@@ -8,26 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		E8954A7923B15FEA00A93209 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8954A7823B15FEA00A93209 /* AppDelegate.swift */; };
-		E8954A7D23B15FEA00A93209 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8954A7C23B15FEA00A93209 /* LoginViewController.swift */; };
+		E8954A7B23B15FEA00A93209 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8954A7A23B15FEA00A93209 /* SceneDelegate.swift */; };
+		E8954A7D23B15FEA00A93209 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8954A7C23B15FEA00A93209 /* ViewController.swift */; };
 		E8954A8023B15FEA00A93209 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8954A7E23B15FEA00A93209 /* Main.storyboard */; };
 		E8954A8223B15FEB00A93209 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8954A8123B15FEB00A93209 /* Assets.xcassets */; };
 		E8954A8523B15FEB00A93209 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8954A8323B15FEB00A93209 /* LaunchScreen.storyboard */; };
-		E8954A9223B162A700A93209 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8954A9023B162A700A93209 /* Images.swift */; };
-		E8954A9323B162A700A93209 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8954A9123B162A700A93209 /* Constants.swift */; };
-		E8954A9523B162B300A93209 /* UIColor+hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8954A9423B162B200A93209 /* UIColor+hex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E8954A7523B15FEA00A93209 /* VKClientSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKClientSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8954A7823B15FEA00A93209 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E8954A7C23B15FEA00A93209 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		E8954A7A23B15FEA00A93209 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		E8954A7C23B15FEA00A93209 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E8954A7F23B15FEA00A93209 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E8954A8123B15FEB00A93209 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E8954A8423B15FEB00A93209 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E8954A8623B15FEB00A93209 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E8954A9023B162A700A93209 /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
-		E8954A9123B162A700A93209 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		E8954A9423B162B200A93209 /* UIColor+hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+hex.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,40 +57,14 @@
 			isa = PBXGroup;
 			children = (
 				E8954A7823B15FEA00A93209 /* AppDelegate.swift */,
-				E8954A7C23B15FEA00A93209 /* LoginViewController.swift */,
+				E8954A7A23B15FEA00A93209 /* SceneDelegate.swift */,
+				E8954A7C23B15FEA00A93209 /* ViewController.swift */,
 				E8954A7E23B15FEA00A93209 /* Main.storyboard */,
+				E8954A8123B15FEB00A93209 /* Assets.xcassets */,
 				E8954A8323B15FEB00A93209 /* LaunchScreen.storyboard */,
 				E8954A8623B15FEB00A93209 /* Info.plist */,
-				E8954A8D23B1624500A93209 /* Utilities */,
 			);
 			path = VKClientSample;
-			sourceTree = "<group>";
-		};
-		E8954A8D23B1624500A93209 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				E8954A8123B15FEB00A93209 /* Assets.xcassets */,
-				E8954A8F23B1625500A93209 /* Constants */,
-				E8954A8E23B1624D00A93209 /* Extensions */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
-		E8954A8E23B1624D00A93209 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				E8954A9423B162B200A93209 /* UIColor+hex.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		E8954A8F23B1625500A93209 /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-				E8954A9123B162A700A93209 /* Constants.swift */,
-				E8954A9023B162A700A93209 /* Images.swift */,
-			);
-			path = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,11 +138,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8954A7D23B15FEA00A93209 /* LoginViewController.swift in Sources */,
-				E8954A9223B162A700A93209 /* Images.swift in Sources */,
-				E8954A9523B162B300A93209 /* UIColor+hex.swift in Sources */,
+				E8954A7D23B15FEA00A93209 /* ViewController.swift in Sources */,
 				E8954A7923B15FEA00A93209 /* AppDelegate.swift in Sources */,
-				E8954A9323B162A700A93209 /* Constants.swift in Sources */,
+				E8954A7B23B15FEA00A93209 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,7 +287,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AC7SNZV8BM;
 				INFOPLIST_FILE = VKClientSample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -338,7 +305,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AC7SNZV8BM;
 				INFOPLIST_FILE = VKClientSample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
