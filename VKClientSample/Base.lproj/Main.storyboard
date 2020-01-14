@@ -1,24 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="VKClientSample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vklogo" translatesAutoresizingMaskIntoConstraints="NO" id="hfs-UI-3Hy">
+                                <rect key="frame" x="159" y="241" width="96" height="96"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="96" id="lHI-p4-9mj">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="160"/>
+                                    </constraint>
+                                    <constraint firstAttribute="width" constant="96" id="nrz-6G-kft">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="160"/>
+                                    </constraint>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cKn-fb-oAg" userLabel="LogIn">
+                                <rect key="frame" x="32" y="569" width="350" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="KAW-81-1kD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Log In">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JgQ-1k-3t2"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email or Phone" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Iqs-xc-3tt" userLabel="email">
+                                <rect key="frame" x="32" y="401" width="350" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Sd0-4s-GDs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JnH-cz-FIm" userLabel="password">
+                                <rect key="frame" x="32" y="465" width="350" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="r0C-SO-KOJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" red="0.27450980390000002" green="0.50196078430000002" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="hfs-UI-3Hy" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="4be-sB-EPf"/>
+                            <constraint firstItem="Iqs-xc-3tt" firstAttribute="leading" secondItem="JnH-cz-FIm" secondAttribute="leading" id="A36-ek-dNk"/>
+                            <constraint firstItem="Iqs-xc-3tt" firstAttribute="trailing" secondItem="JnH-cz-FIm" secondAttribute="trailing" id="A5E-7w-aAt">
+                                <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                            </constraint>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Iqs-xc-3tt" secondAttribute="trailing" constant="32" id="AZ1-bU-Pti">
+                                <variation key="heightClass=compact-widthClass=regular" constant="144"/>
+                                <variation key="heightClass=regular-widthClass=regular" constant="256"/>
+                            </constraint>
+                            <constraint firstItem="JnH-cz-FIm" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="32" id="JND-AQ-EUZ">
+                                <variation key="heightClass=compact-widthClass=compact" constant="56"/>
+                                <variation key="heightClass=compact-widthClass=regular" constant="48"/>
+                            </constraint>
+                            <constraint firstItem="Iqs-xc-3tt" firstAttribute="leading" secondItem="cKn-fb-oAg" secondAttribute="leading" id="VP4-uk-GMf"/>
+                            <constraint firstItem="Iqs-xc-3tt" firstAttribute="top" secondItem="hfs-UI-3Hy" secondAttribute="bottom" constant="64" id="dgO-A1-7oi">
+                                <variation key="heightClass=compact-widthClass=compact" constant="24"/>
+                                <variation key="heightClass=compact-widthClass=regular" constant="32"/>
+                                <variation key="heightClass=regular-widthClass=regular" constant="96"/>
+                            </constraint>
+                            <constraint firstItem="Iqs-xc-3tt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="hWO-mV-AjX">
+                                <variation key="heightClass=compact-widthClass=regular" constant="144"/>
+                                <variation key="heightClass=regular-widthClass=regular" constant="256"/>
+                            </constraint>
+                            <constraint firstItem="Iqs-xc-3tt" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-32" id="k2s-jU-ANN">
+                                <variation key="heightClass=compact-widthClass=compact" constant="0.0"/>
+                                <variation key="heightClass=compact-widthClass=regular" constant="-16"/>
+                                <variation key="heightClass=regular-widthClass=regular" constant="-40"/>
+                            </constraint>
+                            <constraint firstItem="cKn-fb-oAg" firstAttribute="top" secondItem="JnH-cz-FIm" secondAttribute="bottom" constant="64" id="tVI-IH-I0M">
+                                <variation key="heightClass=compact-widthClass=compact" constant="24"/>
+                                <variation key="heightClass=compact-widthClass=regular" constant="48"/>
+                            </constraint>
+                            <constraint firstItem="Iqs-xc-3tt" firstAttribute="trailing" secondItem="cKn-fb-oAg" secondAttribute="trailing" id="ygP-tT-dcb"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <variation key="heightClass=regular-widthClass=regular">
+                            <mask key="constraints">
+                                <include reference="AZ1-bU-Pti"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="emailTF" destination="Iqs-xc-3tt" id="8HP-4X-YOn"/>
+                        <outlet property="loginButton" destination="cKn-fb-oAg" id="KJH-k5-C4H"/>
+                        <outlet property="passwordTF" destination="JnH-cz-FIm" id="zQC-fg-2PI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="139" y="127"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="vklogo" width="143" height="143"/>
+    </resources>
 </document>
