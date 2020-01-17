@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E861CD9923D271EA00D3E9B3 /* CommunityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E861CD9723D271EA00D3E9B3 /* CommunityTableViewCell.swift */; };
+		E861CD9A23D271EA00D3E9B3 /* CommunityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E861CD9823D271EA00D3E9B3 /* CommunityTableViewCell.xib */; };
+		E861CD9D23D274D000D3E9B3 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = E861CD9C23D274D000D3E9B3 /* Group.swift */; };
+		E861CD9F23D274E700D3E9B3 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = E861CD9E23D274E700D3E9B3 /* Friend.swift */; };
 		E885799223D1D72200C97694 /* CommunitiesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799123D1D72200C97694 /* CommunitiesTableVC.swift */; };
 		E885799423D1D73A00C97694 /* FriendsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799323D1D73A00C97694 /* FriendsTableVC.swift */; };
 		E885799823D1D7F200C97694 /* SearchCommunitiesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799723D1D7F200C97694 /* SearchCommunitiesTableVC.swift */; };
@@ -21,6 +25,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E861CD9723D271EA00D3E9B3 /* CommunityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityTableViewCell.swift; sourceTree = "<group>"; };
+		E861CD9823D271EA00D3E9B3 /* CommunityTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommunityTableViewCell.xib; sourceTree = "<group>"; };
+		E861CD9C23D274D000D3E9B3 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		E861CD9E23D274E700D3E9B3 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		E885799123D1D72200C97694 /* CommunitiesTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesTableVC.swift; sourceTree = "<group>"; };
 		E885799323D1D73A00C97694 /* FriendsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableVC.swift; sourceTree = "<group>"; };
 		E885799723D1D7F200C97694 /* SearchCommunitiesTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCommunitiesTableVC.swift; sourceTree = "<group>"; };
@@ -47,13 +55,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E861CD9523D25CE600D3E9B3 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				E885799323D1D73A00C97694 /* FriendsTableVC.swift */,
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
+		E861CD9623D25CF500D3E9B3 /* Communities */ = {
+			isa = PBXGroup;
+			children = (
+				E885799123D1D72200C97694 /* CommunitiesTableVC.swift */,
+				E885799723D1D7F200C97694 /* SearchCommunitiesTableVC.swift */,
+				E861CD9723D271EA00D3E9B3 /* CommunityTableViewCell.swift */,
+				E861CD9823D271EA00D3E9B3 /* CommunityTableViewCell.xib */,
+			);
+			path = Communities;
+			sourceTree = "<group>";
+		};
+		E861CD9B23D274BF00D3E9B3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E861CD9C23D274D000D3E9B3 /* Group.swift */,
+				E861CD9E23D274E700D3E9B3 /* Friend.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		E885799023D1D6EF00C97694 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				E861CD9623D25CF500D3E9B3 /* Communities */,
+				E861CD9523D25CE600D3E9B3 /* Friends */,
 				E8954A7C23B15FEA00A93209 /* LoginViewController.swift */,
-				E885799123D1D72200C97694 /* CommunitiesTableVC.swift */,
-				E885799323D1D73A00C97694 /* FriendsTableVC.swift */,
-				E885799723D1D7F200C97694 /* SearchCommunitiesTableVC.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -77,6 +112,7 @@
 		E8954A7723B15FEA00A93209 /* VKClientSample */ = {
 			isa = PBXGroup;
 			children = (
+				E861CD9B23D274BF00D3E9B3 /* Model */,
 				E885799023D1D6EF00C97694 /* Screens */,
 				E8954A7823B15FEA00A93209 /* AppDelegate.swift */,
 				E8954A7E23B15FEA00A93209 /* Main.storyboard */,
@@ -175,6 +211,7 @@
 				E8954A8523B15FEB00A93209 /* LaunchScreen.storyboard in Resources */,
 				E8954A8223B15FEB00A93209 /* Assets.xcassets in Resources */,
 				E8954A8023B15FEA00A93209 /* Main.storyboard in Resources */,
+				E861CD9A23D271EA00D3E9B3 /* CommunityTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,11 +225,14 @@
 				E8954A7D23B15FEA00A93209 /* LoginViewController.swift in Sources */,
 				E8954A9223B162A700A93209 /* Images.swift in Sources */,
 				E8954A9523B162B300A93209 /* UIColor+hex.swift in Sources */,
+				E861CD9D23D274D000D3E9B3 /* Group.swift in Sources */,
 				E885799223D1D72200C97694 /* CommunitiesTableVC.swift in Sources */,
 				E885799423D1D73A00C97694 /* FriendsTableVC.swift in Sources */,
 				E885799823D1D7F200C97694 /* SearchCommunitiesTableVC.swift in Sources */,
+				E861CD9923D271EA00D3E9B3 /* CommunityTableViewCell.swift in Sources */,
 				E8954A7923B15FEA00A93209 /* AppDelegate.swift in Sources */,
 				E8954A9323B162A700A93209 /* Constants.swift in Sources */,
+				E861CD9F23D274E700D3E9B3 /* Friend.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
