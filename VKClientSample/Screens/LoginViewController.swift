@@ -30,7 +30,7 @@ class LoginViewController: UIViewController {
         // Второе — когда она пропадает
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -55,15 +55,19 @@ class LoginViewController: UIViewController {
         view.endEditing(true)
     }
     
-    @IBAction func loginButtonTapped(_ sender: Any) {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         let email = emailTF.text!
         let password = passwordTF.text!
         
-        if email == "admin" && password == "123456" {
-            print("успешная авторизация")
+        if email == "admin" && password == "12345" {
             view.endEditing(true)
+            return true
         } else {
-            print("неуспешная авторизация")
+            let alertVC = UIAlertController(title: "❌Вы ввели неверный логин/пароль❌", message: "Попробуйте ещё раз", preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "Окей", style: .cancel, handler: nil)
+            alertVC.addAction(alertAction)
+            present(alertVC, animated: true, completion: nil)
+            return false
         }
     }
     
@@ -84,7 +88,7 @@ class LoginViewController: UIViewController {
         let contentInsets = UIEdgeInsets.zero
         scrollView?.contentInset = contentInsets
     }
-
+    
 }
 
 extension LoginViewController: UITextFieldDelegate {

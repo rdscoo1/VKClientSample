@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E885799223D1D72200C97694 /* CommunitiesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799123D1D72200C97694 /* CommunitiesTableVC.swift */; };
+		E885799423D1D73A00C97694 /* FriendsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799323D1D73A00C97694 /* FriendsTableVC.swift */; };
+		E885799823D1D7F200C97694 /* SearchCommunitiesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799723D1D7F200C97694 /* SearchCommunitiesTableVC.swift */; };
 		E8954A7923B15FEA00A93209 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8954A7823B15FEA00A93209 /* AppDelegate.swift */; };
 		E8954A7D23B15FEA00A93209 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8954A7C23B15FEA00A93209 /* LoginViewController.swift */; };
 		E8954A8023B15FEA00A93209 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8954A7E23B15FEA00A93209 /* Main.storyboard */; };
@@ -18,6 +21,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E885799123D1D72200C97694 /* CommunitiesTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesTableVC.swift; sourceTree = "<group>"; };
+		E885799323D1D73A00C97694 /* FriendsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableVC.swift; sourceTree = "<group>"; };
+		E885799723D1D7F200C97694 /* SearchCommunitiesTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCommunitiesTableVC.swift; sourceTree = "<group>"; };
 		E8954A7523B15FEA00A93209 /* VKClientSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKClientSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8954A7823B15FEA00A93209 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8954A7C23B15FEA00A93209 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -41,6 +47,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E885799023D1D6EF00C97694 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				E8954A7C23B15FEA00A93209 /* LoginViewController.swift */,
+				E885799123D1D72200C97694 /* CommunitiesTableVC.swift */,
+				E885799323D1D73A00C97694 /* FriendsTableVC.swift */,
+				E885799723D1D7F200C97694 /* SearchCommunitiesTableVC.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 		E8954A6C23B15FEA00A93209 = {
 			isa = PBXGroup;
 			children = (
@@ -60,8 +77,8 @@
 		E8954A7723B15FEA00A93209 /* VKClientSample */ = {
 			isa = PBXGroup;
 			children = (
+				E885799023D1D6EF00C97694 /* Screens */,
 				E8954A7823B15FEA00A93209 /* AppDelegate.swift */,
-				E8954A7C23B15FEA00A93209 /* LoginViewController.swift */,
 				E8954A7E23B15FEA00A93209 /* Main.storyboard */,
 				E8954A8323B15FEB00A93209 /* LaunchScreen.storyboard */,
 				E8954A8623B15FEB00A93209 /* Info.plist */,
@@ -171,6 +188,9 @@
 				E8954A7D23B15FEA00A93209 /* LoginViewController.swift in Sources */,
 				E8954A9223B162A700A93209 /* Images.swift in Sources */,
 				E8954A9523B162B300A93209 /* UIColor+hex.swift in Sources */,
+				E885799223D1D72200C97694 /* CommunitiesTableVC.swift in Sources */,
+				E885799423D1D73A00C97694 /* FriendsTableVC.swift in Sources */,
+				E885799823D1D7F200C97694 /* SearchCommunitiesTableVC.swift in Sources */,
 				E8954A7923B15FEA00A93209 /* AppDelegate.swift in Sources */,
 				E8954A9323B162A700A93209 /* Constants.swift in Sources */,
 			);
