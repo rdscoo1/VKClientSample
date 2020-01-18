@@ -14,7 +14,7 @@ extension UIImage {
 // MARK: - icons
     static let friends = UIImage(imageLiteralResourceName: "friends")
     static let communities = UIImage(imageLiteralResourceName: "communities")
-    static let addFriend = UIImage(imageLiteralResourceName: "addFriend")
+    static let addGroup = UIImage(imageLiteralResourceName: "addGroup")
     static let showPassword = UIImage(imageLiteralResourceName: "showPassword")
     static let hidePassword = UIImage(imageLiteralResourceName: "hidePassword")
     
