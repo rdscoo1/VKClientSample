@@ -9,80 +9,66 @@
 import UIKit
 
 class CommunitiesTableVC: UITableViewController {
-
+    
+    var communities = Community.communities.filter { $0.isFollowing }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
+        
+        tableView.register(UINib(nibName: CommunityCell.reuseId, bundle: nil), forCellReuseIdentifier: CommunityCell.reuseId)
+        tableView.tableFooterView = UIView()
+        tableView.rowHeight = 64
+        
     }
-
+    
+    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    //        if
+    //            let segueId = segue.identifier,
+    //            segueId == "findCommunity",
+    //            let searchCommunitiesTableVC = segue.destination as? SearchCommunitiesTableVC
+    //        {
+    //            let availiableGroups = Set(Community.communities).subtracting(communities)
+    //            addGroupViewController.items = Array(availiableGroups)
+    //        }
+    //    }
+    
+    
     // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return communities.count
     }
-
-    /*
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CommunityCell.reuseId, for: indexPath) as? CommunityCell else {
+            return UITableViewCell()
+        }
+        let community = communities[indexPath.row]
+        cell.setCommunities(community: community)
+        
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
+    
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            communities[indexPath.row].isFollowing = false
+            communities.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
+    
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if
+            segue.identifier == "addCommunity",
+            let addCommunityVC = segue.destination as? AddCommunitiyTableVC
+        {
+            let availableCommunities = Set(Community.communities).subtracting(communities)
+            addCommunityVC.communities = Array(availableCommunities)
+        }
     }
-    */
-
+    
 }
