@@ -33,7 +33,7 @@ extension Community {
         Community(id: 12, title: "Star", description: "Internet media", communityCover: "rozetked", followers: 2583123941, isFollowing: true),
         Community(id: 13, title: "Films", description: "Movies", communityCover: "movies", followers: 3213, isFollowing: false),
         Community(id: 14, title: "Shop", description: "Style, fashion", communityCover: "themarket", followers: 514130, isFollowing: false),
-        Community(id: 15, title: "Photos", description: "Photography", communityCover: "wallpapers", followers: 456, isFollowing: false),
+        Community(id: 15, title: "Photos", description: "Photography", communityCover: "wallpapers", followers: 456, isFollowing: false)
     ]
 }
 

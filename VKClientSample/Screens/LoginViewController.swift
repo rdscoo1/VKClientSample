@@ -50,10 +50,10 @@ class LoginViewController: UIViewController {
     }
     
     func showPassword() {
-        secureTextEntryButton.setImage(.showPassword, for: .normal)
+        secureTextEntryButton.setImage(.eye, for: .normal)
         secureTextEntryButton.tintColor = .gray
-        secureTextEntryButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
-        secureTextEntryButton.frame = CGRect(x: 0, y: 0, width: 16, height: 10)
+        secureTextEntryButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
+        secureTextEntryButton.frame = CGRect(x: 0, y: 0, width: 22, height: 16)
         secureTextEntryButton.addTarget(self, action: #selector(showPasswordTapped), for: .touchUpInside)
         passwordTF.rightView = secureTextEntryButton
         passwordTF.rightViewMode = .always
@@ -68,7 +68,7 @@ class LoginViewController: UIViewController {
         } else {
             passwordTF.isSecureTextEntry = !passwordTF.isSecureTextEntry
             UIView.animate(withDuration: 0.4, animations: {
-                self.secureTextEntryButton.setImage(.showPassword, for: .normal)
+                self.secureTextEntryButton.setImage(.eye, for: .normal)
             })
         }
     }

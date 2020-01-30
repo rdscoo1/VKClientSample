@@ -21,7 +21,6 @@ class FriendCollectionVC: UICollectionViewController {
         title = friend?.name
 
     }
-
    
 
 // MARK: - UICollectionViewDataSource
