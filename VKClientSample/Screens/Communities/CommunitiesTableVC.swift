@@ -21,18 +21,6 @@ class CommunitiesTableVC: UITableViewController {
         
     }
     
-    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //        if
-    //            let segueId = segue.identifier,
-    //            segueId == "findCommunity",
-    //            let searchCommunitiesTableVC = segue.destination as? SearchCommunitiesTableVC
-    //        {
-    //            let availiableGroups = Set(Community.communities).subtracting(communities)
-    //            addGroupViewController.items = Array(availiableGroups)
-    //        }
-    //    }
-    
-    
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,6 +57,9 @@ class CommunitiesTableVC: UITableViewController {
             let availableCommunities = Set(Community.communities).subtracting(communities)
             addCommunityVC.communities = Array(availableCommunities)
         }
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+        self.navigationController!.navigationBar.tintColor = .white
     }
     
 }

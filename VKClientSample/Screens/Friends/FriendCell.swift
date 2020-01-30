@@ -11,7 +11,7 @@ import UIKit
 class FriendCell: UITableViewCell {
 
     @IBOutlet weak var friendPhoto: UIImageView!
-    @IBOutlet weak var friendName: UILabel!
+    @IBOutlet weak var friendFullName: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,7 +21,7 @@ class FriendCell: UITableViewCell {
     }
     
     func setFriends(friend: Friend) {
-        friendName.text = friend.name
+        friendFullName.text = "\(friend.name) \(friend.surname)"
         friendPhoto.image = UIImage(imageLiteralResourceName: friend.avatar)
     }
 
