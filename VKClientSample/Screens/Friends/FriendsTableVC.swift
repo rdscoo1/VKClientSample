@@ -17,13 +17,20 @@ class FriendsTableVC: UITableViewController {
         
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 64
-        
     }
     
     // MARK: - Table view data source
     
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        var letter = [String]()
+//        let friend = friends[indexPath.row]
+//        for key in keys {
+//            letter.append("\(key.characters.first!)")
+//         }
+//         return letter
+//    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return friends.count
     }
     

@@ -22,6 +22,10 @@ extension UIImage {
     static let commentButton = UIImage(imageLiteralResourceName: "commentButton")
     static let shareButton = UIImage(imageLiteralResourceName: "shareButton")
     static let moreButton = UIImage(imageLiteralResourceName: "more")
+    static let streamIcon = UIImage(imageLiteralResourceName: "streamIcon")
+    static let qrScanIcon = UIImage(imageLiteralResourceName: "qrScanIcon")
+    static let photoIcon = UIImage(imageLiteralResourceName: "photoIcon")
+    static let plusIconToAddStory = UIImage(imageLiteralResourceName: "plusIconToAddStory")
     
     static let helen = UIImage(imageLiteralResourceName: "helen")
     static let postImage = UIImage(imageLiteralResourceName: "postImage")

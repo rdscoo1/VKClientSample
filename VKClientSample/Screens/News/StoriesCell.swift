@@ -12,6 +12,7 @@ class StoryCell: UICollectionViewCell {
 
     let storyContainerView = UIView()
     let storyImageView = UIImageView(image: .helen)
+    let storyAuthor = UILabel()
     
     static let reuseId = "StoryCell"
 
@@ -25,9 +26,17 @@ class StoryCell: UICollectionViewCell {
         setupUI()
     }
     
+    func setStories(story: Friend) {
+        storyImageView.image = UIImage(imageLiteralResourceName: story.avatar)
+    }
+    
     private func setupUI() {
         storyImageView.layer.cornerRadius = 32
         storyImageView.clipsToBounds = true
+        
+        storyAuthor.text = "Alisa Fatianova"
+        storyAuthor.textAlignment = .center
+        storyAuthor.numberOfLines = 0
         
         storyContainerView.layer.cornerRadius = 36
         storyContainerView.clipsToBounds = true
@@ -37,6 +46,7 @@ class StoryCell: UICollectionViewCell {
         
         storyContainerView.addSubview(storyImageView)
         addSubview(storyContainerView)
+        addSubview(storyAuthor)
         configureConstraints()
     }
     
@@ -45,7 +55,7 @@ class StoryCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             storyContainerView.heightAnchor.constraint(equalToConstant: 72),
             storyContainerView.widthAnchor.constraint(equalToConstant: 72),
-            storyContainerView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            storyContainerView.topAnchor.constraint(equalTo: topAnchor),
             storyContainerView.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
         
@@ -53,8 +63,16 @@ class StoryCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             storyImageView.heightAnchor.constraint(equalToConstant: 64),
             storyImageView.widthAnchor.constraint(equalToConstant: 64),
-            storyImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            storyImageView.centerXAnchor.constraint(equalTo: centerXAnchor)
+            storyImageView.centerYAnchor.constraint(equalTo: storyContainerView.centerYAnchor),
+            storyImageView.centerXAnchor.constraint(equalTo: storyContainerView.centerXAnchor)
+        ])
+        
+        storyAuthor.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            storyAuthor.topAnchor.constraint(equalTo: storyContainerView.bottomAnchor, constant: 8),
+            storyAuthor.rightAnchor.constraint(equalTo: rightAnchor),
+            storyAuthor.leftAnchor.constraint(equalTo: leftAnchor),
+            storyAuthor.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 }
@@ -68,7 +86,7 @@ class StoriesCell: UITableViewCell {
     
     var layout: UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 110, height: 130)
+        layout.itemSize = CGSize(width: 80, height: 96)
         layout.scrollDirection = .horizontal
         return layout
     }
@@ -80,6 +98,8 @@ class StoriesCell: UITableViewCell {
         
         storiesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
+        topSeparator.backgroundColor = .lightGray
+        topSeparator.alpha = 0.3
         
         containerView.addSubview(storiesCollectionView)
         addSubview(topSeparator)
@@ -119,10 +139,10 @@ class StoriesCell: UITableViewCell {
         
         storiesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            storiesCollectionView.topAnchor.constraint(equalTo: topAnchor),
-            storiesCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            storiesCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            storiesCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            storiesCollectionView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            storiesCollectionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            storiesCollectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            storiesCollectionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
     }
 }

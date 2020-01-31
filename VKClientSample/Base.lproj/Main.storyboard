@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="lFq-nV-oYe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sbS-dT-Ix3">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -192,7 +192,16 @@
                             <outlet property="delegate" destination="CF1-88-Hcz" id="yEr-u4-lX3"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Friends" id="p9k-Wd-Bdq"/>
+                    <navigationItem key="navigationItem" title="Friends" id="p9k-Wd-Bdq">
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="onP-vV-pem">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </barButtonItem>
+                            <barButtonItem image="qrScannerIcon" id="W8d-bv-Mb9">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="and-NK-EKI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -243,11 +252,13 @@
             </objects>
             <point key="canvasLocation" x="3793" y="504"/>
         </scene>
-        <!--Communities-->
+        <!--Navigation Controller-->
         <scene sceneID="HMe-1d-YWd">
             <objects>
                 <navigationController id="Syz-Hf-mdV" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="2" title="Communities" image="communities" id="wgI-NP-Bhk"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="" image="communities" id="wgI-NP-Bhk">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-10"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5Nk-s1-NM7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -336,11 +347,13 @@
             </objects>
             <point key="canvasLocation" x="2606" y="-1126"/>
         </scene>
-        <!--News-->
+        <!--Navigation Controller-->
         <scene sceneID="tQn-wi-RRA">
             <objects>
                 <navigationController id="avM-3d-OPd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="News" image="newsfeed" id="LgH-z8-sMc"/>
+                    <tabBarItem key="tabBarItem" title="" image="newsfeed" id="LgH-z8-sMc">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-10"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="P9m-bG-asm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -357,11 +370,12 @@
             </objects>
             <point key="canvasLocation" x="1369" y="-1125"/>
         </scene>
-        <!--Friends-->
+        <!--Navigation Controller-->
         <scene sceneID="0VO-fL-Eyd">
             <objects>
                 <navigationController id="2Q5-50-Lng" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="1" title="Friends" image="friends" id="fbY-Bv-gnw">
+                    <tabBarItem key="tabBarItem" tag="1" title="" image="friends" id="fbY-Bv-gnw">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-10"/>
                         <color key="badgeColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
                     <navigationItem key="navigationItem" id="kxd-dM-fEZ"/>
@@ -405,10 +419,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="communities" width="27" height="18"/>
-        <image name="friends" width="22" height="22"/>
+        <image name="communities" width="31" height="20"/>
+        <image name="friends" width="23" height="23"/>
         <image name="maria" width="225" height="338"/>
         <image name="newsfeed" width="28" height="28"/>
+        <image name="qrScannerIcon" width="24" height="24"/>
         <image name="vklogo" width="143" height="143"/>
     </resources>
 </document>

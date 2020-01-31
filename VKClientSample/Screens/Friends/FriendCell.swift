@@ -24,11 +24,4 @@ class FriendCell: UITableViewCell {
         friendFullName.text = "\(friend.name) \(friend.surname)"
         friendPhoto.image = UIImage(imageLiteralResourceName: friend.avatar)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

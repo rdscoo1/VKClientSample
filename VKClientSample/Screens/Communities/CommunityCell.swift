@@ -28,12 +28,5 @@ class CommunityCell: UITableViewCell {
         communityTitle.text = community.title
         communityDescription.text = community.description
         communityPhoto.image = UIImage(imageLiteralResourceName: community.communityCover)
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
+    }    
 }
