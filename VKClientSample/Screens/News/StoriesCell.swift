@@ -8,75 +8,6 @@
 
 import UIKit
 
-class StoryCell: UICollectionViewCell {
-
-    let storyContainerView = UIView()
-    let storyImageView = UIImageView(image: .helen)
-    let storyAuthor = UILabel()
-    
-    static let reuseId = "StoryCell"
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupUI()
-    }
-    
-    func setStories(story: Friend) {
-        storyImageView.image = UIImage(imageLiteralResourceName: story.avatar)
-    }
-    
-    private func setupUI() {
-        storyImageView.layer.cornerRadius = 32
-        storyImageView.clipsToBounds = true
-        
-        storyAuthor.text = "Alisa Fatianova"
-        storyAuthor.textAlignment = .center
-        storyAuthor.numberOfLines = 0
-        
-        storyContainerView.layer.cornerRadius = 36
-        storyContainerView.clipsToBounds = true
-        storyContainerView.backgroundColor = .white
-        storyContainerView.layer.borderWidth = 2
-        storyContainerView.layer.borderColor = Constants.Colors.vkTheme.cgColor
-        
-        storyContainerView.addSubview(storyImageView)
-        addSubview(storyContainerView)
-        addSubview(storyAuthor)
-        configureConstraints()
-    }
-    
-    private func configureConstraints() {
-        storyContainerView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            storyContainerView.heightAnchor.constraint(equalToConstant: 72),
-            storyContainerView.widthAnchor.constraint(equalToConstant: 72),
-            storyContainerView.topAnchor.constraint(equalTo: topAnchor),
-            storyContainerView.centerXAnchor.constraint(equalTo: centerXAnchor)
-        ])
-        
-        storyImageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            storyImageView.heightAnchor.constraint(equalToConstant: 64),
-            storyImageView.widthAnchor.constraint(equalToConstant: 64),
-            storyImageView.centerYAnchor.constraint(equalTo: storyContainerView.centerYAnchor),
-            storyImageView.centerXAnchor.constraint(equalTo: storyContainerView.centerXAnchor)
-        ])
-        
-        storyAuthor.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            storyAuthor.topAnchor.constraint(equalTo: storyContainerView.bottomAnchor, constant: 8),
-            storyAuthor.rightAnchor.constraint(equalTo: rightAnchor),
-            storyAuthor.leftAnchor.constraint(equalTo: leftAnchor),
-            storyAuthor.bottomAnchor.constraint(equalTo: bottomAnchor),
-        ])
-    }
-}
-
 class StoriesCell: UITableViewCell {
     
     let topSeparator = UIView()
@@ -116,6 +47,7 @@ class StoriesCell: UITableViewCell {
     private func setupCollectionView() {
         storiesCollectionView.dataSource = self
         storiesCollectionView.register(StoryCell.self, forCellWithReuseIdentifier: StoryCell.reuseId)
+        storiesCollectionView.register(AddStoryCell.self, forCellWithReuseIdentifier: AddStoryCell.reuseId)
         storiesCollectionView.backgroundColor = .clear
         storiesCollectionView.showsHorizontalScrollIndicator = false
     }
@@ -153,8 +85,20 @@ extension StoriesCell: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StoryCell.reuseId, for: indexPath)
-        return cell
+        if indexPath.item == 0 {
+            guard let addStoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddStoryCell.reuseId, for: indexPath) as? AddStoryCell else {
+                return UICollectionViewCell()
+            }
+            return addStoryCell
+        } else {
+            guard let storiesCell = collectionView.dequeueReusableCell(withReuseIdentifier: StoryCell.reuseId, for: indexPath) as? StoryCell else {
+                return UICollectionViewCell()
+            }
+            let story = items[indexPath.row]
+            storiesCell.setStories(story: story)
+            return storiesCell
+        }
+
     }
 }
 

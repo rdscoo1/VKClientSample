@@ -20,7 +20,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         setUI()
-        configureTapGesture()
+        setupActionHideKeyboard()
         correctCredentials()
         showPassword()
     }
@@ -73,8 +73,8 @@ class LoginViewController: UIViewController {
         }
     }
     
-    private func configureTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.handleTap))
+    private func setupActionHideKeyboard() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
     }
     
@@ -127,7 +127,7 @@ extension LoginViewController {
         scrollView?.contentInset = contentInsets
     }
     
-    @objc func handleTap() {
+    @objc func hideKeyboard() {
         view.endEditing(true)
     }
 }
