@@ -14,12 +14,15 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    let secureTextEntryButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUI()
         configureTapGesture()
+        correctCredentials()
+        showPassword()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,13 +49,38 @@ class LoginViewController: UIViewController {
         passwordTF.delegate = self
     }
     
+    func showPassword() {
+        secureTextEntryButton.setImage(.eye, for: .normal)
+        secureTextEntryButton.tintColor = .gray
+        secureTextEntryButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
+        secureTextEntryButton.frame = CGRect(x: 0, y: 0, width: 22, height: 16)
+        secureTextEntryButton.addTarget(self, action: #selector(showPasswordTapped), for: .touchUpInside)
+        passwordTF.rightView = secureTextEntryButton
+        passwordTF.rightViewMode = .always
+    }
+    
+    @objc func showPasswordTapped() {
+        if passwordTF.isSecureTextEntry == true {
+            passwordTF.isSecureTextEntry = !passwordTF.isSecureTextEntry
+            UIView.animate(withDuration: 0.4, animations: {
+                self.secureTextEntryButton.setImage(.hidePassword, for: .normal)
+            })
+        } else {
+            passwordTF.isSecureTextEntry = !passwordTF.isSecureTextEntry
+            UIView.animate(withDuration: 0.4, animations: {
+                self.secureTextEntryButton.setImage(.eye, for: .normal)
+            })
+        }
+    }
+    
     private func configureTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.handleTap))
         view.addGestureRecognizer(tapGesture)
     }
     
-    @objc func handleTap() {
-        view.endEditing(true)
+    private func correctCredentials() {
+        emailTF.text = "admin"
+        passwordTF.text = "12345"
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
@@ -63,14 +91,24 @@ class LoginViewController: UIViewController {
             view.endEditing(true)
             return true
         } else {
-            let alertVC = UIAlertController(title: "❌Вы ввели неверный логин/пароль❌", message: "Попробуйте ещё раз", preferredStyle: .alert)
-            let alertAction = UIAlertAction(title: "Окей", style: .cancel, handler: nil)
+            let alertVC = UIAlertController(title: "❌User or password is incorrect❌", message: "", preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "Try again", style: .cancel, handler: nil)
             alertVC.addAction(alertAction)
             present(alertVC, animated: true, completion: nil)
             return false
         }
     }
-    
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
+// MARK: - Show/Hide keyboard
+extension LoginViewController {
     @objc func keyboardWasShown(notification: Notification) {
         // Получаем размер клавиатуры
         let info = notification.userInfo! as NSDictionary
@@ -89,12 +127,7 @@ class LoginViewController: UIViewController {
         scrollView?.contentInset = contentInsets
     }
     
-}
-
-extension LoginViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+    @objc func handleTap() {
+        view.endEditing(true)
     }
 }
-
