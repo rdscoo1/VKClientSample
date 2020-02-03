@@ -73,11 +73,6 @@ class LoginViewController: UIViewController {
         }
     }
     
-    private func setupActionHideKeyboard() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        view.addGestureRecognizer(tapGesture)
-    }
-    
     private func correctCredentials() {
         emailTF.text = "admin"
         passwordTF.text = "12345"
@@ -125,6 +120,11 @@ extension LoginViewController {
         // Устанавливаем отступ внизу UIScrollView, равный 0
         let contentInsets = UIEdgeInsets.zero
         scrollView?.contentInset = contentInsets
+    }
+    
+    private func setupActionHideKeyboard() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     @objc func hideKeyboard() {
