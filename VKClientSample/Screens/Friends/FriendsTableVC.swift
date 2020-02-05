@@ -71,7 +71,7 @@ class FriendsTableVC: UITableViewController {
             segueId == "friendInDetailSeque",
             let friendInDetail = segue.destination as? FriendCollectionVC,
             let selectedIndex = tableView.indexPathForSelectedRow {
-                friendInDetail.friend = friends[selectedIndex.row]
+                friendInDetail.friend = searchedFriends[selectedIndex.section][selectedIndex.row]
         }
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)

@@ -12,5 +12,8 @@ class FriendCVCell: UICollectionViewCell {
     
     @IBOutlet weak var friendPhoto: UIImageView!
     
+//    func setPhotos(friend: Friend) {
+//        friendPhoto.image = UIImage(imageLiteralResourceName: friend.photos)
+//    }
     
 }
