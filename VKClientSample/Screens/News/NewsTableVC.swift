@@ -21,6 +21,8 @@ class NewsTableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.backgroundColor = .white
+        view.backgroundColor = .white
         
         models.append(.whatsNewCell)
         models.append(.storiesCell)

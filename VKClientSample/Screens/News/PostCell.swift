@@ -41,8 +41,6 @@ class PostCell: UITableViewCell {
     }
     
     private func setupUI() {
-        selectionStyle = .none
-        
         topSeparator.backgroundColor = .lightGray
         topSeparator.alpha = 0.3
         
@@ -58,6 +56,7 @@ class PostCell: UITableViewCell {
         
         postText.numberOfLines = 0
         postText.text = "adsasdasdasdkasjddasfdhkfkllhasfhdkjshfajsfhjkadfhjhjsafjhsakdfhjsadfhjshjdfhfjsdjhfjhskfshjfasjkfhahjskdfhjshdfjjhdfhjdhjkfdk"
+        postText.backgroundColor = .white
         
         postImageView.contentMode = .scaleAspectFill
         postImageView.clipsToBounds = true

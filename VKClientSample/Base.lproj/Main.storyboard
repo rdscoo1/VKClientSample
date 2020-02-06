@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="lFq-nV-oYe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sbS-dT-Ix3">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -198,7 +198,7 @@
                                 <connections>
                                     <outlet property="friendFullName" destination="Dgk-lY-p8T" id="7KH-Qu-Jro"/>
                                     <outlet property="friendPhoto" destination="LL0-an-Sab" id="ZOW-Sz-O2T"/>
-                                    <segue destination="daE-qE-JWY" kind="show" identifier="friendInDetailSeque" id="yTh-Vi-Toi"/>
+                                    <segue destination="daE-qE-JWY" kind="show" identifier="friendPhotosSegue" id="AyA-NQ-J6V"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -228,7 +228,7 @@
         <!--Communities-->
         <scene sceneID="jTx-gN-NcV">
             <objects>
-                <tableViewController id="aby-sz-shg" customClass="CommunitiesTableVC" customModule="VKClientSample" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController clearsSelectionOnViewWillAppear="NO" id="aby-sz-shg" customClass="CommunitiesTableVC" customModule="VKClientSample" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="CgZ-71-Jy8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -308,7 +308,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FriendInDetails" id="A1C-Ib-5Pq" customClass="FriendCVCell" customModule="VKClientSample" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FriendPhotos" id="A1C-Ib-5Pq" customClass="FriendCVCell" customModule="VKClientSample" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="84" height="85"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TLx-Z1-mwG">
@@ -328,7 +328,6 @@
                                         <constraint firstItem="gDc-f7-aFq" firstAttribute="centerX" secondItem="TLx-Z1-mwG" secondAttribute="centerX" id="bqK-0t-rLh"/>
                                     </constraints>
                                 </collectionViewCellContentView>
-                                <size key="customSize" width="84" height="85"/>
                                 <connections>
                                     <outlet property="friendPhoto" destination="gDc-f7-aFq" id="2jn-AQ-twV"/>
                                 </connections>

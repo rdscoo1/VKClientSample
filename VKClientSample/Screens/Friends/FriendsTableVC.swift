@@ -22,9 +22,18 @@ class FriendsTableVC: UITableViewController {
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 64
         searchBar.delegate = self
+        self.tableView.allowsMultipleSelection = true
+
         
         handleFriends(friend: Friend.friends)
-        setupActionHideKeyboard()
+//        setupActionHideKeyboard()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let selectionIndexPath = self.tableView.indexPathForSelectedRow {
+            self.tableView.deselectRow(at: selectionIndexPath, animated: animated)
+        }
     }
     
     func handleFriends(friend: [Friend]) {
@@ -61,17 +70,17 @@ class FriendsTableVC: UITableViewController {
         cell.setFriends(friend: friend)
         
         return cell
-    } 
+    }
     
     
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let segueId = segue.identifier,
-            segueId == "friendInDetailSeque",
-            let friendInDetail = segue.destination as? FriendCollectionVC,
+            segueId == "friendPhotosSegue",
+            let friendPhotos = segue.destination as? FriendCollectionVC,
             let selectedIndex = tableView.indexPathForSelectedRow {
-                friendInDetail.friend = searchedFriends[selectedIndex.section][selectedIndex.row]
+            friendPhotos.friendPhotos = searchedFriends[selectedIndex.section][selectedIndex.row].photos
         }
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)

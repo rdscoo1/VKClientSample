@@ -28,5 +28,5 @@ class CommunityCell: UITableViewCell {
         communityTitle.text = community.title
         communityDescription.text = community.description
         communityPhoto.image = UIImage(imageLiteralResourceName: community.communityCover)
-    }    
+    }
 }
