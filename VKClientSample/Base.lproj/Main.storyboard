@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sbS-dT-Ix3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2Q5-50-Lng">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -301,7 +301,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ljS-2R-7Uf">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="ljS-2R-7Uf">
                             <size key="itemSize" width="84" height="85"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -315,7 +315,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="84" height="85"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="maria" translatesAutoresizingMaskIntoConstraints="NO" id="gDc-f7-aFq">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anya" translatesAutoresizingMaskIntoConstraints="NO" id="gDc-f7-aFq">
                                             <rect key="frame" x="2" y="2.5" width="80" height="80"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="80" id="Fxb-JW-2rx"/>
@@ -343,6 +343,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o0U-nV-xSk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3765.5999999999999" y="-305.39730134932535"/>
+        </scene>
+        <!--Photo PreviewVC-->
+        <scene sceneID="v0d-XR-tkf">
+            <objects>
+                <viewController storyboardIdentifier="PhotoPreviewVC" id="wme-hw-9LU" customClass="PhotoPreviewVC" customModule="VKClientSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Bhh-XK-db4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.077054251269035534" green="0.077054251269035534" blue="0.077054251269035534" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="HTM-mg-VH9"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="C54-pz-lnw"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oTz-VR-UBS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4957.6000000000004" y="-305.39730134932535"/>
         </scene>
         <!--News-->
         <scene sceneID="Azc-2X-XBp">
@@ -436,6 +454,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="anya" width="200" height="200"/>
         <image name="communities" width="31" height="20"/>
         <image name="friends" width="23" height="23"/>
         <image name="maria" width="225" height="338"/>

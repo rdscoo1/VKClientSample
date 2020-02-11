@@ -11,37 +11,40 @@ import UIKit
 class FriendCollectionVC: UICollectionViewController {
     
     var friendPhotos: [String]!
+    var friendPhotosQuantity: Int = 0
     private let itemsPerRow: CGFloat = 5
     private let sectionInsets = UIEdgeInsets(top: 5.0,
-    left: 5.0,
-    bottom: 5.0,
-    right: 5.0)
+                                             left: 5.0,
+                                             bottom: 5.0,
+                                             right: 5.0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        friendPhotosQuantity = friendPhotos.count
+        
+//        collectionView.register(FriendCVCell.self, forCellWithReuseIdentifier: FriendCVCell.reuseId)
     }
     
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-      //2
-      let width = UIScreen.main.bounds.size.width - 5 * CGFloat(itemsPerRow - 1)
-      return CGSize(width: floor(width / itemsPerRow), height: width / itemsPerRow)
+        let bounds = collectionView.bounds
+        
+        return CGSize(width: bounds.width / 3 - 10, height: bounds.height / 4 - 10)
     }
     
-    //3
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-      return sectionInsets
+        return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     }
     
-    // 4
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-      return sectionInsets.left
+        return 0
     }
     
     // MARK: - UICollectionViewDataSource
@@ -55,18 +58,23 @@ class FriendCollectionVC: UICollectionViewController {
             else {
                 return UICollectionViewCell()
         }
+        
         cell.friendPhoto.image = UIImage(imageLiteralResourceName: friendPhotos[indexPath.row])
         
         return cell
-        
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "PhotoPreviewVC") as! PhotoPreviewVC
+          
+        vc.friendPreviewPhotos = friendPhotos
+        vc.selectedPhoto = indexPath.row
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+        self.navigationController!.navigationBar.tintColor = .white
     }
 }
-
-//class CustomLayout: UICollectionViewFlowLayout {
-//    let itemSpacing: CGFloat = 3
-//    let itemsInOneLine: CGFloat = 3
-//    let width = UIScreen.main.bounds.size.width - self.itemSpacing * CGFloat(self.itemsInOneLine - 1)
-//    override var itemSize: CGSize = CGSize(width: floor(width/itemsInOneLine), height: width/itemsInOneLine)
-//    minimumInteritemSpacing: CGFloat = 3
-//    override var minimumLineSpacing: CGFloat = 3
-//}
