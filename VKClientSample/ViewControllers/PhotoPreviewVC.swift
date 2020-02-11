@@ -54,23 +54,23 @@ class PhotoPreviewVC: UIViewController {
 //        ])
     }
     
-    private func addPanGesture(view: UIView) {
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(handleGesture))
-        view.addGestureRecognizer(pan)
-    }
-    
-    @objc func handleGesture(sender: UIPanGestureRecognizer) {
-        let photoImageView = sender.view!
-        
-        switch sender.state {
-        case .began, .changed:
-            moveWithPan(view: currentPhoto, sender: sender)
-        case .ended:
-            print("PanGesture ended")
-        default:
-            break
-        }
-    }
+//    private func addPanGesture(view: UIView) {
+//        let pan = UIPanGestureRecognizer(target: self, action: #selector(handleGesture))
+//        view.addGestureRecognizer(pan)
+//    }
+//
+//    @objc func handleGesture(sender: UIPanGestureRecognizer) {
+//        let photoImageView = sender.view!
+//
+//        switch sender.state {
+//        case .began, .changed:
+//            moveWithPan(view: currentPhoto, sender: sender)
+//        case .ended:
+//            print("PanGesture ended")
+//        default:
+//            break
+//        }
+//    }
     
     func moveWithPan(view: UIView, sender: UIPanGestureRecognizer) {
         let translation = sender.translation(in: view)
@@ -98,20 +98,20 @@ class PhotoPreviewVC: UIViewController {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizer.Direction.down:
                 self.dismiss(animated: true, completion: nil)
-//            case UISwipeGestureRecognizer.Direction.left:
-//                if selectedPhoto == friendPreviewPhotos.count - 1 {
-//                    selectedPhoto = 0
-//                } else {
-//                    selectedPhoto += 1
-//                }
-//                currentPhoto.image = UIImage(named: friendPreviewPhotos[selectedPhoto])
-//            case UISwipeGestureRecognizer.Direction.right:
-//                if selectedPhoto == 0 {
-//                    selectedPhoto = friendPreviewPhotos.count - 1
-//                } else {
-//                    selectedPhoto -= 1
-//                }
-//                currentPhoto.image = UIImage(named: friendPreviewPhotos[selectedPhoto])
+            case UISwipeGestureRecognizer.Direction.left:
+                if selectedPhoto == friendPreviewPhotos.count - 1 {
+                    selectedPhoto = 0
+                } else {
+                    selectedPhoto += 1
+                }
+                currentPhoto.image = UIImage(named: friendPreviewPhotos[selectedPhoto])
+            case UISwipeGestureRecognizer.Direction.right:
+                if selectedPhoto == 0 {
+                    selectedPhoto = friendPreviewPhotos.count - 1
+                } else {
+                    selectedPhoto -= 1
+                }
+                currentPhoto.image = UIImage(named: friendPreviewPhotos[selectedPhoto])
             default:
                 break
             }
