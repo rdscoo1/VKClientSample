@@ -155,7 +155,7 @@
         <scene sceneID="B2c-PH-kQd">
             <objects>
                 <tableViewController id="CF1-88-Hcz" customClass="FriendsTableVC" customModule="VKClientSample" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Lzd-fn-AeN">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Lzd-fn-AeN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -179,6 +179,10 @@
                                                 <constraint firstAttribute="height" constant="48" id="vtB-3E-5mo"/>
                                             </constraints>
                                         </imageView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EQY-eI-qYB" customClass="ShadowPhotoView" customModule="VKClientSample" customModuleProvider="target">
+                                            <rect key="frame" x="16" y="8" width="48" height="48"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maria Ishunina" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dgk-lY-p8T">
                                             <rect key="frame" x="80" y="22.5" width="263" height="19.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -190,8 +194,12 @@
                                         <constraint firstItem="LL0-an-Sab" firstAttribute="leading" secondItem="0qg-r0-Jr9" secondAttribute="leading" constant="16" id="S4R-qL-4DB"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="Dgk-lY-p8T" secondAttribute="trailing" constant="16" id="Upq-9S-hbI"/>
                                         <constraint firstItem="LL0-an-Sab" firstAttribute="centerY" secondItem="0qg-r0-Jr9" secondAttribute="centerY" id="WQD-0D-uqn"/>
+                                        <constraint firstItem="EQY-eI-qYB" firstAttribute="bottom" secondItem="LL0-an-Sab" secondAttribute="bottom" id="ZM5-jR-6vM"/>
+                                        <constraint firstItem="EQY-eI-qYB" firstAttribute="leading" secondItem="LL0-an-Sab" secondAttribute="leading" id="aUS-nx-3lV"/>
+                                        <constraint firstItem="EQY-eI-qYB" firstAttribute="trailing" secondItem="LL0-an-Sab" secondAttribute="trailing" id="f6Z-qg-xMe"/>
                                         <constraint firstItem="Dgk-lY-p8T" firstAttribute="leading" secondItem="LL0-an-Sab" secondAttribute="trailing" constant="16" id="mEe-mI-kB4"/>
                                         <constraint firstItem="Dgk-lY-p8T" firstAttribute="centerY" secondItem="0qg-r0-Jr9" secondAttribute="centerY" id="oQO-f9-JS7"/>
+                                        <constraint firstItem="EQY-eI-qYB" firstAttribute="top" secondItem="LL0-an-Sab" secondAttribute="top" id="pf8-Cl-Ovf"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
