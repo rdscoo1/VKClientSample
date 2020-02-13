@@ -13,18 +13,27 @@ class ShadowPhotoView: UIView {
     @IBInspectable var size: CGFloat = 40
     @IBInspectable var shadowColor: UIColor = .black
     @IBInspectable var shadowOpacity: Float = 0.5
-    @IBInspectable var image: UIImage = .helen
     
     let friendPhoto = UIImageView()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(image: UIImage) {
+        super.init(frame: .zero)
+        setupUI()
+        setImage(image: image)
+    }
+    
+    init() {
+        super.init(frame: .zero)
         setupUI()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUI()
+    }
+    
+    func setImage(image: UIImage) {
+        friendPhoto.image = image
     }
     
     func setupUI() {
@@ -38,8 +47,7 @@ class ShadowPhotoView: UIView {
         friendPhoto.layer.cornerRadius = size / 2
         friendPhoto.layer.masksToBounds = true
         friendPhoto.frame = CGRect(origin: .zero, size: CGSize(width: size, height: size))
-        friendPhoto.contentMode = .scaleAspectFit
-        friendPhoto.image = image
+        friendPhoto.contentMode = .scaleAspectFill
     }
     
     func configureShadow() {

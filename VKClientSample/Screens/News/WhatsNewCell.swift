@@ -11,7 +11,7 @@ import UIKit
 class WhatsNewCell: UITableViewCell {
     
     let topSeparator = UIView()
-    let shadowPhotoView = AddStoryPhotoView()
+    let shadowPhotoView = ShadowPhotoView(image: .john)
     let whatsNewTF = UITextField()
     let addPhotoButton = UIButton()
     let startStreamButton = UIButton()

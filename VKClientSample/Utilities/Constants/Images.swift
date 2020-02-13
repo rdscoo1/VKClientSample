@@ -28,5 +28,6 @@ extension UIImage {
     static let plusIconToAddStory = UIImage(imageLiteralResourceName: "plusIconToAddStory")
     
     static let helen = UIImage(imageLiteralResourceName: "helen")
+    static let john = UIImage(imageLiteralResourceName: "john")
     static let postImage = UIImage(imageLiteralResourceName: "postImage")
 }

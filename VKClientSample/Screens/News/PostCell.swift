@@ -11,13 +11,15 @@ import UIKit
 class PostCell: UITableViewCell {
     
     let topSeparator = UIView()
-    let shadowPhotoView = ShadowPhotoView()
+    let shadowPhotoView = ShadowPhotoView(image: .helen)
     let postAuthor = UILabel()
     let publishDate = UILabel()
     let moreButton = UIButton()
     let postText = UILabel()
     let postImageView = UIImageView(image: .postImage)
     let postFooter = PostFooter()
+    
+    var items: [Post] = Post.posts
     
     static let reuseId = "PostCell"
 
@@ -29,6 +31,13 @@ class PostCell: UITableViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUI()
+    }
+    
+    func setPosts(post: Post) {
+        postAuthor.text = post.author
+        publishDate.text = post.publishDate
+        postText.text = post.postText
+        postImageView.image = UIImage(imageLiteralResourceName: post.postImage)
     }
     
     private func setupUI() {
