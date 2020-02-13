@@ -11,19 +11,20 @@ import UIKit
 enum CellTypes {
     case whatsNewCell
     case storiesCell
-    case postCell
+    case postCell(item: Post)
 }
 
 class NewsTableVC: UITableViewController {
     
     var models: [CellTypes] = []
+    var posts = Post.posts
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         models.append(.whatsNewCell)
         models.append(.storiesCell)
-        models.append(.postCell)
+        models.append(contentsOf: Post.posts.map { CellTypes.postCell(item: $0) })
         
         tableView.register(WhatsNewCell.self, forCellReuseIdentifier: WhatsNewCell.reuseId)
         tableView.register(StoriesCell.self, forCellReuseIdentifier: StoriesCell.reuseId)
@@ -33,8 +34,7 @@ class NewsTableVC: UITableViewController {
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(NewsTableVC.handleTap))
-        view.addGestureRecognizer(tapGesture)
+        setupActionHideKeyboard()
     }
     
     // MARK: - Table view data source
@@ -51,8 +51,9 @@ class NewsTableVC: UITableViewController {
             return tableView.dequeueReusableCell(withIdentifier: WhatsNewCell.reuseId, for: indexPath) as? WhatsNewCell ?? UITableViewCell()
         case .storiesCell:
             return tableView.dequeueReusableCell(withIdentifier: StoriesCell.reuseId, for: indexPath) as? StoriesCell ?? UITableViewCell()
-        case .postCell:
+        case let .postCell(item: post):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: PostCell.reuseId, for: indexPath) as? PostCell else { return UITableViewCell() }
+            cell.setPosts(post: post)
             return cell
 
         }
@@ -70,7 +71,12 @@ class NewsTableVC: UITableViewController {
         }
     }
     
-    @objc func handleTap() {
+    private func setupActionHideKeyboard() {
+        let tapOnView = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tableView.addGestureRecognizer(tapOnView)
+    }
+    
+    @objc func hideKeyboard() {
         view.endEditing(true)
     }
 }

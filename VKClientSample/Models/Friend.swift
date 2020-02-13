@@ -43,3 +43,9 @@ extension Friend {
         Friend(id: 16, name: "Michael", surname: "Mountin", avatar: "andrey", age: 27, location: "Moscow", sex: .male, isOnline: true)
     ]
 }
+
+extension Friend {
+    var titleFirstLetter: String {
+        return String(self.surname[self.surname.startIndex]).uppercased()
+    }
+}

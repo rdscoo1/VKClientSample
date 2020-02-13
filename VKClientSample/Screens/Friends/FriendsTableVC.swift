@@ -10,33 +10,54 @@ import UIKit
 
 class FriendsTableVC: UITableViewController {
     
+    @IBOutlet weak var searchBar: UISearchBar!
     var friends = Friend.friends
+    var searchedFriends: [[Friend]] = [[]]
+    var sections: [[Friend]] = [[]]
+    var uniqueFirstLetters: [String] = Array(Set(Friend.friends.map { $0.titleFirstLetter })).sorted()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 64
+        searchBar.delegate = self
+        
+        handleFriends(friend: Friend.friends)
+        setupActionHideKeyboard()
     }
     
+    func handleFriends(friend: [Friend]) {
+        uniqueFirstLetters = Array(Set(friend.map { $0.titleFirstLetter })).sorted()
+        sections = uniqueFirstLetters.map { firstLetter in
+            return friend
+                .filter { $0.titleFirstLetter == firstLetter }
+                .sorted { $0.surname < $1.surname }
+        }
+        searchedFriends = sections
+    }
+
     // MARK: - Table view data source
     
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        var letter = [String]()
-//        let friend = friends[indexPath.row]
-//        for key in keys {
-//            letter.append("\(key.characters.first!)")
-//         }
-//         return letter
-//    }
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return uniqueFirstLetters[section]
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return searchedFriends.count
+    }
+
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return uniqueFirstLetters
+    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return friends.count
+        return searchedFriends[section].count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell") as! FriendCell
-        let friend = friends[indexPath.row]
+        let friend = searchedFriends[indexPath.section][indexPath.row]
         cell.setFriends(friend: friend)
         
         return cell
@@ -57,4 +78,28 @@ class FriendsTableVC: UITableViewController {
         self.navigationController!.navigationBar.tintColor = .white
     }
     
+    private func setupActionHideKeyboard() {
+        let tapOnView = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tableView.addGestureRecognizer(tapOnView)
+    }
+    
+    @objc
+    private func hideKeyboard() {
+        tableView?.endEditing(true)
+    }
+}
+
+extension FriendsTableVC: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if !searchText.isEmpty {
+            friends = sections.flatMap({ $0 }).filter({
+                friend -> Bool in
+                friend.surname.lowercased().contains(searchText.lowercased())
+            })
+            handleFriends(friend: friends)
+        } else {
+            handleFriends(friend: Friend.friends)
+        }
+        tableView.reloadData()
+    }
 }

@@ -17,10 +17,13 @@
 		E8068CE723E1C7150083FBBE /* StoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CE623E1C7150083FBBE /* StoriesCell.swift */; };
 		E8068CEB23E384C10083FBBE /* WhatsNewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CEA23E384C10083FBBE /* WhatsNewCell.swift */; };
 		E8068CED23E3A7890083FBBE /* AddStoryPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CEC23E3A7890083FBBE /* AddStoryPhotoView.swift */; };
+		E8068CEF23E4FE0C0083FBBE /* StoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CEE23E4FE0C0083FBBE /* StoryCell.swift */; };
+		E8068CF123E4FE5B0083FBBE /* AddStoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CF023E4FE5B0083FBBE /* AddStoryCell.swift */; };
 		E861CD9923D271EA00D3E9B3 /* CommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E861CD9723D271EA00D3E9B3 /* CommunityCell.swift */; };
 		E861CD9A23D271EA00D3E9B3 /* CommunityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E861CD9823D271EA00D3E9B3 /* CommunityCell.xib */; };
 		E861CD9D23D274D000D3E9B3 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = E861CD9C23D274D000D3E9B3 /* Community.swift */; };
 		E861CD9F23D274E700D3E9B3 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = E861CD9E23D274E700D3E9B3 /* Friend.swift */; };
+		E87BB7F423E8CE39006C14F6 /* LoadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87BB7F323E8CE39006C14F6 /* LoadView.swift */; };
 		E885799223D1D72200C97694 /* CommunitiesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799123D1D72200C97694 /* CommunitiesTableVC.swift */; };
 		E885799423D1D73A00C97694 /* FriendsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799323D1D73A00C97694 /* FriendsTableVC.swift */; };
 		E885799823D1D7F200C97694 /* AddCommunityTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799723D1D7F200C97694 /* AddCommunityTableVC.swift */; };
@@ -50,10 +53,13 @@
 		E8068CE623E1C7150083FBBE /* StoriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesCell.swift; sourceTree = "<group>"; };
 		E8068CEA23E384C10083FBBE /* WhatsNewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewCell.swift; sourceTree = "<group>"; };
 		E8068CEC23E3A7890083FBBE /* AddStoryPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStoryPhotoView.swift; sourceTree = "<group>"; };
+		E8068CEE23E4FE0C0083FBBE /* StoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCell.swift; sourceTree = "<group>"; };
+		E8068CF023E4FE5B0083FBBE /* AddStoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStoryCell.swift; sourceTree = "<group>"; };
 		E861CD9723D271EA00D3E9B3 /* CommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCell.swift; sourceTree = "<group>"; };
 		E861CD9823D271EA00D3E9B3 /* CommunityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommunityCell.xib; sourceTree = "<group>"; };
 		E861CD9C23D274D000D3E9B3 /* Community.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
 		E861CD9E23D274E700D3E9B3 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		E87BB7F323E8CE39006C14F6 /* LoadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadView.swift; sourceTree = "<group>"; };
 		E885799123D1D72200C97694 /* CommunitiesTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesTableVC.swift; sourceTree = "<group>"; };
 		E885799323D1D73A00C97694 /* FriendsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableVC.swift; sourceTree = "<group>"; };
 		E885799723D1D7F200C97694 /* AddCommunityTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommunityTableVC.swift; sourceTree = "<group>"; };
@@ -134,6 +140,8 @@
 				E8068CD723DC485C0083FBBE /* PostCell.swift */,
 				E8068CE623E1C7150083FBBE /* StoriesCell.swift */,
 				E8068CEA23E384C10083FBBE /* WhatsNewCell.swift */,
+				E8068CEE23E4FE0C0083FBBE /* StoryCell.swift */,
+				E8068CF023E4FE5B0083FBBE /* AddStoryCell.swift */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -168,7 +176,7 @@
 		E8954A7723B15FEA00A93209 /* VKClientSample */ = {
 			isa = PBXGroup;
 			children = (
-				E8CD1C9523DB29B800C5D668 /* CustomViews */,
+				E8CD1C9523DB29B800C5D668 /* Components */,
 				E861CD9B23D274BF00D3E9B3 /* Models */,
 				E885799023D1D6EF00C97694 /* Screens */,
 				E8954A7823B15FEA00A93209 /* AppDelegate.swift */,
@@ -207,7 +215,7 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
-		E8CD1C9523DB29B800C5D668 /* CustomViews */ = {
+		E8CD1C9523DB29B800C5D668 /* Components */ = {
 			isa = PBXGroup;
 			children = (
 				E8068CDD23E0C1BB0083FBBE /* Controls */,
@@ -215,8 +223,9 @@
 				E8068CDB23E0BE360083FBBE /* PostFooter.swift */,
 				E8068CE223E0C4290083FBBE /* ViewsCounter.swift */,
 				E8068CEC23E3A7890083FBBE /* AddStoryPhotoView.swift */,
+				E87BB7F323E8CE39006C14F6 /* LoadView.swift */,
 			);
-			path = CustomViews;
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -302,6 +311,7 @@
 				E8068CD923DC485C0083FBBE /* PostCell.swift in Sources */,
 				E8954A9523B162B300A93209 /* UIColor+hex.swift in Sources */,
 				E8068CE323E0C4290083FBBE /* ViewsCounter.swift in Sources */,
+				E8068CF123E4FE5B0083FBBE /* AddStoryCell.swift in Sources */,
 				E861CD9D23D274D000D3E9B3 /* Community.swift in Sources */,
 				E885799223D1D72200C97694 /* CommunitiesTableVC.swift in Sources */,
 				E8068CE523E0E7270083FBBE /* Post.swift in Sources */,
@@ -314,8 +324,10 @@
 				E8068CE123E0C1EE0083FBBE /* ShareControl.swift in Sources */,
 				E8068CD223DC47E80083FBBE /* NewsTableVC.swift in Sources */,
 				E8068CE723E1C7150083FBBE /* StoriesCell.swift in Sources */,
+				E8068CEF23E4FE0C0083FBBE /* StoryCell.swift in Sources */,
 				E8954A9323B162A700A93209 /* Constants.swift in Sources */,
 				E8068CEB23E384C10083FBBE /* WhatsNewCell.swift in Sources */,
+				E87BB7F423E8CE39006C14F6 /* LoadView.swift in Sources */,
 				E861CD9F23D274E700D3E9B3 /* Friend.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
