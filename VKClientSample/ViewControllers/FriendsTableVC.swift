@@ -22,11 +22,13 @@ class FriendsTableVC: UITableViewController {
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 64
         searchBar.delegate = self
-        self.tableView.allowsMultipleSelection = true
-
         
         handleFriends(friend: Friend.friends)
 //        setupActionHideKeyboard()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.navigationBar.barStyle = .black
     }
     
     override func viewWillAppear(_ animated: Bool) {

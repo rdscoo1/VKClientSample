@@ -28,7 +28,6 @@ class PostFooter: UIView {
     
     
     private func setupUI() {
-        containerStackView.spacing = 16
         containerStackView.distribution = .fillEqually
         containerStackView.axis = .horizontal
         

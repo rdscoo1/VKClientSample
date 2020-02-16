@@ -19,6 +19,8 @@
 		E8068CED23E3A7890083FBBE /* AddStoryPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CEC23E3A7890083FBBE /* AddStoryPhotoView.swift */; };
 		E8068CEF23E4FE0C0083FBBE /* StoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CEE23E4FE0C0083FBBE /* StoryCell.swift */; };
 		E8068CF123E4FE5B0083FBBE /* AddStoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CF023E4FE5B0083FBBE /* AddStoryCell.swift */; };
+		E80D57EE23F9E441002C53CB /* PhotoPreviewNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80D57ED23F9E441002C53CB /* PhotoPreviewNavBarView.swift */; };
+		E80D57F123F9F47D002C53CB /* PhotoPreviewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80D57F023F9F47D002C53CB /* PhotoPreviewFooter.swift */; };
 		E861CD9923D271EA00D3E9B3 /* CommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E861CD9723D271EA00D3E9B3 /* CommunityCell.swift */; };
 		E861CD9A23D271EA00D3E9B3 /* CommunityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E861CD9823D271EA00D3E9B3 /* CommunityCell.xib */; };
 		E861CD9D23D274D000D3E9B3 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = E861CD9C23D274D000D3E9B3 /* Community.swift */; };
@@ -56,6 +58,8 @@
 		E8068CEC23E3A7890083FBBE /* AddStoryPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStoryPhotoView.swift; sourceTree = "<group>"; };
 		E8068CEE23E4FE0C0083FBBE /* StoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCell.swift; sourceTree = "<group>"; };
 		E8068CF023E4FE5B0083FBBE /* AddStoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStoryCell.swift; sourceTree = "<group>"; };
+		E80D57ED23F9E441002C53CB /* PhotoPreviewNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewNavBarView.swift; sourceTree = "<group>"; };
+		E80D57F023F9F47D002C53CB /* PhotoPreviewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewFooter.swift; sourceTree = "<group>"; };
 		E861CD9723D271EA00D3E9B3 /* CommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCell.swift; sourceTree = "<group>"; };
 		E861CD9823D271EA00D3E9B3 /* CommunityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommunityCell.xib; sourceTree = "<group>"; };
 		E861CD9C23D274D000D3E9B3 /* Community.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
@@ -103,6 +107,15 @@
 			path = Controls;
 			sourceTree = "<group>";
 		};
+		E80D57EF23F9F455002C53CB /* PhotoPreview */ = {
+			isa = PBXGroup;
+			children = (
+				E80D57ED23F9E441002C53CB /* PhotoPreviewNavBarView.swift */,
+				E80D57F023F9F47D002C53CB /* PhotoPreviewFooter.swift */,
+			);
+			path = PhotoPreview;
+			sourceTree = "<group>";
+		};
 		E8500E9323F08B030080F802 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -121,9 +134,9 @@
 			isa = PBXGroup;
 			children = (
 				E8500E9523F08B4A0080F802 /* News */,
-				E861CD9723D271EA00D3E9B3 /* CommunityCell.swift */,
 				E861CD9823D271EA00D3E9B3 /* CommunityCell.xib */,
 				E8CD1C8F23D65EA600C5D668 /* FriendCell.swift */,
+				E861CD9723D271EA00D3E9B3 /* CommunityCell.swift */,
 				E8CD1C9323D6AF6000C5D668 /* FriendCVCell.swift */,
 			);
 			path = Cells;
@@ -213,6 +226,7 @@
 		E8CD1C9523DB29B800C5D668 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E80D57EF23F9F455002C53CB /* PhotoPreview */,
 				E8068CDD23E0C1BB0083FBBE /* Controls */,
 				E8CD1C9623DB29D300C5D668 /* ShadowPhotoView.swift */,
 				E8068CDB23E0BE360083FBBE /* PostFooter.swift */,
@@ -309,6 +323,8 @@
 				E8068CE323E0C4290083FBBE /* ViewsCounter.swift in Sources */,
 				E8068CF123E4FE5B0083FBBE /* AddStoryCell.swift in Sources */,
 				E861CD9D23D274D000D3E9B3 /* Community.swift in Sources */,
+				E80D57F123F9F47D002C53CB /* PhotoPreviewFooter.swift in Sources */,
+				E80D57EE23F9E441002C53CB /* PhotoPreviewNavBarView.swift in Sources */,
 				E885799223D1D72200C97694 /* CommunitiesTableVC.swift in Sources */,
 				E8068CE523E0E7270083FBBE /* Post.swift in Sources */,
 				E885799423D1D73A00C97694 /* FriendsTableVC.swift in Sources */,

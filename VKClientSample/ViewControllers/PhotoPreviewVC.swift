@@ -10,57 +10,122 @@ import UIKit
 
 class PhotoPreviewVC: UIViewController {
     
-    let previousPhoto = UIImageView()
+//    let previousPhoto = UIImageView()
+//    let nextPhoto = UIImageView()
+    
     let currentPhoto = UIImageView()
-    let nextPhoto = UIImageView()
+    let photosPreviewNavBar = PhotoPreviewNavBarView(selectedPhotoNumber: 0, photosQuantity: 10)
+    let photoPreviewFooter = PhotoPreviewFooter()
+    var isToolBarsOpened: Bool = false
     
     var friendPreviewPhotos: [String]!
     var friendPhotosQuantity: Int = 0
     var selectedPhoto = 0
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.addSubview(currentPhoto)
-//        addPanGesture(view: currentPhoto)
-        
-        configurePhotos()
-        configureSwipeGestures()
+    var isStatusBarHidden: Bool = true {
+        didSet {
+            if oldValue != self.isStatusBarHidden {
+                self.setNeedsStatusBarAppearanceUpdate()
+            }
+        }
+    }
+
+    override var prefersStatusBarHidden: Bool {
+        return self.isStatusBarHidden
     }
     
-    private func configurePhotos() {
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.navigationBar.barStyle = .black
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.addSubview(currentPhoto)
+        
+        configureUI()
+        
+        
+//        view.addSubview(photosPreviewNavBar)
+//        view.addSubview(photoPreviewFooter)
+        setConstraints()
+        
+        configureSwipeGestures()
+//        addGesture(view: currentPhoto)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    private func configureUI() {
+        view.backgroundColor = .black
+        
+        currentPhoto.autoresizingMask = UIView.AutoresizingMask(rawValue: UIView.AutoresizingMask.flexibleBottomMargin.rawValue | UIView.AutoresizingMask.flexibleHeight.rawValue | UIView.AutoresizingMask.flexibleRightMargin.rawValue | UIView.AutoresizingMask.flexibleLeftMargin.rawValue | UIView.AutoresizingMask.flexibleTopMargin.rawValue | UIView.AutoresizingMask.flexibleWidth.rawValue)
+        currentPhoto.contentMode = .scaleAspectFit
+        currentPhoto.clipsToBounds = true
         currentPhoto.isUserInteractionEnabled = true
         currentPhoto.image = UIImage(imageLiteralResourceName: friendPreviewPhotos[selectedPhoto])
         
-        nextPhoto.isUserInteractionEnabled = true
-        nextPhoto.image = UIImage(imageLiteralResourceName: friendPreviewPhotos[selectedPhoto + 1])
-        
+        photosPreviewNavBar.alpha = 0.0
+        photoPreviewFooter.alpha = 0.0
+    }
+    
+    private func setConstraints() {
         currentPhoto.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             currentPhoto.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             currentPhoto.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             currentPhoto.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             currentPhoto.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            currentPhoto.heightAnchor.constraint(equalToConstant: 288)
+            currentPhoto.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 9.0 / 16.0)
         ])
         
-//        nextPhoto.translatesAutoresizingMaskIntoConstraints = false
+//        photosPreviewNavBar.translatesAutoresizingMaskIntoConstraints = false
 //        NSLayoutConstraint.activate([
-//            nextPhoto.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-//            nextPhoto.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            nextPhoto.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            nextPhoto.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            nextPhoto.heightAnchor.constraint(equalToConstant: 288)
+//            photosPreviewNavBar.topAnchor.constraint(equalTo: view.topAnchor),
+//            photosPreviewNavBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            photosPreviewNavBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            photosPreviewNavBar.heightAnchor.constraint(equalToConstant: 64)
+//        ])
+//
+//        photoPreviewFooter.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            photoPreviewFooter.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+//            photoPreviewFooter.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+//            photoPreviewFooter.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+//            photoPreviewFooter.heightAnchor.constraint(equalToConstant: 32)
 //        ])
     }
     
-//    private func addPanGesture(view: UIView) {
-//        let pan = UIPanGestureRecognizer(target: self, action: #selector(handleGesture))
-//        view.addGestureRecognizer(pan)
+//    private func addGesture(view: UIView) {
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(handeTapGesture))
+//        view.addGestureRecognizer(tap)
+////        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
+////        view.addGestureRecognizer(pan)
 //    }
+    
+    @objc func handeTapGesture(sender: UITapGestureRecognizer) {
+        isToolBarsOpened = !isToolBarsOpened
+        
+        if isToolBarsOpened {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.photosPreviewNavBar.alpha = 1.0
+                self.photoPreviewFooter.alpha = 1.0
+                self.isStatusBarHidden = !self.isStatusBarHidden
+            })
+        } else {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.photosPreviewNavBar.alpha = 0.0
+                self.photoPreviewFooter.alpha = 0.0
+                self.isStatusBarHidden = !self.isStatusBarHidden
+            })
+        }
+    }
 //
-//    @objc func handleGesture(sender: UIPanGestureRecognizer) {
-//        let photoImageView = sender.view!
+//    @objc func handlePanGesture(sender: UIPanGestureRecognizer) {
+//        let currentPhoto = sender.view!
 //
 //        switch sender.state {
 //        case .began, .changed:
@@ -83,14 +148,22 @@ class PhotoPreviewVC: UIViewController {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(gesture:)))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
+        print("added")
         
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(gesture:)))
         swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
         self.view.addGestureRecognizer(swipeLeft)
+        print("added")
+
         
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(gesture:)))
         swipeDown.direction = UISwipeGestureRecognizer.Direction.down
         self.view.addGestureRecognizer(swipeDown)
+        print("added")
+
+        
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(handeTapGesture))
+//        self.view.addGestureRecognizer(tap)
     }
     
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
@@ -105,6 +178,7 @@ class PhotoPreviewVC: UIViewController {
                     selectedPhoto += 1
                 }
                 currentPhoto.image = UIImage(named: friendPreviewPhotos[selectedPhoto])
+                print("done")
             case UISwipeGestureRecognizer.Direction.right:
                 if selectedPhoto == 0 {
                     selectedPhoto = friendPreviewPhotos.count - 1
@@ -112,6 +186,7 @@ class PhotoPreviewVC: UIViewController {
                     selectedPhoto -= 1
                 }
                 currentPhoto.image = UIImage(named: friendPreviewPhotos[selectedPhoto])
+                print("right")
             default:
                 break
             }

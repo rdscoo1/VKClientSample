@@ -8,15 +8,10 @@
 
 import UIKit
 
-class FriendCollectionVC: UICollectionViewController {
+class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var friendPhotos: [String]!
     var friendPhotosQuantity: Int = 0
-    private let itemsPerRow: CGFloat = 5
-    private let sectionInsets = UIEdgeInsets(top: 5.0,
-                                             left: 5.0,
-                                             bottom: 5.0,
-                                             right: 5.0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,25 +21,28 @@ class FriendCollectionVC: UICollectionViewController {
 //        collectionView.register(FriendCVCell.self, forCellWithReuseIdentifier: FriendCVCell.reuseId)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.navigationBar.barStyle = .black
+    }    
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let bounds = collectionView.bounds
+        let width = collectionView.frame.width / 4 - 1.0
         
-        return CGSize(width: bounds.width / 3 - 10, height: bounds.height / 4 - 10)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        return CGSize(width: width, height: width)
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 1.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1.0
     }
     
     // MARK: - UICollectionViewDataSource

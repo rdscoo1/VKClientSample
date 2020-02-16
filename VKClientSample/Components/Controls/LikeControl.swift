@@ -65,6 +65,9 @@ class LikeControl: UIControl {
                 self.likeCounterLabel.textColor = .red
                 self.layoutIfNeeded()
             })
+            let generator = UIImpactFeedbackGenerator(style: .light)
+            generator.impactOccurred()
+//            animateButtonTap()
         } else {
             likeCounter -= 1
             likeImageView.image = .heart
@@ -75,11 +78,11 @@ class LikeControl: UIControl {
                 self.likeCounterLabel.textColor = .lightGray
                 self.likeCounterLabel.alpha = 0.0
                 self.layoutIfNeeded()
-            })            
-            
-            animateButtonTap()
-            updateLikeCounter()
+            })
         }
+        
+        animateButtonTap()
+        updateLikeCounter()
     }
     
     func updateLikeCounter() {

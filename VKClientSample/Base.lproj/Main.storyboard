@@ -309,33 +309,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="ljS-2R-7Uf">
-                            <size key="itemSize" width="84" height="85"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="ljS-2R-7Uf">
+                            <size key="itemSize" width="130" height="130"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FriendPhotos" id="A1C-Ib-5Pq" customClass="FriendCVCell" customModule="VKClientSample" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="84" height="85"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FriendPhotosСell" id="A1C-Ib-5Pq" customClass="FriendCVCell" customModule="VKClientSample" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TLx-Z1-mwG">
-                                    <rect key="frame" x="0.0" y="0.0" width="84" height="85"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anya" translatesAutoresizingMaskIntoConstraints="NO" id="gDc-f7-aFq">
-                                            <rect key="frame" x="2" y="2.5" width="80" height="80"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="80" id="Fxb-JW-2rx"/>
-                                                <constraint firstAttribute="height" constant="80" id="ygm-zZ-yk2"/>
-                                            </constraints>
+                                            <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
                                         </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="gDc-f7-aFq" firstAttribute="centerY" secondItem="TLx-Z1-mwG" secondAttribute="centerY" id="Lcb-MB-DrI"/>
+                                        <constraint firstItem="gDc-f7-aFq" firstAttribute="height" secondItem="TLx-Z1-mwG" secondAttribute="height" id="SNb-En-oIx"/>
                                         <constraint firstItem="gDc-f7-aFq" firstAttribute="centerX" secondItem="TLx-Z1-mwG" secondAttribute="centerX" id="bqK-0t-rLh"/>
+                                        <constraint firstItem="gDc-f7-aFq" firstAttribute="width" secondItem="TLx-Z1-mwG" secondAttribute="width" id="wgV-be-2pe"/>
                                     </constraints>
                                 </collectionViewCellContentView>
+                                <size key="customSize" width="130" height="130"/>
                                 <connections>
                                     <outlet property="friendPhoto" destination="gDc-f7-aFq" id="2jn-AQ-twV"/>
                                 </connections>

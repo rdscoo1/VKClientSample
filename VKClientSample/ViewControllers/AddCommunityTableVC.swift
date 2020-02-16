@@ -20,6 +20,10 @@ class AddCommunitiyTableVC: UITableViewController {
         tableView.rowHeight = 64
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.navigationBar.barStyle = .black
+    }
+    
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -44,13 +48,4 @@ class AddCommunitiyTableVC: UITableViewController {
         communityVC?.tableView.reloadData()
         navigationController?.popViewController(animated: true)
     }
-    
-    
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        
-//    }
-    
 }

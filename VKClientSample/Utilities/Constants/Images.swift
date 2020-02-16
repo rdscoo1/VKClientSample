@@ -15,6 +15,7 @@ extension UIImage {
     static let friends = UIImage(imageLiteralResourceName: "friends")
     static let communities = UIImage(imageLiteralResourceName: "communities")
     static let addGroup = UIImage(imageLiteralResourceName: "addGroup")
+    static let backButton = UIImage(imageLiteralResourceName: "backButton")
     static let eye = UIImage(imageLiteralResourceName: "eye")
     static let hidePassword = UIImage(imageLiteralResourceName: "hidePassword")
     static let heart = UIImage(imageLiteralResourceName: "heart")
