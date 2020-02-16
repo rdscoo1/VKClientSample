@@ -41,11 +41,9 @@ class PhotoPreviewVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+         configureUI()
+        
         view.addSubview(currentPhoto)
-        
-        configureUI()
-        
-        
 //        view.addSubview(photosPreviewNavBar)
 //        view.addSubview(photoPreviewFooter)
         setConstraints()
@@ -148,19 +146,14 @@ class PhotoPreviewVC: UIViewController {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(gesture:)))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
-        print("added")
         
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(gesture:)))
         swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
         self.view.addGestureRecognizer(swipeLeft)
-        print("added")
-
         
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(gesture:)))
         swipeDown.direction = UISwipeGestureRecognizer.Direction.down
         self.view.addGestureRecognizer(swipeDown)
-        print("added")
-
         
 //        let tap = UITapGestureRecognizer(target: self, action: #selector(handeTapGesture))
 //        self.view.addGestureRecognizer(tap)
@@ -178,7 +171,6 @@ class PhotoPreviewVC: UIViewController {
                     selectedPhoto += 1
                 }
                 currentPhoto.image = UIImage(named: friendPreviewPhotos[selectedPhoto])
-                print("done")
             case UISwipeGestureRecognizer.Direction.right:
                 if selectedPhoto == 0 {
                     selectedPhoto = friendPreviewPhotos.count - 1
@@ -186,7 +178,6 @@ class PhotoPreviewVC: UIViewController {
                     selectedPhoto -= 1
                 }
                 currentPhoto.image = UIImage(named: friendPreviewPhotos[selectedPhoto])
-                print("right")
             default:
                 break
             }
