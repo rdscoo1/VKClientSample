@@ -66,7 +66,9 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
         let vc = storyboard?.instantiateViewController(withIdentifier: "PhotoPreviewVC") as! PhotoPreviewVC
           
         vc.friendPreviewPhotos = friendPhotos
-        vc.selectedPhoto = indexPath.row
+        let selectedPhotoNumber = indexPath.row
+        vc.selectedPhoto = selectedPhotoNumber
+        vc.photosPreviewNavBar.photosQuantityLabel.text = "\(selectedPhotoNumber + 1) of \(friendPhotos.count)"
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
     }

@@ -137,3 +137,11 @@ extension LoginViewController {
         view.endEditing(true)
     }
 }
+
+extension LoginViewController {
+    @IBAction func logOut(_ segue: UIStoryboardSegue) {
+        print("User logged out")
+    }
+}
+
+

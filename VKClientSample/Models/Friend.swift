@@ -47,6 +47,6 @@ extension Friend {
 
 extension Friend {
     var titleFirstLetter: String {
-        return String(self.surname[self.surname.startIndex]).uppercased()
+        return surname[surname.startIndex].uppercased()
     }
 }

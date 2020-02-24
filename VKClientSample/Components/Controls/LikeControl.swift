@@ -40,7 +40,7 @@ class LikeControl: UIControl {
         addGestureRecognizer(tap)
         
         likeImageView.translatesAutoresizingMaskIntoConstraints = false
-        likeImageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        likeImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         likeImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         likeImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
@@ -67,7 +67,6 @@ class LikeControl: UIControl {
             })
             let generator = UIImpactFeedbackGenerator(style: .light)
             generator.impactOccurred()
-//            animateButtonTap()
         } else {
             likeCounter -= 1
             likeImageView.image = .heart

@@ -46,12 +46,7 @@ class PhotoPreviewFooter: UIView {
         shareImageView.tintColor = .gray
     }
     
-    private func setConstraints() {
-        [likeControl, commentImageView, shareImageView].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.centerYAnchor.constraint(equalTo: containerStackView.centerYAnchor).isActive = true
-        }
-        
+    private func setConstraints() {        
         containerStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             containerStackView.centerYAnchor.constraint(equalTo: centerYAnchor),

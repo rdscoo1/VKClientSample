@@ -55,7 +55,6 @@ class PostCell: UITableViewCell {
         moreButton.setImage(.moreButton, for: .normal)
         
         postText.numberOfLines = 0
-        postText.text = "adsasdasdasdkasjddasfdhkfkllhasfhdkjshfajsfhjkadfhjhjsafjhsakdfhjsadfhjshjdfhfjsdjhfjhskfshjfasjkfhahjskdfhjshdfjjhdfhjdhjkfdk"
         postText.backgroundColor = .white
         
         postImageView.contentMode = .scaleAspectFill

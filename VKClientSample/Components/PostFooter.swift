@@ -35,35 +35,21 @@ class PostFooter: UIView {
         shareControl.contentMode = .center
         commentCotrol.contentMode = .center
         
-        [likeControl, commentCotrol, shareControl].forEach {
+        [likeControl, commentCotrol, shareControl, viewsConterView].forEach {
             containerStackView.addArrangedSubview($0)
         }
         addSubview(containerStackView)
-        addSubview(viewsConterView)
         
         configureConstraints()
     }
     
     private func configureConstraints() {
-        [likeControl, commentCotrol, shareControl].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.centerYAnchor.constraint(equalTo: containerStackView.centerYAnchor).isActive = true
-        }
-        
         containerStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             containerStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            containerStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
-            containerStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -112),
+            containerStackView.leftAnchor.constraint(equalTo: leftAnchor),
+            containerStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20),
             containerStackView.heightAnchor.constraint(equalToConstant: 32)
-        ])
-        
-        viewsConterView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            viewsConterView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            viewsConterView.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
-            viewsConterView.heightAnchor.constraint(equalToConstant: 32),
-            viewsConterView.widthAnchor.constraint(equalToConstant: 48)
         ])
     }
 }

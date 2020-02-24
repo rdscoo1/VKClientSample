@@ -14,7 +14,7 @@ class FriendsTableVC: UITableViewController {
     var friends = Friend.friends
     var searchedFriends: [[Friend]] = [[]]
     var sections: [[Friend]] = [[]]
-    var uniqueFirstLetters: [String] = Array(Set(Friend.friends.map { $0.titleFirstLetter })).sorted()
+    var uniqueFirstLetters: [String] = Friend.friends.map { $0.titleFirstLetter }.sorted()
     
     override func viewDidLoad() {
         super.viewDidLoad()
