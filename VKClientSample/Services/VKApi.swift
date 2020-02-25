@@ -47,7 +47,7 @@ class VKApi {
             "fields": "city, domain",
         ]
         
-        doRequest(token: token, userId: userId, request: .groups, params: params, completion: completion)
+        doRequest(token: token, userId: userId, request: .groupsSearch, params: params, completion: completion)
     }
     
     func getFriends(completion: @escaping (String) -> Void) {
