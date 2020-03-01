@@ -68,7 +68,6 @@ class LoadView: UIView {
         let group = CAAnimationGroup()
         group.animations = [scaleDown]
         group.repeatCount = Float.infinity
-        group.autoreverses = false
         
         group.duration = CFTimeInterval(0.8)
 
