@@ -36,7 +36,7 @@ class CommentControl: UIControl {
         updateCommentCounter()
         
         commentImageView.translatesAutoresizingMaskIntoConstraints = false
-        commentImageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        commentImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         commentImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         commentImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
 

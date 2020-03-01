@@ -41,6 +41,8 @@ class ShadowPhotoView: UIView {
         addSubview(friendPhoto)
         configureFriendPhotoView()
         configureShadow()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(shadowPhotoTapped))
+        self.addGestureRecognizer(tap)
     }
     
     func configureFriendPhotoView() {
@@ -55,5 +57,31 @@ class ShadowPhotoView: UIView {
         layer.shadowOpacity = shadowOpacity
         layer.shadowRadius = 8
         layer.shadowOffset = CGSize(width: 0, height: 4)
+    }
+    
+    func animateButtonTap() {
+        UIView.animate(
+            withDuration: 0.15,
+            delay: 0,
+            usingSpringWithDamping: 0.7,
+            initialSpringVelocity: 0.5,
+            options: .curveEaseIn,
+            animations: {
+            self.friendPhoto.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        }) { (_) in
+            UIView.animate(
+                withDuration: 0.2,
+                delay: 0,
+                usingSpringWithDamping: 0.4,
+                initialSpringVelocity: 0.5,
+                options: .curveEaseIn,
+                animations: {
+                self.friendPhoto.transform = CGAffineTransform(scaleX: 1, y: 1)
+            }, completion: nil)
+        }
+    }
+    
+    @objc func shadowPhotoTapped() {
+        animateButtonTap()
     }
 }

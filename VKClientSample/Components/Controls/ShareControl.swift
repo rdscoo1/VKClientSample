@@ -36,7 +36,7 @@ class ShareControl: UIControl {
         updateShareCounter()
         
         shareImageView.translatesAutoresizingMaskIntoConstraints = false
-        shareImageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        shareImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         shareImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         shareImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
         

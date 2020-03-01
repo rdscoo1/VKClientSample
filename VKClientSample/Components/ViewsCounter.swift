@@ -41,7 +41,7 @@ class ViewsCounter: UIView {
     private func configureConstraints() {
         viewIcon.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            viewIcon.leftAnchor.constraint(equalTo: leftAnchor),
+            viewIcon.centerXAnchor.constraint(equalTo: centerXAnchor),
             viewIcon.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
         
