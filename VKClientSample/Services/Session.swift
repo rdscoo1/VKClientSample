@@ -12,8 +12,8 @@ class Session {
     
     static let shared = Session() //создаём singleton
     
-    let token: String = "" // Хранение токена VK
-    let userId: Int = 0 // Хранение id пользователя вк
+    var token: String = "" // Хранение токена VK
+    var userId: String = "" // Хранение id пользователя вк
     
     private init() {}
 }

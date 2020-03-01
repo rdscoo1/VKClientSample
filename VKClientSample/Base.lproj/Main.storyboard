@@ -17,12 +17,28 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="uUD-dg-Ojq" kind="relationship" relationship="rootViewController" id="dZc-QP-hzf"/>
+                        <segue destination="nBl-Lx-0MF" kind="relationship" relationship="rootViewController" id="ymm-LV-ypJ"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XAf-wH-kPY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1748" y="119"/>
+            <point key="canvasLocation" x="-1662" y="116"/>
+        </scene>
+        <!--Vk Authorization View Controller-->
+        <scene sceneID="Mdf-jw-Fyo">
+            <objects>
+                <viewController id="nBl-Lx-0MF" customClass="VkAuthorizationViewController" customModule="VKClientSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="n3V-TR-qFn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="wRV-nQ-rNJ"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="omm-ju-fh9"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tle-Yc-YBi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-794" y="117"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="deU-G7-f0n">
@@ -70,9 +86,6 @@
                                                 <state key="normal" title="Log In">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
-                                                <connections>
-                                                    <segue destination="sbS-dT-Ix3" kind="show" id="Xyx-KF-S4N"/>
-                                                </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A6c-kc-9WK" customClass="LoadView" customModule="VKClientSample" customModuleProvider="target">
                                                 <rect key="frame" x="135.5" y="500" width="64" height="12"/>
@@ -149,7 +162,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r2p-LI-heR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-839.13043478260875" y="119.86607142857142"/>
+            <point key="canvasLocation" x="-1943" y="-924"/>
         </scene>
         <!--Friends-->
         <scene sceneID="B2c-PH-kQd">
