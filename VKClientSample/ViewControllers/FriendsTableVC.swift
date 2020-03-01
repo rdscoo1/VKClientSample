@@ -12,9 +12,8 @@ class FriendsTableVC: UITableViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     var friends = Friend.friends
-    var searchedFriends: [[Friend]] = [[]]
     var sections: [[Friend]] = [[]]
-    var uniqueFirstLetters: [String] = Friend.friends.map { $0.titleFirstLetter }.sorted()
+    var uniqueFirstLetters: [String] = Array(Set(Friend.friends.map { $0.titleFirstLetter })).sorted()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +44,6 @@ class FriendsTableVC: UITableViewController {
                 .filter { $0.titleFirstLetter == firstLetter }
                 .sorted { $0.surname < $1.surname }
         }
-        searchedFriends = sections
     }
 
     // MARK: - Table view data source
@@ -55,7 +53,7 @@ class FriendsTableVC: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return searchedFriends.count
+        return sections.count
     }
 
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
@@ -63,12 +61,12 @@ class FriendsTableVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchedFriends[section].count
+        return sections[section].count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell") as! FriendCell
-        let friend = searchedFriends[indexPath.section][indexPath.row]
+        let friend = sections[indexPath.section][indexPath.row]
         cell.setFriends(friend: friend)
         
         return cell
@@ -82,7 +80,7 @@ class FriendsTableVC: UITableViewController {
             segueId == "friendPhotosSegue",
             let friendPhotos = segue.destination as? FriendCollectionVC,
             let selectedIndex = tableView.indexPathForSelectedRow {
-            friendPhotos.friendPhotos = searchedFriends[selectedIndex.section][selectedIndex.row].photos
+            friendPhotos.friendPhotos = sections[selectedIndex.section][selectedIndex.row].photos
         }
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
