@@ -14,7 +14,7 @@ class FriendsTableVC: UITableViewController {
     var friends = Friend.friends
     var searchedFriends: [[Friend]] = [[]]
     var sections: [[Friend]] = [[]]
-    var uniqueFirstLetters: [String] = Array(Set(Friend.friends.map { $0.titleFirstLetter })).sorted()
+    var uniqueFirstLetters: [String] = Friend.friends.map { $0.titleFirstLetter }.sorted()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,18 @@ class FriendsTableVC: UITableViewController {
         searchBar.delegate = self
         
         handleFriends(friend: Friend.friends)
-        setupActionHideKeyboard()
+//        setupActionHideKeyboard()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.navigationBar.barStyle = .black
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let selectionIndexPath = self.tableView.indexPathForSelectedRow {
+            self.tableView.deselectRow(at: selectionIndexPath, animated: animated)
+        }
     }
     
     func handleFriends(friend: [Friend]) {
@@ -61,17 +72,17 @@ class FriendsTableVC: UITableViewController {
         cell.setFriends(friend: friend)
         
         return cell
-    } 
+    }
     
     
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let segueId = segue.identifier,
-            segueId == "friendInDetailSeque",
-            let friendInDetail = segue.destination as? FriendCollectionVC,
+            segueId == "friendPhotosSegue",
+            let friendPhotos = segue.destination as? FriendCollectionVC,
             let selectedIndex = tableView.indexPathForSelectedRow {
-                friendInDetail.friend = friends[selectedIndex.row]
+            friendPhotos.friendPhotos = searchedFriends[selectedIndex.section][selectedIndex.row].photos
         }
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)

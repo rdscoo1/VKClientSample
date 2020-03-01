@@ -40,7 +40,7 @@ class LikeControl: UIControl {
         addGestureRecognizer(tap)
         
         likeImageView.translatesAutoresizingMaskIntoConstraints = false
-        likeImageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        likeImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         likeImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         likeImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
@@ -59,26 +59,28 @@ class LikeControl: UIControl {
             likeCounter += 1
             likeImageView.image = .heartFill
             likeImageView.tintColor = .red
-            likeCounterLabel.textColor = .red
-            likeCounterLabelConstraint.constant = 4
             UIView.animate(withDuration: 0.3, animations: {
-                self.layoutIfNeeded()
+                self.likeCounterLabelConstraint.constant = 4
                 self.likeCounterLabel.alpha = 1.0
+                self.likeCounterLabel.textColor = .red
+                self.layoutIfNeeded()
             })
-            animateButtonTap()
+            let generator = UIImpactFeedbackGenerator(style: .light)
+            generator.impactOccurred()
         } else {
             likeCounter -= 1
             likeImageView.image = .heart
             likeImageView.tintColor = .gray
-            likeCounterLabel.textColor = .lightGray
-            likeCounterLabelConstraint.constant = -4
-            UIView.animate(withDuration: 0.3, animations: {
-                self.layoutIfNeeded()
+            
+            UIView.animate(withDuration: 0.3, delay: 0.0, animations: {
+                self.likeCounterLabelConstraint.constant = -4
+                self.likeCounterLabel.textColor = .lightGray
                 self.likeCounterLabel.alpha = 0.0
+                self.layoutIfNeeded()
             })
-            animateButtonTap()
         }
         
+        animateButtonTap()
         updateLikeCounter()
     }
     
@@ -94,7 +96,7 @@ class LikeControl: UIControl {
             initialSpringVelocity: 0.5,
             options: .curveEaseIn,
             animations: {
-            self.likeImageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+                self.likeImageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         }) { (_) in
             UIView.animate(
                 withDuration: 0.2,
@@ -103,7 +105,7 @@ class LikeControl: UIControl {
                 initialSpringVelocity: 0.5,
                 options: .curveEaseIn,
                 animations: {
-                self.likeImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                    self.likeImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
             }, completion: nil)
         }
     }
