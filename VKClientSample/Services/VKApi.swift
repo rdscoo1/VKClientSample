@@ -30,7 +30,7 @@ class VKApi {
     }
     
     
-    func getGroups(completion: @escaping (String) -> Void) {
+    func getGroups(completion: @escaping (Result<VKResponse<VKCommunity>, Error>) -> Void) {
         let params = [
             "extended" : "1",
             "fields": "activity, description"
@@ -39,7 +39,7 @@ class VKApi {
         doRequest(token: token, userId: userId, request: .groups, params: params, completion: completion)
     }
     
-    func getSearchedGroups(groupName: String, completion: @escaping (String) -> Void) {
+    func getSearchedGroups(groupName: String, completion: @escaping (Result<VKResponse<VKCommunity>, Error>) -> Void) {
         let params = [
             "order": "name",
             "q" : groupName,
@@ -50,7 +50,7 @@ class VKApi {
         doRequest(token: token, userId: userId, request: .groupsSearch, params: params, completion: completion)
     }
     
-    func getFriends(completion: @escaping (String) -> Void) {
+    func getFriends(completion: @escaping (Result<VKResponse<VKFriend>, Error>) -> Void) {
         let params = [
             "order": "name",
             "fields": "city, fomain"
@@ -60,11 +60,16 @@ class VKApi {
     }
     
     func getAllPhotos(completion: @escaping (String) -> Void) {
-        doRequest(token: token, userId: userId, request: .allPhotos, params: [:], completion: completion)
+//        doRequest(token: token, userId: userId, request: .allPhotos, params: [:], completion: completion)
     }
     
     
-    private func doRequest(token: String, userId: String, request: ApiRequests, params inputParams: [String: Any], method: HTTPMethod = .get, completion: @escaping (String) -> Void) {
+    private func doRequest<ResponseType: Decodable>(token: String,
+                                                    userId: String,
+                                                    request: ApiRequests,
+                                                    params inputParams: [String: Any],
+                                                    method: HTTPMethod = .get,
+                                                    completion: @escaping (Result<ResponseType, Error>) -> Void) {
         let requestUrl = apiURL + request.rawValue
         let defaultParams: [String : Any] = [
             "access_token": token,
@@ -78,8 +83,17 @@ class VKApi {
             .responseJSON(completionHandler: { response in
                 switch response.result {
                 case .success:
-                   print("📩📩📩 VKApi Response: 📩📩📩")
-                   print(response)
+                    print("📩📩📩 VKApi Response: 📩📩📩")
+                    print(response)
+                    guard let responseData = response.data else {
+                        return
+                    }
+                    do {
+                        let decodedModel = try JSONDecoder().decode(ResponseType.self, from: responseData)
+                        completion(.success(decodedModel))
+                    } catch {
+                        print("❌ \(error)")
+                    }
                 case let .failure(error):
                     print(error)
                 }

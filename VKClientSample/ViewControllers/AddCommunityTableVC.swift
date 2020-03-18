@@ -36,7 +36,7 @@ class AddCommunitiyTableVC: UITableViewController {
             return UITableViewCell()
         }
         let community = communities[indexPath.row]
-        cell.setCommunities(community: community)
+//        cell.setCommunities(community: community)
         
         return cell
     }
@@ -44,7 +44,7 @@ class AddCommunitiyTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let addedCommunity = communities[indexPath.row]
         let communityVC = navigationController?.children.first { $0 is CommunitiesTableVC } as? CommunitiesTableVC
-        communityVC?.communities.append(addedCommunity)
+//        communityVC?.communities.append(addedCommunity)
         communityVC?.tableView.reloadData()
         navigationController?.popViewController(animated: true)
     }

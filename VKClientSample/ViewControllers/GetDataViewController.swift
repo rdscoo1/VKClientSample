@@ -38,9 +38,6 @@ class GetDataViewController: UIViewController {
         let userId = Session.shared.userId
         let vkApi = VKApi(token: token, userId: userId)
         
-        vkApi.getFriends { result in
-            print(result)
-        }
         
         vkApi.getGroups { result in
             print(result)

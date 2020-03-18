@@ -16,7 +16,7 @@ class PhotoPreviewVC: UIViewController {
     let currentPhoto = UIImageView()
     let photosPreviewNavBar = PhotoPreviewNavBarView(selectedPhotoNumber: 0)
     let photoPreviewFooter = PhotoPreviewFooter()
-    var isToolBarsOpened: Bool = false
+    var isToolBarOpened: Bool = false
     
     var friendPreviewPhotos: [String]!
     var friendPhotosQuantity: Int = 0
@@ -119,9 +119,9 @@ extension PhotoPreviewVC: UIGestureRecognizerDelegate {
         }
     
     @objc func handeTapGesture(sender: UITapGestureRecognizer) {
-        isToolBarsOpened = !isToolBarsOpened
+        isToolBarOpened = !isToolBarOpened
         
-        if isToolBarsOpened {
+        if isToolBarOpened {
             UIView.animate(withDuration: 0.3, animations: {
                 self.photosPreviewNavBar.alpha = 1.0
                 self.photoPreviewFooter.alpha = 1.0
@@ -143,14 +143,12 @@ extension PhotoPreviewVC: UIGestureRecognizerDelegate {
                     self.dismiss(animated: true, completion: nil)
                 case UISwipeGestureRecognizer.Direction.left:
                     if selectedPhoto == friendPreviewPhotos.count - 1 {
-                        selectedPhoto = 0
                     } else {
                         selectedPhoto += 1
                     }
                     currentPhoto.image = UIImage(named: friendPreviewPhotos[selectedPhoto])
                 case UISwipeGestureRecognizer.Direction.right:
                     if selectedPhoto == 0 {
-                        selectedPhoto = friendPreviewPhotos.count - 1
                     } else {
                         selectedPhoto -= 1
                     }

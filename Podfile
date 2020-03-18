@@ -9,5 +9,7 @@ target 'VKClientSample' do
 
   pod 'SnapKit'
   pod 'Alamofire'
+  pod 'RealmSwift'
+  pod 'Kingfisher'
 
 end

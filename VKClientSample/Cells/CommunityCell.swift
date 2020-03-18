@@ -7,9 +7,9 @@
 //
 
 import UIKit
+import Kingfisher
 
 class CommunityCell: UITableViewCell {
-
     
     @IBOutlet weak var communityPhoto: UIImageView!
     @IBOutlet weak var communityTitle: UILabel!
@@ -24,9 +24,12 @@ class CommunityCell: UITableViewCell {
         communityPhoto.layer.masksToBounds = true
     }
     
-    func setCommunities(community: Community) {
-        communityTitle.text = community.title
-        communityDescription.text = community.description
-        communityPhoto.image = UIImage(imageLiteralResourceName: community.communityCover)
-    }
+//    func setCommunities(model: Section<VKCommunity>) {
+//
+//        communityTitle.text = community
+//        communityDescription.text = community.activity
+//        if let imageUrl = URL(string: community.photo200) {
+//            communityPhoto.kf.setImage(with: imageUrl)
+//        }
+//    }
 }

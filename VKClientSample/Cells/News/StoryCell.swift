@@ -41,7 +41,7 @@ class StoryCell: UICollectionViewCell {
         
         storyContainerView.layer.cornerRadius = 36
         storyContainerView.clipsToBounds = true
-        storyContainerView.backgroundColor = .white
+        storyContainerView.backgroundColor = .clear
         storyContainerView.layer.borderWidth = 2
         storyContainerView.layer.borderColor = Constants.Colors.vkTheme.cgColor
         

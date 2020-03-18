@@ -55,9 +55,8 @@ class VkAuthorizationViewController: UIViewController {
     }
     
     private func goToGetDataVC() {
-        if let navigationController =  UIApplication.shared.windows.first?.rootViewController as? UINavigationController {
-            navigationController.pushViewController(GetDataViewController(), animated: true)
-        }
+        let vc = (storyboard?.instantiateViewController(withIdentifier: "TabBarVC"))!
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
