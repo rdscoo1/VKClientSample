@@ -6,18 +6,20 @@
 //  Copyright © 2020 Roman Khodukin. All rights reserved.
 //
 
-import Foundation
-
-enum VKSex {
-    case male, female, none
+protocol VKFriendProtocol {
+    var id: Int { get }
+    var firstName: String { get }
+    var lastName: String { get }
+    var photo200orig: String? { get }
 }
 
-struct VKFriend: Decodable {
+struct VKFriend: Decodable, VKFriendProtocol {
     let id: Int
     let firstName: String
     let lastName: String
     let online: Int
     let city: City?
+    let photo200orig: String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -25,12 +27,19 @@ struct VKFriend: Decodable {
         case lastName = "last_name"
         case online
         case city
+        case photo200orig = "photo_200_orig"
     }
 }
 
 extension VKFriend {
     struct City: Decodable {
-        let title: String
+        let title: String?
+    }
+}
+
+extension VKFriend {
+    var titleFirstLetter: String {
+        return lastName[lastName.startIndex].uppercased()
     }
 }
 

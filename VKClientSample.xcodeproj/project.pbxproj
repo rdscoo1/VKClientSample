@@ -36,6 +36,8 @@
 		E8757B12241CECED002F92A7 /* VKFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8757B11241CECED002F92A7 /* VKFriend.swift */; };
 		E8757B14241EC81D002F92A7 /* VKResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8757B13241EC81D002F92A7 /* VKResponse.swift */; };
 		E8757B18241EDA54002F92A7 /* VKRealmGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8757B17241EDA54002F92A7 /* VKRealmGroup.swift */; };
+		E8757B1A24278B57002F92A7 /* VKPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8757B1924278B57002F92A7 /* VKPhoto.swift */; };
+		E8757B1E242844AA002F92A7 /* Data+PrettyPrintJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8757B1D242844AA002F92A7 /* Data+PrettyPrintJSON.swift */; };
 		E87BB7F423E8CE39006C14F6 /* LoadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87BB7F323E8CE39006C14F6 /* LoadView.swift */; };
 		E885799223D1D72200C97694 /* CommunitiesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799123D1D72200C97694 /* CommunitiesTableVC.swift */; };
 		E885799423D1D73A00C97694 /* FriendsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799323D1D73A00C97694 /* FriendsTableVC.swift */; };
@@ -87,6 +89,8 @@
 		E8757B11241CECED002F92A7 /* VKFriend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKFriend.swift; sourceTree = "<group>"; };
 		E8757B13241EC81D002F92A7 /* VKResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKResponse.swift; sourceTree = "<group>"; };
 		E8757B17241EDA54002F92A7 /* VKRealmGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKRealmGroup.swift; sourceTree = "<group>"; };
+		E8757B1924278B57002F92A7 /* VKPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKPhoto.swift; sourceTree = "<group>"; };
+		E8757B1D242844AA002F92A7 /* Data+PrettyPrintJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+PrettyPrintJSON.swift"; sourceTree = "<group>"; };
 		E87BB7F323E8CE39006C14F6 /* LoadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadView.swift; sourceTree = "<group>"; };
 		E885799123D1D72200C97694 /* CommunitiesTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesTableVC.swift; sourceTree = "<group>"; };
 		E885799323D1D73A00C97694 /* FriendsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableVC.swift; sourceTree = "<group>"; };
@@ -225,6 +229,7 @@
 				E8757B0F241CEAC0002F92A7 /* VKCommunity.swift */,
 				E8757B11241CECED002F92A7 /* VKFriend.swift */,
 				E8757B13241EC81D002F92A7 /* VKResponse.swift */,
+				E8757B1924278B57002F92A7 /* VKPhoto.swift */,
 			);
 			path = Decodable;
 			sourceTree = "<group>";
@@ -286,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				E8954A9423B162B200A93209 /* UIColor+hex.swift */,
+				E8757B1D242844AA002F92A7 /* Data+PrettyPrintJSON.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -458,6 +464,7 @@
 				E8068CF123E4FE5B0083FBBE /* AddStoryCell.swift in Sources */,
 				E861CD9D23D274D000D3E9B3 /* Community.swift in Sources */,
 				E80D57F123F9F47D002C53CB /* PhotoPreviewFooter.swift in Sources */,
+				E8757B1A24278B57002F92A7 /* VKPhoto.swift in Sources */,
 				E80D57EE23F9E441002C53CB /* PhotoPreviewNavBarView.swift in Sources */,
 				E885799223D1D72200C97694 /* CommunitiesTableVC.swift in Sources */,
 				E8068CE523E0E7270083FBBE /* Post.swift in Sources */,
@@ -475,6 +482,7 @@
 				E8757B0B241BEE49002F92A7 /* CustomInteractionNavigationController.swift in Sources */,
 				E8068CEF23E4FE0C0083FBBE /* StoryCell.swift in Sources */,
 				E8757B12241CECED002F92A7 /* VKFriend.swift in Sources */,
+				E8757B1E242844AA002F92A7 /* Data+PrettyPrintJSON.swift in Sources */,
 				E8954A9323B162A700A93209 /* Constants.swift in Sources */,
 				E8B5E33024046C9D009A5494 /* Session.swift in Sources */,
 				E8068CEB23E384C10083FBBE /* WhatsNewCell.swift in Sources */,

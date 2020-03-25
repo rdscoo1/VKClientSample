@@ -10,15 +10,17 @@ import UIKit
 
 class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var friendPhotos: [String]!
+    var friendPhotos = [String]()
     var friendPhotosQuantity: Int = 0
+    var friendId: Int = -1
+    var friendModel: [Photo<VKPhotoProtocol>] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         friendPhotosQuantity = friendPhotos.count
         
-//        collectionView.register(FriendCVCell.self, forCellWithReuseIdentifier: FriendCVCell.reuseId)
+        loadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -46,8 +48,13 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     // MARK: - UICollectionViewDataSource
+    
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return friendModel.count
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return friendPhotos.count
+        return friendModel[section].sizes.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -56,9 +63,14 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
             else {
                 return UICollectionViewCell()
         }
-        
-        cell.friendPhoto.image = UIImage(imageLiteralResourceName: friendPhotos[indexPath.row])
-        
+        let friendPhoto = friendModel[indexPath.section].sizes[0]
+        print("Ячейка \(friendPhoto)")
+//        let photoLink = friendPhoto
+//
+//        if let photoUrl = URL(string: photoLink) {
+//            cell.friendPhoto.kf.setImage(with: photoUrl)
+//        }
+            
         return cell
     }
     
@@ -76,5 +88,46 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
         self.navigationController!.navigationBar.tintColor = .white
+    }
+    
+//MARK: - Load and handle Data
+    
+    func handlePhoto(items: [VKFriendProtocol]) -> [Section<VKFriendProtocol>] {
+        return Dictionary(grouping: items) { $0.lastName.prefix(1) }
+            .map { Section<VKFriendProtocol>(title: "\($0.key)", items: $0.value) }
+            .sorted(by: { $0.title < $1.title })
+    }
+    
+    private func loadData() {
+        requestFromApi { items in
+//            print("👥 photos: ", items)
+            self.friendModel.append(Photo(sizes: items))
+//            let photoLink = sizes.first(where: { $0.type == "x" })?.url
+            self.collectionView.reloadData()
+        }
+    }
+    
+    private func requestFromApi(completion: @escaping ([VKPhotoProtocol]) -> Void) {
+        let token = Session.shared.token
+        let userId = Session.shared.userId
+        let vkApi = VKApi(token: token, userId: userId)
+        
+        vkApi.getAllPhotos(ownerId: String(friendId)) { response in
+            switch response {
+            case let .success(models):
+                if let items = models.response?.items {
+                    let size = items[1].sizes[0].url
+                    print("\n \(size)")
+                    completion(items)
+                } else if
+                    let errorCode = models.error?.error_code,
+                    let errorMsg = models.error?.error_msg
+                {
+                    print("❌ #\(errorCode) \(errorMsg)")
+                }
+            case let .failure(error):
+                print("❌ \(error)")
+            }
+        }
     }
 }

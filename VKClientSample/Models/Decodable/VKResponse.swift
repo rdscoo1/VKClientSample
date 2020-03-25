@@ -6,8 +6,6 @@
 //  Copyright © 2020 Roman Khodukin. All rights reserved.
 //
 
-import Foundation
-
 struct VKResponse<T: Decodable>: Decodable {
     let response: Response?
     let error: VKError?
@@ -36,4 +34,8 @@ struct VKResponse<T: Decodable>: Decodable {
 struct Section<T> {
     var title: String
     var items: [T]
+}
+
+struct Photo<T> {
+    var sizes: [T]
 }

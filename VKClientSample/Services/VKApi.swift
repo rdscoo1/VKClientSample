@@ -53,14 +53,29 @@ class VKApi {
     func getFriends(completion: @escaping (Result<VKResponse<VKFriend>, Error>) -> Void) {
         let params = [
             "order": "name",
-            "fields": "city, fomain"
+            "fields": "city,"
+            + "photo_200_orig"
         ]
         
         doRequest(token: token, userId: userId, request: .friends, params: params, completion: completion)
     }
     
-    func getAllPhotos(completion: @escaping (String) -> Void) {
-//        doRequest(token: token, userId: userId, request: .allPhotos, params: [:], completion: completion)
+    func getPhotos(ownerId: Int, completion: @escaping (Result<VKResponse<VKPhoto>, Error>) -> Void) {
+        let params = [
+            "album_id": "profile",
+            "owner_id": "\(ownerId)",
+            "extended": "1" //для получения лайков
+        ]
+        
+        doRequest(token: token, userId: userId, request: .photos, params: params, completion: completion)
+    }
+    
+    func getAllPhotos(ownerId: String, completion: @escaping (Result<VKResponse<VKPhoto>, Error>) -> Void) {
+        let params = [
+            "owner_id": ownerId
+        ]
+        
+        doRequest(token: token, userId: userId, request: .allPhotos, params: params, completion: completion)
     }
     
     
@@ -83,8 +98,8 @@ class VKApi {
             .responseJSON(completionHandler: { response in
                 switch response.result {
                 case .success:
-                    print("📩📩📩 VKApi Response: 📩📩📩")
-                    print(response)
+//                    print("📩📩📩 VKApi Response: 📩📩📩")
+//                    print(response)
                     guard let responseData = response.data else {
                         return
                     }

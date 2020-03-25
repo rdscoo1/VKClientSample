@@ -42,11 +42,7 @@ class GetDataViewController: UIViewController {
         vkApi.getGroups { result in
             print(result)
         }
-        
-        
-        vkApi.getAllPhotos { result in
-            print(result)
-        }
+
         
         vkApi.getSearchedGroups(groupName: "Music") { result in
             print(result)

@@ -6,9 +6,14 @@
 //  Copyright © 2020 Roman Khodukin. All rights reserved.
 //
 
-import Foundation
+protocol VKCommunityProtocol {
+    var id: Int { get }
+    var name: String { get }
+    var activity: String? { get }
+    var photo200: String { get }
+}
 
-struct VKCommunity: Decodable {
+struct VKCommunity: Decodable, VKCommunityProtocol {
         let id: Int
         let name: String
         let activity: String?
