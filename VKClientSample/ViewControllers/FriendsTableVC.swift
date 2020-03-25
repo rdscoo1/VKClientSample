@@ -22,15 +22,10 @@ class FriendsTableVC: UITableViewController {
         
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 64
-//        tableView.allowsSelection = false // выключить при настройке перехода
         searchBar.delegate = self
         
         configureActivityIndicator()
-        loadData()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        navigationController?.navigationBar.barStyle = .black
+        requestFromApi()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,11 +48,7 @@ class FriendsTableVC: UITableViewController {
     }
     
     @IBAction func refresh(_ sender: UIRefreshControl) {
-        requestFromApi { items in
-//            print("👥 friends: ", items)
-            self.items = items
-            self.tableView.reloadData()
-        }
+        requestFromApi()
         
         sender.endRefreshing()        
     }
@@ -109,12 +100,17 @@ class FriendsTableVC: UITableViewController {
         self.navigationController!.navigationBar.tintColor = .white
     }
     
-    private func loadData() {
-        requestFromApi { items in
-//            print("👥 friends: ", items)
-            self.items = items
-            self.friendsInSection = self.handleFriends(items: items)
-            self.tableView.reloadData()
+    private func requestFromApi() {
+        let token = Session.shared.token
+        let userId = Session.shared.userId
+        let vkApi = VKApi(token: token, userId: userId)
+        
+        vkApi.getFriends { friends in
+            DispatchQueue.main.async {
+                self.items = friends
+                self.friendsInSection = self.handleFriends(items: friends)
+                self.tableView.reloadData()
+            }
         }
         
         self.activityIndicator.stopAnimating()
@@ -123,27 +119,7 @@ class FriendsTableVC: UITableViewController {
         })
     }
     
-    private func requestFromApi(completion: @escaping ([VKFriendProtocol]) -> Void) {
-        let token = Session.shared.token
-        let userId = Session.shared.userId
-        let vkApi = VKApi(token: token, userId: userId)
-        
-        vkApi.getFriends { response in
-            switch response {
-            case let .success(models):
-                if let items = models.response?.items {
-                    completion(items)
-                } else if
-                    let errorCode = models.error?.error_code,
-                    let errorMsg = models.error?.error_msg
-                {
-                    print("❌ #\(errorCode) \(errorMsg)")
-                }
-            case let .failure(error):
-                print("❌ \(error)")
-            }
-        }
-    }
+    
 }
 
 extension FriendsTableVC: UISearchBarDelegate {

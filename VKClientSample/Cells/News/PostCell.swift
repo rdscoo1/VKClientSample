@@ -11,7 +11,7 @@ import UIKit
 class PostCell: UITableViewCell {
     
     let topSeparator = UIView()
-    let shadowPhotoView = ShadowPhotoView(image: .helen)
+    let shadowPhotoView = ShadowPhotoView(image: .helen, size: 48)
     let postAuthor = UILabel()
     let publishDate = UILabel()
     let moreButton = UIButton()
@@ -45,12 +45,12 @@ class PostCell: UITableViewCell {
         topSeparator.alpha = 0.3
         
         postAuthor.text = "Apple | iPhone | iPad"
-        postAuthor.textColor = Constants.Colors.vkTheme
-        postAuthor.font = .systemFont(ofSize: 16)
+        postAuthor.textColor = .black
+        postAuthor.font = .systemFont(ofSize: 16, weight: UIFont.Weight.medium)
         
         publishDate.text = "вчера в \(Int.random(in: 10...23)):\(Int.random(in: 10...59))"
-        publishDate.textColor = .lightGray
-        publishDate.font = .systemFont(ofSize: 15)
+        publishDate.textColor = Constants.Colors.vkDarkGray
+        publishDate.font = .systemFont(ofSize: 15, weight: UIFont.Weight.regular)
         
         moreButton.setImage(.moreButton, for: .normal)
         
@@ -77,15 +77,15 @@ class PostCell: UITableViewCell {
             topSeparator.topAnchor.constraint(equalTo: topAnchor),
             topSeparator.leadingAnchor.constraint(equalTo: leadingAnchor),
             topSeparator.trailingAnchor.constraint(equalTo: trailingAnchor),
-            topSeparator.heightAnchor.constraint(equalToConstant: 8)
+            topSeparator.heightAnchor.constraint(equalToConstant: 10)
         ])
         
         shadowPhotoView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            shadowPhotoView.topAnchor.constraint(equalTo: topSeparator.bottomAnchor, constant: 16),
+            shadowPhotoView.topAnchor.constraint(equalTo: topSeparator.bottomAnchor, constant: 8),
             shadowPhotoView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            shadowPhotoView.heightAnchor.constraint(equalToConstant: 40),
-            shadowPhotoView.widthAnchor.constraint(equalToConstant: 40)
+            shadowPhotoView.heightAnchor.constraint(equalToConstant: 48),
+            shadowPhotoView.widthAnchor.constraint(equalToConstant: 48)
         ])
         
         postAuthor.translatesAutoresizingMaskIntoConstraints = false
@@ -99,7 +99,7 @@ class PostCell: UITableViewCell {
         NSLayoutConstraint.activate([
             publishDate.leadingAnchor.constraint(equalTo: postAuthor.leadingAnchor),
             publishDate.trailingAnchor.constraint(equalTo: postAuthor.trailingAnchor),
-            publishDate.topAnchor.constraint(equalTo: postAuthor.bottomAnchor, constant: 4)
+            publishDate.topAnchor.constraint(equalTo: postAuthor.bottomAnchor, constant: 2)
         ])
         
         moreButton.translatesAutoresizingMaskIntoConstraints = false

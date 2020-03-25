@@ -11,13 +11,13 @@ protocol VKPhotoProtocol {
 }
 
 struct VKPhoto: Decodable, VKPhotoProtocol {
-    let id: Int
-    let albumId: Int
-    let date: Int
-    let ownerId: Int
-    let postId: Int?
-    let sizes: [Size]
-    let text: String
+    var id: Int
+    var albumId: Int
+    var date: Int
+    var ownerId: Int
+    var postId: Int?
+    var sizes: [Size]
+    var text: String
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -32,9 +32,9 @@ struct VKPhoto: Decodable, VKPhotoProtocol {
 
 extension VKPhoto {
     struct Size: Decodable {
-        let height: Int
-        let width: Int
-        let type: String
-        let url: String
+        var height: Int
+        var width: Int
+        var type: String
+        var url: String
     }
 }

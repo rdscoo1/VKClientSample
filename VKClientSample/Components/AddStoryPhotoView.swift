@@ -13,7 +13,7 @@ class AddStoryPhotoView: UIView {
     let photoImageView = UIImageView(image: .john)
     let plusImageViewContainer = UIView()
     let plusImageView = UIImageView(image: .plusIconToAddStory)
-    let photoSize: CGFloat = 64
+    let photoSize: CGFloat = 56
     let plusIconSize: CGFloat = 20
 
     

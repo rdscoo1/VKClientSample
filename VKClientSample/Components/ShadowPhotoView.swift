@@ -10,16 +10,16 @@ import UIKit
 
 class ShadowPhotoView: UIView {
     
-    @IBInspectable var size: CGFloat = 40
     @IBInspectable var shadowColor: UIColor = .black
     @IBInspectable var shadowOpacity: Float = 0.5
     
     let friendPhoto = UIImageView()
     
-    init(image: UIImage) {
+    init(image: UIImage, size: CGFloat) {
         super.init(frame: .zero)
         setupUI()
         setImage(image: image)
+        configureFriendPhotoView(size: size)
     }
     
     init() {
@@ -39,13 +39,12 @@ class ShadowPhotoView: UIView {
     func setupUI() {
         backgroundColor = .clear
         addSubview(friendPhoto)
-        configureFriendPhotoView()
         configureShadow()
         let tap = UITapGestureRecognizer(target: self, action: #selector(shadowPhotoTapped))
         self.addGestureRecognizer(tap)
     }
     
-    func configureFriendPhotoView() {
+    func configureFriendPhotoView(size: CGFloat) {
         friendPhoto.layer.cornerRadius = size / 2
         friendPhoto.layer.masksToBounds = true
         friendPhoto.frame = CGRect(origin: .zero, size: CGSize(width: size, height: size))

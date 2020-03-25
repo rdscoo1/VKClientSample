@@ -28,7 +28,9 @@ class AddStoryCell: UICollectionViewCell {
         storyAuthor.text = "Roman"
         storyAuthor.textAlignment = .center
         storyAuthor.numberOfLines = 0
-        storyAuthor.textColor = .lightGray
+        storyAuthor.textColor = Constants.Colors.vkDarkGray
+        storyAuthor.font = .systemFont(ofSize: 12, weight: UIFont.Weight.regular)
+
         
         addSubview(addStoryPhotoView)
         addSubview(storyAuthor)
@@ -37,13 +39,13 @@ class AddStoryCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             addStoryPhotoView.heightAnchor.constraint(equalToConstant: 64),
             addStoryPhotoView.widthAnchor.constraint(equalToConstant: 64),
-            addStoryPhotoView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+            addStoryPhotoView.topAnchor.constraint(equalTo: topAnchor),
             addStoryPhotoView.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
         
         storyAuthor.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            storyAuthor.topAnchor.constraint(equalTo: addStoryPhotoView.bottomAnchor, constant: 12),
+            storyAuthor.topAnchor.constraint(equalTo: addStoryPhotoView.bottomAnchor, constant: 2),
             storyAuthor.rightAnchor.constraint(equalTo: rightAnchor),
             storyAuthor.leftAnchor.constraint(equalTo: leftAnchor),
             storyAuthor.bottomAnchor.constraint(equalTo: bottomAnchor),

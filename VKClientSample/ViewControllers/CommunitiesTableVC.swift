@@ -12,12 +12,11 @@ import SnapKit
 
 class CommunitiesTableVC: UITableViewController {
     
-    var communities: [Section<VKCommunityProtocol>] = []
+    var communities: [VKCommunityProtocol] = []
     private var activityIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         
         view.addSubview(activityIndicator)
         
@@ -27,12 +26,8 @@ class CommunitiesTableVC: UITableViewController {
         tableView.alpha = 0.0
         
         configureActivityIndicator()
-
-        loadData()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        navigationController?.navigationBar.barStyle = .black
+        
+        requestFromApi()
     }
     
     private func configureActivityIndicator() {
@@ -49,12 +44,12 @@ class CommunitiesTableVC: UITableViewController {
     
     // MARK: - Table view data source
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return communities.count
-    }
+    //    override func numberOfSections(in tableView: UITableView) -> Int {
+    //        return communities.count
+    //    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return communities[section].items.count
+        return communities.count
     }
     
     
@@ -62,7 +57,7 @@ class CommunitiesTableVC: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CommunityCell.reuseId, for: indexPath) as? CommunityCell else {
             return UITableViewCell()
         }
-        let community = communities[indexPath.section].items[indexPath.row]
+        let community = communities[indexPath.row]
         cell.communityTitle.text = community.name
         cell.communityDescription.text = community.activity
         if let imageUrl = URL(string: community.photo200) {
@@ -95,49 +90,26 @@ class CommunitiesTableVC: UITableViewController {
     
     
     @IBAction func refresh(_ sender: UIRefreshControl) {
-       requestFromApi { [weak self] items in
-            //            print("👥 groups: ", items)
-            self?.communities.append(Section(title: "Communities", items: items))
-            self?.tableView.reloadData()
-        }
+        requestFromApi()
         
         sender.endRefreshing()
     }
     
-    
-    private func loadData() {
-        requestFromApi { [weak self] items in
-            //            print("👥 groups: ", items)
-            self?.communities.append(Section(title: "Communities", items: items))
-            self?.tableView.reloadData()
-        }
-        self.activityIndicator.stopAnimating()
-        UIView.animate(withDuration: 0.2, animations: {
-            self.tableView.alpha = 1.0
-        })
-        
-    }
-    
-    private func requestFromApi(completion: @escaping ([VKCommunity]) -> Void) {
+    private func requestFromApi() {
         let token = Session.shared.token
         let userId = Session.shared.userId
         let vkApi = VKApi(token: token, userId: userId)
         
-        vkApi.getGroups { response in
-            switch response {
-            case let .success(models):
-                if let items = models.response?.items {
-                    
-                    completion(items)
-                } else if
-                    let errorCode = models.error?.error_code,
-                    let errorMsg = models.error?.error_msg
-                {
-                    print("❌ #\(errorCode) \(errorMsg)")
-                }
-            case let .failure(error):
-                print("❌ \(error)")
+        vkApi.getGroups { [weak self] groups in
+            DispatchQueue.main.async {
+                self?.communities = groups
+                self?.tableView.reloadData()
             }
         }
+        
+        self.activityIndicator.stopAnimating()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.tableView.alpha = 1.0
+        })
     }
 }
