@@ -8,22 +8,43 @@
 
 import UIKit
 import Kingfisher
+import SnapKit
 
 class CommunitiesTableVC: UITableViewController {
     
-    var communities: [Section<VKCommunity>] = []
+    var communities: [Section<VKCommunityProtocol>] = []
+    private var activityIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        
+        view.addSubview(activityIndicator)
         
         tableView.register(UINib(nibName: CommunityCell.reuseId, bundle: nil), forCellReuseIdentifier: CommunityCell.reuseId)
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 64
+        tableView.alpha = 0.0
         
+        configureActivityIndicator()
+
+        loadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         navigationController?.navigationBar.barStyle = .black
+    }
+    
+    private func configureActivityIndicator() {
+        activityIndicator.color = .darkGray
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        
+        activityIndicator.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-48)
+            $0.height.width.equalTo(64)
+        }
     }
     
     // MARK: - Table view data source
@@ -73,12 +94,28 @@ class CommunitiesTableVC: UITableViewController {
     }
     
     
-    @IBAction func getData(_ sender: Any) {
-        requestFromApi { items in
+    @IBAction func refresh(_ sender: UIRefreshControl) {
+       requestFromApi { [weak self] items in
             //            print("👥 groups: ", items)
-            self.communities.append(Section(title: "Communities", items: items))
+            self?.communities.append(Section(title: "Communities", items: items))
+            self?.tableView.reloadData()
         }
-        tableView.reloadData()
+        
+        sender.endRefreshing()
+    }
+    
+    
+    private func loadData() {
+        requestFromApi { [weak self] items in
+            //            print("👥 groups: ", items)
+            self?.communities.append(Section(title: "Communities", items: items))
+            self?.tableView.reloadData()
+        }
+        self.activityIndicator.stopAnimating()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.tableView.alpha = 1.0
+        })
+        
     }
     
     private func requestFromApi(completion: @escaping ([VKCommunity]) -> Void) {
