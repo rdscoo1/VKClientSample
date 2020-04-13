@@ -10,23 +10,17 @@ import UIKit
 
 class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var friendPhotos = [String]()
-    var friendPhotosQuantity: Int = 0
     var friendId: Int = -1
     var friendModel: [VKPhoto] = []
-    var photosUrls = [String?]()
+    var photosUrlsLowRes = [String?]()
+    var photosUrlsHighRes = [String?]()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        friendPhotosQuantity = friendPhotos.count
-        
+                
         requestFromApi()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        navigationController?.navigationBar.barStyle = .black
-    }    
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -50,20 +44,14 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
     
     // MARK: - UICollectionViewDataSource
     
-//    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        return friendModel.count
-//    }
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photosUrls.count
+        return photosUrlsLowRes.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FriendCVCell.reuseId, for: indexPath) as? FriendCVCell
             else { return UICollectionViewCell() }
-//        let friendPhoto = friendModel[indexPath.section].sizes[indexPath.row].url
-//        print("Ячейка \(friendPhoto)")
-        guard let friendPhotos = photosUrls[indexPath.row] else {
+        guard let friendPhotos = photosUrlsLowRes[indexPath.row] else {
             return UICollectionViewCell()
         }
         
@@ -76,18 +64,18 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "PhotoPreviewVC") as! PhotoPreviewVC
-        
-        vc.friendPreviewPhotos = friendPhotos
+            
+        vc.friendPreviewPhotos = photosUrlsHighRes
         let selectedPhotoNumber = indexPath.row
         vc.selectedPhoto = selectedPhotoNumber
-        vc.photosPreviewNavBar.photosQuantityLabel.text = "\(selectedPhotoNumber + 1) of \(friendPhotos.count)"
+        vc.photosPreviewNavBar.photosQuantityLabel.text = "\(selectedPhotoNumber + 1) of \(photosUrlsHighRes.count)"
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
-        self.navigationController!.navigationBar.tintColor = .white
+        self.navigationController!.navigationBar.tintColor = Constants.Colors.vkBlue
     }
     
     //MARK: - Load and handle Data
@@ -124,9 +112,14 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
         
         vkApi.getPhotos(ownerId: friendId) { [weak self] photos in
             self?.friendModel = photos
+//            print(self?.friendModel)
             photos.forEach {
-                let photoLink = $0.sizes.first(where: { $0.type == "m" })?.url
-                self?.photosUrls.append(photoLink)
+                let photoLinklowRes = $0.sizes.first(where: { $0.type == "m" })?.url
+                self?.photosUrlsLowRes.append(photoLinklowRes)
+                
+                let photoLinkhighRes = $0.sizes.first(where: { $0.type == "x" })?.url
+                self?.photosUrlsHighRes.append(photoLinkhighRes)
+
 //                print("photo url-> ", photoLink)
             }
             

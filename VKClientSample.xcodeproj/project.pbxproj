@@ -38,6 +38,9 @@
 		E8757B18241EDA54002F92A7 /* VKRealmGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8757B17241EDA54002F92A7 /* VKRealmGroup.swift */; };
 		E8757B1A24278B57002F92A7 /* VKPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8757B1924278B57002F92A7 /* VKPhoto.swift */; };
 		E8757B1E242844AA002F92A7 /* Data+PrettyPrintJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8757B1D242844AA002F92A7 /* Data+PrettyPrintJSON.swift */; };
+		E8757B21242C0708002F92A7 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8757B20242C0708002F92A7 /* ProfileTableViewController.swift */; };
+		E8757B23242C073C002F92A7 /* ProfileTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8757B22242C073C002F92A7 /* ProfileTVCell.swift */; };
+		E8757B25242C2F0E002F92A7 /* ActionsTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8757B24242C2F0E002F92A7 /* ActionsTVCell.swift */; };
 		E87BB7F423E8CE39006C14F6 /* LoadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87BB7F323E8CE39006C14F6 /* LoadView.swift */; };
 		E885799223D1D72200C97694 /* CommunitiesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799123D1D72200C97694 /* CommunitiesTableVC.swift */; };
 		E885799423D1D73A00C97694 /* FriendsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799323D1D73A00C97694 /* FriendsTableVC.swift */; };
@@ -91,6 +94,9 @@
 		E8757B17241EDA54002F92A7 /* VKRealmGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKRealmGroup.swift; sourceTree = "<group>"; };
 		E8757B1924278B57002F92A7 /* VKPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKPhoto.swift; sourceTree = "<group>"; };
 		E8757B1D242844AA002F92A7 /* Data+PrettyPrintJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+PrettyPrintJSON.swift"; sourceTree = "<group>"; };
+		E8757B20242C0708002F92A7 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
+		E8757B22242C073C002F92A7 /* ProfileTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTVCell.swift; sourceTree = "<group>"; };
+		E8757B24242C2F0E002F92A7 /* ActionsTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsTVCell.swift; sourceTree = "<group>"; };
 		E87BB7F323E8CE39006C14F6 /* LoadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadView.swift; sourceTree = "<group>"; };
 		E885799123D1D72200C97694 /* CommunitiesTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesTableVC.swift; sourceTree = "<group>"; };
 		E885799323D1D73A00C97694 /* FriendsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableVC.swift; sourceTree = "<group>"; };
@@ -174,6 +180,7 @@
 				E86CCCB023EC669900F3AAA6 /* PhotoPreviewVC.swift */,
 				E829F95E2404839400ED148B /* VkAuthorizationViewController.swift */,
 				E829F96224049DBD00ED148B /* GetDataViewController.swift */,
+				E8757B20242C0708002F92A7 /* ProfileTableViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -181,6 +188,7 @@
 		E8500E9423F08B0C0080F802 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				E8757B1F242C06B2002F92A7 /* Profile */,
 				E8500E9523F08B4A0080F802 /* News */,
 				E861CD9823D271EA00D3E9B3 /* CommunityCell.xib */,
 				E8CD1C8F23D65EA600C5D668 /* FriendCell.swift */,
@@ -240,6 +248,15 @@
 				E8757B17241EDA54002F92A7 /* VKRealmGroup.swift */,
 			);
 			path = Realm;
+			sourceTree = "<group>";
+		};
+		E8757B1F242C06B2002F92A7 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				E8757B22242C073C002F92A7 /* ProfileTVCell.swift */,
+				E8757B24242C2F0E002F92A7 /* ActionsTVCell.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		E8954A6C23B15FEA00A93209 = {
@@ -446,6 +463,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8954A7D23B15FEA00A93209 /* LoginViewController.swift in Sources */,
+				E8757B25242C2F0E002F92A7 /* ActionsTVCell.swift in Sources */,
 				E8954A9223B162A700A93209 /* Images.swift in Sources */,
 				E8CD1C9923DB2AF900C5D668 /* LikeControl.swift in Sources */,
 				E8068CED23E3A7890083FBBE /* AddStoryPhotoView.swift in Sources */,
@@ -474,6 +492,7 @@
 				E8954A7923B15FEA00A93209 /* AppDelegate.swift in Sources */,
 				E8CD1C9223D6AC0200C5D668 /* FriendCollectionVC.swift in Sources */,
 				E8CD1C9723DB29D300C5D668 /* ShadowPhotoView.swift in Sources */,
+				E8757B23242C073C002F92A7 /* ProfileTVCell.swift in Sources */,
 				E8068CE123E0C1EE0083FBBE /* ShareControl.swift in Sources */,
 				E829F96324049DBD00ED148B /* GetDataViewController.swift in Sources */,
 				E8068CD223DC47E80083FBBE /* NewsTableVC.swift in Sources */,
@@ -481,6 +500,7 @@
 				E8757B0D241BEEA2002F92A7 /* NavigationTransition.swift in Sources */,
 				E8757B0B241BEE49002F92A7 /* CustomInteractionNavigationController.swift in Sources */,
 				E8068CEF23E4FE0C0083FBBE /* StoryCell.swift in Sources */,
+				E8757B21242C0708002F92A7 /* ProfileTableViewController.swift in Sources */,
 				E8757B12241CECED002F92A7 /* VKFriend.swift in Sources */,
 				E8757B1E242844AA002F92A7 /* Data+PrettyPrintJSON.swift in Sources */,
 				E8954A9323B162A700A93209 /* Constants.swift in Sources */,

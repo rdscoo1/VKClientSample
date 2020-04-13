@@ -66,11 +66,23 @@ class VKApi {
         }
     }
     
+    func getUserInfo(ownerId: Int, completion: @escaping ([VKFriend]) -> Void) { // Сделать модель и доделать модель
+        let params = [
+            "user_id": userId,
+            "fields": "city,"
+            + "photo_50,"
+            + "online,"
+            + "status"
+        ]
+        
+        doRequest(token: token, request: .userInfo, params: params, type: VKFriend.self, completion: completion)
+    }
     
     func getGroups(completion: @escaping ([VKCommunity]) -> Void) {
         let params = [
             "extended" : "1",
-            "fields": "activity, description"
+            "fields": "activity,"
+            + "description"
         ]
         
         doRequest(token: token, request: .groups, params: params, type: VKCommunity.self) { response in

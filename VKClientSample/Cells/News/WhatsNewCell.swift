@@ -79,8 +79,8 @@ class WhatsNewCell: UITableViewCell {
         
         addPhotoButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            addPhotoButton.heightAnchor.constraint(equalToConstant: 20),
-            addPhotoButton.widthAnchor.constraint(equalToConstant: 20),
+            addPhotoButton.heightAnchor.constraint(equalToConstant: 22),
+            addPhotoButton.widthAnchor.constraint(equalToConstant: 22),
             addPhotoButton.centerYAnchor.constraint(equalTo: shadowPhotoView.centerYAnchor),
             addPhotoButton.leftAnchor.constraint(equalTo: whatsNewTF.rightAnchor, constant: 16),
             addPhotoButton.rightAnchor.constraint(equalTo: startStreamButton.leftAnchor, constant: -16)
@@ -88,10 +88,10 @@ class WhatsNewCell: UITableViewCell {
         
         startStreamButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            startStreamButton.heightAnchor.constraint(equalToConstant: 22),
+            startStreamButton.widthAnchor.constraint(equalToConstant: 22),
             startStreamButton.centerYAnchor.constraint(equalTo: shadowPhotoView.centerYAnchor),
-            startStreamButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
-            startStreamButton.heightAnchor.constraint(equalToConstant: 20),
-            startStreamButton.widthAnchor.constraint(equalToConstant: 20)
+            startStreamButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -16)
         ])
         
         

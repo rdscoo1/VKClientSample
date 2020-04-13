@@ -85,7 +85,7 @@ class CommunitiesTableVC: UITableViewController {
         //        }
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
-        self.navigationController!.navigationBar.tintColor = .white
+        self.navigationController!.navigationBar.tintColor = Constants.Colors.vkBlue
     }
     
     

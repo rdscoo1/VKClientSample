@@ -20,10 +20,6 @@ class AddCommunitiyTableVC: UITableViewController {
         tableView.rowHeight = 64
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        navigationController?.navigationBar.barStyle = .black
-    }
-    
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -27,6 +27,8 @@ extension UIImage {
     static let qrScanIcon = UIImage(imageLiteralResourceName: "qrScanIcon")
     static let photoIcon = UIImage(imageLiteralResourceName: "photoIcon")
     static let plusIconToAddStory = UIImage(imageLiteralResourceName: "plusIconToAddStory")
+    static let writePost = UIImage(imageLiteralResourceName: "writePost")
+    static let camera = UIImage(imageLiteralResourceName: "camera")
     
     static let helen = UIImage(imageLiteralResourceName: "helen")
     static let john = UIImage(imageLiteralResourceName: "john")

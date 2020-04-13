@@ -40,6 +40,8 @@ class AddStoryPhotoView: UIView {
         
         plusImageView.layer.cornerRadius = plusIconSize / 2 - 1
         plusImageView.layer.masksToBounds = true
+        plusImageView.backgroundColor = .white
+        plusImageView.tintColor = Constants.Colors.vkBlue
         
         plusImageViewContainer.addSubview(plusImageView)
         addSubview(photoImageView)
