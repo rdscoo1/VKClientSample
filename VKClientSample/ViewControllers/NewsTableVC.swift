@@ -19,14 +19,8 @@ class NewsTableVC: UITableViewController {
     var models: [CellTypes] = []
     var posts = Post.posts
     
-   override func viewDidAppear(_ animated: Bool) {
-        navigationController?.navigationBar.barStyle = .black
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.backgroundColor = .white
-        view.backgroundColor = .white
         
         models.append(.whatsNewCell)
         models.append(.storiesCell)
@@ -71,7 +65,7 @@ class NewsTableVC: UITableViewController {
         case .whatsNewCell:
             return 64
         case .storiesCell:
-            return 128
+            return 112
         case .postCell:
             return UITableView.automaticDimension
         }

@@ -11,7 +11,7 @@ import UIKit
 class WhatsNewCell: UITableViewCell {
     
     let topSeparator = UIView()
-    let shadowPhotoView = ShadowPhotoView(image: .john)
+    let shadowPhotoView = ShadowPhotoView(image: .john, size: 32)
     let whatsNewTF = UITextField()
     let addPhotoButton = UIButton()
     let startStreamButton = UIButton()
@@ -31,12 +31,13 @@ class WhatsNewCell: UITableViewCell {
         topSeparator.backgroundColor = .lightGray
         topSeparator.alpha = 0.3
         
-        let attributes = NSAttributedString(string: "What's new?", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14.0)])
+        let attributes = NSAttributedString(string: "What's new?",
+                                            attributes: [NSAttributedString.Key.foregroundColor: Constants.Colors.vkDarkGray,
+                                            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)])
         whatsNewTF.attributedPlaceholder = attributes
-        whatsNewTF.backgroundColor = .lightGray
-        whatsNewTF.alpha = 0.2
+        whatsNewTF.backgroundColor = Constants.Colors.vkLightGray
         whatsNewTF.layer.cornerRadius = 8
-        whatsNewTF.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 6, height: self.frame.height))
+        whatsNewTF.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: self.frame.height))
         whatsNewTF.leftViewMode = .always
         
         addPhotoButton.setImage(.photoIcon, for: .normal)
@@ -58,39 +59,39 @@ class WhatsNewCell: UITableViewCell {
             topSeparator.topAnchor.constraint(equalTo: topAnchor),
             topSeparator.leadingAnchor.constraint(equalTo: leadingAnchor),
             topSeparator.trailingAnchor.constraint(equalTo: trailingAnchor),
-            topSeparator.heightAnchor.constraint(equalToConstant: 8)
+            topSeparator.heightAnchor.constraint(equalToConstant: 10)
         ])
         
         shadowPhotoView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             shadowPhotoView.heightAnchor.constraint(equalToConstant: 32),
             shadowPhotoView.widthAnchor.constraint(equalToConstant: 32),
-            shadowPhotoView.topAnchor.constraint(equalTo: topSeparator.bottomAnchor, constant: 8),
-            shadowPhotoView.leftAnchor.constraint(equalTo: leftAnchor, constant: 8),
-            shadowPhotoView.rightAnchor.constraint(equalTo: whatsNewTF.leftAnchor, constant: -16)
+            shadowPhotoView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 4),
+            shadowPhotoView.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
+            shadowPhotoView.rightAnchor.constraint(equalTo: whatsNewTF.leftAnchor, constant: -12)
         ])
         
         whatsNewTF.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            whatsNewTF.heightAnchor.constraint(equalToConstant: 32),
-            whatsNewTF.centerYAnchor.constraint(equalTo: shadowPhotoView.centerYAnchor, constant: 4)
+            whatsNewTF.heightAnchor.constraint(equalToConstant: 34),
+            whatsNewTF.centerYAnchor.constraint(equalTo: shadowPhotoView.centerYAnchor)
         ])
         
         addPhotoButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            addPhotoButton.heightAnchor.constraint(equalToConstant: 24),
-            addPhotoButton.widthAnchor.constraint(equalToConstant: 24),
-            addPhotoButton.centerYAnchor.constraint(equalTo: shadowPhotoView.centerYAnchor, constant: 4),
-            addPhotoButton.leftAnchor.constraint(equalTo: whatsNewTF.rightAnchor, constant: 8),
-            addPhotoButton.rightAnchor.constraint(equalTo: startStreamButton.leftAnchor, constant: -8)
+            addPhotoButton.heightAnchor.constraint(equalToConstant: 22),
+            addPhotoButton.widthAnchor.constraint(equalToConstant: 22),
+            addPhotoButton.centerYAnchor.constraint(equalTo: shadowPhotoView.centerYAnchor),
+            addPhotoButton.leftAnchor.constraint(equalTo: whatsNewTF.rightAnchor, constant: 16),
+            addPhotoButton.rightAnchor.constraint(equalTo: startStreamButton.leftAnchor, constant: -16)
         ])
         
         startStreamButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            startStreamButton.centerYAnchor.constraint(equalTo: shadowPhotoView.centerYAnchor, constant: 4),
-            startStreamButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -8),
-            startStreamButton.heightAnchor.constraint(equalToConstant: 24),
-            startStreamButton.widthAnchor.constraint(equalToConstant: 24)
+            startStreamButton.heightAnchor.constraint(equalToConstant: 22),
+            startStreamButton.widthAnchor.constraint(equalToConstant: 22),
+            startStreamButton.centerYAnchor.constraint(equalTo: shadowPhotoView.centerYAnchor),
+            startStreamButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -16)
         ])
         
         

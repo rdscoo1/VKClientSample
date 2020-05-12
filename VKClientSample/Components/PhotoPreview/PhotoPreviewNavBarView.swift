@@ -14,11 +14,10 @@ class PhotoPreviewNavBarView: UIView {
     let photosQuantityLabel = UILabel()
     let moreButton = UIButton()
     
-    init(selectedPhotoNumber: Int) {
+    init() {
         super.init(frame: .zero)
         
         configureUI()
-//        setPhotosQuantityLabel(selectedPhotoNumber: selectedPhotoNumber)
         
         addSubview(backButton)
         addSubview(photosQuantityLabel)
@@ -31,9 +30,9 @@ class PhotoPreviewNavBarView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    private func setPhotosQuantityLabel(selectedPhotoNumber: Int) {
-//        photosQuantityLabel.text = "\(selectedPhotoNumber) of \(photosQuantity)"
-//    }
+    func setNavBarTitle(selectedPhotoNumber: Int, photoQuantity: Int) {
+        photosQuantityLabel.text = "\(selectedPhotoNumber + 1) of \(photoQuantity)"
+    }
     
     private func configureUI() {
         backgroundColor = UIColor(hex: "#2E2E2E", alpha: 0.8)

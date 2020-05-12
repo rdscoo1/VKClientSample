@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Gl5-hz-FdW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="lFq-nV-oYe">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -191,14 +191,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Find friend" id="Le3-ym-KIR">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <searchBar key="tableHeaderView" contentMode="center" searchBarStyle="minimal" text="" placeholder="Search" id="Le3-ym-KIR">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="friendCell" rowHeight="64" id="Vba-ut-n0R" customClass="FriendCell" customModule="VKClientSample" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="64"/>
+                                <rect key="frame" x="0.0" y="84" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Vba-ut-n0R" id="0qg-r0-Jr9">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
@@ -247,22 +247,7 @@
                             <outlet property="delegate" destination="CF1-88-Hcz" id="yEr-u4-lX3"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Friends" id="p9k-Wd-Bdq">
-                        <barButtonItem key="leftBarButtonItem" title="Log Out" style="done" id="9r0-PN-AdY">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <segue destination="HJi-go-Q0w" kind="unwind" unwindAction="logOut:" id="mib-pV-4PM"/>
-                            </connections>
-                        </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem systemItem="add" id="onP-vV-pem">
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </barButtonItem>
-                            <barButtonItem image="qrScannerIcon" id="W8d-bv-Mb9">
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </barButtonItem>
-                        </rightBarButtonItems>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Friends" id="p9k-Wd-Bdq"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="9XA-bW-Lmp">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -276,7 +261,6 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="and-NK-EKI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="HJi-go-Q0w" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2605.5999999999999" y="-305.39730134932535"/>
         </scene>
@@ -288,21 +272,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <connections>
                             <outlet property="dataSource" destination="aby-sz-shg" id="VZo-Zc-uKu"/>
                             <outlet property="delegate" destination="aby-sz-shg" id="oDg-xS-bwB"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Communities" id="Zi5-Ui-G5c">
-                        <barButtonItem key="leftBarButtonItem" title="Log Out" style="done" id="mBK-1a-YMQ">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <segue destination="mzh-fQ-l7m" kind="unwind" unwindAction="logOut:" id="vQh-9W-kHG"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="qTH-yp-ZUR">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                             <connections>
                                 <segue destination="YFT-9s-3kN" kind="show" identifier="addCommunity" id="eZo-n5-SxK"/>
                             </connections>
@@ -318,7 +295,6 @@
                     </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lu4-ey-1Bh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="mzh-fQ-l7m" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2606" y="504"/>
         </scene>
@@ -349,9 +325,8 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5Nk-s1-NM7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.27450980390000002" green="0.50196078430000002" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                         </textAttributes>
                     </navigationBar>
                     <connections>
@@ -361,6 +336,50 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4E0-FD-7RI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1369" y="504"/>
+        </scene>
+        <!--Profile-->
+        <scene sceneID="4Eu-hC-3km">
+            <objects>
+                <tableViewController id="cai-XP-eCa" customClass="ProfileTableViewController" customModule="VKClientSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="k5d-nQ-Jsc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="cai-XP-eCa" id="mcs-fZ-ebl"/>
+                            <outlet property="delegate" destination="cai-XP-eCa" id="vPv-lt-X8q"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Profile" id="phv-LR-CKj">
+                        <barButtonItem key="leftBarButtonItem" title="Log Out" style="done" id="iio-Ce-arl">
+                            <color key="tintColor" red="0.27450980390000002" green="0.50196078430000002" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <segue destination="jx1-zI-Rax" kind="unwind" unwindAction="logOut:" id="vJj-Kx-lt0"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6yl-wf-kXu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="jx1-zI-Rax" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2606" y="1447"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="5CU-pj-QLZ">
+            <objects>
+                <navigationController id="02R-z9-njK" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="profile" id="7cU-Ym-Gtm"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tJk-x9-ytv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="cai-XP-eCa" kind="relationship" relationship="rootViewController" id="4V5-im-Vgs"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tRc-8N-fgG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1369" y="1447"/>
         </scene>
         <!--Photos-->
         <scene sceneID="gsN-Hu-4Nq">
@@ -444,17 +463,9 @@
                             <outlet property="delegate" destination="i9E-BS-zP8" id="bSN-de-eeV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="News" id="UU2-RS-Db0">
-                        <barButtonItem key="leftBarButtonItem" title="Log Out" style="done" id="G4d-c1-Mqb">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <segue destination="VFw-r7-41m" kind="unwind" unwindAction="logOut:" id="Xel-mx-YZZ"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="News" id="UU2-RS-Db0"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7NK-6U-4B0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="VFw-r7-41m" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2606" y="-1126"/>
         </scene>
@@ -466,9 +477,8 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="P9m-bG-asm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.27450980390000002" green="0.50196078430000002" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                         </textAttributes>
                     </navigationBar>
                     <connections>
@@ -490,9 +500,8 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QpY-uO-ed6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.27450980390000002" green="0.50196078430000002" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                         </textAttributes>
                     </navigationBar>
                     <connections>
@@ -519,6 +528,7 @@
                         <segue destination="avM-3d-OPd" kind="relationship" relationship="viewControllers" id="Dxc-Iy-DR7"/>
                         <segue destination="2Q5-50-Lng" kind="relationship" relationship="viewControllers" id="v4b-I3-Fo1"/>
                         <segue destination="Syz-Hf-mdV" kind="relationship" relationship="viewControllers" id="8Wv-bi-IPn"/>
+                        <segue destination="02R-z9-njK" kind="relationship" relationship="viewControllers" id="V3X-qe-ZyF"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="56z-zC-B95" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -528,11 +538,11 @@
     </scenes>
     <resources>
         <image name="anya" width="200" height="200"/>
-        <image name="communities" width="31" height="20"/>
-        <image name="friends" width="23" height="23"/>
+        <image name="communities" width="37" height="18"/>
+        <image name="friends" width="31" height="20"/>
         <image name="maria" width="225" height="338"/>
         <image name="newsfeed" width="28" height="28"/>
-        <image name="qrScannerIcon" width="24" height="24"/>
+        <image name="profile" width="25" height="24"/>
         <image name="vklogo" width="143" height="143"/>
     </resources>
 </document>
