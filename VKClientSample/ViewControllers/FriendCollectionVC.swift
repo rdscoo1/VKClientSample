@@ -68,7 +68,8 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
         vc.friendPreviewPhotos = photosUrlsHighRes
         let selectedPhotoNumber = indexPath.row
         vc.selectedPhoto = selectedPhotoNumber
-        vc.photosPreviewNavBar.photosQuantityLabel.text = "\(selectedPhotoNumber + 1) of \(photosUrlsHighRes.count)"
+        vc.friendPhotosQuantity = photosUrlsHighRes.count
+        vc.photosPreviewNavBar.setNavBarTitle(selectedPhotoNumber: selectedPhotoNumber, photoQuantity: photosUrlsHighRes.count)
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
     }

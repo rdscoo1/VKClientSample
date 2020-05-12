@@ -46,11 +46,10 @@ class VKApi {
             AF.request(requestUrl, method: method, parameters: params)
                 .validate(statusCode: 200..<300)
                 .responseData { response in
+                    print("📩📩📩 VKApi Response: 📩📩📩")
+                    print(response.result)
                     switch response.result {
                     case let .success(data):
-    //                    print("📩📩📩 VKApi Response: 📩📩📩")
-    //                    print(data)
-                        
                         do {
                             let decodedModel = try JSONDecoder().decode(VKResponse<ResponseType>.self, from: data)
                             guard let responseData = decodedModel.response else {

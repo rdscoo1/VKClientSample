@@ -11,7 +11,7 @@ import UIKit
 class PhotoPreviewVC: UIViewController {
     
     let currentPhoto = UIImageView()
-    let photosPreviewNavBar = PhotoPreviewNavBarView(selectedPhotoNumber: 0)
+    let photosPreviewNavBar = PhotoPreviewNavBarView()
     let photoPreviewFooter = PhotoPreviewFooter()
     var isToolBarOpened: Bool = false
     
@@ -38,21 +38,19 @@ class PhotoPreviewVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureUI()
-        
+        view.backgroundColor = .black
+                
         view.addSubview(currentPhoto)
         view.addSubview(photosPreviewNavBar)
         view.addSubview(photoPreviewFooter)
+        
+        configureUI()
         setConstraints()
         
         configureSwipeGestures()
     }
     
     private func configureUI() {
-        //        photosPreviewNavBar.photosQuantityLabel.text =
-        
-        view.backgroundColor = .black
-        
         currentPhoto.autoresizingMask = UIView.AutoresizingMask(rawValue: UIView.AutoresizingMask.flexibleBottomMargin.rawValue | UIView.AutoresizingMask.flexibleHeight.rawValue | UIView.AutoresizingMask.flexibleRightMargin.rawValue | UIView.AutoresizingMask.flexibleLeftMargin.rawValue | UIView.AutoresizingMask.flexibleTopMargin.rawValue | UIView.AutoresizingMask.flexibleWidth.rawValue)
         currentPhoto.contentMode = .scaleAspectFit
         currentPhoto.clipsToBounds = true
@@ -144,6 +142,7 @@ extension PhotoPreviewVC: UIGestureRecognizerDelegate {
                 if selectedPhoto == friendPreviewPhotos.count - 1 {
                 } else {
                     selectedPhoto += 1
+                    photosPreviewNavBar.setNavBarTitle(selectedPhotoNumber: selectedPhoto, photoQuantity: friendPhotosQuantity)
                 }
                 if let photoUrl = URL(string: friendPreviewPhotos[selectedPhoto]!) {
                     currentPhoto.kf.setImage(with: photoUrl)
@@ -152,6 +151,7 @@ extension PhotoPreviewVC: UIGestureRecognizerDelegate {
                 if selectedPhoto == 0 {
                 } else {
                     selectedPhoto -= 1
+                    photosPreviewNavBar.setNavBarTitle(selectedPhotoNumber: selectedPhoto, photoQuantity: friendPhotosQuantity)
                 }
                 if let photoUrl = URL(string: friendPreviewPhotos[selectedPhoto]!) {
                     currentPhoto.kf.setImage(with: photoUrl)
