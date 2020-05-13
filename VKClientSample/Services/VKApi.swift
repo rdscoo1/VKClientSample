@@ -28,43 +28,43 @@ class VKApi {
                                                     type: ResponseType.Type,
                                                     method: HTTPMethod = .get,
                                                     completion: @escaping ([ResponseType]) -> Void) {
-            let requestUrl = apiURL + request.rawValue
-            let defaultParams: [String : Any] = [
-                "access_token": token,
-                "user_id": userId,
-                "v": "5.103"
-            ]
-            let params = defaultParams.merging(inputParams, uniquingKeysWith: { currentKey, _ in currentKey })
-            
-            AF.request(requestUrl, method: method, parameters: params)
-                .validate(statusCode: 200..<300)
-                .responseData { response in
-                    print("📩📩📩 VKApi Response: 📩📩📩")
-                    print(response.result)
-                    switch response.result {
-                    case let .success(data):
-                        do {
-                            let decodedModel = try JSONDecoder().decode(VKResponse<ResponseType>.self, from: data)
-                            guard let responseData = decodedModel.response else {
-                                return
-                            }
-                            completion(responseData.items)
-                        } catch {
-                            print("❌ \(error)")
+        let requestUrl = apiURL + request.rawValue
+        let defaultParams: [String : Any] = [
+            "access_token": token,
+            "user_id": userId,
+            "v": "5.103"
+        ]
+        let params = defaultParams.merging(inputParams, uniquingKeysWith: { currentKey, _ in currentKey })
+        
+        AF.request(requestUrl, method: method, parameters: params)
+            .validate(statusCode: 200..<300)
+            .responseData { response in
+                print("📩📩📩 VKApi Response: 📩📩📩")
+                print(response.result)
+                switch response.result {
+                case let .success(data):
+                    do {
+                        let decodedModel = try JSONDecoder().decode(VKResponse<ResponseType>.self, from: data)
+                        guard let responseData = decodedModel.response else {
+                            return
                         }
-                    case let .failure(error):
-                        print(error)
+                        completion(responseData.items)
+                    } catch {
+                        print("❌ \(error)")
                     }
+                case let .failure(error):
+                    print(error)
+                }
         }
     }
     
-    func getUserInfo(ownerId: Int, completion: @escaping ([VKFriend]) -> Void) { // Сделать модель и доделать модель
+    func getUserInfo(ownerId: Int, completion: @escaping ([VKFriend]) -> Void) {
         let params = [
             "user_id": userId,
             "fields": "city,"
-            + "photo_50,"
-            + "online,"
-            + "status"
+                + "photo_50,"
+                + "online,"
+                + "status"
         ]
         
         doRequest(request: .userInfo, params: params, type: VKFriend.self, completion: completion)
@@ -74,7 +74,7 @@ class VKApi {
         let params = [
             "extended" : "1",
             "fields": "activity,"
-            + "description"
+                + "description"
         ]
         
         doRequest(request: .groups, params: params, type: VKCommunity.self) { response in
@@ -98,7 +98,7 @@ class VKApi {
             "user_id": userId,
             "order": "hints",
             "fields": "city,"
-            + "photo_200_orig"
+                + "photo_200_orig"
         ]
         
         doRequest(request: .friends, params: params, type: VKFriend.self, completion: completion)
