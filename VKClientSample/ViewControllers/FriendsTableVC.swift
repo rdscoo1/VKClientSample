@@ -10,11 +10,19 @@ import UIKit
 
 class FriendsTableVC: UITableViewController {
     
+    let vkApi = VKApi()
     @IBOutlet weak var searchBar: UISearchBar!
     private var activityIndicator = UIActivityIndicatorView()
     
-    var items: [VKFriendProtocol] = []
-    var friendsInSection: [Section<VKFriendProtocol>] = []
+    var items = [VKFriendProtocol]()
+    var friendsInSection = [Section<VKFriendProtocol>]()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let selectionIndexPath = self.tableView.indexPathForSelectedRow {
+            self.tableView.deselectRow(at: selectionIndexPath, animated: animated)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,13 +34,6 @@ class FriendsTableVC: UITableViewController {
         
         configureActivityIndicator()
         requestFromApi()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if let selectionIndexPath = self.tableView.indexPathForSelectedRow {
-            self.tableView.deselectRow(at: selectionIndexPath, animated: animated)
-        }
     }
     
     private func configureActivityIndicator() {
@@ -47,20 +48,50 @@ class FriendsTableVC: UITableViewController {
         }
     }
     
-    @IBAction func refresh(_ sender: UIRefreshControl) {
-        requestFromApi()
-        
-        sender.endRefreshing()        
-    }
-    
     func handleFriends(items: [VKFriendProtocol]) -> [Section<VKFriendProtocol>] {
         return Dictionary(grouping: items) { $0.lastName.prefix(1) }
             .map { Section<VKFriendProtocol>(title: "\($0.key)", items: $0.value) }
             .sorted(by: { $0.title < $1.title })
     }
-
-    // MARK: - Table view data source
     
+    private func requestFromApi() {
+        vkApi.getFriends { friends in
+            DispatchQueue.main.async {
+                self.items = friends
+                self.friendsInSection = self.handleFriends(items: friends)
+                self.tableView.reloadData()
+            }
+        }
+        
+        self.activityIndicator.stopAnimating()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.tableView.alpha = 1.0
+        })
+    }
+    
+    @IBAction func refresh(_ sender: UIRefreshControl) {
+        requestFromApi()
+        
+        sender.endRefreshing()
+    }
+    
+    
+    // MARK: - Navigation
+    //
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let segueId = segue.identifier,
+            segueId == "friendPhotosSegue",
+            let friendPhotos = segue.destination as? FriendCollectionVC,
+            let selectedIndex = tableView.indexPathForSelectedRow {
+            friendPhotos.friendId = friendsInSection[selectedIndex.section].items[selectedIndex.row].id
+        }
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+        self.navigationController!.navigationBar.tintColor = Constants.Colors.vkBlue
+    }
+}
+
+extension FriendsTableVC {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return friendsInSection.count
     }
@@ -68,7 +99,7 @@ class FriendsTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return friendsInSection[section].title
     }
-
+    
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         return friendsInSection.map { $0.title }
     }
@@ -84,42 +115,6 @@ class FriendsTableVC: UITableViewController {
         
         return cell
     }
-    
-    
-    // MARK: - Navigation
-//
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let segueId = segue.identifier,
-            segueId == "friendPhotosSegue",
-            let friendPhotos = segue.destination as? FriendCollectionVC,
-            let selectedIndex = tableView.indexPathForSelectedRow {
-            friendPhotos.friendId = friendsInSection[selectedIndex.section].items[selectedIndex.row].id
-        }
-
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
-        self.navigationController!.navigationBar.tintColor = Constants.Colors.vkBlue
-    }
-    
-    private func requestFromApi() {
-        let token = Session.shared.token
-        let userId = Session.shared.userId
-        let vkApi = VKApi(token: token, userId: userId)
-        
-        vkApi.getFriends { friends in
-            DispatchQueue.main.async {
-                self.items = friends
-                self.friendsInSection = self.handleFriends(items: friends)
-                self.tableView.reloadData()
-            }
-        }
-        
-        self.activityIndicator.stopAnimating()
-        UIView.animate(withDuration: 0.2, animations: {
-            self.tableView.alpha = 1.0
-        })
-    }
-    
-    
 }
 
 extension FriendsTableVC: UISearchBarDelegate {
@@ -129,7 +124,7 @@ extension FriendsTableVC: UISearchBarDelegate {
                 $0.lastName.lowercased().contains(searchText.lowercased())
             })
         } else {
-           friendsInSection = handleFriends(items: items)
+            friendsInSection = handleFriends(items: items)
         }
         tableView.reloadData()
     }

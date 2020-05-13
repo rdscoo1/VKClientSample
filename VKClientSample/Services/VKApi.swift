@@ -20,71 +20,64 @@ enum ApiRequests: String {
 
 class VKApi {
     let apiURL = "https://api.vk.com/method/"
+    let token = Session.shared.token
+    let userId = Session.shared.userId
     
-    var token: String
-    var userId: String
-    
-    init(token: String, userId: String) {
-        self.token = token
-        self.userId = userId
-    }
-    
-    private func doRequest<ResponseType: Decodable>(token: String,
-                                                    request: ApiRequests,
+    private func doRequest<ResponseType: Decodable>(request: ApiRequests,
                                                     params inputParams: [String: Any],
                                                     type: ResponseType.Type,
                                                     method: HTTPMethod = .get,
                                                     completion: @escaping ([ResponseType]) -> Void) {
-            let requestUrl = apiURL + request.rawValue
-            let defaultParams: [String : Any] = [
-                "access_token": token,
-                "user_id": userId,
-                "v": "5.103"
-            ]
-            let params = defaultParams.merging(inputParams, uniquingKeysWith: { currentKey, _ in currentKey })
-            
-            AF.request(requestUrl, method: method, parameters: params)
-                .validate(statusCode: 200..<300)
-                .responseData { response in
-                    print("📩📩📩 VKApi Response: 📩📩📩")
-                    print(response.result)
-                    switch response.result {
-                    case let .success(data):
-                        do {
-                            let decodedModel = try JSONDecoder().decode(VKResponse<ResponseType>.self, from: data)
-                            guard let responseData = decodedModel.response else {
-                                return
-                            }
-                            completion(responseData.items)
-                        } catch {
-                            print("❌ \(error)")
+        let requestUrl = apiURL + request.rawValue
+        let defaultParams: [String : Any] = [
+            "access_token": token,
+            "user_id": userId,
+            "v": "5.103"
+        ]
+        let params = defaultParams.merging(inputParams, uniquingKeysWith: { currentKey, _ in currentKey })
+        
+        AF.request(requestUrl, method: method, parameters: params)
+            .validate(statusCode: 200..<300)
+            .responseData { response in
+                print("📩📩📩 VKApi Response: 📩📩📩")
+                print(response.result)
+                switch response.result {
+                case let .success(data):
+                    do {
+                        let decodedModel = try JSONDecoder().decode(VKResponse<ResponseType>.self, from: data)
+                        guard let responseData = decodedModel.response else {
+                            return
                         }
-                    case let .failure(error):
-                        print(error)
+                        completion(responseData.items)
+                    } catch {
+                        print("❌ \(error)")
                     }
+                case let .failure(error):
+                    print(error)
+                }
         }
     }
     
-    func getUserInfo(ownerId: Int, completion: @escaping ([VKFriend]) -> Void) { // Сделать модель и доделать модель
+    func getUserInfo(ownerId: Int, completion: @escaping ([VKFriend]) -> Void) {
         let params = [
             "user_id": userId,
             "fields": "city,"
-            + "photo_50,"
-            + "online,"
-            + "status"
+                + "photo_50,"
+                + "online,"
+                + "status"
         ]
         
-        doRequest(token: token, request: .userInfo, params: params, type: VKFriend.self, completion: completion)
+        doRequest(request: .userInfo, params: params, type: VKFriend.self, completion: completion)
     }
     
     func getGroups(completion: @escaping ([VKCommunity]) -> Void) {
         let params = [
             "extended" : "1",
             "fields": "activity,"
-            + "description"
+                + "description"
         ]
         
-        doRequest(token: token, request: .groups, params: params, type: VKCommunity.self) { response in
+        doRequest(request: .groups, params: params, type: VKCommunity.self) { response in
             completion(response)
         }
     }
@@ -97,7 +90,7 @@ class VKApi {
             "fields": "city, domain",
         ]
         
-        doRequest(token: token, request: .groupsSearch, params: params, type: VKCommunity.self, completion: completion)
+        doRequest(request: .groupsSearch, params: params, type: VKCommunity.self, completion: completion)
     }
     
     func getFriends(completion: @escaping ([VKFriend]) -> Void) {
@@ -105,10 +98,10 @@ class VKApi {
             "user_id": userId,
             "order": "hints",
             "fields": "city,"
-            + "photo_200_orig"
+                + "photo_200_orig"
         ]
         
-        doRequest(token: token, request: .friends, params: params, type: VKFriend.self, completion: completion)
+        doRequest(request: .friends, params: params, type: VKFriend.self, completion: completion)
     }
     
     func getPhotos(ownerId: Int, completion: @escaping ([VKPhoto]) -> Void) {
@@ -118,7 +111,7 @@ class VKApi {
             "extended": "1" //для получения лайков
         ]
         
-        doRequest(token: token, request: .photos, params: params, type: VKPhoto.self, completion: completion)
+        doRequest(request: .photos, params: params, type: VKPhoto.self, completion: completion)
     }
     
     func getAllPhotos(ownerId: String, completion: @escaping ([VKPhoto]) -> Void) {
@@ -126,6 +119,6 @@ class VKApi {
             "owner_id": ownerId
         ]
         
-        doRequest(token: token, request: .allPhotos, params: params, type: VKPhoto.self, completion: completion)
+        doRequest(request: .allPhotos, params: params, type: VKPhoto.self, completion: completion)
     }
 }
