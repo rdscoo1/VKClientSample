@@ -20,17 +20,10 @@ enum ApiRequests: String {
 
 class VKApi {
     let apiURL = "https://api.vk.com/method/"
+    let token = Session.shared.token
+    let userId = Session.shared.userId
     
-    var token: String
-    var userId: String
-    
-    init(token: String, userId: String) {
-        self.token = token
-        self.userId = userId
-    }
-    
-    private func doRequest<ResponseType: Decodable>(token: String,
-                                                    request: ApiRequests,
+    private func doRequest<ResponseType: Decodable>(request: ApiRequests,
                                                     params inputParams: [String: Any],
                                                     type: ResponseType.Type,
                                                     method: HTTPMethod = .get,
@@ -74,7 +67,7 @@ class VKApi {
             + "status"
         ]
         
-        doRequest(token: token, request: .userInfo, params: params, type: VKFriend.self, completion: completion)
+        doRequest(request: .userInfo, params: params, type: VKFriend.self, completion: completion)
     }
     
     func getGroups(completion: @escaping ([VKCommunity]) -> Void) {
@@ -84,7 +77,7 @@ class VKApi {
             + "description"
         ]
         
-        doRequest(token: token, request: .groups, params: params, type: VKCommunity.self) { response in
+        doRequest(request: .groups, params: params, type: VKCommunity.self) { response in
             completion(response)
         }
     }
@@ -97,7 +90,7 @@ class VKApi {
             "fields": "city, domain",
         ]
         
-        doRequest(token: token, request: .groupsSearch, params: params, type: VKCommunity.self, completion: completion)
+        doRequest(request: .groupsSearch, params: params, type: VKCommunity.self, completion: completion)
     }
     
     func getFriends(completion: @escaping ([VKFriend]) -> Void) {
@@ -108,7 +101,7 @@ class VKApi {
             + "photo_200_orig"
         ]
         
-        doRequest(token: token, request: .friends, params: params, type: VKFriend.self, completion: completion)
+        doRequest(request: .friends, params: params, type: VKFriend.self, completion: completion)
     }
     
     func getPhotos(ownerId: Int, completion: @escaping ([VKPhoto]) -> Void) {
@@ -118,7 +111,7 @@ class VKApi {
             "extended": "1" //для получения лайков
         ]
         
-        doRequest(token: token, request: .photos, params: params, type: VKPhoto.self, completion: completion)
+        doRequest(request: .photos, params: params, type: VKPhoto.self, completion: completion)
     }
     
     func getAllPhotos(ownerId: String, completion: @escaping ([VKPhoto]) -> Void) {
@@ -126,6 +119,6 @@ class VKApi {
             "owner_id": ownerId
         ]
         
-        doRequest(token: token, request: .allPhotos, params: params, type: VKPhoto.self, completion: completion)
+        doRequest(request: .allPhotos, params: params, type: VKPhoto.self, completion: completion)
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 
 class AddCommunitiyTableVC: UITableViewController {
     
-    var communities: [Community] = []
+    var communities = [Community]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,14 +31,14 @@ class AddCommunitiyTableVC: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CommunityCell.reuseId, for: indexPath) as? CommunityCell else {
             return UITableViewCell()
         }
-        let community = communities[indexPath.row]
+//        let community = communities[indexPath.row]
 //        cell.setCommunities(community: community)
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let addedCommunity = communities[indexPath.row]
+//        let addedCommunity = communities[indexPath.row]
         let communityVC = navigationController?.children.first { $0 is CommunitiesTableVC } as? CommunitiesTableVC
 //        communityVC?.communities.append(addedCommunity)
         communityVC?.tableView.reloadData()

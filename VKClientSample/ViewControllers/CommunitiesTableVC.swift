@@ -12,7 +12,8 @@ import SnapKit
 
 class CommunitiesTableVC: UITableViewController {
     
-    var communities: [VKCommunityProtocol] = []
+    let vkApi = VKApi()
+    var communities = [VKCommunityProtocol]()
     private var activityIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
@@ -42,12 +43,42 @@ class CommunitiesTableVC: UITableViewController {
         }
     }
     
-    // MARK: - Table view data source
+    private func requestFromApi() {
+        vkApi.getGroups { [weak self] groups in
+            DispatchQueue.main.async {
+                self?.communities = groups
+                self?.tableView.reloadData()
+            }
+        }
+        
+        self.activityIndicator.stopAnimating()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.tableView.alpha = 1.0
+        })
+    }
     
-    //    override func numberOfSections(in tableView: UITableView) -> Int {
-    //        return communities.count
-    //    }
+    @IBAction func refresh(_ sender: UIRefreshControl) {
+        requestFromApi()
+        
+        sender.endRefreshing()
+    }
     
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //        if
+        //            segue.identifier == "addCommunity",
+        //            let addCommunityVC = segue.destination as? AddCommunitiyTableVC
+        //        {
+        //            let availableCommunities = Set(Community.communities).subtracting(communities)
+        //            addCommunityVC.communities = Array(availableCommunities)
+        //        }
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+        self.navigationController!.navigationBar.tintColor = Constants.Colors.vkBlue
+    }
+}
+
+extension CommunitiesTableVC {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return communities.count
     }
@@ -65,51 +96,12 @@ class CommunitiesTableVC: UITableViewController {
         }
         
         return cell
-    }    
+    }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             communities.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
-    }
-    
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //        if
-        //            segue.identifier == "addCommunity",
-        //            let addCommunityVC = segue.destination as? AddCommunitiyTableVC
-        //        {
-        //            let availableCommunities = Set(Community.communities).subtracting(communities)
-        //            addCommunityVC.communities = Array(availableCommunities)
-        //        }
-        
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
-        self.navigationController!.navigationBar.tintColor = Constants.Colors.vkBlue
-    }
-    
-    
-    @IBAction func refresh(_ sender: UIRefreshControl) {
-        requestFromApi()
-        
-        sender.endRefreshing()
-    }
-    
-    private func requestFromApi() {
-        let token = Session.shared.token
-        let userId = Session.shared.userId
-        let vkApi = VKApi(token: token, userId: userId)
-        
-        vkApi.getGroups { [weak self] groups in
-            DispatchQueue.main.async {
-                self?.communities = groups
-                self?.tableView.reloadData()
-            }
-        }
-        
-        self.activityIndicator.stopAnimating()
-        UIView.animate(withDuration: 0.2, animations: {
-            self.tableView.alpha = 1.0
-        })
     }
 }

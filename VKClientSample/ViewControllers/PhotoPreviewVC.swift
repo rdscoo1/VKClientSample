@@ -10,14 +10,14 @@ import UIKit
 
 class PhotoPreviewVC: UIViewController {
     
-    let currentPhoto = UIImageView()
     let photosPreviewNavBar = PhotoPreviewNavBarView()
     let photoPreviewFooter = PhotoPreviewFooter()
     var isToolBarOpened: Bool = false
     
+    let currentPhoto = UIImageView()
     var friendPreviewPhotos = [String?]()
-    var friendPhotosQuantity: Int = 0
-    var selectedPhoto = 0
+    var friendPhotosQuantity = Int()
+    var selectedPhoto = Int()
     
     var isStatusBarHidden: Bool = true {
         didSet {
@@ -31,15 +31,11 @@ class PhotoPreviewVC: UIViewController {
         return self.isStatusBarHidden
     }
     
-    //    override func viewDidAppear(_ animated: Bool) {
-    //        navigationController?.navigationBar.barStyle = .black
-    //    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .black
-                
+        
         view.addSubview(currentPhoto)
         view.addSubview(photosPreviewNavBar)
         view.addSubview(photoPreviewFooter)
@@ -63,6 +59,9 @@ class PhotoPreviewVC: UIViewController {
         photoPreviewFooter.alpha = 0.0
         
         photosPreviewNavBar.addButtonTarget(target: self, action: #selector(dissmissPhotoPreviewVC))
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handeTapGesture))
+        view.addGestureRecognizer(tap)
     }
     
     private func setConstraints() {
@@ -95,25 +94,6 @@ class PhotoPreviewVC: UIViewController {
     @objc func dissmissPhotoPreviewVC() {
         self.dismiss(animated: true, completion: nil)
     }
-}
-
-extension PhotoPreviewVC: UIGestureRecognizerDelegate {
-    private func configureSwipeGestures() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(gesture:)))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
-        
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(gesture:)))
-        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
-        self.view.addGestureRecognizer(swipeLeft)
-        
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(gesture:)))
-        swipeDown.direction = UISwipeGestureRecognizer.Direction.down
-        self.view.addGestureRecognizer(swipeDown)
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handeTapGesture))
-        view.addGestureRecognizer(tap)
-    }
     
     @objc func handeTapGesture(sender: UITapGestureRecognizer) {
         isToolBarOpened = !isToolBarOpened
@@ -132,6 +112,22 @@ extension PhotoPreviewVC: UIGestureRecognizerDelegate {
             })
         }
     }
+}
+
+extension PhotoPreviewVC: UIGestureRecognizerDelegate {
+    private func configureSwipeGestures() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(gesture:)))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(gesture:)))
+        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
+        self.view.addGestureRecognizer(swipeLeft)
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(gesture:)))
+        swipeDown.direction = UISwipeGestureRecognizer.Direction.down
+        self.view.addGestureRecognizer(swipeDown)
+    }
     
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
@@ -139,52 +135,24 @@ extension PhotoPreviewVC: UIGestureRecognizerDelegate {
             case UISwipeGestureRecognizer.Direction.down:
                 self.dismiss(animated: true, completion: nil)
             case UISwipeGestureRecognizer.Direction.left:
-                if selectedPhoto == friendPreviewPhotos.count - 1 {
-                } else {
+                if selectedPhoto != friendPreviewPhotos.count - 1 {
                     selectedPhoto += 1
+                    if let photoUrl = URL(string: friendPreviewPhotos[selectedPhoto]!) {
+                        currentPhoto.kf.setImage(with: photoUrl)
+                    }
                     photosPreviewNavBar.setNavBarTitle(selectedPhotoNumber: selectedPhoto, photoQuantity: friendPhotosQuantity)
-                }
-                if let photoUrl = URL(string: friendPreviewPhotos[selectedPhoto]!) {
-                    currentPhoto.kf.setImage(with: photoUrl)
                 }
             case UISwipeGestureRecognizer.Direction.right:
-                if selectedPhoto == 0 {
-                } else {
+                if selectedPhoto != 0 {
                     selectedPhoto -= 1
+                    if let photoUrl = URL(string: friendPreviewPhotos[selectedPhoto]!) {
+                        currentPhoto.kf.setImage(with: photoUrl)
+                    }
                     photosPreviewNavBar.setNavBarTitle(selectedPhotoNumber: selectedPhoto, photoQuantity: friendPhotosQuantity)
-                }
-                if let photoUrl = URL(string: friendPreviewPhotos[selectedPhoto]!) {
-                    currentPhoto.kf.setImage(with: photoUrl)
                 }
             default:
                 break
             }
         }
     }
-    
-    
-    //    private func addGesture(view: UIView) {
-    //        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
-    //        view.addGestureRecognizer(pan)
-    //    }
-    
-    //    func moveWithPan(view: UIView, sender: UIPanGestureRecognizer) {
-    //        let translation = sender.translation(in: view)
-    //
-    //        view.center = CGPoint(x: view.center.x + translation.x, y: view.center.y + translation.y)
-    //        sender.setTranslation(CGPoint.zero, in: view)
-    //    }
-    
-    //    @objc func handlePanGesture(sender: UIPanGestureRecognizer) {
-    //        let currentPhoto = sender.view!
-    //
-    //        switch sender.state {
-    //        case .began, .changed:
-    //            moveWithPan(view: currentPhoto, sender: sender)
-    //        case .ended:
-    //            print("PanGesture ended")
-    //        default:
-    //            break
-    //        }
-    //    }
 }
