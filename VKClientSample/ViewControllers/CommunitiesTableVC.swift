@@ -64,15 +64,7 @@ class CommunitiesTableVC: UITableViewController {
     }
     
     // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //        if
-        //            segue.identifier == "addCommunity",
-        //            let addCommunityVC = segue.destination as? AddCommunitiyTableVC
-        //        {
-        //            let availableCommunities = Set(Community.communities).subtracting(communities)
-        //            addCommunityVC.communities = Array(availableCommunities)
-        //        }
-        
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {        
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
         self.navigationController!.navigationBar.tintColor = Constants.Colors.vkBlue
     }

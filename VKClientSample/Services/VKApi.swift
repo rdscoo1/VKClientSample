@@ -23,13 +23,12 @@ class VKApi {
     let token = Session.shared.token
     let userId = Session.shared.userId
     
-    private func doRequest<ResponseType: Decodable>(request: ApiRequests,
-                                                    params inputParams: [String: Any],
-                                                    type: ResponseType.Type,
-                                                    method: HTTPMethod = .get,
-                                                    completion: @escaping ([ResponseType]) -> Void) {
+    private func makeRequest<ResponseType: Decodable>(request: ApiRequests,
+                                                      params inputParams: Parameters,
+                                                      method: HTTPMethod = .get,
+                                                      completion: @escaping ([ResponseType]) -> Void) {
         let requestUrl = apiURL + request.rawValue
-        let defaultParams: [String : Any] = [
+        let defaultParams: Parameters = [
             "access_token": token,
             "user_id": userId,
             "v": "5.103"
@@ -39,8 +38,6 @@ class VKApi {
         AF.request(requestUrl, method: method, parameters: params)
             .validate(statusCode: 200..<300)
             .responseData { response in
-                print("📩📩📩 VKApi Response: 📩📩📩")
-                print(response.result)
                 switch response.result {
                 case let .success(data):
                     do {
@@ -48,6 +45,8 @@ class VKApi {
                         guard let responseData = decodedModel.response else {
                             return
                         }
+//                        print("📩📩📩 Method \(request.rawValue) response: 📩📩📩")
+//                        print(responseData.items)
                         completion(responseData.items)
                     } catch {
                         print("❌ \(error)")
@@ -67,7 +66,7 @@ class VKApi {
                 + "status"
         ]
         
-        doRequest(request: .userInfo, params: params, type: VKFriend.self, completion: completion)
+        makeRequest(request: .userInfo, params: params, completion: completion)
     }
     
     func getGroups(completion: @escaping ([VKCommunity]) -> Void) {
@@ -77,9 +76,7 @@ class VKApi {
                 + "description"
         ]
         
-        doRequest(request: .groups, params: params, type: VKCommunity.self) { response in
-            completion(response)
-        }
+        makeRequest(request: .groups, params: params, completion: completion)
     }
     
     func getSearchedGroups(groupName: String, completion: @escaping ([VKCommunity]) -> Void) {
@@ -90,7 +87,7 @@ class VKApi {
             "fields": "city, domain",
         ]
         
-        doRequest(request: .groupsSearch, params: params, type: VKCommunity.self, completion: completion)
+        makeRequest(request: .groupsSearch, params: params, completion: completion)
     }
     
     func getFriends(completion: @escaping ([VKFriend]) -> Void) {
@@ -101,7 +98,7 @@ class VKApi {
                 + "photo_200_orig"
         ]
         
-        doRequest(request: .friends, params: params, type: VKFriend.self, completion: completion)
+        makeRequest(request: .friends, params: params, completion: completion)
     }
     
     func getPhotos(ownerId: Int, completion: @escaping ([VKPhoto]) -> Void) {
@@ -111,7 +108,7 @@ class VKApi {
             "extended": "1" //для получения лайков
         ]
         
-        doRequest(request: .photos, params: params, type: VKPhoto.self, completion: completion)
+        makeRequest(request: .photos, params: params, completion: completion)
     }
     
     func getAllPhotos(ownerId: String, completion: @escaping ([VKPhoto]) -> Void) {
@@ -119,6 +116,6 @@ class VKApi {
             "owner_id": ownerId
         ]
         
-        doRequest(request: .allPhotos, params: params, type: VKPhoto.self, completion: completion)
+        makeRequest(request: .allPhotos, params: params, completion: completion)
     }
 }

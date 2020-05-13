@@ -44,7 +44,7 @@
 		E87BB7F423E8CE39006C14F6 /* LoadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87BB7F323E8CE39006C14F6 /* LoadView.swift */; };
 		E885799223D1D72200C97694 /* CommunitiesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799123D1D72200C97694 /* CommunitiesTableVC.swift */; };
 		E885799423D1D73A00C97694 /* FriendsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799323D1D73A00C97694 /* FriendsTableVC.swift */; };
-		E885799823D1D7F200C97694 /* AddCommunityTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799723D1D7F200C97694 /* AddCommunityTableVC.swift */; };
+		E885799823D1D7F200C97694 /* SearchCommunitiyTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799723D1D7F200C97694 /* SearchCommunitiyTableVC.swift */; };
 		E8954A7923B15FEA00A93209 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8954A7823B15FEA00A93209 /* AppDelegate.swift */; };
 		E8954A7D23B15FEA00A93209 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8954A7C23B15FEA00A93209 /* LoginViewController.swift */; };
 		E8954A8023B15FEA00A93209 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8954A7E23B15FEA00A93209 /* Main.storyboard */; };
@@ -100,7 +100,7 @@
 		E87BB7F323E8CE39006C14F6 /* LoadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadView.swift; sourceTree = "<group>"; };
 		E885799123D1D72200C97694 /* CommunitiesTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesTableVC.swift; sourceTree = "<group>"; };
 		E885799323D1D73A00C97694 /* FriendsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableVC.swift; sourceTree = "<group>"; };
-		E885799723D1D7F200C97694 /* AddCommunityTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommunityTableVC.swift; sourceTree = "<group>"; };
+		E885799723D1D7F200C97694 /* SearchCommunitiyTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCommunitiyTableVC.swift; sourceTree = "<group>"; };
 		E8954A7523B15FEA00A93209 /* VKClientSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKClientSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8954A7823B15FEA00A93209 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8954A7C23B15FEA00A93209 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -174,7 +174,7 @@
 				E8954A7C23B15FEA00A93209 /* LoginViewController.swift */,
 				E8068CD123DC47E80083FBBE /* NewsTableVC.swift */,
 				E885799123D1D72200C97694 /* CommunitiesTableVC.swift */,
-				E885799723D1D7F200C97694 /* AddCommunityTableVC.swift */,
+				E885799723D1D7F200C97694 /* SearchCommunitiyTableVC.swift */,
 				E885799323D1D73A00C97694 /* FriendsTableVC.swift */,
 				E8CD1C9123D6AC0200C5D668 /* FriendCollectionVC.swift */,
 				E86CCCB023EC669900F3AAA6 /* PhotoPreviewVC.swift */,
@@ -487,7 +487,7 @@
 				E885799223D1D72200C97694 /* CommunitiesTableVC.swift in Sources */,
 				E8068CE523E0E7270083FBBE /* Post.swift in Sources */,
 				E885799423D1D73A00C97694 /* FriendsTableVC.swift in Sources */,
-				E885799823D1D7F200C97694 /* AddCommunityTableVC.swift in Sources */,
+				E885799823D1D7F200C97694 /* SearchCommunitiyTableVC.swift in Sources */,
 				E861CD9923D271EA00D3E9B3 /* CommunityCell.swift in Sources */,
 				E8954A7923B15FEA00A93209 /* AppDelegate.swift in Sources */,
 				E8CD1C9223D6AC0200C5D668 /* FriendCollectionVC.swift in Sources */,
