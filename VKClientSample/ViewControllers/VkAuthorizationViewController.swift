@@ -84,7 +84,6 @@ extension VkAuthorizationViewController: WKNavigationDelegate {
         
         Session.shared.token = params["access_token"] ?? ""
         Session.shared.userId = params["user_id"] ?? ""
-        UserDefaults.standard.isAuthorized = true
                
         goToTabBar()
         decisionHandler(.cancel)

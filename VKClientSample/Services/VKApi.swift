@@ -20,8 +20,6 @@ enum ApiRequests: String {
 
 class VKApi {
     let apiURL = "https://api.vk.com/method/"
-    let token = Session.shared.token
-    let userId = Session.shared.userId
     
     private func makeRequest<ResponseType: Decodable>(request: ApiRequests,
                                                       params inputParams: Parameters,
@@ -29,7 +27,7 @@ class VKApi {
                                                       completion: @escaping ([ResponseType]) -> Void) {
         let requestUrl = apiURL + request.rawValue
         let defaultParams: Parameters = [
-            "access_token": token,
+            "access_token": Session.shared.token,
             "v": "5.103"
         ]
         
@@ -51,7 +49,6 @@ class VKApi {
                             let errorMsg = decodedModel.error?.error_msg
                         {
                             print("❌ #\(errorCode) \(errorMsg) ❌")
-                            UserDefaults.standard.isAuthorized = false
                         }
                     } catch {
                         print("❌ \(error) ❌")
@@ -61,6 +58,7 @@ class VKApi {
                 }
         }
     }
+    
     
     func getGroups(completion: @escaping ([VKCommunity]) -> Void) {
         let params: Parameters = [
@@ -84,7 +82,7 @@ class VKApi {
     
     func getFriends(completion: @escaping ([VKFriend]) -> Void) {
         let params: Parameters = [
-            "user_id": userId,
+            "user_id": Session.shared.userId,
             "order": "hints",
             "fields": "city,"
                 + "photo_200_orig"
@@ -111,10 +109,16 @@ class VKApi {
         makeRequest(request: .allPhotos, params: params, completion: completion)
     }
     
+    func getNewsfeed() {
+        let params: Parameters = [
+            "filters": "post,photo,wall_photo"
+        ]
+    }
+    
     func getUserInfo(userId: String, completion: @escaping ([VKUser]) -> Void) {
         let requestUrl = apiURL + ApiRequests.userInfo.rawValue
         let params: Parameters = [
-            "access_token": token,
+            "access_token": Session.shared.token,
             "v": "5.103",
             "user_ids": userId,
             "fields": "photo_100,"
@@ -129,14 +133,13 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(VKUserResponse<VKUser>.self, from: data)
                         if let responseData = decodedModel.response {
-                            print("My response: \(responseData)")
+//                            print("My response: \(responseData)")
                             completion(responseData)
                         } else if
                             let errorCode = decodedModel.error?.error_code,
                             let errorMsg = decodedModel.error?.error_msg
                         {
                             print("❌ #\(errorCode) \(errorMsg) ❌")
-                            UserDefaults.standard.isAuthorized = false
                         }
                     } catch {
                         print("❌ \(error) ❌")
