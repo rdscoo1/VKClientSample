@@ -12,7 +12,7 @@ import SnapKit
 class ProfileTVCell: UITableViewCell {
     static let reuseId = "ProfileTVCell"
 
-    private let avatarImageView = UIImageView()
+    let avatarImageView = UIImageView()
     private let avatarSize: CGFloat = 80
     
     private let name = UILabel()
@@ -39,7 +39,6 @@ class ProfileTVCell: UITableViewCell {
     private func configureUI() {
         avatarImageView.layer.cornerRadius = avatarSize / 2
         avatarImageView.layer.masksToBounds = true
-        avatarImageView.image = .helen
         avatarImageView.contentMode = .scaleAspectFill
 
         name.font = .systemFont(ofSize: 18, weight: UIFont.Weight.semibold)
@@ -77,8 +76,8 @@ class ProfileTVCell: UITableViewCell {
         }
     }
     
-    func configure(with name: String, status: String, online: Bool) {
-        self.name.text = "\(name)"
+    func configureWith(name: String, surname: String, status: String) {
+        self.name.text = "\(name) \(surname)"
         self.status.text = "\(status)"
     }
     

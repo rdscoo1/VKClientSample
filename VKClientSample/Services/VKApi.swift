@@ -30,9 +30,9 @@ class VKApi {
         let requestUrl = apiURL + request.rawValue
         let defaultParams: Parameters = [
             "access_token": token,
-            "user_id": userId,
             "v": "5.103"
         ]
+        
         let params = defaultParams.merging(inputParams, uniquingKeysWith: { currentKey, _ in currentKey })
         
         AF.request(requestUrl, method: method, parameters: params)
@@ -49,28 +49,16 @@ class VKApi {
 //                        print(responseData.items)
                         completion(responseData.items)
                     } catch {
-                        print("❌ \(error)")
+                        print("❌ \(error) ❌")
                     }
                 case let .failure(error):
-                    print(error)
+                    print("❌ \(error) ❌")
                 }
         }
     }
     
-    func getUserInfo(ownerId: Int, completion: @escaping ([VKFriend]) -> Void) {
-        let params = [
-            "user_id": userId,
-            "fields": "city,"
-                + "photo_50,"
-                + "online,"
-                + "status"
-        ]
-        
-        makeRequest(request: .userInfo, params: params, completion: completion)
-    }
-    
     func getGroups(completion: @escaping ([VKCommunity]) -> Void) {
-        let params = [
+        let params: Parameters = [
             "extended" : "1",
             "fields": "activity,"
                 + "description"
@@ -80,18 +68,17 @@ class VKApi {
     }
     
     func getSearchedGroups(groupName: String, completion: @escaping ([VKCommunity]) -> Void) {
-        let params = [
-            "order": "name",
+        let params: Parameters = [
             "q" : groupName,
-            "type": "group",
-            "fields": "city, domain",
+            "fields": "activity,"
+                + "description"
         ]
         
         makeRequest(request: .groupsSearch, params: params, completion: completion)
     }
     
     func getFriends(completion: @escaping ([VKFriend]) -> Void) {
-        let params = [
+        let params: Parameters = [
             "user_id": userId,
             "order": "hints",
             "fields": "city,"
@@ -102,7 +89,7 @@ class VKApi {
     }
     
     func getPhotos(ownerId: Int, completion: @escaping ([VKPhoto]) -> Void) {
-        let params = [
+        let params: Parameters = [
             "album_id": "profile",
             "owner_id": "\(ownerId)",
             "extended": "1" //для получения лайков
@@ -112,10 +99,39 @@ class VKApi {
     }
     
     func getAllPhotos(ownerId: String, completion: @escaping ([VKPhoto]) -> Void) {
-        let params = [
+        let params: Parameters = [
             "owner_id": ownerId
         ]
         
         makeRequest(request: .allPhotos, params: params, completion: completion)
+    }
+    
+    func getUserInfo(userId: String, completion: @escaping ([VKUser]) -> Void) {
+        let requestUrl = apiURL + ApiRequests.userInfo.rawValue
+        let params: Parameters = [
+            "access_token": token,
+            "v": "5.103",
+            "user_ids": userId,
+            "fields": "photo_100,"
+                + "status",
+        ]
+        
+        AF.request(requestUrl, method: .get, parameters: params)
+            .validate(statusCode: 200..<300)
+            .responseData { response in
+                switch response.result {
+                case let .success(data):
+                    do {
+                        let decodedModel = try JSONDecoder().decode(VKUserResponse<VKUser>.self, from: data)
+                        let responseData = decodedModel.response
+//                        print("My response: \(responseData)")
+                        completion(responseData)
+                    } catch {
+                        print("❌ \(error) ❌")
+                    }
+                case let .failure(error):
+                    print("❌ \(error) ❌")
+                }
+        }
     }
 }

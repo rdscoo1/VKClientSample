@@ -10,23 +10,34 @@ import UIKit
 
 class ProfileTableViewController: UITableViewController {
 
+    let vkApi = VKApi()
+    private var profile = [VKUser(id: 0, firstName: "", lastName: "", status: "", photo100: "")]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.register(ProfileTVCell.self, forCellReuseIdentifier: ProfileTVCell.reuseId)
         
-//        tableView.separatorStyle = .none
+        requestProfileInfo()
+    }
+    
+    private func requestProfileInfo() {
+        print(Session.shared.userId)
+        vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] profileInfo in
+            DispatchQueue.main.async {
+                self?.profile = profileInfo
+                self?.tableView.reloadData()
+            }
+        }
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return 1
     }
 
@@ -35,8 +46,13 @@ class ProfileTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTVCell.reuseId, for: indexPath) as? ProfileTVCell else {
             return UITableViewCell()
         }
-        cell.configure(with: "Roman Khodukin", status: "perplexed.", online: true)
+        let profileInfo = profile[indexPath.row]
 
+        cell.configureWith(name: profileInfo.firstName, surname: profileInfo.lastName, status: profileInfo.status)
+        if let imageUrl = URL(string: profileInfo.photo100!) {
+            cell.avatarImageView.kf.setImage(with: imageUrl)
+        }
+        
         return cell
     }
 
