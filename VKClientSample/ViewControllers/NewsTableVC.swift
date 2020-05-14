@@ -22,6 +22,8 @@ class NewsTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UserDefaults.standard.isAuthorized = true
+        
         models.append(.whatsNewCell)
         models.append(.storiesCell)
         models.append(contentsOf: Post.posts.map { CellTypes.postCell(item: $0) })

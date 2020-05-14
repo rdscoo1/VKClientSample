@@ -27,7 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = navController
             window?.makeKeyAndVisible()
         } else {
-            window?.rootViewController = UINavigationController(rootViewController: VkAuthorizationViewController())
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let authController = storyboard.instantiateViewController(withIdentifier: "VkAuthorizationViewController")
+            let navController = UINavigationController(rootViewController: authController)
+            navController.isNavigationBarHidden = true
+            window?.rootViewController = navController
             window?.makeKeyAndVisible()
         }
         

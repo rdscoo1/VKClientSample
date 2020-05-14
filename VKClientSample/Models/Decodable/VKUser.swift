@@ -32,5 +32,11 @@ struct VKUser: Decodable, VKUserProtocol {
 }
 
 struct VKUserResponse<T: Decodable>: Decodable {
-    let response: [T]
+    let response: [T]?
+    let error: VKError?
+    
+    struct VKError: Decodable {
+        let error_code: Int?
+        let error_msg: String?
+    }
 }

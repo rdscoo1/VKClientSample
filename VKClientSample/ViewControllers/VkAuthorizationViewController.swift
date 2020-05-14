@@ -56,7 +56,7 @@ class VkAuthorizationViewController: UIViewController {
     
     private func goToTabBar() {
         let tabBarController = storyboard?.instantiateViewController(withIdentifier: "TabBarVC")
-        navigationController?.pushViewController(tabBarController!, animated: true)
+        self.navigationController?.pushViewController(tabBarController!, animated: true)
     }
 }
 
@@ -68,18 +68,18 @@ extension VkAuthorizationViewController: WKNavigationDelegate {
             let fragment = url.fragment
         else {
             decisionHandler(.allow)
-            /Users/romankhodukin/Desktop/Study/GeekBrains/Projects/VKClientSample/VKClientSample/Services/VKApi.swift
             return
         }
         
-        let params = fragment.components(separatedBy: "&")
-                            .map { $0.components(separatedBy: "=") }
-            .reduce([String: String]()) { value, params in
-            var dict = value
-            let key = params[0]
-            let value = params[1]
-            dict[key] = value
-            return dict
+        let params = fragment
+            .components(separatedBy: "&")
+            .map { $0.components(separatedBy: "=") }
+            .reduce([String: String] ()) { result, param in
+                var dict = result //создаем словать с результатом url
+                let key = param[0] //получаем параметры (access_token, expires_in, user_id)
+                let value = param[1] //получаем значения параметров
+                dict[key] = value
+                return dict
         }
         
         Session.shared.token = params["access_token"] ?? ""

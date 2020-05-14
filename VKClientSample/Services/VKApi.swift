@@ -42,12 +42,17 @@ class VKApi {
                 case let .success(data):
                     do {
                         let decodedModel = try JSONDecoder().decode(VKResponse<ResponseType>.self, from: data)
-                        guard let responseData = decodedModel.response else {
-                            return
+                        if let responseData = decodedModel.response {
+                            //                            print("📩📩📩 Method \(request.rawValue) response: 📩📩📩")
+                            //                            print(responseData.items)
+                            completion(responseData.items)
+                        } else if
+                            let errorCode = decodedModel.error?.error_code,
+                            let errorMsg = decodedModel.error?.error_msg
+                        {
+                            print("❌ #\(errorCode) \(errorMsg) ❌")
+                            UserDefaults.standard.isAuthorized = false
                         }
-//                        print("📩📩📩 Method \(request.rawValue) response: 📩📩📩")
-//                        print(responseData.items)
-                        completion(responseData.items)
                     } catch {
                         print("❌ \(error) ❌")
                     }
@@ -123,9 +128,16 @@ class VKApi {
                 case let .success(data):
                     do {
                         let decodedModel = try JSONDecoder().decode(VKUserResponse<VKUser>.self, from: data)
-                        let responseData = decodedModel.response
-//                        print("My response: \(responseData)")
-                        completion(responseData)
+                        if let responseData = decodedModel.response {
+                            print("My response: \(responseData)")
+                            completion(responseData)
+                        } else if
+                            let errorCode = decodedModel.error?.error_code,
+                            let errorMsg = decodedModel.error?.error_msg
+                        {
+                            print("❌ #\(errorCode) \(errorMsg) ❌")
+                            UserDefaults.standard.isAuthorized = false
+                        }
                     } catch {
                         print("❌ \(error) ❌")
                     }
