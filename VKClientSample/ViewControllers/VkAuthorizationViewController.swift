@@ -54,9 +54,9 @@ class VkAuthorizationViewController: UIViewController {
         }
     }
     
-    private func goToGetDataVC() {
-        let vc = (storyboard?.instantiateViewController(withIdentifier: "TabBarVC"))!
-        navigationController?.pushViewController(vc, animated: true)
+    private func goToTabBar() {
+        let tabBarController = storyboard?.instantiateViewController(withIdentifier: "TabBarVC")
+        navigationController?.pushViewController(tabBarController!, animated: true)
     }
 }
 
@@ -68,6 +68,7 @@ extension VkAuthorizationViewController: WKNavigationDelegate {
             let fragment = url.fragment
         else {
             decisionHandler(.allow)
+            /Users/romankhodukin/Desktop/Study/GeekBrains/Projects/VKClientSample/VKClientSample/Services/VKApi.swift
             return
         }
         
@@ -84,8 +85,8 @@ extension VkAuthorizationViewController: WKNavigationDelegate {
         Session.shared.token = params["access_token"] ?? ""
         Session.shared.userId = params["user_id"] ?? ""
         UserDefaults.standard.isAuthorized = true
-                
+               
+        goToTabBar()
         decisionHandler(.cancel)
-        goToGetDataVC()
     }
 }
