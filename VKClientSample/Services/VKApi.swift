@@ -63,8 +63,7 @@ class VKApi {
     func getGroups(completion: @escaping ([VKCommunity]) -> Void) {
         let params: Parameters = [
             "extended" : "1",
-            "fields": "activity,"
-                + "description"
+            "fields": "activity"
         ]
         
         makeRequest(request: .groups, params: params, completion: completion)
@@ -73,8 +72,7 @@ class VKApi {
     func getSearchedGroups(groupName: String, completion: @escaping ([VKCommunity]) -> Void) {
         let params: Parameters = [
             "q" : groupName,
-            "fields": "activity,"
-                + "description"
+            "fields": "activity"
         ]
         
         makeRequest(request: .groupsSearch, params: params, completion: completion)
@@ -84,8 +82,7 @@ class VKApi {
         let params: Parameters = [
             "user_id": Session.shared.userId,
             "order": "hints",
-            "fields": "city,"
-                + "photo_200_orig"
+            "fields": "city, photo_50"
         ]
         
         makeRequest(request: .friends, params: params, completion: completion)
@@ -109,20 +106,13 @@ class VKApi {
         makeRequest(request: .allPhotos, params: params, completion: completion)
     }
     
-    func getNewsfeed() {
-        let params: Parameters = [
-            "filters": "post,photo,wall_photo"
-        ]
-    }
-    
     func getUserInfo(userId: String, completion: @escaping ([VKUser]) -> Void) {
         let requestUrl = apiURL + ApiRequests.userInfo.rawValue
         let params: Parameters = [
             "access_token": Session.shared.token,
             "v": "5.103",
             "user_ids": userId,
-            "fields": "photo_100,"
-                + "status",
+            "fields": "photo_100, status"
         ]
         
         AF.request(requestUrl, method: .get, parameters: params)

@@ -22,7 +22,7 @@ class FriendCell: UITableViewCell {
     
     func configure(with friend: VKFriendProtocol) {
         friendFullName.text = "\(friend.firstName) \(friend.lastName)"
-        if  let photoLink = friend.photo200orig,
+        if  let photoLink = friend.photo50,
             let photoUrl = URL(string: photoLink) {
             friendPhoto.kf.setImage(with: photoUrl)
         }

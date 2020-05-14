@@ -83,7 +83,7 @@ extension CommunitiesTableVC {
         let community = communities[indexPath.row]
         cell.communityTitle.text = community.name
         cell.communityDescription.text = community.activity
-        if let imageUrl = URL(string: community.photo200) {
+        if let imageUrl = URL(string: community.photo50) {
             cell.communityPhoto.kf.setImage(with: imageUrl)
         }
         

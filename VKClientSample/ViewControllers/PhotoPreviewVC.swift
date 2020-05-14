@@ -51,6 +51,7 @@ class PhotoPreviewVC: UIViewController {
         currentPhoto.contentMode = .scaleAspectFit
         currentPhoto.clipsToBounds = true
         currentPhoto.isUserInteractionEnabled = true
+        
         if let photoUrl = URL(string: friendPreviewPhotos[selectedPhoto]!) {
             currentPhoto.kf.setImage(with: photoUrl)
         }

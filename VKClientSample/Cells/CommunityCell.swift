@@ -24,12 +24,11 @@ class CommunityCell: UITableViewCell {
         communityPhoto.layer.masksToBounds = true
     }
     
-//    func setCommunities(model: Section<VKCommunity>) {
-//
-//        communityTitle.text = community
-//        communityDescription.text = community.activity
-//        if let imageUrl = URL(string: community.photo200) {
-//            communityPhoto.kf.setImage(with: imageUrl)
-//        }
-//    }
+    func configure(with community: VKCommunityProtocol) {
+        communityTitle.text = community.name
+        communityDescription.text = community.activity
+        if let imageUrl = URL(string: community.photo50) {
+            communityPhoto.kf.setImage(with: imageUrl)
+        }
+    }
 }

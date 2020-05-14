@@ -10,7 +10,7 @@ protocol VKCommunityProtocol {
     var id: Int { get }
     var name: String { get }
     var activity: String? { get }
-    var photo200: String { get }
+    var photo50: String { get }
 }
 
 struct VKCommunity: Decodable, VKCommunityProtocol {

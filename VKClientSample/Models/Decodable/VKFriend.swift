@@ -10,7 +10,7 @@ protocol VKFriendProtocol {
     var id: Int { get }
     var firstName: String { get }
     var lastName: String { get }
-    var photo200orig: String? { get }
+    var photo50: String? { get }
 }
 
 struct VKFriend: Decodable, VKFriendProtocol {
@@ -19,7 +19,7 @@ struct VKFriend: Decodable, VKFriendProtocol {
     let lastName: String
     let online: Int
     let city: City?
-    let photo200orig: String?
+    let photo50: String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -27,7 +27,7 @@ struct VKFriend: Decodable, VKFriendProtocol {
         case lastName = "last_name"
         case online
         case city
-        case photo200orig = "photo_200_orig"
+        case photo50 = "photo_50"
     }
 }
 

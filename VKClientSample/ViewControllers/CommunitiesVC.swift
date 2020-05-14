@@ -33,19 +33,15 @@ class CommunitiesVC: UIViewController {
     
     private func requestCommunitiesFromApi() {
         vkApi.getGroups { [weak self] groups in
-            DispatchQueue.main.async {
                 self?.communities = groups
                 self?.tableView.reloadData()
-            }
         }
     }
     
     private func requestSearchedCommunitiesFromApi(groupName: String) {
         vkApi.getSearchedGroups(groupName: groupName) { [weak self] groups in
-            DispatchQueue.main.async {
                 self?.communities = groups
                 self?.tableView.reloadData()
-            }
         }
     }
 }
@@ -60,11 +56,7 @@ extension CommunitiesVC: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         let community = communities[indexPath.row]
-        cell.communityTitle.text = community.name
-        cell.communityDescription.text = community.activity
-        if let imageUrl = URL(string: community.photo200) {
-            cell.communityPhoto.kf.setImage(with: imageUrl)
-        }
+        cell.configure(with: community)
         
         return cell
     }
@@ -74,7 +66,6 @@ extension CommunitiesVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if !searchText.isEmpty {
             requestSearchedCommunitiesFromApi(groupName: searchText)
-            print("searchText \(searchText)")
         } else {
             requestCommunitiesFromApi()
         }

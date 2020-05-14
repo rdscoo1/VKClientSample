@@ -56,12 +56,10 @@ class FriendsTableVC: UITableViewController {
     }
     
     private func requestFromApi() {
-        vkApi.getFriends { friends in
-            DispatchQueue.main.async {
-                self.items = friends
-                self.friendsInSection = self.handleFriends(items: friends)
-                self.tableView.reloadData()
-            }
+        vkApi.getFriends { [weak self] friends in
+                self?.items = friends
+                self?.friendsInSection = self!.handleFriends(items: friends)
+                self?.tableView.reloadData()
         }
         
         self.activityIndicator.stopAnimating()

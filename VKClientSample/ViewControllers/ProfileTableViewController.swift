@@ -11,7 +11,7 @@ import UIKit
 class ProfileTableViewController: UITableViewController {
 
     let vkApi = VKApi()
-    private var profile = [VKUser(id: 0, firstName: "", lastName: "", status: "", photo100: "")]
+    private var profile = [VKUserProtocol]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,12 +22,9 @@ class ProfileTableViewController: UITableViewController {
     }
     
     private func requestProfileInfo() {
-        print(Session.shared.userId)
         vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] profileInfo in
-            DispatchQueue.main.async {
                 self?.profile = profileInfo
                 self?.tableView.reloadData()
-            }
         }
     }
 
@@ -38,7 +35,7 @@ class ProfileTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return profile.count
     }
 
     
@@ -46,6 +43,7 @@ class ProfileTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTVCell.reuseId, for: indexPath) as? ProfileTVCell else {
             return UITableViewCell()
         }
+        
         let profileInfo = profile[indexPath.row]
 
         cell.configureWith(name: profileInfo.firstName, surname: profileInfo.lastName, status: profileInfo.status)
