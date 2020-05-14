@@ -32,7 +32,7 @@ class VkAuthorizationViewController: UIViewController {
             URLQueryItem(name: "client_id", value: "7334032"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
-            URLQueryItem(name: "scope", value: "262150"),
+            URLQueryItem(name: "scope", value: "270342"),
             URLQueryItem(name: "response_type", value: "token"),
             URLQueryItem(name: "v", value: "5.103")
         ]
@@ -54,9 +54,9 @@ class VkAuthorizationViewController: UIViewController {
         }
     }
     
-    private func goToGetDataVC() {
-        let vc = (storyboard?.instantiateViewController(withIdentifier: "TabBarVC"))!
-        navigationController?.pushViewController(vc, animated: true)
+    private func goToTabBar() {
+        let tabBarController = storyboard?.instantiateViewController(withIdentifier: "TabBarVC")
+        self.navigationController?.pushViewController(tabBarController!, animated: true)
     }
 }
 
@@ -83,10 +83,10 @@ extension VkAuthorizationViewController: WKNavigationDelegate {
         }
         
         Session.shared.token = params["access_token"] ?? ""
-        Session.shared.userId = params["user_id"] ?? "0"
-        
-        goToGetDataVC()
-        
+        Session.shared.userId = params["user_id"] ?? ""
+        UserDefaults.standard.isAuthorized = true
+               
+        goToTabBar()
         decisionHandler(.cancel)
     }
 }
