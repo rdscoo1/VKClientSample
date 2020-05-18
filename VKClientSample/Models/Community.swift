@@ -8,11 +8,11 @@
 
 import RealmSwift
 
-struct Community: Decodable {
-        let id: Int
-        let name: String
-        let activity: String?
-        let photo50: String
+@objcMembers class Community: Object, Decodable {
+        dynamic var id: Int = 0
+        dynamic var name: String = ""
+        dynamic var activity: String? = nil
+        dynamic var photo50: String = ""
         
         enum CodingKeys: String, CodingKey {
             case id
@@ -20,32 +20,25 @@ struct Community: Decodable {
             case activity
             case photo50 = "photo_50"
         }
-}
-
-class RealmCommunity: Object {
-    @objc dynamic var id: Int = 0
-    @objc dynamic var name: String = ""
-    @objc dynamic var activity: String = ""
-    @objc dynamic var photo50: String = ""
     
     override static func primaryKey() -> String? { // По `id`  при совпадении: перезаписывает, а не дублирует
         return "id"
     }
 }
 
-extension RealmCommunity {
-    func saveToRealm() {
-        let community = RealmCommunity()
-        community.id = id
-        community.name = name
-        community.activity = activity
-        community.photo50 = photo50
-        RealmService.manager.saveObject(community)
-    }
-    
-    func getModel() -> Community {
-        return Community(id: id, name: name, activity: activity, photo50: photo50)
-    }
-}
+//extension RealmCommunity {
+//    func saveToRealm() {
+//        let community = RealmCommunity()
+//        community.id = id
+//        community.name = name
+//        community.activity = activity
+//        community.photo50 = photo50
+//        RealmService.manager.saveObject(community)
+//    }
+//
+//    func getModel() -> Community {
+//        return Community(id: id, name: name, activity: activity, photo50: photo50)
+//    }
+//}
 
 

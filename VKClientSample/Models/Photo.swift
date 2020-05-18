@@ -6,18 +6,16 @@
 //  Copyright © 2020 Roman Khodukin. All rights reserved.
 //
 
-protocol PhotoProtocol {
-    var sizes: [Photo.Size] { get }
-}
+import RealmSwift
 
-struct Photo: Decodable, PhotoProtocol {
-    var id: Int
-    var albumId: Int
-    var date: Int
-    var ownerId: Int
-    var postId: Int?
-    var sizes: [Size]
-    var text: String
+@objcMembers class Photo: Object, Decodable {
+    dynamic var id: Int = 0
+    dynamic var albumId: Int = 0
+    dynamic var date: Int = 0
+    dynamic var ownerId: Int = 0
+    var postId = RealmOptional<Int>()
+    var sizes = List<Size>()
+    dynamic var text: String = ""
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -28,13 +26,22 @@ struct Photo: Decodable, PhotoProtocol {
         case sizes
         case text
     }
+    
+    required convenience init(from decoder: Decoder) throws {
+        self.init()
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(Int.self, forKey: .id)
+        date = try container.decode(Int.self, forKey: .date)
+        ownerId = try container.decode(Int.self, forKey: .ownerId)
+        postId.value = try container.decodeIfPresent(Int.self, forKey: .postId)
+        sizes = try container.decode(List<Size>.self, forKey: .sizes)
+        text = try container.decode(String.self, forKey: .text)
+    }
 }
 
-extension Photo {
-    struct Size: Decodable {
-        var height: Int
-        var width: Int
-        var type: String
-        var url: String
-    }
+@objcMembers class Size: Object, Decodable {
+    dynamic var height: Int = 0
+    dynamic var width: Int = 0
+    dynamic var type: String = ""
+    dynamic var url: String = ""
 }

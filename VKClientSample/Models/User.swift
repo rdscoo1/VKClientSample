@@ -6,14 +6,14 @@
 //  Copyright © 2020 Roman Khodukin. All rights reserved.
 //
 
-import Foundation
+import RealmSwift
 
-struct User: Decodable {
-    let id: Int
-    let firstName: String
-    let lastName: String
-    let status: String
-    let photo100: String?
+@objcMembers class User: Object, Decodable {
+    dynamic var id: Int = 0
+    dynamic var firstName: String = ""
+    dynamic var lastName: String = ""
+    dynamic var status: String = ""
+    dynamic var photo100: String? = nil
     
     enum CodingKeys: String, CodingKey {
         case id

@@ -6,13 +6,15 @@
 //  Copyright © 2020 Roman Khodukin. All rights reserved.
 //
 
-struct Friend: Decodable {
-    let id: Int
-    let firstName: String
-    let lastName: String
-    let online: Int
-    let city: City?
-    let photo50: String?
+import RealmSwift
+
+@objcMembers class Friend: Object, Decodable {
+    dynamic var id: Int = 0
+    dynamic var firstName: String = ""
+    dynamic var lastName: String = ""
+    dynamic var online: Int = 0
+    dynamic var city: City?
+    dynamic var photo50: String? = nil
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -24,10 +26,8 @@ struct Friend: Decodable {
     }
 }
 
-extension Friend {
-    struct City: Decodable {
-        let title: String?
-    }
+class City: Object, Decodable {
+    @objc dynamic var title: String?
 }
 
 struct FriendSection {

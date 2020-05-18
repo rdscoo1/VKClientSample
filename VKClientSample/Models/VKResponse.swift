@@ -35,7 +35,3 @@ struct VKResponse<T: Decodable>: Decodable {
         }
     }
 }
-
-struct PhotoResponse<T> {
-    var sizes: [T]
-}
