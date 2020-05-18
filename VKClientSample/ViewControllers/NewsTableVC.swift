@@ -11,20 +11,20 @@ import UIKit
 enum CellTypes {
     case whatsNewCell
     case storiesCell
-    case postCell(item: Post)
+    case postCell(item: PostFactory)
 }
 
 class NewsTableVC: UITableViewController {
     
     var models: [CellTypes] = []
-    var posts = Post.posts
+    var posts = PostFactory.posts
     
     override func viewDidLoad() {
         super.viewDidLoad()
                 
         models.append(.whatsNewCell)
         models.append(.storiesCell)
-        models.append(contentsOf: Post.posts.map { CellTypes.postCell(item: $0) })
+        models.append(contentsOf: PostFactory.posts.map { CellTypes.postCell(item: $0) })
         
         tableView.register(WhatsNewCell.self, forCellReuseIdentifier: WhatsNewCell.reuseId)
         tableView.register(StoriesCell.self, forCellReuseIdentifier: StoriesCell.reuseId)

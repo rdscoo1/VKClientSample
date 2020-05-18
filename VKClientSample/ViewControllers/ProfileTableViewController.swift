@@ -11,7 +11,7 @@ import UIKit
 class ProfileTableViewController: UITableViewController {
 
     let vkApi = VKApi()
-    private var profile = [VKUserProtocol]()
+    private var profile = [User]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

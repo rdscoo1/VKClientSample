@@ -15,8 +15,8 @@ class FriendsTableVC: UITableViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     private var activityIndicator = UIActivityIndicatorView()
     
-    var items = [VKFriendProtocol]()
-    var friendsInSection = [Section<VKFriendProtocol>]()
+    var friends = [Friend]()
+    var friendsInSection = [FriendSection]()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -49,15 +49,15 @@ class FriendsTableVC: UITableViewController {
         }
     }
     
-    func handleFriends(items: [VKFriendProtocol]) -> [Section<VKFriendProtocol>] {
+    func handleFriends(items: [Friend]) -> [FriendSection] {
         return Dictionary(grouping: items) { $0.lastName.prefix(1) }
-            .map { Section<VKFriendProtocol>(title: "\($0.key)", items: $0.value) }
-            .sorted(by: { $0.title < $1.title })
+            .map { FriendSection(firstLetter: "\($0.key)", items: $0.value) }
+            .sorted(by: { $0.firstLetter < $1.firstLetter })
     }
     
     private func requestFromApi() {
         vkApi.getFriends { [weak self] friends in
-                self?.items = friends
+                self?.friends = friends
                 self?.friendsInSection = self!.handleFriends(items: friends)
                 self?.tableView.reloadData()
         }
@@ -96,11 +96,11 @@ extension FriendsTableVC {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return friendsInSection[section].title
+        return friendsInSection[section].firstLetter
     }
     
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return friendsInSection.map { $0.title }
+        return friendsInSection.map { $0.firstLetter }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -119,11 +119,11 @@ extension FriendsTableVC {
 extension FriendsTableVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if !searchText.isEmpty {
-            friendsInSection = handleFriends(items: items.filter{
+            friendsInSection = handleFriends(items: friends.filter{
                 $0.lastName.lowercased().contains(searchText.lowercased())
             })
         } else {
-            friendsInSection = handleFriends(items: items)
+            friendsInSection = handleFriends(items: friends)
         }
         tableView.reloadData()
     }

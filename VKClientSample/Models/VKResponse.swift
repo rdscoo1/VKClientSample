@@ -26,16 +26,16 @@ struct VKResponse<T: Decodable>: Decodable {
     }
     
     struct VKError: Decodable {
-        let error_code: Int?
-        let error_msg: String?
+        let errorCode: Int?
+        let errorMessage: String?
+        
+        enum CodingKeys: String, CodingKey {
+            case errorCode = "error_code"
+            case errorMessage = "error_msg"
+        }
     }
 }
 
-struct Section<T> {
-    var title: String
-    var items: [T]
-}
-
-struct Photo<T> {
+struct PhotoResponse<T> {
     var sizes: [T]
 }

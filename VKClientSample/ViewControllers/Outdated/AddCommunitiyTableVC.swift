@@ -11,7 +11,7 @@ import UIKit
 class AddCommunitiyTableVC: UITableViewController {
     
     private var searchBar = UISearchBar()
-    var communities = [VKCommunityProtocol]()
+    var communities = [Community]()
     let vkApi = VKApi()
     
     override func viewDidLoad() {
@@ -39,10 +39,8 @@ class AddCommunitiyTableVC: UITableViewController {
     
     private func requestFromApi(groupName: String) {
         vkApi.getSearchedGroups(groupName: groupName) { [weak self] groups in
-            DispatchQueue.main.async {
-                self?.communities = groups
-                self?.tableView.reloadData()
-            }
+            self?.communities = groups
+            self?.tableView.reloadData()
         }
     }
     
@@ -70,8 +68,8 @@ class AddCommunitiyTableVC: UITableViewController {
 
 extension AddCommunitiyTableVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            requestFromApi(groupName: searchText)
-            print("searchText \(searchText)")
+        requestFromApi(groupName: searchText)
+        print("searchText \(searchText)")
     }
 }
 

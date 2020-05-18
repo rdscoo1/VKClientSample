@@ -45,8 +45,8 @@ class VKApi {
                             //                            print(responseData.items)
                             completion(responseData.items)
                         } else if
-                            let errorCode = decodedModel.error?.error_code,
-                            let errorMsg = decodedModel.error?.error_msg
+                            let errorCode = decodedModel.error?.errorCode,
+                            let errorMsg = decodedModel.error?.errorMessage
                         {
                             print("❌ #\(errorCode) \(errorMsg) ❌")
                         }
@@ -60,7 +60,7 @@ class VKApi {
     }
     
     
-    func getGroups(completion: @escaping ([VKCommunity]) -> Void) {
+    func getGroups(completion: @escaping ([Community]) -> Void) {
         let params: Parameters = [
             "extended" : "1",
             "fields": "activity"
@@ -69,7 +69,7 @@ class VKApi {
         makeRequest(request: .groups, params: params, completion: completion)
     }
     
-    func getSearchedGroups(groupName: String, completion: @escaping ([VKCommunity]) -> Void) {
+    func getSearchedGroups(groupName: String, completion: @escaping ([Community]) -> Void) {
         let params: Parameters = [
             "q" : groupName,
             "fields": "activity"
@@ -78,7 +78,7 @@ class VKApi {
         makeRequest(request: .groupsSearch, params: params, completion: completion)
     }
     
-    func getFriends(completion: @escaping ([VKFriend]) -> Void) {
+    func getFriends(completion: @escaping ([Friend]) -> Void) {
         let params: Parameters = [
             "user_id": Session.shared.userId,
             "order": "hints",
@@ -88,7 +88,7 @@ class VKApi {
         makeRequest(request: .friends, params: params, completion: completion)
     }
     
-    func getPhotos(ownerId: Int, completion: @escaping ([VKPhoto]) -> Void) {
+    func getPhotos(ownerId: Int, completion: @escaping ([Photo]) -> Void) {
         let params: Parameters = [
             "album_id": "profile",
             "owner_id": "\(ownerId)",
@@ -98,7 +98,7 @@ class VKApi {
         makeRequest(request: .photos, params: params, completion: completion)
     }
     
-    func getAllPhotos(ownerId: String, completion: @escaping ([VKPhoto]) -> Void) {
+    func getAllPhotos(ownerId: String, completion: @escaping ([Photo]) -> Void) {
         let params: Parameters = [
             "owner_id": ownerId
         ]
@@ -106,7 +106,7 @@ class VKApi {
         makeRequest(request: .allPhotos, params: params, completion: completion)
     }
     
-    func getUserInfo(userId: String, completion: @escaping ([VKUser]) -> Void) {
+    func getUserInfo(userId: String, completion: @escaping ([User]) -> Void) {
         let requestUrl = apiURL + ApiRequests.userInfo.rawValue
         let params: Parameters = [
             "access_token": Session.shared.token,
@@ -121,13 +121,13 @@ class VKApi {
                 switch response.result {
                 case let .success(data):
                     do {
-                        let decodedModel = try JSONDecoder().decode(VKUserResponse<VKUser>.self, from: data)
+                        let decodedModel = try JSONDecoder().decode(UserResponse<User>.self, from: data)
                         if let responseData = decodedModel.response {
 //                            print("My response: \(responseData)")
                             completion(responseData)
                         } else if
-                            let errorCode = decodedModel.error?.error_code,
-                            let errorMsg = decodedModel.error?.error_msg
+                            let errorCode = decodedModel.error?.errorCode,
+                            let errorMsg = decodedModel.error?.errorMessage
                         {
                             print("❌ #\(errorCode) \(errorMsg) ❌")
                         }

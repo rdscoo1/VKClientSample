@@ -12,7 +12,7 @@ class CommunitiesVC: UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    private var communities = [VKCommunityProtocol]()
+    private var communities = [Community]()
     let vkApi = VKApi()
     
     override func viewDidLoad() {

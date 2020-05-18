@@ -13,7 +13,7 @@ class StoriesCell: UITableViewCell {
     let topSeparator = UIView()
     let containerView = UIView()
     var storiesCollectionView: UICollectionView!
-    var items: [Friend] = Friend.friends
+    var items: [FriendFactory] = FriendFactory.friends
     
     var layout: UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()

@@ -1,5 +1,5 @@
 //
-//  VKUser.swift
+//  User.swift
 //  VKClientSample
 //
 //  Created by Roman Khodukin on 14.05.2020.
@@ -8,14 +8,7 @@
 
 import Foundation
 
-protocol VKUserProtocol {
-    var firstName: String { get }
-    var lastName: String { get }
-    var status: String { get }
-    var photo100: String? { get }
-}
-
-struct VKUser: Decodable, VKUserProtocol {
+struct User: Decodable {
     let id: Int
     let firstName: String
     let lastName: String
@@ -31,12 +24,17 @@ struct VKUser: Decodable, VKUserProtocol {
     }
 }
 
-struct VKUserResponse<T: Decodable>: Decodable {
+struct UserResponse<T: Decodable>: Decodable {
     let response: [T]?
     let error: VKError?
     
     struct VKError: Decodable {
-        let error_code: Int?
-        let error_msg: String?
+        let errorCode: Int?
+        let errorMessage: String?
+        
+        enum CodingKeys: String, CodingKey {
+            case errorCode = "error_code"
+            case errorMessage = "error_msg"
+        }
     }
 }

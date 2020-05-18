@@ -11,8 +11,9 @@ import UIKit
 class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let vkApi = VKApi()
+    
     var friendId = Int()
-    var friendModel: [VKPhoto] = []
+    var friendPhotos = [Photo]()
     var photosUrlsLowRes = [String?]()
     var photosUrlsHighRes = [String?]()
     
@@ -24,7 +25,7 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
     
     private func requestFromApi() {
         vkApi.getPhotos(ownerId: friendId) { [weak self] photos in
-            self?.friendModel = photos
+            self?.friendPhotos = photos
             photos.forEach {
                 let photoLinklowRes = $0.sizes.first(where: { $0.type == "m" })?.url
                 self?.photosUrlsLowRes.append(photoLinklowRes)
@@ -42,6 +43,7 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
         self.navigationController!.navigationBar.tintColor = Constants.Colors.vkBlue
     }
 }
+
 
 extension FriendCollectionVC {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -66,10 +68,9 @@ extension FriendCollectionVC {
         let vc = storyboard?.instantiateViewController(withIdentifier: "PhotoPreviewVC") as! PhotoPreviewVC
         
         vc.friendPreviewPhotos = photosUrlsHighRes
-        let selectedPhotoNumber = indexPath.row
-        vc.selectedPhoto = selectedPhotoNumber
+        vc.selectedPhoto = indexPath.row
         vc.friendPhotosQuantity = photosUrlsHighRes.count
-        vc.photosPreviewNavBar.setNavBarTitle(selectedPhotoNumber: selectedPhotoNumber, photoQuantity: photosUrlsHighRes.count)
+        vc.photosPreviewNavBar.setNavBarTitle(selectedPhotoNumber: indexPath.row, photoQuantity: photosUrlsHighRes.count)
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
     }

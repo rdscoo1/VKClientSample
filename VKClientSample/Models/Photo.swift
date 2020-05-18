@@ -1,16 +1,16 @@
 //
-//  VKPhoto.swift
+//  Photo.swift
 //  VKClientSample
 //
 //  Created by Roman Khodukin on 22.03.2020.
 //  Copyright © 2020 Roman Khodukin. All rights reserved.
 //
 
-protocol VKPhotoProtocol {
-    var sizes: [VKPhoto.Size] { get }
+protocol PhotoProtocol {
+    var sizes: [Photo.Size] { get }
 }
 
-struct VKPhoto: Decodable, VKPhotoProtocol {
+struct Photo: Decodable, PhotoProtocol {
     var id: Int
     var albumId: Int
     var date: Int
@@ -30,7 +30,7 @@ struct VKPhoto: Decodable, VKPhotoProtocol {
     }
 }
 
-extension VKPhoto {
+extension Photo {
     struct Size: Decodable {
         var height: Int
         var width: Int

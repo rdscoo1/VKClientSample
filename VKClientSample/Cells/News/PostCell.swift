@@ -19,7 +19,7 @@ class PostCell: UITableViewCell {
     let postImageView = UIImageView(image: .postImage)
     let postFooter = PostFooter()
     
-    var items: [Post] = Post.posts
+    var items: [PostFactory] = PostFactory.posts
     
     static let reuseId = "PostCell"
 
@@ -33,7 +33,7 @@ class PostCell: UITableViewCell {
         setupUI()
     }
     
-    func setPosts(post: Post) {
+    func setPosts(post: PostFactory) {
         postAuthor.text = post.author
         publishDate.text = post.publishDate
         postText.text = post.postText

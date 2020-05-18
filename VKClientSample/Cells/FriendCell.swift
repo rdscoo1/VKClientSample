@@ -20,7 +20,7 @@ class FriendCell: UITableViewCell {
         friendPhoto.layer.masksToBounds = true
     }
     
-    func configure(with friend: VKFriendProtocol) {
+    func configure(with friend: Friend) {
         friendFullName.text = "\(friend.firstName) \(friend.lastName)"
         if  let photoLink = friend.photo50,
             let photoUrl = URL(string: photoLink) {

@@ -25,7 +25,7 @@ class StoryCell: UICollectionViewCell {
         setupUI()
     }
     
-    func setStories(story: Friend) {
+    func setStories(story: FriendFactory) {
         storyImageView.image = UIImage(imageLiteralResourceName: story.avatar)
         storyAuthor.text = "\(story.name) \(story.surname)"
     }

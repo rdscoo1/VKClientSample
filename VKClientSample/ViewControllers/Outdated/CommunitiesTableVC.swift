@@ -13,7 +13,7 @@ import SnapKit
 class CommunitiesTableVC: UITableViewController {
     
     let vkApi = VKApi()
-    var communities = [VKCommunityProtocol]()
+    var communities = [Community]()
     private var activityIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
@@ -45,10 +45,8 @@ class CommunitiesTableVC: UITableViewController {
     
     private func requestFromApi() {
         vkApi.getGroups { [weak self] groups in
-            DispatchQueue.main.async {
                 self?.communities = groups
                 self?.tableView.reloadData()
-            }
         }
         
         self.activityIndicator.stopAnimating()
