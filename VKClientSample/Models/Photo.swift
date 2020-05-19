@@ -42,6 +42,10 @@ import RealmSwift
     override static func primaryKey() -> String? { // По `id`  при совпадении: перезаписывает, а не дублирует
         return "id"
     }
+    
+    override static func ignoredProperties() -> [String] {
+        return [ "albumId", "postId"]
+    }
 }
 
 @objcMembers class Size: Object, Decodable {
@@ -50,10 +54,11 @@ import RealmSwift
     dynamic var type: String = ""
     dynamic var url: String = ""
     
-    enum CodingKeys: String, CodingKey {
-        case height
-        case width
-        case type
-        case url
+    override class func indexedProperties() -> [String] {
+        return ["url"]
+    }
+    
+    override static func ignoredProperties() -> [String] {
+        return ["height", "width"]
     }
 }
