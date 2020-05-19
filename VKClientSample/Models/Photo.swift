@@ -31,11 +31,16 @@ import RealmSwift
         self.init()
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(Int.self, forKey: .id)
+        albumId = try container.decode(Int.self, forKey: .albumId)
         date = try container.decode(Int.self, forKey: .date)
         ownerId = try container.decode(Int.self, forKey: .ownerId)
         postId.value = try container.decodeIfPresent(Int.self, forKey: .postId)
         sizes = try container.decode(List<Size>.self, forKey: .sizes)
         text = try container.decode(String.self, forKey: .text)
+    }
+    
+    override static func primaryKey() -> String? { // По `id`  при совпадении: перезаписывает, а не дублирует
+        return "id"
     }
 }
 
@@ -44,4 +49,11 @@ import RealmSwift
     dynamic var width: Int = 0
     dynamic var type: String = ""
     dynamic var url: String = ""
+    
+    enum CodingKeys: String, CodingKey {
+        case height
+        case width
+        case type
+        case url
+    }
 }

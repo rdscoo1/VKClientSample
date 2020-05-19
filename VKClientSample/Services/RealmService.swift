@@ -24,13 +24,14 @@ class RealmService: RealmServiceProtocol {
     private init() {}
     
     func saveObject(_ object: Object) {
-        print("URL: \(realm.configuration.fileURL!)")
+//        print("URL: \(realm.configuration.fileURL!)")
         try? realm.write {
             realm.add(object, update: .modified)
         }
     }
     
     func saveObjects(_ objects: [Object]) {
+//        print("URL: \(realm.configuration.fileURL!)")
         try? realm.write {
             realm.add(objects, update: .modified)
         }
@@ -40,5 +41,9 @@ class RealmService: RealmServiceProtocol {
         try? realm.write {
             realm.delete(object)
         }
+    }
+    
+    func getAll<T: Object>(_ type: T.Type) -> [T] {
+        return realm.objects(type).compactMap { $0 }
     }
 }

@@ -24,10 +24,19 @@ import RealmSwift
         case city
         case photo50 = "photo_50"
     }
+    
+    override static func primaryKey() -> String? { // По `id`  при совпадении: перезаписывает, а не дублирует
+        return "id"
+    }
 }
 
 class City: Object, Decodable {
-    @objc dynamic var title: String?
+    @objc dynamic var id: Int = 0
+    @objc dynamic var title: String? = nil
+    
+    override static func primaryKey() -> String? { // По `id`  при совпадении: перезаписывает, а не дублирует
+        return "id"
+    }
 }
 
 struct FriendSection {

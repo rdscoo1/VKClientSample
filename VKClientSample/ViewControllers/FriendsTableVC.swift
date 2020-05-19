@@ -56,11 +56,15 @@ class FriendsTableVC: UITableViewController {
     }
     
     private func requestFromApi() {
-        vkApi.getFriends { [weak self] friends in
-                self?.friends = friends
-                self?.friendsInSection = self!.handleFriends(items: friends)
-                self?.tableView.reloadData()
-        }
+        friends = RealmService.manager.getAll(Friend.self)
+        friendsInSection = handleFriends(items: friends)
+        
+                vkApi.getFriends { [weak self] friends in
+                    self?.friends = friends
+                    RealmService.manager.saveObjects(friends)
+                    self?.friendsInSection = self!.handleFriends(items: friends)
+                    self?.tableView.reloadData()
+                }
         
         self.activityIndicator.stopAnimating()
         UIView.animate(withDuration: 0.2, animations: {

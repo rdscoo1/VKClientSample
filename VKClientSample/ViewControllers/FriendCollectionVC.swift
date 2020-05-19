@@ -24,6 +24,8 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     private func requestFromApi() {
+        friendPhotos = RealmService.manager.getAll(Photo.self)
+        
         vkApi.getPhotos(ownerId: friendId) { [weak self] photos in
             self?.friendPhotos = photos
             photos.forEach {
@@ -33,6 +35,8 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
                 let photoLinkhighRes = $0.sizes.first(where: { $0.type == "x" })?.url
                 self?.photosUrlsHighRes.append(photoLinkhighRes)
             }
+            
+            RealmService.manager.saveObjects(photos)
             
             self?.collectionView.reloadData()
         }

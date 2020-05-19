@@ -22,6 +22,10 @@ import RealmSwift
         case status
         case photo100 = "photo_100"
     }
+    
+    override static func primaryKey() -> String? { // По `id`  при совпадении: перезаписывает, а не дублирует
+        return "id"
+    }
 }
 
 struct UserResponse<T: Decodable>: Decodable {

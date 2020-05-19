@@ -32,8 +32,11 @@ class CommunitiesVC: UIViewController {
     }
     
     private func requestCommunitiesFromApi() {
+        communities = RealmService.manager.getAll(Community.self)
+        
         vkApi.getGroups { [weak self] groups in
                 self?.communities = groups
+                RealmService.manager.saveObjects(groups)
                 self?.tableView.reloadData()
         }
     }
