@@ -18,6 +18,7 @@ class NewsTableVC: UITableViewController {
     
     var models: [CellTypes] = []
     var posts = PostFactory.posts
+    let vkApi = VKApi()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,14 @@ class NewsTableVC: UITableViewController {
         tableView.separatorStyle = .none
         
         setupActionHideKeyboard()
+        
+        requestFromApi()
+    }
+    
+    private func requestFromApi() {
+        vkApi.getNewsfeed { (post) in
+            print(post)
+        }
     }
     
     // MARK: - Table view data source

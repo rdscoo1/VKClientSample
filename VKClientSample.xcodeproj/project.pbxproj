@@ -63,6 +63,7 @@
 		E8CD1C9423D6AF6100C5D668 /* FriendCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CD1C9323D6AF6000C5D668 /* FriendCVCell.swift */; };
 		E8CD1C9723DB29D300C5D668 /* ShadowPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CD1C9623DB29D300C5D668 /* ShadowPhotoView.swift */; };
 		E8CD1C9923DB2AF900C5D668 /* LikeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CD1C9823DB2AF900C5D668 /* LikeControl.swift */; };
+		E8D51AAE2475D7570056B945 /* VKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D51AAD2475D7570056B945 /* VKError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -125,6 +126,7 @@
 		E8CD1C9323D6AF6000C5D668 /* FriendCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCVCell.swift; sourceTree = "<group>"; };
 		E8CD1C9623DB29D300C5D668 /* ShadowPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowPhotoView.swift; sourceTree = "<group>"; };
 		E8CD1C9823DB2AF900C5D668 /* LikeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeControl.swift; sourceTree = "<group>"; };
+		E8D51AAD2475D7570056B945 /* VKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKError.swift; sourceTree = "<group>"; };
 		FA61B0E00B803FDF8FE9BD4C /* Pods_VKClientSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VKClientSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -232,6 +234,7 @@
 			children = (
 				E87624182472A9AF00FB62B6 /* Outdated */,
 				E8757B13241EC81D002F92A7 /* VKResponse.swift */,
+				E8D51AAD2475D7570056B945 /* VKError.swift */,
 				E8757B0F241CEAC0002F92A7 /* Community.swift */,
 				E8757B11241CECED002F92A7 /* Friend.swift */,
 				E8757B1924278B57002F92A7 /* Photo.swift */,
@@ -493,6 +496,7 @@
 				E836E3B8246CAA900053A065 /* CommunitiesVC.swift in Sources */,
 				E8068CE323E0C4290083FBBE /* ViewsCounter.swift in Sources */,
 				E8068CF123E4FE5B0083FBBE /* AddStoryCell.swift in Sources */,
+				E8D51AAE2475D7570056B945 /* VKError.swift in Sources */,
 				E861CD9D23D274D000D3E9B3 /* CommunityFactory.swift in Sources */,
 				E80D57F123F9F47D002C53CB /* PhotoPreviewFooter.swift in Sources */,
 				E8757B1A24278B57002F92A7 /* Photo.swift in Sources */,

@@ -10,28 +10,8 @@ struct VKResponse<T: Decodable>: Decodable {
     let response: Response?
     let error: VKError?
     
-    enum CodingKeys: String, CodingKey {
-        case response
-        case error
-    }
-    
     struct Response: Decodable {
         let count: Int?
         let items: [T]
-        
-        enum CodingKeys: String, CodingKey {
-            case count
-            case items
-        }
-    }
-    
-    struct VKError: Decodable {
-        let errorCode: Int?
-        let errorMessage: String?
-        
-        enum CodingKeys: String, CodingKey {
-            case errorCode = "error_code"
-            case errorMessage = "error_msg"
-        }
     }
 }

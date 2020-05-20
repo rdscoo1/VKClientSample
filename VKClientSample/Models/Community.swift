@@ -25,21 +25,3 @@ import RealmSwift
         return "id"
     }
 }
-
-
-//extension RealmCommunity {
-//    func saveToRealm() {
-//        let community = RealmCommunity()
-//        community.id = id
-//        community.name = name
-//        community.activity = activity
-//        community.photo50 = photo50
-//        RealmService.manager.saveObject(community)
-//    }
-//
-//    func getModel() -> Community {
-//        return Community(id: id, name: name, activity: activity, photo50: photo50)
-//    }
-//}
-
-

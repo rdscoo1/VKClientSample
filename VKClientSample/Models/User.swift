@@ -8,6 +8,11 @@
 
 import RealmSwift
 
+struct UserResponse: Decodable {
+    let response: [User]?
+    let error: VKError?
+}
+
 @objcMembers class User: Object, Decodable {
     dynamic var id: Int = 0
     dynamic var firstName: String = ""
@@ -25,20 +30,5 @@ import RealmSwift
     
     override static func primaryKey() -> String? { // По `id`  при совпадении: перезаписывает, а не дублирует
         return "id"
-    }
-}
-
-struct UserResponse<T: Decodable>: Decodable {
-    let response: [T]?
-    let error: VKError?
-    
-    struct VKError: Decodable {
-        let errorCode: Int?
-        let errorMessage: String?
-        
-        enum CodingKeys: String, CodingKey {
-            case errorCode = "error_code"
-            case errorMessage = "error_msg"
-        }
     }
 }

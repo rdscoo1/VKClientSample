@@ -15,17 +15,17 @@ enum ApiRequests: String {
     case groups = "groups.get"
     case groupsSearch = "groups.search"
     case photos = "photos.get"
-    case allPhotos = "photos.getAll"
+    case newsfeed = "newsfeed.get"
 }
 
 class VKApi {
     let apiURL = "https://api.vk.com/method/"
     
-    private func makeRequest<ResponseType: Decodable>(request: ApiRequests,
+    private func makeRequest<ResponseType: Decodable>(apiMethod: ApiRequests,
                                                       params inputParams: Parameters,
-                                                      method: HTTPMethod = .get,
+                                                      httpMethod: HTTPMethod = .get,
                                                       completion: @escaping ([ResponseType]) -> Void) {
-        let requestUrl = apiURL + request.rawValue
+        let requestUrl = apiURL + apiMethod.rawValue
         let defaultParams: Parameters = [
             "access_token": Session.shared.token,
             "v": "5.103"
@@ -33,7 +33,7 @@ class VKApi {
         
         let params = defaultParams.merging(inputParams, uniquingKeysWith: { currentKey, _ in currentKey })
         
-        AF.request(requestUrl, method: method, parameters: params)
+        AF.request(requestUrl, method: httpMethod, parameters: params)
             .validate(statusCode: 200..<300)
             .responseData { response in
                 switch response.result {
@@ -41,8 +41,8 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(VKResponse<ResponseType>.self, from: data)
                         if let responseData = decodedModel.response {
-                            //                            print("📩📩📩 Method \(request.rawValue) response: 📩📩📩")
-                            //                            print(responseData.items)
+                            //                                                        print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
+                            //                                                        print(responseData.items)
                             completion(responseData.items)
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
@@ -66,7 +66,7 @@ class VKApi {
             "fields": "activity"
         ]
         
-        makeRequest(request: .groups, params: params, completion: completion)
+        makeRequest(apiMethod: .groups, params: params, completion: completion)
     }
     
     func getSearchedGroups(groupName: String, completion: @escaping ([Community]) -> Void) {
@@ -75,7 +75,7 @@ class VKApi {
             "fields": "activity"
         ]
         
-        makeRequest(request: .groupsSearch, params: params, completion: completion)
+        makeRequest(apiMethod: .groupsSearch, params: params, completion: completion)
     }
     
     func getFriends(completion: @escaping ([Friend]) -> Void) {
@@ -85,7 +85,7 @@ class VKApi {
             "fields": "city, photo_50"
         ]
         
-        makeRequest(request: .friends, params: params, completion: completion)
+        makeRequest(apiMethod: .friends, params: params, completion: completion)
     }
     
     func getPhotos(ownerId: Int, completion: @escaping ([Photo]) -> Void) {
@@ -95,15 +95,41 @@ class VKApi {
             "extended": "1" //для получения лайков
         ]
         
-        makeRequest(request: .photos, params: params, completion: completion)
+        makeRequest(apiMethod: .photos, params: params, completion: completion)
     }
     
-    func getAllPhotos(ownerId: String, completion: @escaping ([Photo]) -> Void) {
+    func getNewsfeed(completion: @escaping (PostResponse.Response) -> Void) {
+        let requestUrl = apiURL + ApiRequests.newsfeed.rawValue
         let params: Parameters = [
-            "owner_id": ownerId
+            "access_token": Session.shared.token,
+            "v": "5.103",
+            "filters": "post,photo,wall_photo",
+            "count": "1"
         ]
         
-        makeRequest(request: .allPhotos, params: params, completion: completion)
+        AF.request(requestUrl, method: .get, parameters: params)
+            .validate(statusCode: 200..<300)
+            .responseData { response in
+                switch response.result {
+                case let .success(data):
+                    do {
+                        let decodedModel = try JSONDecoder().decode(PostResponse.self, from: data)
+                        if let responseData = decodedModel.response {
+                            print(responseData)
+                            completion(responseData)
+                        } else if
+                            let errorCode = decodedModel.error?.errorCode,
+                            let errorMsg = decodedModel.error?.errorMessage
+                        {
+                            print("❌ #\(errorCode) \(errorMsg) ❌")
+                        }
+                    } catch {
+                        print("❌ \(error) ❌")
+                    }
+                case let .failure(error):
+                    print("❌ \(error) ❌")
+                }
+        }
     }
     
     func getUserInfo(userId: String, completion: @escaping ([User]) -> Void) {
@@ -121,9 +147,8 @@ class VKApi {
                 switch response.result {
                 case let .success(data):
                     do {
-                        let decodedModel = try JSONDecoder().decode(UserResponse<User>.self, from: data)
+                        let decodedModel = try JSONDecoder().decode(UserResponse.self, from: data)
                         if let responseData = decodedModel.response {
-//                            print("My response: \(responseData)")
                             completion(responseData)
                         } else if
                             let errorCode = decodedModel.error?.errorCode,

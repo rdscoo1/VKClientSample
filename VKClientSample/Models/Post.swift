@@ -8,30 +8,61 @@
 
 import Foundation
 
+struct PostResponse: Decodable {
+    let response: Response?
+    let error: VKError?
+    
+    struct Response: Decodable {
+        let items: [Post]
+        let groups: [Community?]
+    }
+}
+
 struct Post: Decodable {
+    let postId: Int
     let date: Int
-    let text: String
-    let attachments: Attachment?
+    let text: String?
+    let attachments: [Attachment?]
+    let comments: Comments
+    let likes: Likes
+    let reposts: Reposts
+    let views: Views
     
     enum CodingKeys: String, CodingKey {
+        case postId = "post_id"
         case date
         case text
         case attachments
+        case comments
+        case likes
+        case reposts
+        case views
     }
     
     struct Attachment: Decodable {
         let type: String
-        let link: Link?
+        let photo: Photo?
+    }
+    
+    struct Comments: Decodable {
+        let count: Int
+    }
+    
+    struct Likes: Decodable {
+        let count: Int
+        let canLike: Int?
         
         enum CodingKeys: String, CodingKey {
-            case type
-            case link
+            case count
+            case canLike = "can_like"
         }
-        
-        struct Link: Decodable {
-            let title: String
-            let description: String
-            let photo: Photo?
-        }
+    }
+    
+    struct Reposts: Decodable {
+        let count: Int
+    }
+    
+    struct Views: Decodable {
+        let count: Int
     }
 }
