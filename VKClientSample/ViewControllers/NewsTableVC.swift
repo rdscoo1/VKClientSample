@@ -10,7 +10,9 @@ import UIKit
 
 class NewsTableVC: UITableViewController {
     
-    var posts = PostFactory.posts
+    var posts = [Post]()
+    var communities = [Community]()
+    var photos = [String?]()
     let vkApi = VKApi()
     
     override func viewDidLoad() {
@@ -30,8 +32,34 @@ class NewsTableVC: UITableViewController {
     }
     
     private func requestFromApi() {
-        vkApi.getNewsfeed { (post) in
-            print(post)
+        vkApi.getNewsfeed { [weak self] (post) in
+            let items = post.items
+            self?.posts = items
+            self?.communities = post.groups
+            
+            items.forEach {
+                guard let attachment = $0.attachments.first else {
+                    return
+                }
+                
+                if
+                    attachment!.type == "photo",
+                    let sizes = attachment?.photo?.sizes,
+                    let photoLink = sizes.first(where: { $0.type == "x" })?.url
+                    {
+                        self?.photos.append(photoLink)
+                    } else {
+                        print("post -> ", attachment)
+                    }
+            }
+            self?.tableView.reloadData()
+        }
+    }
+    
+    private func handleArray(of array: [Photo]) {
+        array.forEach {
+            let photoLinkhighRes = $0.sizes.first(where: { $0.type == "x" })?.url
+            self.photos.append(photoLinkhighRes)
         }
     }
     
@@ -64,7 +92,10 @@ class NewsTableVC: UITableViewController {
              guard let postCell = tableView.dequeueReusableCell(withIdentifier: PostCell.reuseId, for: indexPath) as? PostCell else { return UITableViewCell() }
             
             let post = posts[indexPath.row]
-            postCell.setPosts(post: post)
+            let community = communities[indexPath.row]
+            let photo = photos[indexPath.row]
+
+            postCell.setPosts(post: post, community: community, photo: photo)
             return postCell
         }
     }

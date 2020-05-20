@@ -28,17 +28,21 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
         
         vkApi.getPhotos(ownerId: friendId) { [weak self] photos in
             self?.friendPhotos = photos
-            photos.forEach {
-                let photoLinklowRes = $0.sizes.first(where: { $0.type == "m" })?.url
-                self?.photosUrlsLowRes.append(photoLinklowRes)
-                
-                let photoLinkhighRes = $0.sizes.first(where: { $0.type == "x" })?.url
-                self?.photosUrlsHighRes.append(photoLinkhighRes)
-            }
+            self?.handleArray(of: photos)
             
             RealmService.manager.saveObjects(photos)
             
             self?.collectionView.reloadData()
+        }
+    }
+    
+    private func handleArray(of array: [Photo]) {
+        array.forEach {
+            let photoLinklowRes = $0.sizes.first(where: { $0.type == "m" })?.url
+            self.photosUrlsLowRes.append(photoLinklowRes)
+            
+            let photoLinkhighRes = $0.sizes.first(where: { $0.type == "x" })?.url
+            self.photosUrlsHighRes.append(photoLinkhighRes)
         }
     }
     

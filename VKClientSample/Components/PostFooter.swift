@@ -26,6 +26,14 @@ class PostFooter: UIView {
         setupUI()
     }
     
+//    init(likes: Int, comments: Int, shares: Int, views: Int) {
+//        <#statements#>
+//    }
+    
+    private func configureControls() {
+        
+    }
+    
     
     private func setupUI() {
         containerStackView.distribution = .fillEqually

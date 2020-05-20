@@ -14,7 +14,7 @@ struct PostResponse: Decodable {
     
     struct Response: Decodable {
         let items: [Post]
-        let groups: [Community?]
+        let groups: [Community]
     }
 }
 

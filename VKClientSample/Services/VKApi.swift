@@ -103,7 +103,7 @@ class VKApi {
         let params: Parameters = [
             "access_token": Session.shared.token,
             "v": "5.103",
-            "filters": "post,photo,wall_photo",
+            "filters": "post",
             "count": "1"
         ]
         

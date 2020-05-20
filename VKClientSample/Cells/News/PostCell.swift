@@ -7,22 +7,21 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PostCell: UITableViewCell {
     
+    static let reuseId = "PostCell"
+
     let topSeparator = UIView()
-    let shadowPhotoView = ShadowPhotoView(image: .helen, size: 48)
+    let postAuthorImage = UIImageView()
     let postAuthor = UILabel()
     let publishDate = UILabel()
     let moreButton = UIButton()
     let postText = UILabel()
     let postImageView = UIImageView(image: .postImage)
     let postFooter = PostFooter()
-    
-    var items: [PostFactory] = PostFactory.posts
-    
-    static let reuseId = "PostCell"
-
+        
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -33,16 +32,28 @@ class PostCell: UITableViewCell {
         setupUI()
     }
     
-    func setPosts(post: PostFactory) {
-        postAuthor.text = post.author
-        publishDate.text = post.publishDate
-        postText.text = post.postText
-        postImageView.image = UIImage(imageLiteralResourceName: post.postImage)
+    func setPosts(post: Post, community: Community, photo: String?) {
+        postAuthor.text = community.name
+        publishDate.text = "11:11 вчера"
+        postText.text = post.text
+        if let photoUrl = URL(string: community.photo50) {
+            postAuthorImage.kf.setImage(with: photoUrl)
+        }
+        
+        guard let photo = photo else {
+            return
+        }
+        if let photoUrl = URL(string: photo) {
+            postImageView.kf.setImage(with: photoUrl)
+        }
     }
     
     private func setupUI() {
         topSeparator.backgroundColor = .lightGray
         topSeparator.alpha = 0.3
+        
+        postAuthorImage.layer.cornerRadius = 24
+        postAuthorImage.layer.masksToBounds = true
         
         postAuthor.text = "Apple | iPhone | iPad"
         postAuthor.textColor = .black
@@ -60,7 +71,7 @@ class PostCell: UITableViewCell {
         postImageView.clipsToBounds = true
         
         addSubview(topSeparator)
-        addSubview(shadowPhotoView)
+        addSubview(postAuthorImage)
         addSubview(postAuthor)
         addSubview(publishDate)
         addSubview(moreButton)
@@ -80,18 +91,18 @@ class PostCell: UITableViewCell {
             topSeparator.heightAnchor.constraint(equalToConstant: 10)
         ])
         
-        shadowPhotoView.translatesAutoresizingMaskIntoConstraints = false
+        postAuthorImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            shadowPhotoView.topAnchor.constraint(equalTo: topSeparator.bottomAnchor, constant: 8),
-            shadowPhotoView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            shadowPhotoView.heightAnchor.constraint(equalToConstant: 48),
-            shadowPhotoView.widthAnchor.constraint(equalToConstant: 48)
+            postAuthorImage.topAnchor.constraint(equalTo: topSeparator.bottomAnchor, constant: 8),
+            postAuthorImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            postAuthorImage.heightAnchor.constraint(equalToConstant: 48),
+            postAuthorImage.widthAnchor.constraint(equalToConstant: 48)
         ])
         
         postAuthor.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            postAuthor.centerYAnchor.constraint(equalTo: shadowPhotoView.centerYAnchor, constant: -8),
-            postAuthor.leadingAnchor.constraint(equalTo: shadowPhotoView.trailingAnchor, constant: 8),
+            postAuthor.centerYAnchor.constraint(equalTo: postAuthorImage.centerYAnchor, constant: -8),
+            postAuthor.leadingAnchor.constraint(equalTo: postAuthorImage.trailingAnchor, constant: 8),
             postAuthor.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
         
@@ -110,7 +121,7 @@ class PostCell: UITableViewCell {
         
         postText.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            postText.topAnchor.constraint(equalTo: shadowPhotoView.bottomAnchor, constant: 16),
+            postText.topAnchor.constraint(equalTo: postAuthorImage.bottomAnchor, constant: 16),
             postText.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
             postText.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
         ])
