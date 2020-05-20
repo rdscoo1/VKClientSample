@@ -25,23 +25,7 @@ import RealmSwift
         return "id"
     }
 }
-//
-//extension Community {
-//    func add(from items: [Community]) {
-//        do {
-//            let realm = try! Realm()
-//            
-//            try realm.write {
-//                items.forEach {
-//                    let realmVkGroup = Community()
-//                    realm.add(realmVkGroup, update: .modified)
-//                }
-//            }
-//        } catch {
-//            print("❌ \(error)")
-//        }
-//    }
-//}
+
 
 //extension RealmCommunity {
 //    func saveToRealm() {
