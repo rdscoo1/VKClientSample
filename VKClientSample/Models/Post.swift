@@ -20,7 +20,7 @@ struct PostResponse: Decodable {
 
 struct Post: Decodable {
     let postId: Int
-    let date: Int
+    let date: Double
     let text: String?
     let attachments: [Attachment?]
     let comments: Comments

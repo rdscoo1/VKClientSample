@@ -56,13 +56,6 @@ class NewsTableVC: UITableViewController {
         }
     }
     
-    private func handleArray(of array: [Photo]) {
-        array.forEach {
-            let photoLinkhighRes = $0.sizes.first(where: { $0.type == "x" })?.url
-            self.photos.append(photoLinkhighRes)
-        }
-    }
-    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -93,9 +86,9 @@ class NewsTableVC: UITableViewController {
             
             let post = posts[indexPath.row]
             let community = communities[indexPath.row]
-            let photo = photos[indexPath.row]
+//            let photo = photos[indexPath.row]
 
-            postCell.setPosts(post: post, community: community, photo: photo)
+            postCell.setPosts(post: post, community: community, photo: "")
             return postCell
         }
     }

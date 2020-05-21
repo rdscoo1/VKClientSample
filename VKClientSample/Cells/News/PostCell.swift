@@ -20,7 +20,7 @@ class PostCell: UITableViewCell {
     let moreButton = UIButton()
     let postText = UILabel()
     let postImageView = UIImageView(image: .postImage)
-    let postFooter = PostFooter()
+    let postFooter = PostFooter(likes: 100)
         
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -34,7 +34,7 @@ class PostCell: UITableViewCell {
     
     func setPosts(post: Post, community: Community, photo: String?) {
         postAuthor.text = community.name
-        publishDate.text = "11:11 вчера"
+        publishDate.text = String.postDate(timestamp: post.date)
         postText.text = post.text
         if let photoUrl = URL(string: community.photo50) {
             postAuthorImage.kf.setImage(with: photoUrl)
