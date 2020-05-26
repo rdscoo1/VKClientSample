@@ -9,63 +9,45 @@
 import Foundation
 import RealmSwift
 
-class RealmService {
+protocol RealmServiceProtocol {
+    var realm: Realm { get }
+    
+    func saveObject(_ object: Object)
+    func saveObjects(_ objects: [Object])
+    func removeObject(_ object: Object)
+}
+
+class RealmService: RealmServiceProtocol {
     static let manager = RealmService()
+    let realm = try! Realm()
     
     private init() {}
 
 //MARK: - Save & Remove
     func saveObject(_ object: Object) {
-        do {
-            let realm = try Realm()
-            try? realm.write {
-                realm.add(object, update: .modified)
-            }
-        } catch {
-            print("❌ \(error) ❌")
+        try? realm.write {
+            realm.add(object, update: .modified)
         }
     }
     
     func saveObjects(_ objects: [Object]) {
-        do {
-            let realm = try Realm()
-            try? realm.write {
-                realm.add(objects, update: .modified)
-            }
-        } catch {
-            print("❌ \(error) ❌")
+        try? realm.write {
+            realm.add(objects, update: .modified)
         }
     }
     
     func removeObject(_ object: Object) {
-        do {
-            let realm = try Realm()
-            try? realm.write {
-                realm.delete(object)
-            }
-        } catch {
-            print("❌ \(error) ❌")
+        try? realm.write {
+            realm.delete(object)
         }
     }
     
     //MARK: - Get
-    func getAllObjects<T: Object>(of type: T.Type) -> [T] {
-        do {
-            let realm = try Realm()
-            return realm.objects(type).compactMap { $0 }
-        } catch {
-            print("❌ \(error) ❌")
-            return []
-        }
+    func getAll<T: Object>(_ type: T.Type) -> [T] {
+        return realm.objects(type).compactMap { $0 }
     }
     
-    func getAllObjects<T: Object>(_ type: T.Type, with filter: NSPredicate) -> [T] {
-        do {
-            let realm = try Realm()
-            return realm.objects(T.self).filter(filter).compactMap { $0 }
-        } catch {
-            print("❌ \(error) ❌")
-            return []
-        }
+    func getAll<T: Object>(_ type: T.Type, with filter: NSPredicate) -> [T] {
+        return realm.objects(T.self).filter(filter).compactMap { $0 }
     }
 }
