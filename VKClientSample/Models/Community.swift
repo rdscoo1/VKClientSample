@@ -25,3 +25,9 @@ import RealmSwift
         return "id"
     }
 }
+
+extension Community {
+    override var debugDescription: String {
+       return "<Community:\(id)> \(name) which activity is \(String(describing: activity)). His photo url is \(String(describing: photo50))"
+    }
+}

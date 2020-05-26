@@ -28,6 +28,8 @@ import RealmSwift
     override static func primaryKey() -> String? { // По `id`  при совпадении: перезаписывает, а не дублирует
         return "id"
     }
+    
+    
 }
 
 class City: Object, Decodable {
@@ -42,6 +44,12 @@ class City: Object, Decodable {
 struct FriendSection {
     var firstLetter: String
     var items: [Friend]
+}
+
+extension Friend {
+   override var debugDescription: String {
+      return "<Friend:\(id)> \(firstName) \(lastName) who is from \(String(describing: city?.title)). His photo url is \(String(describing: photo50))"
+   }
 }
 
 

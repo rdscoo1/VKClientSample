@@ -25,7 +25,6 @@ class RealmService: RealmServiceProtocol {
 
 //MARK: - Save & Remove
     func saveObject(_ object: Object) {
-//        print("URL: \(realm.configuration.fileURL!)")
         try? realm.write {
             realm.add(object, update: .modified)
         }

@@ -104,7 +104,7 @@ class VKApi {
             "access_token": Session.shared.token,
             "v": "5.103",
             "filters": "post",
-            "count": "1"
+            "count": "5"
         ]
         
         AF.request(requestUrl, method: .get, parameters: params)
@@ -115,7 +115,7 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(PostResponse.self, from: data)
                         if let responseData = decodedModel.response {
-                            print(responseData)
+//                            print(responseData)
                             completion(responseData)
                         } else if
                             let errorCode = decodedModel.error?.errorCode,

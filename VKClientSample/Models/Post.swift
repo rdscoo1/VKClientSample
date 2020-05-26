@@ -26,7 +26,7 @@ struct Post: Decodable {
     let comments: Comments
     let likes: Likes
     let reposts: Reposts
-    let views: Views
+    let views: Views?
     
     enum CodingKeys: String, CodingKey {
         case postId = "post_id"
@@ -64,5 +64,11 @@ struct Post: Decodable {
     
     struct Views: Decodable {
         let count: Int
+    }
+}
+
+extension Post: CustomDebugStringConvertible {
+    var debugDescription: String {
+        return "<Post:\(postId)>\n\(String(describing: text)) with date \(String(describing: String.postDate(timestamp: date))). It has photo \(String(describing: attachments[0]?.photo?.highResPhoto)). This post got \(likes.count) likes, \(comments.count) comments, \(reposts.count) reposts and \(views?.count) views."
     }
 }
