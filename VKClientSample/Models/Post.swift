@@ -19,16 +19,20 @@ struct PostResponse: Decodable {
 }
 
 struct Post: Decodable {
+    let type: String
+    let sourceId: Int
     let postId: Int
     let date: Double
     let text: String?
-    let attachments: [Attachment?]
+    let attachments: [Attachment]?
     let comments: Comments
     let likes: Likes
     let reposts: Reposts
     let views: Views?
     
     enum CodingKeys: String, CodingKey {
+        case type
+        case sourceId = "source_id"
         case postId = "post_id"
         case date
         case text
@@ -69,6 +73,6 @@ struct Post: Decodable {
 
 extension Post: CustomDebugStringConvertible {
     var debugDescription: String {
-        return "<Post:\(postId)>\n\(String(describing: text)) with date \(String(describing: String.postDate(timestamp: date))). It has photos \(String(describing: attachments[0]?.photo)). This post got \(likes.count) likes, \(comments.count) comments, \(reposts.count) reposts and \(String(describing: views?.count)) views."
+        return "<Post:\(postId)>\n\(String(describing: text)) pusblished \(Date(timeIntervalSince1970: date).getElapsedInterval()) ago. It has photos \(String(describing: attachments?[0].photo)). This post got \(likes.count) likes, \(comments.count) comments, \(reposts.count) reposts and \(String(describing: views?.count)) views."
     }
 }

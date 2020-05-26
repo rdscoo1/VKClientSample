@@ -34,7 +34,8 @@ class PostCell: UITableViewCell {
     
     func setPosts(post: Post, community: Community, photo: String?) {
         postAuthor.text = community.name
-        publishDate.text = String.postDate(timestamp: post.date)
+        let date = Date(timeIntervalSince1970: post.date).getElapsedInterval()
+        publishDate.text = "\(date) ago"
         postText.text = post.text
         if let photoUrl = URL(string: community.photo50) {
             postAuthorImage.kf.setImage(with: photoUrl)
