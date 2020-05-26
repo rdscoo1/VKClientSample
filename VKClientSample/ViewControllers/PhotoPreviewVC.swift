@@ -11,10 +11,10 @@ import UIKit
 class PhotoPreviewVC: UIViewController {
     
     let photosPreviewNavBar = PhotoPreviewNavBarView()
-    let photoPreviewFooter = PhotoPreviewFooter()
-    var isToolBarOpened: Bool = false
+    private let photoPreviewFooter = PhotoPreviewFooter()
+    private var isToolBarOpened: Bool = false
     
-    let currentPhoto = UIImageView()
+    private let currentPhoto = UIImageView()
     var friendPreviewPhotos = [String?]()
     var friendPhotosQuantity = Int()
     var selectedPhoto = Int()

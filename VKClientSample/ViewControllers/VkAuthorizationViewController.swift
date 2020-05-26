@@ -12,7 +12,7 @@ import SnapKit
 
 class VkAuthorizationViewController: UIViewController {
 
-    let webView = WKWebView()
+    private let webView = WKWebView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,7 @@ class VkAuthorizationViewController: UIViewController {
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
             URLQueryItem(name: "scope", value: "270342"),
             URLQueryItem(name: "response_type", value: "token"),
-            URLQueryItem(name: "v", value: "5.103")
+            URLQueryItem(name: "v", value: "5.107")
         ]
         
         let request = URLRequest(url: urlComponents.url!)
