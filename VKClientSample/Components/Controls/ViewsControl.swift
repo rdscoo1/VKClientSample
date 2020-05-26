@@ -8,13 +8,11 @@
 
 import UIKit
 
-class ViewsCounter: UIView {
+class ViewsControl: UIView {
     
     let viewIcon = UIImageView(image: .eye)
     let viewCounterLabel = UILabel()
     
-    var counter: Int = Int.random(in: 1...1000)
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -25,12 +23,17 @@ class ViewsCounter: UIView {
         setupUI()
     }
     
+    func updateViewsControl(quantity: Int) {
+        if quantity > 0 {
+            viewCounterLabel.text = "\(quantity)"
+        }
+    }
+    
     private func setupUI() {
-        viewCounterLabel.textColor = .lightGray
+        viewCounterLabel.textColor = UIColor(hex: "#67707a")
         viewCounterLabel.font = .systemFont(ofSize: 12, weight: .medium)
-        viewCounterLabel.text = "\(counter)"
         
-        viewIcon.tintColor = .lightGray
+        viewIcon.tintColor = UIColor(hex: "#909399")
         
         addSubview(viewIcon)
         addSubview(viewCounterLabel)

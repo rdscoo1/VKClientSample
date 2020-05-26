@@ -12,7 +12,6 @@ class CommentControl: UIControl {
     
     let commentImageView = UIImageView(image: .commentButton)
     let commentCounterLabel = UILabel()
-    var commentCounter: Int = Int.random(in: 1...1000)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,29 +23,29 @@ class CommentControl: UIControl {
         configureCommentControl()
     }
     
+    func updateCommentControl(quantity: Int) {
+        if quantity > 0 {
+            commentCounterLabel.text = "\(quantity)"
+        }
+    }
+    
     func configureCommentControl() {
         addSubview(commentImageView)
         addSubview(commentCounterLabel)
         
-        commentImageView.tintColor = .gray
+        commentImageView.tintColor = UIColor(hex: "#909399")
         
-        commentCounterLabel.textColor = .lightGray
+        commentCounterLabel.textColor = UIColor(hex: "#67707a")
         commentCounterLabel.font = .systemFont(ofSize: 12, weight: .medium)
         
-        updateCommentCounter()
         
         commentImageView.translatesAutoresizingMaskIntoConstraints = false
         commentImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         commentImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         commentImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
-
         
         commentCounterLabel.translatesAutoresizingMaskIntoConstraints = false
         commentCounterLabel.leadingAnchor.constraint(equalTo: commentImageView.trailingAnchor, constant: 4).isActive = true
         commentCounterLabel.centerYAnchor.constraint(equalTo: commentImageView.centerYAnchor).isActive = true
-    }
-    
-    func updateCommentCounter() {
-        commentCounterLabel.text = "\(commentCounter)"
     }
 }

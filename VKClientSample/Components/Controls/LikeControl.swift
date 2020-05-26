@@ -12,7 +12,7 @@ class LikeControl: UIControl {
     
     let likeImageView = UIImageView(image: .heart)
     let likeCounterLabel = UILabel()
-    var likeCounter: Int = Int.random(in: 1...1000)
+    var likeCounter = Int()
     var isLiked: Bool = false
     
     override init(frame: CGRect) {
@@ -25,15 +25,20 @@ class LikeControl: UIControl {
         configureLikeControl()
     }
     
-    
+    func updateLikeControl(quantity: Int) {
+        if quantity > 0 {
+            self.likeCounter = quantity
+            likeCounterLabel.text = "\(quantity)"
+        }
+    }
     
     private func configureLikeControl() {
         addSubview(likeImageView)
         addSubview(likeCounterLabel)
         
-        likeImageView.tintColor = .gray
+        likeImageView.tintColor = UIColor(hex: "#909399")
         
-        likeCounterLabel.textColor = .lightGray
+        likeCounterLabel.textColor = UIColor(hex: "#67707a")
         likeCounterLabel.font = .systemFont(ofSize: 12, weight: .medium)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(tappedLike))
@@ -53,7 +58,7 @@ class LikeControl: UIControl {
         isLiked = !isLiked
         
         if isLiked {
-            likeCounter += 1
+            likeCounterLabel.text = "\(likeCounter + 1)"
             likeImageView.image = .heartFill
             likeImageView.tintColor = .red
             UIView.animate(withDuration: 0.3, animations: {
@@ -63,7 +68,7 @@ class LikeControl: UIControl {
             let generator = UIImpactFeedbackGenerator(style: .light)
             generator.impactOccurred()
         } else {
-            likeCounter -= 1
+            likeCounterLabel.text = "\(likeCounter)"
             likeImageView.image = .heart
             likeImageView.tintColor = .gray
             
@@ -74,10 +79,6 @@ class LikeControl: UIControl {
         }
         
         animateButtonTap()
-    }
-    
-    func updateLikeCounter(quantity: Int) {
-        likeCounterLabel.text = "\(quantity)"
     }
     
     private func animateButtonTap() {
