@@ -22,7 +22,7 @@ class ProfileTableViewController: UITableViewController {
     }
     
     private func requestProfileInfo() {
-        profile = RealmService.manager.getAll(User.self)
+        profile = RealmService.manager.getAllObjects(of: User.self)
 
         vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] profileInfo in
             self?.profile = profileInfo

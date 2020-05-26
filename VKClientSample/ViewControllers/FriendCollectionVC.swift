@@ -24,7 +24,7 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     private func requestFromApi() {
-        friendPhotos = RealmService.manager.getAll(Photo.self)
+        friendPhotos = RealmService.manager.getAllObjects(of: Photo.self)
         
         vkApi.getPhotos(ownerId: friendId) { [weak self] photos in
             self?.friendPhotos = photos

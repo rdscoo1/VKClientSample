@@ -56,7 +56,7 @@ class FriendsTableVC: UITableViewController {
     }
     
     private func requestFromApi() {
-        friends = RealmService.manager.getAll(Friend.self)
+        friends = RealmService.manager.getAllObjects(of: Friend.self)
         friendsInSection = handleFriends(items: friends)
         
                 vkApi.getFriends { [weak self] friends in

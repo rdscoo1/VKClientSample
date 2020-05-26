@@ -32,7 +32,7 @@ class CommunitiesVC: UIViewController {
     }
     
     private func requestCommunitiesFromApi() {
-        communities = RealmService.manager.getAll(Community.self)
+        communities = RealmService.manager.getAllObjects(of: Community.self)
         
         vkApi.getGroups { [weak self] groups in
                 self?.communities = groups
