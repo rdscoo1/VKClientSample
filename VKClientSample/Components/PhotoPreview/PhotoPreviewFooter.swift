@@ -11,8 +11,8 @@ import UIKit
 class PhotoPreviewFooter: UIView {
 
     let likeControl = LikeControl()
-    let commentImageView = UIImageView(image: .commentButton)
-    let shareImageView = UIImageView(image: .shareButton)
+    let commentControl = CommentControl()
+    let repostControl = RepostControl()
     let containerStackView = UIStackView()
     
     init() {
@@ -20,7 +20,7 @@ class PhotoPreviewFooter: UIView {
         
         setupUI()
         
-        [likeControl, commentImageView, shareImageView].forEach {
+        [likeControl, commentControl, repostControl].forEach {
             containerStackView.addArrangedSubview($0)
         }
         addSubview(containerStackView)
@@ -32,6 +32,12 @@ class PhotoPreviewFooter: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func updateControls(likes: Int, comments: Int, reposts: Int) {
+        likeControl.updateLikeControl(quantity: likes)
+        commentControl.updateCommentControl(quantity: comments)
+        repostControl.updateRepostControl(quantity: reposts)
+    }
+    
     private func setupUI() {
         backgroundColor = .clear
         
@@ -39,11 +45,11 @@ class PhotoPreviewFooter: UIView {
         containerStackView.axis = .horizontal
         
         likeControl.contentMode = .center
-        commentImageView.contentMode = .center
-        shareImageView.contentMode = .center
+        commentControl.contentMode = .center
+        repostControl.contentMode = .center
         
-        commentImageView.tintColor = .gray
-        shareImageView.tintColor = .gray
+        commentControl.tintColor = .gray
+        repostControl.tintColor = .gray
     }
     
     private func setConstraints() {        

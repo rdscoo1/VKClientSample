@@ -26,7 +26,7 @@ struct Post: Decodable {
     let text: String?
     let attachments: [Attachment]?
     let comments: Comments
-    let likes: Likes
+    let likes: Likes?
     let reposts: Reposts
     let views: Views?
     
@@ -73,6 +73,6 @@ struct Post: Decodable {
 
 extension Post: CustomDebugStringConvertible {
     var debugDescription: String {
-        return "<Post:\(postId)>\n\(String(describing: text)) pusblished \(Date(timeIntervalSince1970: date).getElapsedInterval()) ago. It has photos \(String(describing: attachments?[0].photo)). This post got \(likes.count) likes, \(comments.count) comments, \(reposts.count) reposts and \(String(describing: views?.count)) views."
+        return "<Post:\(postId)>\n\(String(describing: text)) pusblished \(Date(timeIntervalSince1970: date).getElapsedInterval()) ago. It has photos \(String(describing: attachments?[0].photo)).\n This post got \(String(describing: likes?.count)) likes, \(comments.count) comments, \(reposts.count) reposts and \(String(describing: views?.count)) views."
     }
 }

@@ -89,7 +89,7 @@ class NewsTableVC: UITableViewController {
 //            let photo = photos[indexPath.row]
 
             print(post.debugDescription)
-            postCell.postFooter.updateControls(likes: post.likes.count, comments: post.comments.count, reposts: post.reposts.count, views: post.views?.count ?? 0)
+            postCell.postFooter.updateControls(likes: post.likes?.count ?? 0, comments: post.comments.count, reposts: post.reposts.count, views: post.views?.count ?? 0)
             postCell.setPosts(post: post, community: community, photo: "")
             return postCell
         }
