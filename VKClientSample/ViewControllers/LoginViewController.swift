@@ -14,7 +14,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var loginButton: UIButton!
-    let secureTextEntryButton = UIButton()
+    private let secureTextEntryButton = UIButton()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent

@@ -11,11 +11,11 @@ import SnapKit
 
 class FriendsTableVC: UITableViewController {
     
-    let vkApi = VKApi()
+    private let vkApi = VKApi()
     @IBOutlet weak var searchBar: UISearchBar!
     private var activityIndicator = UIActivityIndicatorView()
     
-    var friends = [Friend]()
+    private var friends = [Friend]()
     var friendsInSection = [FriendSection]()
     
     override func viewWillAppear(_ animated: Bool) {

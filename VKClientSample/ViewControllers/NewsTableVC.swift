@@ -88,6 +88,7 @@ class NewsTableVC: UITableViewController {
             let community = communities[indexPath.row]
 //            let photo = photos[indexPath.row]
 
+            print(post.debugDescription)
             postCell.setPosts(post: post, community: community, photo: "")
             return postCell
         }

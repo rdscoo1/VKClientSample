@@ -10,7 +10,7 @@ import UIKit
 
 class ProfileTableViewController: UITableViewController {
     
-    let vkApi = VKApi()
+    private let vkApi = VKApi()
     private var profile = [User]()
     
     override func viewDidLoad() {
