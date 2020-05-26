@@ -69,6 +69,6 @@ struct Post: Decodable {
 
 extension Post: CustomDebugStringConvertible {
     var debugDescription: String {
-        return "<Post:\(postId)>\n\(String(describing: text)) with date \(String(describing: String.postDate(timestamp: date))). It has photo \(String(describing: attachments[0]?.photo?.highResPhoto)). This post got \(likes.count) likes, \(comments.count) comments, \(reposts.count) reposts and \(views?.count) views."
+        return "<Post:\(postId)>\n\(String(describing: text)) with date \(String(describing: String.postDate(timestamp: date))). It has photos \(String(describing: attachments[0]?.photo)). This post got \(likes.count) likes, \(comments.count) comments, \(reposts.count) reposts and \(String(describing: views?.count)) views."
     }
 }

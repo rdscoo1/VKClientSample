@@ -54,8 +54,8 @@ import RealmSwift
     dynamic var type: String = ""
     dynamic var url: String = ""
     
-    override class func indexedProperties() -> [String] {
-        return ["url"]
+    override static func primaryKey() -> String? { // По `id`  при совпадении: перезаписывает, а не дублирует
+        return "url"
     }
     
     override static func ignoredProperties() -> [String] {
