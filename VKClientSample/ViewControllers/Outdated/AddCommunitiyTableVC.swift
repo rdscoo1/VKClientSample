@@ -38,10 +38,10 @@ class AddCommunitiyTableVC: UITableViewController {
     }
     
     private func requestFromApi(groupName: String) {
-        vkApi.getSearchedGroups(groupName: groupName) { [weak self] groups in
-            self?.communities = groups
-            self?.tableView.reloadData()
-        }
+//        vkApi.getSearchedGroups(groupName: groupName) { [weak self] groups in
+//            self?.communities = groups
+//            self?.tableView.reloadData()
+//        }
     }
     
     

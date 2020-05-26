@@ -36,14 +36,14 @@ class GetDataViewController: UIViewController {
     }
     
     @objc func getDataButtonTapped() {
-        vkApi.getGroups { result in
-            print(result)
-        }
-
-        
-        vkApi.getSearchedGroups(groupName: "Music") { result in
-            print(result)
-        }
+//        vkApi.getGroups { result in
+//            print(result)
+//        }
+//
+//        
+//        vkApi.getSearchedGroups(groupName: "Music") { result in
+//            print(result)
+//        }
     }
 
 }
