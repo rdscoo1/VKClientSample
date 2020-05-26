@@ -48,6 +48,17 @@ class RealmService {
         }
     }
     
+    func removeAllObjects<T: Object>(_ object: T.Type) {
+        do {
+            let realm = try Realm()
+            try? realm.write {
+                realm.delete(getAllObjects(of: object))
+            }
+        } catch {
+            print("❌ \(error) ❌")
+        }
+    }
+    
     //MARK: - Get
     func getAllObjects<T: Object>(of type: T.Type) -> [T] {
         do {

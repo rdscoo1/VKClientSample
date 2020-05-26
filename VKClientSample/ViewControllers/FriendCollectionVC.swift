@@ -20,20 +20,17 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        requestFromApi()
+        loadData()
+        
+        vkApi.getPhotos(ownerId: friendId) { [weak self] in
+            self?.loadData()
+        }
     }
     
-    private func requestFromApi() {
-        friendPhotos = RealmService.manager.getAllObjects(of: Photo.self)
-        
-        vkApi.getPhotos(ownerId: friendId) { [weak self] photos in
-            self?.friendPhotos = photos
-            self?.handleArray(of: photos)
-            
-            RealmService.manager.saveObjects(photos)
-            
-            self?.collectionView.reloadData()
-        }
+    private func loadData() {
+        self.friendPhotos = RealmService.manager.getAllObjects(of: Photo.self)
+        self.handleArray(of: friendPhotos)
+        self.collectionView.reloadData()
     }
     
     private func handleArray(of array: [Photo]) {

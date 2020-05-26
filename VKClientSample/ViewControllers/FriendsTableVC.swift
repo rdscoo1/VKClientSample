@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import RealmSwift
 
 class FriendsTableVC: UITableViewController {
     
@@ -34,6 +35,7 @@ class FriendsTableVC: UITableViewController {
         searchBar.delegate = self
         
         configureActivityIndicator()
+        loadData()
         requestFromApi()
     }
     
@@ -56,20 +58,20 @@ class FriendsTableVC: UITableViewController {
     }
     
     private func requestFromApi() {
-        friends = RealmService.manager.getAllObjects(of: Friend.self)
-        friendsInSection = handleFriends(items: friends)
-        
-                vkApi.getFriends { [weak self] friends in
-                    self?.friends = friends
-                    RealmService.manager.saveObjects(friends)
-                    self?.friendsInSection = self!.handleFriends(items: friends)
-                    self?.tableView.reloadData()
-                }
+        vkApi.getFriends { [weak self] in
+            self?.loadData()
+        }
         
         self.activityIndicator.stopAnimating()
         UIView.animate(withDuration: 0.2, animations: {
             self.tableView.alpha = 1.0
         })
+    }
+    
+    private func loadData() {
+        self.friends = RealmService.manager.getAllObjects(of: Friend.self)
+        self.friendsInSection = self.handleFriends(items: self.friends)
+        self.tableView.reloadData()
     }
     
     @IBAction func refresh(_ sender: UIRefreshControl) {

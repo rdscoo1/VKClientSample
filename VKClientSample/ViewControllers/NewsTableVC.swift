@@ -38,13 +38,13 @@ class NewsTableVC: UITableViewController {
             self?.communities = post.groups
             
             items.forEach {
-                guard let attachment = $0.attachments.first else {
+                guard let attachment = $0.attachments?.first else {
                     return
                 }
                 
                 if
-                    attachment!.type == "photo",
-                    let sizes = attachment?.photo?.sizes,
+                    attachment.type == "photo",
+                    let sizes = attachment.photo?.sizes,
                     let photoLink = sizes.first(where: { $0.type == "x" })?.url
                     {
                         self?.photos.append(photoLink)
@@ -89,6 +89,7 @@ class NewsTableVC: UITableViewController {
 //            let photo = photos[indexPath.row]
 
             print(post.debugDescription)
+            postCell.postFooter.updateControls(likes: post.likes.count, comments: post.comments.count, reposts: post.reposts.count, views: post.views?.count ?? 0)
             postCell.setPosts(post: post, community: community, photo: "")
             return postCell
         }
