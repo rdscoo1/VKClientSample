@@ -8,29 +8,15 @@
 
 import UIKit
 
-enum CellTypes {
-    case whatsNewCell
-    case storiesCell
-    case postCell(item: Post)
-}
-
 class NewsTableVC: UITableViewController {
     
-    var models: [CellTypes] = []
-    var posts = Post.posts
-    
-   override func viewDidAppear(_ animated: Bool) {
-        navigationController?.navigationBar.barStyle = .black
-    }
+    var posts = [Post]()
+    var communities = [Community]()
+    var photos = [String?]()
+    let vkApi = VKApi()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.backgroundColor = .white
-        view.backgroundColor = .white
-        
-        models.append(.whatsNewCell)
-        models.append(.storiesCell)
-        models.append(contentsOf: Post.posts.map { CellTypes.postCell(item: $0) })
         
         tableView.register(WhatsNewCell.self, forCellReuseIdentifier: WhatsNewCell.reuseId)
         tableView.register(StoriesCell.self, forCellReuseIdentifier: StoriesCell.reuseId)
@@ -41,38 +27,79 @@ class NewsTableVC: UITableViewController {
         tableView.separatorStyle = .none
         
         setupActionHideKeyboard()
+        
+        requestFromApi()
+    }
+    
+    private func requestFromApi() {
+        vkApi.getNewsfeed { [weak self] (post) in
+            let items = post.items
+            self?.posts = items
+            self?.communities = post.groups
+            
+            items.forEach {
+                guard let attachment = $0.attachments.first else {
+                    return
+                }
+                
+                if
+                    attachment!.type == "photo",
+                    let sizes = attachment?.photo?.sizes,
+                    let photoLink = sizes.first(where: { $0.type == "x" })?.url
+                    {
+                        self?.photos.append(photoLink)
+                    } else {
+                        print("post -> ", attachment)
+                    }
+            }
+            self?.tableView.reloadData()
+        }
     }
     
     // MARK: - Table view data source
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return models.count
+        if section == 0 {
+            return 1
+        } else if section == 1 {
+            return 1
+        } else {
+            return posts.count
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellModel = models[indexPath.row]
-        
-        switch cellModel {
-        case .whatsNewCell:
-            return tableView.dequeueReusableCell(withIdentifier: WhatsNewCell.reuseId, for: indexPath) as? WhatsNewCell ?? UITableViewCell()
-        case .storiesCell:
-            return tableView.dequeueReusableCell(withIdentifier: StoriesCell.reuseId, for: indexPath) as? StoriesCell ?? UITableViewCell()
-        case let .postCell(item: post):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: PostCell.reuseId, for: indexPath) as? PostCell else { return UITableViewCell() }
-            cell.setPosts(post: post)
-            return cell
+        if indexPath.section == 0 {
+            guard let whatsNewCell = tableView.dequeueReusableCell(withIdentifier: WhatsNewCell.reuseId, for: indexPath) as? WhatsNewCell else { return UITableViewCell() }
+            
+            return whatsNewCell
+        } else if indexPath.section == 1 {
+             guard let storiesCell = tableView.dequeueReusableCell(withIdentifier: StoriesCell.reuseId, for: indexPath) as? StoriesCell else { return UITableViewCell() }
+            
+            return storiesCell
+        } else {
+             guard let postCell = tableView.dequeueReusableCell(withIdentifier: PostCell.reuseId, for: indexPath) as? PostCell else { return UITableViewCell() }
+            
+            let post = posts[indexPath.row]
+            let community = communities[indexPath.row]
+//            let photo = photos[indexPath.row]
 
+            print(post.debugDescription)
+            postCell.setPosts(post: post, community: community, photo: "")
+            return postCell
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let cellModel = models[indexPath.row]
-        switch cellModel {
-        case .whatsNewCell:
+        if indexPath.section == 0 {
             return 64
-        case .storiesCell:
-            return 128
-        case .postCell:
+        } else if indexPath.section == 1 {
+            return 112
+        } else {
             return UITableView.automaticDimension
         }
     }

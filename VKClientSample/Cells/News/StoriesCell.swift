@@ -13,11 +13,11 @@ class StoriesCell: UITableViewCell {
     let topSeparator = UIView()
     let containerView = UIView()
     var storiesCollectionView: UICollectionView!
-    var items: [Friend] = Friend.friends
+    var items: [FriendFactory] = FriendFactory.friends
     
     var layout: UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 80, height: 96)
+        layout.itemSize = CGSize(width: 68, height: 84)
         layout.scrollDirection = .horizontal
         return layout
     }
@@ -58,7 +58,7 @@ class StoriesCell: UITableViewCell {
             topSeparator.topAnchor.constraint(equalTo: topAnchor),
             topSeparator.leadingAnchor.constraint(equalTo: leadingAnchor),
             topSeparator.trailingAnchor.constraint(equalTo: trailingAnchor),
-            topSeparator.heightAnchor.constraint(equalToConstant: 8)
+            topSeparator.heightAnchor.constraint(equalToConstant: 10)
         ])
         
         containerView.translatesAutoresizingMaskIntoConstraints = false

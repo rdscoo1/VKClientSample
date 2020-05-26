@@ -12,7 +12,7 @@ import SnapKit
 
 class VkAuthorizationViewController: UIViewController {
 
-    let webView = WKWebView()
+    private let webView = WKWebView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,9 +32,9 @@ class VkAuthorizationViewController: UIViewController {
             URLQueryItem(name: "client_id", value: "7334032"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
-            URLQueryItem(name: "scope", value: "262150"),
+            URLQueryItem(name: "scope", value: "270342"),
             URLQueryItem(name: "response_type", value: "token"),
-            URLQueryItem(name: "v", value: "5.103")
+            URLQueryItem(name: "v", value: "5.107")
         ]
         
         let request = URLRequest(url: urlComponents.url!)
@@ -54,10 +54,9 @@ class VkAuthorizationViewController: UIViewController {
         }
     }
     
-    private func goToGetDataVC() {
-        if let navigationController =  UIApplication.shared.windows.first?.rootViewController as? UINavigationController {
-            navigationController.pushViewController(GetDataViewController(), animated: true)
-        }
+    private func goToTabBar() {
+        let tabBarController = storyboard?.instantiateViewController(withIdentifier: "TabBarVC")
+        self.navigationController?.pushViewController(tabBarController!, animated: true)
     }
 }
 
@@ -84,10 +83,9 @@ extension VkAuthorizationViewController: WKNavigationDelegate {
         }
         
         Session.shared.token = params["access_token"] ?? ""
-        Session.shared.userId = params["user_id"] ?? "0"
-        
-        goToGetDataVC()
-        
+        Session.shared.userId = params["user_id"] ?? ""
+               
+        goToTabBar()
         decisionHandler(.cancel)
     }
 }

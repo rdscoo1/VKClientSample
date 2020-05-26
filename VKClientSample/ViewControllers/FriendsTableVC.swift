@@ -7,28 +7,16 @@
 //
 
 import UIKit
+import SnapKit
 
 class FriendsTableVC: UITableViewController {
     
+    private let vkApi = VKApi()
     @IBOutlet weak var searchBar: UISearchBar!
-    var friends = Friend.friends
-    var sections: [[Friend]] = [[]]
-    var uniqueFirstLetters: [String] = Array(Set(Friend.friends.map { $0.titleFirstLetter })).sorted()
+    private var activityIndicator = UIActivityIndicatorView()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        tableView.tableFooterView = UIView()
-        tableView.rowHeight = 64
-        searchBar.delegate = self
-        
-        handleFriends(friend: Friend.friends)
-//        setupActionHideKeyboard()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        navigationController?.navigationBar.barStyle = .black
-    }
+    private var friends = [Friend]()
+    var friendsInSection = [FriendSection]()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -37,77 +25,109 @@ class FriendsTableVC: UITableViewController {
         }
     }
     
-    func handleFriends(friend: [Friend]) {
-        uniqueFirstLetters = Array(Set(friend.map { $0.titleFirstLetter })).sorted()
-        sections = uniqueFirstLetters.map { firstLetter in
-            return friend
-                .filter { $0.titleFirstLetter == firstLetter }
-                .sorted { $0.surname < $1.surname }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(activityIndicator)
+        
+        tableView.tableFooterView = UIView()
+        tableView.rowHeight = 64
+        searchBar.delegate = self
+        
+        configureActivityIndicator()
+        requestFromApi()
+    }
+    
+    private func configureActivityIndicator() {
+        activityIndicator.color = .darkGray
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        
+        activityIndicator.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-48)
+            $0.height.width.equalTo(64)
         }
     }
-
-    // MARK: - Table view data source
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return uniqueFirstLetters[section]
+    func handleFriends(items: [Friend]) -> [FriendSection] {
+        return Dictionary(grouping: items) { $0.lastName.prefix(1) }
+            .map { FriendSection(firstLetter: "\($0.key)", items: $0.value) }
+            .sorted(by: { $0.firstLetter < $1.firstLetter })
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
-    }
-
-    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return uniqueFirstLetters
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell") as! FriendCell
-        let friend = sections[indexPath.section][indexPath.row]
-        cell.setFriends(friend: friend)
+    private func requestFromApi() {
+        friends = RealmService.manager.getAll(Friend.self)
+        friendsInSection = handleFriends(items: friends)
         
-        return cell
+                vkApi.getFriends { [weak self] friends in
+                    self?.friends = friends
+                    RealmService.manager.saveObjects(friends)
+                    self?.friendsInSection = self!.handleFriends(items: friends)
+                    self?.tableView.reloadData()
+                }
+        
+        self.activityIndicator.stopAnimating()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.tableView.alpha = 1.0
+        })
+    }
+    
+    @IBAction func refresh(_ sender: UIRefreshControl) {
+        requestFromApi()
+        
+        sender.endRefreshing()
     }
     
     
     // MARK: - Navigation
-    
+    //
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let segueId = segue.identifier,
             segueId == "friendPhotosSegue",
             let friendPhotos = segue.destination as? FriendCollectionVC,
             let selectedIndex = tableView.indexPathForSelectedRow {
-            friendPhotos.friendPhotos = sections[selectedIndex.section][selectedIndex.row].photos
+            friendPhotos.friendId = friendsInSection[selectedIndex.section].items[selectedIndex.row].id
         }
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
-        self.navigationController!.navigationBar.tintColor = .white
+        self.navigationController!.navigationBar.tintColor = Constants.Colors.vkBlue
+    }
+}
+
+extension FriendsTableVC {
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return friendsInSection.count
     }
     
-    private func setupActionHideKeyboard() {
-        let tapOnView = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        tableView.addGestureRecognizer(tapOnView)
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return friendsInSection[section].firstLetter
     }
     
-    @objc
-    private func hideKeyboard() {
-        tableView?.endEditing(true)
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return friendsInSection.map { $0.firstLetter }
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return friendsInSection[section].items.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell") as! FriendCell
+        let friend = friendsInSection[indexPath.section].items[indexPath.row]
+        cell.configure(with: friend)
+        
+        return cell
     }
 }
 
 extension FriendsTableVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if !searchText.isEmpty {
-            friends = sections.flatMap({ $0 }).filter({
-                friend -> Bool in
-                friend.surname.lowercased().contains(searchText.lowercased())
+            friendsInSection = handleFriends(items: friends.filter{
+                $0.lastName.lowercased().contains(searchText.lowercased())
             })
-            handleFriends(friend: friends)
         } else {
-            handleFriends(friend: Friend.friends)
+            friendsInSection = handleFriends(items: friends)
         }
         tableView.reloadData()
     }

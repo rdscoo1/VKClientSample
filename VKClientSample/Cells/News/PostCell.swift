@@ -7,22 +7,21 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PostCell: UITableViewCell {
     
+    static let reuseId = "PostCell"
+
     let topSeparator = UIView()
-    let shadowPhotoView = ShadowPhotoView(image: .helen)
+    let postAuthorImage = UIImageView()
     let postAuthor = UILabel()
     let publishDate = UILabel()
     let moreButton = UIButton()
     let postText = UILabel()
     let postImageView = UIImageView(image: .postImage)
-    let postFooter = PostFooter()
-    
-    var items: [Post] = Post.posts
-    
-    static let reuseId = "PostCell"
-
+    let postFooter = PostFooter(likes: 100)
+        
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -33,35 +32,46 @@ class PostCell: UITableViewCell {
         setupUI()
     }
     
-    func setPosts(post: Post) {
-        postAuthor.text = post.author
-        publishDate.text = post.publishDate
-        postText.text = post.postText
-        postImageView.image = UIImage(imageLiteralResourceName: post.postImage)
+    func setPosts(post: Post, community: Community, photo: String?) {
+        postAuthor.text = community.name
+        publishDate.text = String.postDate(timestamp: post.date)
+        postText.text = post.text
+        if let photoUrl = URL(string: community.photo50) {
+            postAuthorImage.kf.setImage(with: photoUrl)
+        }
+        
+        guard let photo = photo else {
+            return
+        }
+        if let photoUrl = URL(string: photo) {
+            postImageView.kf.setImage(with: photoUrl)
+        }
     }
     
     private func setupUI() {
         topSeparator.backgroundColor = .lightGray
         topSeparator.alpha = 0.3
         
+        postAuthorImage.layer.cornerRadius = 24
+        postAuthorImage.layer.masksToBounds = true
+        
         postAuthor.text = "Apple | iPhone | iPad"
-        postAuthor.textColor = Constants.Colors.vkTheme
-        postAuthor.font = .systemFont(ofSize: 16)
+        postAuthor.textColor = .black
+        postAuthor.font = .systemFont(ofSize: 16, weight: UIFont.Weight.medium)
         
         publishDate.text = "вчера в \(Int.random(in: 10...23)):\(Int.random(in: 10...59))"
-        publishDate.textColor = .lightGray
-        publishDate.font = .systemFont(ofSize: 15)
+        publishDate.textColor = Constants.Colors.vkDarkGray
+        publishDate.font = .systemFont(ofSize: 15, weight: UIFont.Weight.regular)
         
         moreButton.setImage(.moreButton, for: .normal)
         
         postText.numberOfLines = 0
-        postText.backgroundColor = .white
         
         postImageView.contentMode = .scaleAspectFill
         postImageView.clipsToBounds = true
         
         addSubview(topSeparator)
-        addSubview(shadowPhotoView)
+        addSubview(postAuthorImage)
         addSubview(postAuthor)
         addSubview(publishDate)
         addSubview(moreButton)
@@ -78,21 +88,21 @@ class PostCell: UITableViewCell {
             topSeparator.topAnchor.constraint(equalTo: topAnchor),
             topSeparator.leadingAnchor.constraint(equalTo: leadingAnchor),
             topSeparator.trailingAnchor.constraint(equalTo: trailingAnchor),
-            topSeparator.heightAnchor.constraint(equalToConstant: 8)
+            topSeparator.heightAnchor.constraint(equalToConstant: 10)
         ])
         
-        shadowPhotoView.translatesAutoresizingMaskIntoConstraints = false
+        postAuthorImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            shadowPhotoView.topAnchor.constraint(equalTo: topSeparator.bottomAnchor, constant: 16),
-            shadowPhotoView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            shadowPhotoView.heightAnchor.constraint(equalToConstant: 40),
-            shadowPhotoView.widthAnchor.constraint(equalToConstant: 40)
+            postAuthorImage.topAnchor.constraint(equalTo: topSeparator.bottomAnchor, constant: 8),
+            postAuthorImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            postAuthorImage.heightAnchor.constraint(equalToConstant: 48),
+            postAuthorImage.widthAnchor.constraint(equalToConstant: 48)
         ])
         
         postAuthor.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            postAuthor.centerYAnchor.constraint(equalTo: shadowPhotoView.centerYAnchor, constant: -8),
-            postAuthor.leadingAnchor.constraint(equalTo: shadowPhotoView.trailingAnchor, constant: 8),
+            postAuthor.centerYAnchor.constraint(equalTo: postAuthorImage.centerYAnchor, constant: -8),
+            postAuthor.leadingAnchor.constraint(equalTo: postAuthorImage.trailingAnchor, constant: 8),
             postAuthor.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
         
@@ -100,7 +110,7 @@ class PostCell: UITableViewCell {
         NSLayoutConstraint.activate([
             publishDate.leadingAnchor.constraint(equalTo: postAuthor.leadingAnchor),
             publishDate.trailingAnchor.constraint(equalTo: postAuthor.trailingAnchor),
-            publishDate.topAnchor.constraint(equalTo: postAuthor.bottomAnchor, constant: 4)
+            publishDate.topAnchor.constraint(equalTo: postAuthor.bottomAnchor, constant: 2)
         ])
         
         moreButton.translatesAutoresizingMaskIntoConstraints = false
@@ -111,7 +121,7 @@ class PostCell: UITableViewCell {
         
         postText.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            postText.topAnchor.constraint(equalTo: shadowPhotoView.bottomAnchor, constant: 16),
+            postText.topAnchor.constraint(equalTo: postAuthorImage.bottomAnchor, constant: 16),
             postText.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
             postText.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
         ])

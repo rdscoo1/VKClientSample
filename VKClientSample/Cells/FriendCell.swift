@@ -20,8 +20,11 @@ class FriendCell: UITableViewCell {
         friendPhoto.layer.masksToBounds = true
     }
     
-    func setFriends(friend: Friend) {
-        friendFullName.text = "\(friend.name) \(friend.surname)"
-        friendPhoto.image = UIImage(imageLiteralResourceName: friend.avatar)
+    func configure(with friend: Friend) {
+        friendFullName.text = "\(friend.firstName) \(friend.lastName)"
+        if  let photoLink = friend.photo50,
+            let photoUrl = URL(string: photoLink) {
+            friendPhoto.kf.setImage(with: photoUrl)
+        }
     }
 }

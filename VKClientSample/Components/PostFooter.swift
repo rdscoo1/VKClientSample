@@ -16,6 +16,12 @@ class PostFooter: UIView {
     let viewsConterView = ViewsCounter()
     let containerStackView = UIStackView()
     
+    init(likes: Int) {
+        super.init(frame: .zero)
+        setupUI()
+        likeControl.updateLikeCounter(quantity: likes)
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -24,6 +30,10 @@ class PostFooter: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUI()
+    }
+    
+    private func configureControls() {
+        
     }
     
     

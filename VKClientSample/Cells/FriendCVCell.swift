@@ -13,9 +13,4 @@ class FriendCVCell: UICollectionViewCell {
     @IBOutlet weak var friendPhoto: UIImageView!
     
     static let reuseId = "FriendPhotosСell"
-    
-//    func setFriends(friend: Friend.friends) {
-//        friendFullName.text = "\(friend.name) \(friend.surname)"
-//        friendPhoto.image = UIImage(imageLiteralResourceName: friend.avatar)
-//    }
 }

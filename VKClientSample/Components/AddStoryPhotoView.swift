@@ -13,7 +13,7 @@ class AddStoryPhotoView: UIView {
     let photoImageView = UIImageView(image: .john)
     let plusImageViewContainer = UIView()
     let plusImageView = UIImageView(image: .plusIconToAddStory)
-    let photoSize: CGFloat = 64
+    let photoSize: CGFloat = 56
     let plusIconSize: CGFloat = 20
 
     
@@ -40,6 +40,8 @@ class AddStoryPhotoView: UIView {
         
         plusImageView.layer.cornerRadius = plusIconSize / 2 - 1
         plusImageView.layer.masksToBounds = true
+        plusImageView.backgroundColor = .white
+        plusImageView.tintColor = Constants.Colors.vkBlue
         
         plusImageViewContainer.addSubview(plusImageView)
         addSubview(photoImageView)

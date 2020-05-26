@@ -25,25 +25,26 @@ class StoryCell: UICollectionViewCell {
         setupUI()
     }
     
-    func setStories(story: Friend) {
+    func setStories(story: FriendFactory) {
         storyImageView.image = UIImage(imageLiteralResourceName: story.avatar)
         storyAuthor.text = "\(story.name) \(story.surname)"
     }
     
     private func setupUI() {
-        storyImageView.layer.cornerRadius = 32
+        storyImageView.layer.cornerRadius = 28
         storyImageView.clipsToBounds = true
         storyImageView.contentMode = .scaleAspectFill
         
         storyAuthor.textAlignment = .center
         storyAuthor.numberOfLines = 0
-        storyAuthor.textColor = Constants.Colors.vkTheme
+        storyAuthor.textColor = Constants.Colors.vkBlue
+        storyAuthor.font = .systemFont(ofSize: 12, weight: UIFont.Weight.medium)
         
-        storyContainerView.layer.cornerRadius = 36
+        storyContainerView.layer.cornerRadius = 32
         storyContainerView.clipsToBounds = true
-        storyContainerView.backgroundColor = .white
+        storyContainerView.backgroundColor = .clear
         storyContainerView.layer.borderWidth = 2
-        storyContainerView.layer.borderColor = Constants.Colors.vkTheme.cgColor
+        storyContainerView.layer.borderColor = Constants.Colors.vkBlue.cgColor
         
         storyContainerView.addSubview(storyImageView)
         addSubview(storyContainerView)
@@ -54,23 +55,23 @@ class StoryCell: UICollectionViewCell {
     private func configureConstraints() {
         storyContainerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            storyContainerView.heightAnchor.constraint(equalToConstant: 72),
-            storyContainerView.widthAnchor.constraint(equalToConstant: 72),
+            storyContainerView.heightAnchor.constraint(equalToConstant: 64),
+            storyContainerView.widthAnchor.constraint(equalToConstant: 64),
             storyContainerView.topAnchor.constraint(equalTo: topAnchor),
             storyContainerView.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
         
         storyImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            storyImageView.heightAnchor.constraint(equalToConstant: 64),
-            storyImageView.widthAnchor.constraint(equalToConstant: 64),
+            storyImageView.heightAnchor.constraint(equalToConstant: 56),
+            storyImageView.widthAnchor.constraint(equalToConstant: 56),
             storyImageView.centerYAnchor.constraint(equalTo: storyContainerView.centerYAnchor),
             storyImageView.centerXAnchor.constraint(equalTo: storyContainerView.centerXAnchor)
         ])
         
         storyAuthor.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            storyAuthor.topAnchor.constraint(equalTo: storyContainerView.bottomAnchor, constant: 8),
+            storyAuthor.topAnchor.constraint(equalTo: storyContainerView.bottomAnchor, constant: 2),
             storyAuthor.rightAnchor.constraint(equalTo: rightAnchor),
             storyAuthor.leftAnchor.constraint(equalTo: leftAnchor),
             storyAuthor.bottomAnchor.constraint(equalTo: bottomAnchor),
