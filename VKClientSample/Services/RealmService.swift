@@ -22,7 +22,7 @@ class RealmService {
                 realm.add(object, update: .modified)
             }
         } catch {
-            print("❌ \(error) ❌")
+            print("❌❌❌ Realm error\n \(error) ❌❌❌")
         }
     }
     
@@ -33,7 +33,7 @@ class RealmService {
                 realm.add(objects, update: .modified)
             }
         } catch {
-            print("❌ \(error) ❌")
+            print("❌❌❌ Realm error\n \(error) ❌❌❌")
         }
     }
     
@@ -44,7 +44,7 @@ class RealmService {
                 realm.delete(object)
             }
         } catch {
-            print("❌ \(error) ❌")
+            print("❌❌❌ Realm error\n \(error) ❌❌❌")
         }
     }
     
@@ -55,7 +55,7 @@ class RealmService {
                 realm.delete(getAllObjects(of: object))
             }
         } catch {
-            print("❌ \(error) ❌")
+            print("❌❌❌ Realm error\n \(error) ❌❌❌")
         }
     }
     
@@ -65,7 +65,7 @@ class RealmService {
             let realm = try Realm()
             return realm.objects(type).compactMap { $0 }
         } catch {
-            print("❌ \(error) ❌")
+            print("❌❌❌ Realm error\n \(error) ❌❌❌")
             return []
         }
     }
@@ -75,7 +75,7 @@ class RealmService {
             let realm = try Realm()
             return realm.objects(T.self).filter(filter).compactMap { $0 }
         } catch {
-            print("❌ \(error) ❌")
+            print("❌❌❌ Realm error\n \(error) ❌❌❌")
             return []
         }
     }

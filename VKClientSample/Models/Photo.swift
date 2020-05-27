@@ -16,6 +16,12 @@ import RealmSwift
     var postId = RealmOptional<Int>()
     var sizes = List<Size>()
     dynamic var text: String = ""
+    dynamic var highResPhoto: String {
+        guard let photoLinkhighRes = sizes.first(where: { $0.type == "x" })?.url else {
+            return ""
+        }
+        return photoLinkhighRes
+    }
 
     enum CodingKeys: String, CodingKey {
         case id

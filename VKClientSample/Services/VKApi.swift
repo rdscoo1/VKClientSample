@@ -26,40 +26,40 @@ class VKApi {
         "v": "5.103"
     ]
     
-//    private func makeRequest<ResponseType: Decodable, Object>(apiMethod: ApiRequests,
-//                                                      params inputParams: Parameters,
-//                                                      httpMethod: HTTPMethod = .get,
-//                                                      objectType: Object,
-//                                                      completion: @escaping ([ResponseType]) -> Void) {
-//        let requestUrl = apiURL + apiMethod.rawValue
-//
-//        let params = defaultParams.merging(inputParams, uniquingKeysWith: { currentKey, _ in currentKey })
-//
-//        AF.request(requestUrl, method: httpMethod, parameters: params)
-//            .validate(statusCode: 200..<300)
-//            .responseData { response in
-//                switch response.result {
-//                case let .success(data):
-//                    do {
-//                        let decodedModel = try JSONDecoder().decode(VKResponse<ResponseType>.self, from: data)
-//                        if let responseData = decodedModel.response {
-//                            //                                                        print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
-//                            //                                                        print(responseData.items)
-//                            completion(responseData.items)
-//                        } else if
-//                            let errorCode = decodedModel.error?.errorCode,
-//                            let errorMsg = decodedModel.error?.errorMessage
-//                        {
-//                            print("❌ #\(errorCode) \(errorMsg) ❌")
-//                        }
-//                    } catch {
-//                        print("❌ \(error) ❌")
-//                    }
-//                case let .failure(error):
-//                    print("❌ \(error) ❌")
-//                }
-//        }
-//    }
+    //    private func makeRequest<ResponseType: Decodable, Object>(apiMethod: ApiRequests,
+    //                                                              params inputParams: Parameters,
+    //                                                              httpMethod: HTTPMethod = .get,
+    //                                                              objectType: Object,
+    //                                                              completion: @escaping ([ResponseType]) -> Void) {
+    //        let requestUrl = apiURL + apiMethod.rawValue
+    //
+    //        let params = defaultParams.merging(inputParams, uniquingKeysWith: { currentKey, _ in currentKey })
+    //
+    //        AF.request(requestUrl, method: httpMethod, parameters: params)
+    //            .validate(statusCode: 200..<300)
+    //            .responseData { response in
+    //                switch response.result {
+    //                case let .success(data):
+    //                    do {
+    //                        let decodedModel = try JSONDecoder().decode(VKResponse<ResponseType>.self, from: data)
+    //                        if let responseData = decodedModel.response {
+    //                            //                                                        print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
+    //                            //                                                        print(responseData.items)
+    //                            completion(responseData.items)
+    //                        } else if
+    //                            let errorCode = decodedModel.error?.errorCode,
+    //                            let errorMsg = decodedModel.error?.errorMessage
+    //                        {
+    //                            print("❌ VKApi error\n\(errorCode) \(errorMsg) ❌")
+    //                        }
+    //                    } catch {
+    //                        print("❌ Decoding failed\n\(error) ❌")
+    //                    }
+    //                case let .failure(error):
+    //                    print("❌ Alamofire error\n \(error) ❌")
+    //                }
+    //        }
+    //    }
     
     
     func getGroups(completion: @escaping () -> Void) {
@@ -89,13 +89,13 @@ class VKApi {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ #\(errorCode) \(errorMsg) ❌")
+                            print("❌ VKApi error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
-                        print("❌ \(error) ❌")
+                        print("❌ Decoding failed ❌\n\(error) ")
                     }
                 case let .failure(error):
-                    print("❌ \(error) ❌")
+                    print("❌ Alamofire error ❌\n \(error)")
                 }
         }
     }
@@ -127,13 +127,13 @@ class VKApi {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ #\(errorCode) \(errorMsg) ❌")
+                            print("❌ VKApi error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
-                        print("❌ \(error) ❌")
+                        print("❌ Decoding failed ❌\n\(error) ")
                     }
                 case let .failure(error):
-                    print("❌ \(error) ❌")
+                    print("❌ Alamofire error ❌\n \(error)")
                 }
         }
     }
@@ -166,13 +166,13 @@ class VKApi {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ #\(errorCode) \(errorMsg) ❌")
+                            print("❌ VKApi error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
-                        print("❌ \(error) ❌")
+                        print("❌ Decoding failed ❌\n\(error) ")
                     }
                 case let .failure(error):
-                    print("❌ \(error) ❌")
+                    print("❌ Alamofire error ❌\n \(error)")
                 }
         }
     }
@@ -205,13 +205,13 @@ class VKApi {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ #\(errorCode) \(errorMsg) ❌")
+                            print("❌ VKApi error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
-                        print("❌ \(error) ❌")
+                        print("❌ Decoding failed ❌\n\(error) ")
                     }
                 case let .failure(error):
-                    print("❌ \(error) ❌")
+                    print("❌ Alamofire error ❌\n \(error)")
                 }
         }
     }
@@ -239,13 +239,13 @@ class VKApi {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ #\(errorCode) \(errorMsg) ❌")
+                            print("❌ VKApi error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
-                        print("❌ \(error) ❌")
+                        print("❌ Decoding failed ❌\n\(error) ")
                     }
                 case let .failure(error):
-                    print("❌ \(error) ❌")
+                    print("❌ Alamofire error ❌\n \(error)")
                 }
         }
     }
@@ -275,13 +275,13 @@ class VKApi {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ #\(errorCode) \(errorMsg) ❌")
+                            print("❌ VKApi error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
-                        print("❌ \(error) ❌")
+                        print("❌ Decoding failed ❌\n\(error) ")
                     }
                 case let .failure(error):
-                    print("❌ \(error) ❌")
+                    print("❌ Alamofire error ❌\n \(error)")
                 }
         }
     }
