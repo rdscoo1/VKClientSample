@@ -101,7 +101,6 @@ extension StoriesCell: UICollectionViewDataSource {
             if let photoUrl = URL(string: userPhoto!) {
                 addStoryCell.addStoryPhotoView.photoImageView.kf.setImage(with: photoUrl)
             }
-            print("userPhoto \(userPhoto)")
             
             return addStoryCell
         } else {
