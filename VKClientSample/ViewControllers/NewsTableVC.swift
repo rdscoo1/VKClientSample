@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class NewsTableVC: UITableViewController {
     
@@ -14,6 +15,7 @@ class NewsTableVC: UITableViewController {
     var communities = [Community]()
     var photos = [String?]()
     let vkApi = VKApi()
+    var userPhotoUrl: String? = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,13 +40,13 @@ class NewsTableVC: UITableViewController {
             self?.communities = post.groups
             
             items.forEach {
-                guard let attachment = $0.attachments.first else {
+                guard let attachment = $0.attachments?.first else {
                     return
                 }
                 
                 if
-                    attachment!.type == "photo",
-                    let sizes = attachment?.photo?.sizes,
+                    attachment.type == "photo",
+                    let sizes = attachment.photo?.sizes,
                     let photoLink = sizes.first(where: { $0.type == "x" })?.url
                     {
                         self?.photos.append(photoLink)
@@ -53,6 +55,11 @@ class NewsTableVC: UITableViewController {
                     }
             }
             self?.tableView.reloadData()
+        }
+        
+        vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
+            let user = RealmService.manager.getAllObjects(of: User.self)
+            self?.userPhotoUrl = user[0].photo100
         }
     }
     
@@ -75,6 +82,9 @@ class NewsTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             guard let whatsNewCell = tableView.dequeueReusableCell(withIdentifier: WhatsNewCell.reuseId, for: indexPath) as? WhatsNewCell else { return UITableViewCell() }
+            if let photoUrl = URL(string: userPhotoUrl!) {
+                whatsNewCell.profilePhoto.kf.setImage(with: photoUrl)
+            }
             
             return whatsNewCell
         } else if indexPath.section == 1 {
@@ -89,6 +99,7 @@ class NewsTableVC: UITableViewController {
 //            let photo = photos[indexPath.row]
 
             print(post.debugDescription)
+            postCell.postFooter.updateControls(likes: post.likes?.count ?? 0, comments: post.comments.count, reposts: post.reposts.count, views: post.views?.count ?? 0)
             postCell.setPosts(post: post, community: community, photo: "")
             return postCell
         }

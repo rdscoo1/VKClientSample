@@ -10,7 +10,7 @@ import UIKit
 
 class AddStoryPhotoView: UIView {
 
-    let photoImageView = UIImageView(image: .john)
+    let photoImageView = UIImageView()
     let plusImageViewContainer = UIView()
     let plusImageView = UIImageView(image: .plusIconToAddStory)
     let photoSize: CGFloat = 56
@@ -68,8 +68,8 @@ class AddStoryPhotoView: UIView {
         
         plusImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            plusImageView.heightAnchor.constraint(equalToConstant: plusIconSize - 2),
-            plusImageView.widthAnchor.constraint(equalToConstant: plusIconSize - 2),
+            plusImageView.heightAnchor.constraint(equalToConstant: plusIconSize - 4),
+            plusImageView.widthAnchor.constraint(equalToConstant: plusIconSize - 4),
             plusImageView.centerXAnchor.constraint(equalTo: plusImageViewContainer.centerXAnchor),
             plusImageView.centerYAnchor.constraint(equalTo: plusImageViewContainer.centerYAnchor)
         ])

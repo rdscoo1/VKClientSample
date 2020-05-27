@@ -20,6 +20,7 @@ class CommunitiesVC: UIViewController {
         
         searchBar.delegate = self
         configureTableView()
+        loadData()
         requestCommunitiesFromApi()
     }
     
@@ -32,20 +33,20 @@ class CommunitiesVC: UIViewController {
     }
     
     private func requestCommunitiesFromApi() {
-        communities = RealmService.manager.getAll(Community.self)
-        
-        vkApi.getGroups { [weak self] groups in
-                self?.communities = groups
-                RealmService.manager.saveObjects(groups)
-                self?.tableView.reloadData()
+        vkApi.getGroups { [weak self] in
+            self?.loadData()
         }
     }
     
     private func requestSearchedCommunitiesFromApi(groupName: String) {
-        vkApi.getSearchedGroups(groupName: groupName) { [weak self] groups in
-                self?.communities = groups
-                self?.tableView.reloadData()
+        vkApi.getSearchedGroups(groupName: groupName) { [weak self] in
+            self?.loadData()
         }
+    }
+    
+    private func loadData() {
+        self.communities = RealmService.manager.getAllObjects(of: Community.self)
+        self.tableView.reloadData()
     }
 }
 
@@ -68,7 +69,9 @@ extension CommunitiesVC: UITableViewDelegate, UITableViewDataSource {
 extension CommunitiesVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if !searchText.isEmpty {
-            requestSearchedCommunitiesFromApi(groupName: searchText)
+            vkApi.getSearchedGroups(groupName: searchText) { [weak self] in
+                self?.loadData()
+            }
         } else {
             requestCommunitiesFromApi()
         }

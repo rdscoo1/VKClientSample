@@ -11,15 +11,14 @@ import UIKit
 class PostFooter: UIView {
     
     let likeControl = LikeControl()
-    let commentCotrol = CommentControl()
-    let shareControl = ShareControl()
-    let viewsConterView = ViewsCounter()
+    let commentControl = CommentControl()
+    let shareControl = RepostControl()
+    let viewsControl = ViewsControl()
     let containerStackView = UIStackView()
     
     init(likes: Int) {
         super.init(frame: .zero)
         setupUI()
-        likeControl.updateLikeCounter(quantity: likes)
     }
     
     override init(frame: CGRect) {
@@ -32,8 +31,11 @@ class PostFooter: UIView {
         setupUI()
     }
     
-    private func configureControls() {
-        
+    func updateControls(likes: Int, comments: Int, reposts: Int, views: Int) {
+        likeControl.updateLikeControl(quantity: likes)
+        commentControl.updateCommentControl(quantity: comments)
+        shareControl.updateRepostControl(quantity: reposts)
+        viewsControl.updateViewsControl(quantity: views)
     }
     
     
@@ -43,9 +45,9 @@ class PostFooter: UIView {
         
         likeControl.contentMode = .center
         shareControl.contentMode = .center
-        commentCotrol.contentMode = .center
+        commentControl.contentMode = .center
         
-        [likeControl, commentCotrol, shareControl, viewsConterView].forEach {
+        [likeControl, commentControl, shareControl, viewsControl].forEach {
             containerStackView.addArrangedSubview($0)
         }
         addSubview(containerStackView)

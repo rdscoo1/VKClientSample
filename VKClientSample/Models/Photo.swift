@@ -16,6 +16,12 @@ import RealmSwift
     var postId = RealmOptional<Int>()
     var sizes = List<Size>()
     dynamic var text: String = ""
+    dynamic var highResPhoto: String {
+        guard let photoLinkhighRes = sizes.first(where: { $0.type == "x" })?.url else {
+            return ""
+        }
+        return photoLinkhighRes
+    }
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -54,7 +60,7 @@ import RealmSwift
     dynamic var type: String = ""
     dynamic var url: String = ""
     
-    override static func primaryKey() -> String? { // По `id`  при совпадении: перезаписывает, а не дублирует
+    override static func primaryKey() -> String? { // По `url`  при совпадении: перезаписывает, а не дублирует
         return "url"
     }
     

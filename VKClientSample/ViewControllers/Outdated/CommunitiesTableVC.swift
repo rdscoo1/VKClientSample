@@ -44,15 +44,15 @@ class CommunitiesTableVC: UITableViewController {
     }
     
     private func requestFromApi() {
-        vkApi.getGroups { [weak self] groups in
-                self?.communities = groups
-                self?.tableView.reloadData()
-        }
-        
-        self.activityIndicator.stopAnimating()
-        UIView.animate(withDuration: 0.2, animations: {
-            self.tableView.alpha = 1.0
-        })
+//        vkApi.getGroups { [weak self] groups in
+//                self?.communities = groups
+//                self?.tableView.reloadData()
+//        }
+//        
+//        self.activityIndicator.stopAnimating()
+//        UIView.animate(withDuration: 0.2, animations: {
+//            self.tableView.alpha = 1.0
+//        })
     }
     
     @IBAction func refresh(_ sender: UIRefreshControl) {

@@ -22,14 +22,15 @@ class ProfileTableViewController: UITableViewController {
     }
     
     private func requestProfileInfo() {
-        profile = RealmService.manager.getAll(User.self)
-
-        vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] profileInfo in
-            self?.profile = profileInfo
-            RealmService.manager.saveObjects(profileInfo)
-            self?.tableView.reloadData()
+        vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
+            self?.loadData()
         }
     }
+    
+    private func loadData() {
+           self.profile = RealmService.manager.getAllObjects(of: User.self)
+           self.tableView.reloadData()
+       }
     
     // MARK: - Table view data source
     

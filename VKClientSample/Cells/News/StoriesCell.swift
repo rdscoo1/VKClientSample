@@ -7,13 +7,16 @@
 //
 
 import UIKit
+import Kingfisher
 
 class StoriesCell: UITableViewCell {
     
+    let vkApi = VKApi()
     let topSeparator = UIView()
     let containerView = UIView()
     var storiesCollectionView: UICollectionView!
     var items: [FriendFactory] = FriendFactory.friends
+    var userPhoto: String? = ""
     
     var layout: UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
@@ -38,6 +41,12 @@ class StoriesCell: UITableViewCell {
         
         configureConstraints()
         setupCollectionView()
+        
+        vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
+            let user = RealmService.manager.getAllObjects(of: User.self)
+            self?.userPhoto = user[0].photo100
+            self?.storiesCollectionView.reloadData()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -89,6 +98,10 @@ extension StoriesCell: UICollectionViewDataSource {
             guard let addStoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddStoryCell.reuseId, for: indexPath) as? AddStoryCell else {
                 return UICollectionViewCell()
             }
+            if let photoUrl = URL(string: userPhoto!) {
+                addStoryCell.addStoryPhotoView.photoImageView.kf.setImage(with: photoUrl)
+            }
+            
             return addStoryCell
         } else {
             guard let storiesCell = collectionView.dequeueReusableCell(withReuseIdentifier: StoryCell.reuseId, for: indexPath) as? StoryCell else {
