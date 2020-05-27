@@ -11,7 +11,7 @@ import UIKit
 class WhatsNewCell: UITableViewCell {
     
     let topSeparator = UIView()
-    let shadowPhotoView = ShadowPhotoView(image: .john, size: 32)
+    let profilePhoto = UIImageView()
     let whatsNewTF = UITextField()
     let addPhotoButton = UIButton()
     let startStreamButton = UIButton()
@@ -28,6 +28,9 @@ class WhatsNewCell: UITableViewCell {
     }
     
     private func setupUI() {
+        profilePhoto.layer.cornerRadius = 16
+        profilePhoto.layer.masksToBounds = true
+        
         topSeparator.backgroundColor = .lightGray
         topSeparator.alpha = 0.3
         
@@ -46,7 +49,7 @@ class WhatsNewCell: UITableViewCell {
         startStreamButton.tintColor = .lightGray
         
         addSubview(topSeparator)
-        addSubview(shadowPhotoView)
+        addSubview(profilePhoto)
         addSubview(whatsNewTF)
         addSubview(addPhotoButton)
         addSubview(startStreamButton)
@@ -62,26 +65,26 @@ class WhatsNewCell: UITableViewCell {
             topSeparator.heightAnchor.constraint(equalToConstant: 10)
         ])
         
-        shadowPhotoView.translatesAutoresizingMaskIntoConstraints = false
+        profilePhoto.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            shadowPhotoView.heightAnchor.constraint(equalToConstant: 32),
-            shadowPhotoView.widthAnchor.constraint(equalToConstant: 32),
-            shadowPhotoView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 4),
-            shadowPhotoView.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
-            shadowPhotoView.rightAnchor.constraint(equalTo: whatsNewTF.leftAnchor, constant: -12)
+            profilePhoto.heightAnchor.constraint(equalToConstant: 32),
+            profilePhoto.widthAnchor.constraint(equalToConstant: 32),
+            profilePhoto.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 4),
+            profilePhoto.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
+            profilePhoto.rightAnchor.constraint(equalTo: whatsNewTF.leftAnchor, constant: -12)
         ])
         
         whatsNewTF.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             whatsNewTF.heightAnchor.constraint(equalToConstant: 34),
-            whatsNewTF.centerYAnchor.constraint(equalTo: shadowPhotoView.centerYAnchor)
+            whatsNewTF.centerYAnchor.constraint(equalTo: profilePhoto.centerYAnchor)
         ])
         
         addPhotoButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             addPhotoButton.heightAnchor.constraint(equalToConstant: 22),
             addPhotoButton.widthAnchor.constraint(equalToConstant: 22),
-            addPhotoButton.centerYAnchor.constraint(equalTo: shadowPhotoView.centerYAnchor),
+            addPhotoButton.centerYAnchor.constraint(equalTo: profilePhoto.centerYAnchor),
             addPhotoButton.leftAnchor.constraint(equalTo: whatsNewTF.rightAnchor, constant: 16),
             addPhotoButton.rightAnchor.constraint(equalTo: startStreamButton.leftAnchor, constant: -16)
         ])
@@ -90,7 +93,7 @@ class WhatsNewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             startStreamButton.heightAnchor.constraint(equalToConstant: 22),
             startStreamButton.widthAnchor.constraint(equalToConstant: 22),
-            startStreamButton.centerYAnchor.constraint(equalTo: shadowPhotoView.centerYAnchor),
+            startStreamButton.centerYAnchor.constraint(equalTo: profilePhoto.centerYAnchor),
             startStreamButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -16)
         ])
         

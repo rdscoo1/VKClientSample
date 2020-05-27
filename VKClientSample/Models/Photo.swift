@@ -60,7 +60,7 @@ import RealmSwift
     dynamic var type: String = ""
     dynamic var url: String = ""
     
-    override static func primaryKey() -> String? { // По `id`  при совпадении: перезаписывает, а не дублирует
+    override static func primaryKey() -> String? { // По `url`  при совпадении: перезаписывает, а не дублирует
         return "url"
     }
     

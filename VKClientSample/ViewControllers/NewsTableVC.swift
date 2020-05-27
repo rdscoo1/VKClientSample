@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class NewsTableVC: UITableViewController {
     
@@ -14,6 +15,7 @@ class NewsTableVC: UITableViewController {
     var communities = [Community]()
     var photos = [String?]()
     let vkApi = VKApi()
+    var userPhotoUrl: String? = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +56,11 @@ class NewsTableVC: UITableViewController {
             }
             self?.tableView.reloadData()
         }
+        
+        vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
+            let user = RealmService.manager.getAllObjects(of: User.self)
+            self?.userPhotoUrl = user[0].photo100
+        }
     }
     
     // MARK: - Table view data source
@@ -75,6 +82,9 @@ class NewsTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             guard let whatsNewCell = tableView.dequeueReusableCell(withIdentifier: WhatsNewCell.reuseId, for: indexPath) as? WhatsNewCell else { return UITableViewCell() }
+            if let photoUrl = URL(string: userPhotoUrl!) {
+                whatsNewCell.profilePhoto.kf.setImage(with: photoUrl)
+            }
             
             return whatsNewCell
         } else if indexPath.section == 1 {

@@ -181,16 +181,16 @@ class VKApi {
         let photosParams: Parameters = [
             "album_id": "profile",
             "owner_id": "\(ownerId)",
-            "extended": "1" //для получения лайков
         ]
         
-        let requestUrl = apiURL + ApiRequests.friends.rawValue
+        let requestUrl = apiURL + ApiRequests.photos.rawValue
         
         let params = defaultParams.merging(photosParams, uniquingKeysWith: { currentKey, _ in currentKey })
         
         AF.request(requestUrl, method: .get, parameters: params)
             .validate(statusCode: 200..<300)
             .responseData { response in
+                print(response)
                 switch response.result {
                 case let .success(data):
                     do {

@@ -104,7 +104,7 @@ class PostCell: UITableViewCell {
         NSLayoutConstraint.activate([
             postAuthor.centerYAnchor.constraint(equalTo: postAuthorImage.centerYAnchor, constant: -8),
             postAuthor.leadingAnchor.constraint(equalTo: postAuthorImage.trailingAnchor, constant: 8),
-            postAuthor.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+            postAuthor.trailingAnchor.constraint(lessThanOrEqualTo: moreButton.leadingAnchor, constant: -8)
         ])
         
         publishDate.translatesAutoresizingMaskIntoConstraints = false
