@@ -82,8 +82,7 @@ class VKApi {
                         if let responseData = decodedModel.response {
                             //                                                        print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
                             //                                                        print(responseData.items)
-                            RealmService.manager.removeAllObjects(Community.self)
-                            RealmService.manager.saveObjects(responseData.items)
+                            RealmService.manager.removeObjectsThanSave(of: Community.self, objects: responseData.items)
                             completion()
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
@@ -120,8 +119,7 @@ class VKApi {
                         if let responseData = decodedModel.response {
                             //                                                        print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
                             //                                                        print(responseData.items)
-                            RealmService.manager.removeAllObjects(Community.self)
-                            RealmService.manager.saveObjects(responseData.items)
+                            RealmService.manager.removeObjectsThanSave(of: Community.self, objects: responseData.items)
                             completion()
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
@@ -159,8 +157,7 @@ class VKApi {
                         if let responseData = decodedModel.response {
                             //                                                        print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
                             //                                                        print(responseData.items)
-                            RealmService.manager.removeAllObjects(Friend.self)
-                            RealmService.manager.saveObjects(responseData.items)
+                            RealmService.manager.removeObjectsThanSave(of: Friend.self, objects: responseData.items)
                             completion()
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
@@ -198,8 +195,7 @@ class VKApi {
                         if let responseData = decodedModel.response {
                             //                                                        print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
                             //                                                        print(responseData.items)
-                            RealmService.manager.removeAllObjects(Photo.self)
-                            RealmService.manager.saveObjects(responseData.items)
+                            RealmService.manager.removeObjectsThanSave(of: Photo.self, objects: responseData.items)
                             completion()
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
@@ -233,7 +229,6 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(PostResponse.self, from: data)
                         if let responseData = decodedModel.response {
-                            //                            print(responseData)
                             completion(responseData)
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
@@ -268,8 +263,7 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(UserResponse.self, from: data)
                         if let responseData = decodedModel.response {
-                            RealmService.manager.removeAllObjects(User.self)
-                            RealmService.manager.saveObjects(responseData)
+                            RealmService.manager.removeObjectsThanSave(of: User.self, objects: responseData)
                             completion()
                         } else if
                             let errorCode = decodedModel.error?.errorCode,

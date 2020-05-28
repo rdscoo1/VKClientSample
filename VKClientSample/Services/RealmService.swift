@@ -51,9 +51,23 @@ class RealmService {
     func removeAllObjects<T: Object>(_ object: T.Type) {
         do {
             let realm = try Realm()
-            try? realm.write {
-                realm.delete(getAllObjects(of: object))
-            }
+            realm.beginWrite()
+            let oldObjects = realm.objects(object).compactMap { $0 }
+            realm.delete(oldObjects)
+            try realm.commitWrite()
+        } catch {
+            print("❌❌❌ Realm error\n \(error) ❌❌❌")
+        }
+    }
+    
+    func removeObjectsThanSave<T: Object>(of object: T.Type, objects: [Object]) {
+        do {
+            let realm = try Realm()
+            realm.beginWrite()
+            let oldObjects = realm.objects(object).compactMap { $0 }
+            realm.delete(oldObjects)
+            realm.add(objects, update: .modified)
+            try realm.commitWrite()
         } catch {
             print("❌❌❌ Realm error\n \(error) ❌❌❌")
         }
