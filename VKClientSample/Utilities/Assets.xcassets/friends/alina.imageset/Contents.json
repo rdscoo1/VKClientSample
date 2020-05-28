@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "filename" : "alina.jpg"
+      "filename" : "alina.jpg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }
