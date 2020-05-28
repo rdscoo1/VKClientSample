@@ -14,33 +14,17 @@ class CommunitiesTableVC: UITableViewController {
     
     let vkApi = VKApi()
     var communities = [Community]()
-    private var activityIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(activityIndicator)
         
         tableView.register(UINib(nibName: CommunityCell.reuseId, bundle: nil), forCellReuseIdentifier: CommunityCell.reuseId)
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 64
         tableView.alpha = 0.0
-        
-        configureActivityIndicator()
-        
+                
         requestFromApi()
-    }
-    
-    private func configureActivityIndicator() {
-        activityIndicator.color = .darkGray
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.startAnimating()
-        
-        activityIndicator.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview().offset(-48)
-            $0.height.width.equalTo(64)
-        }
     }
     
     private func requestFromApi() {

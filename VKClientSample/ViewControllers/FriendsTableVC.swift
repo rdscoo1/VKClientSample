@@ -13,7 +13,6 @@ class FriendsTableVC: UITableViewController {
     
     private let vkApi = VKApi()
     @IBOutlet weak var searchBar: UISearchBar!
-    private var activityIndicator = UIActivityIndicatorView()
     
     private var friends = [Friend]()
     var friendsInSection = [FriendSection]()
@@ -27,28 +26,15 @@ class FriendsTableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(activityIndicator)
         
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 64
         searchBar.delegate = self
         
-        configureActivityIndicator()
         loadData()
         requestFromApi()
     }
     
-    private func configureActivityIndicator() {
-        activityIndicator.color = .darkGray
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.startAnimating()
-        
-        activityIndicator.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview().offset(-48)
-            $0.height.width.equalTo(64)
-        }
-    }
     
     func handleFriends(items: [Friend]) -> [FriendSection] {
         return Dictionary(grouping: items) { $0.lastName.prefix(1) }
@@ -60,11 +46,6 @@ class FriendsTableVC: UITableViewController {
         vkApi.getFriends { [weak self] in
             self?.loadData()
         }
-        
-        self.activityIndicator.stopAnimating()
-        UIView.animate(withDuration: 0.2, animations: {
-            self.tableView.alpha = 1.0
-        })
     }
     
     private func loadData() {
