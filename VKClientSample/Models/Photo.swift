@@ -15,7 +15,6 @@ import RealmSwift
     dynamic var ownerId: Int = 0
     var postId = RealmOptional<Int>()
     var sizes = List<Size>()
-    dynamic var text: String = ""
     dynamic var highResPhoto: String {
         guard let photoLinkhighRes = sizes.first(where: { $0.type == "x" })?.url else {
             return ""
@@ -30,7 +29,6 @@ import RealmSwift
         case ownerId = "owner_id"
         case postId = "post_id"
         case sizes
-        case text
     }
     
     required convenience init(from decoder: Decoder) throws {
@@ -42,7 +40,6 @@ import RealmSwift
         ownerId = try container.decode(Int.self, forKey: .ownerId)
         postId.value = try container.decodeIfPresent(Int.self, forKey: .postId)
         sizes = try container.decode(List<Size>.self, forKey: .sizes)
-        text = try container.decode(String.self, forKey: .text)
     }
     
     override static func primaryKey() -> String? { // По `id`  при совпадении: перезаписывает, а не дублирует

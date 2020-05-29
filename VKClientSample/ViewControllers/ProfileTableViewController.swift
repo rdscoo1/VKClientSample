@@ -50,7 +50,7 @@ class ProfileTableViewController: UITableViewController {
         
         let profileInfo = profile[indexPath.row]
         
-        cell.configureWith(name: profileInfo.firstName, surname: profileInfo.lastName, status: profileInfo.status)
+        cell.configureWith(name: profileInfo.firstName, surname: profileInfo.lastName, status: profileInfo.status ?? "")
         if let imageUrl = URL(string: profileInfo.photo100!) {
             cell.avatarImageView.kf.setImage(with: imageUrl)
         }
