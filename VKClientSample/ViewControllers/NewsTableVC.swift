@@ -11,9 +11,7 @@ import Kingfisher
 
 class NewsTableVC: UITableViewController {
     
-    var posts = [Post]()
-    var communities = [Community]()
-    var photos = [String?]()
+    var posts: PostResponse.Response?
     let vkApi = VKApi()
     var userPhotoUrl: String? = ""
     
@@ -34,26 +32,8 @@ class NewsTableVC: UITableViewController {
     }
     
     private func requestFromApi() {
-        vkApi.getNewsfeed { [weak self] (post) in
-            let items = post.items
+        vkApi.getNewsfeed { [weak self] items in
             self?.posts = items
-            self?.communities = post.groups
-            
-            items.forEach {
-                guard let attachment = $0.attachments?.first else {
-                    return
-                }
-                
-                if
-                    attachment.type == "photo",
-                    let sizes = attachment.photo?.sizes,
-                    let photoLink = sizes.first(where: { $0.type == "x" })?.url
-                    {
-                        self?.photos.append(photoLink)
-                    } else {
-                        print("post -> ", attachment)
-                    }
-            }
             self?.tableView.reloadData()
         }
         
@@ -75,7 +55,7 @@ class NewsTableVC: UITableViewController {
         } else if section == 1 {
             return 1
         } else {
-            return posts.count
+            return posts?.items.count ?? 0
         }
     }
     
@@ -85,22 +65,47 @@ class NewsTableVC: UITableViewController {
             if let photoUrl = URL(string: userPhotoUrl!) {
                 whatsNewCell.profilePhoto.kf.setImage(with: photoUrl)
             }
-            
             return whatsNewCell
+            
         } else if indexPath.section == 1 {
-             guard let storiesCell = tableView.dequeueReusableCell(withIdentifier: StoriesCell.reuseId, for: indexPath) as? StoriesCell else { return UITableViewCell() }
-            
+            guard let storiesCell = tableView.dequeueReusableCell(withIdentifier: StoriesCell.reuseId, for: indexPath) as? StoriesCell else { return UITableViewCell() }
             return storiesCell
-        } else {
-             guard let postCell = tableView.dequeueReusableCell(withIdentifier: PostCell.reuseId, for: indexPath) as? PostCell else { return UITableViewCell() }
             
-            let post = posts[indexPath.row]
-            let community = communities[indexPath.row]
-//            let photo = photos[indexPath.row]
-
-            print(post.debugDescription)
+        } else {
+            guard let postCell = tableView.dequeueReusableCell(withIdentifier: PostCell.reuseId, for: indexPath) as? PostCell else { return UITableViewCell() }
+            guard let postItem = posts, !postItem.items.isEmpty else {
+                return UITableViewCell()
+            }
+            
+            let post = postItem.items[indexPath.row]
+            if post.sourceId > 0 {
+                let user = postItem.profiles.first(where: { $0.id == abs(post.sourceId) })
+                postCell.postAuthor.text = user?.getFullName()
+                if let photoUrl = URL(string: user?.photo100 ?? "") {
+                    postCell.postAuthorImage.kf.setImage(with: photoUrl)
+                }
+            } else {
+                let community = postItem.groups.first(where: { $0.id == abs(post.sourceId) })
+                if let photoUrl = URL(string: community?.photo50 ?? "") {
+                    postCell.postAuthorImage.kf.setImage(with: photoUrl)
+                }
+            }
+            
+            let date = Date(timeIntervalSince1970: post.date).getElapsedInterval()
+            postCell.publishDate.text = "\(date) ago"
+            postCell.postText.text = post.text
+            
+            if !post.attachments.isEmpty {
+                if let photoUrl = URL(string: post.attachments[0].photo?.highResPhoto ?? "") {
+                    postCell.postImageView.kf.setImage(with: photoUrl)
+                }
+            } else if post.photos != nil {
+                if let photoUrl = URL(string: post.photos?[0].highResPhoto ?? "") {
+                    postCell.postImageView.kf.setImage(with: photoUrl)
+                }
+            }
+            
             postCell.postFooter.updateControls(likes: post.likes?.count ?? 0, comments: post.comments.count, reposts: post.reposts.count, views: post.views?.count ?? 0)
-            postCell.setPosts(post: post, community: community, photo: "")
             return postCell
         }
     }

@@ -32,23 +32,6 @@ class PostCell: UITableViewCell {
         setupUI()
     }
     
-    func setPosts(post: Post, community: Community, photo: String?) {
-        postAuthor.text = community.name
-        let date = Date(timeIntervalSince1970: post.date).getElapsedInterval()
-        publishDate.text = "\(date) ago"
-        postText.text = post.text
-        if let photoUrl = URL(string: community.photo50) {
-            postAuthorImage.kf.setImage(with: photoUrl)
-        }
-        
-        guard let photo = photo else {
-            return
-        }
-        if let photoUrl = URL(string: photo) {
-            postImageView.kf.setImage(with: photoUrl)
-        }
-    }
-    
     private func setupUI() {
         topSeparator.backgroundColor = .lightGray
         topSeparator.alpha = 0.3
