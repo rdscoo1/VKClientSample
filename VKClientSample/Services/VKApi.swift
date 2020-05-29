@@ -26,89 +26,72 @@ class VKApi {
         "v": "5.103"
     ]
     
-    //    private func makeRequest<ResponseType: Decodable, Object>(apiMethod: ApiRequests,
-    //                                                              params inputParams: Parameters,
-    //                                                              httpMethod: HTTPMethod = .get,
-    //                                                              objectType: Object,
-    //                                                              completion: @escaping ([ResponseType]) -> Void) {
-    //        let requestUrl = apiURL + apiMethod.rawValue
-    //
-    //        let params = defaultParams.merging(inputParams, uniquingKeysWith: { currentKey, _ in currentKey })
-    //
-    //        AF.request(requestUrl, method: httpMethod, parameters: params)
-    //            .validate(statusCode: 200..<300)
-    //            .responseData { response in
-    //                switch response.result {
-    //                case let .success(data):
-    //                    do {
-    //                        let decodedModel = try JSONDecoder().decode(VKResponse<ResponseType>.self, from: data)
-    //                        if let responseData = decodedModel.response {
-    //                            //                                                        print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
-    //                            //                                                        print(responseData.items)
-    //                            completion(responseData.items)
-    //                        } else if
-    //                            let errorCode = decodedModel.error?.errorCode,
-    //                            let errorMsg = decodedModel.error?.errorMessage
-    //                        {
-    //                            print("❌ VKApi error\n\(errorCode) \(errorMsg) ❌")
-    //                        }
-    //                    } catch {
-    //                        print("❌ Decoding failed\n\(error) ❌")
-    //                    }
-    //                case let .failure(error):
-    //                    print("❌ Alamofire error\n \(error) ❌")
-    //                }
-    //        }
-    //    }
-    
-    
-    func getGroups(completion: @escaping () -> Void) {
-        let groupsParams: Parameters = [
-            "extended" : "1",
-            "fields": "activity"
-        ]
+    private func makeRequest<ResponseType>(
+        apiMethod: ApiRequests,
+        params inputParams: Parameters,
+        httpMethod: HTTPMethod = .get,
+        objectType: ResponseType.Type,
+        completion: @escaping () -> Void) where ResponseType: Object, ResponseType: Decodable {
+        let requestUrl = apiURL + apiMethod.rawValue
         
-        let requestUrl = apiURL + ApiRequests.groups.rawValue
+        let params = defaultParams.merging(inputParams, uniquingKeysWith: { currentKey, _ in currentKey })
         
-        let params = defaultParams.merging(groupsParams, uniquingKeysWith: { currentKey, _ in currentKey })
-        
-        AF.request(requestUrl, method: .get, parameters: params)
+        AF.request(requestUrl, method: httpMethod, parameters: params)
             .validate(statusCode: 200..<300)
             .responseData { response in
                 switch response.result {
                 case let .success(data):
                     do {
-                        let decodedModel = try JSONDecoder().decode(VKResponse<Community>.self, from: data)
+                        let decodedModel = try JSONDecoder().decode(VKResponse<ResponseType>.self, from: data)
                         if let responseData = decodedModel.response {
                             //                                                        print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
                             //                                                        print(responseData.items)
-                            RealmService.manager.removeAllObjects(Community.self)
-                            RealmService.manager.saveObjects(responseData.items)
+                            RealmService.manager.removeObjectsThanSave(of: ResponseType.self, objects: responseData.items)
                             completion()
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ VKApi error ❌\n\(errorCode) \(errorMsg)")
+                            print("❌ VKApi error\n\(errorCode) \(errorMsg) ❌")
                         }
                     } catch {
-                        print("❌ Decoding failed ❌\n\(error) ")
+                        print("❌ Decoding failed\n\(error) ❌")
                     }
                 case let .failure(error):
-                    print("❌ Alamofire error ❌\n \(error)")
+                    print("❌ Alamofire error\n \(error) ❌")
                 }
         }
     }
     
-    func getSearchedGroups(groupName: String, completion: @escaping () -> Void) {
-        let groupsParams: Parameters = [
+    
+    func getGroups(completion: @escaping () -> Void) {
+        let params: Parameters = [
+            "extended" : "1",
+            "fields": "activity"
+        ]
+        
+        makeRequest(apiMethod: .groups, params: params, objectType: Community.self, completion: completion)
+    }
+    
+    func getFriends(completion: @escaping () -> Void) {
+        let params: Parameters = [
+            "user_id": Session.shared.userId,
+            "order": "hints",
+            "fields": "city, photo_50"
+        ]
+        
+        makeRequest(apiMethod: .friends, params: params, objectType: Friend.self, completion: completion)
+    }
+    
+    func getSearchedGroups(groupName: String, completion: @escaping ([Community]) -> Void) {
+        let searchParams: Parameters = [
             "q" : groupName,
             "fields": "activity"
         ]
         
         let requestUrl = apiURL + ApiRequests.groupsSearch.rawValue
         
-        let params = defaultParams.merging(groupsParams, uniquingKeysWith: { currentKey, _ in currentKey })
+        let params = defaultParams.merging(searchParams, uniquingKeysWith: { currentKey, _ in currentKey })
         
         AF.request(requestUrl, method: .get, parameters: params)
             .validate(statusCode: 200..<300)
@@ -118,50 +101,7 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(VKResponse<Community>.self, from: data)
                         if let responseData = decodedModel.response {
-                            //                                                        print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
-                            //                                                        print(responseData.items)
-                            RealmService.manager.removeAllObjects(Community.self)
-                            RealmService.manager.saveObjects(responseData.items)
-                            completion()
-                        } else if
-                            let errorCode = decodedModel.error?.errorCode,
-                            let errorMsg = decodedModel.error?.errorMessage
-                        {
-                            print("❌ VKApi error ❌\n\(errorCode) \(errorMsg)")
-                        }
-                    } catch {
-                        print("❌ Decoding failed ❌\n\(error) ")
-                    }
-                case let .failure(error):
-                    print("❌ Alamofire error ❌\n \(error)")
-                }
-        }
-    }
-    
-    func getFriends(completion: @escaping () -> Void) {
-        let friendsParams: Parameters = [
-            "user_id": Session.shared.userId,
-            "order": "hints",
-            "fields": "city, photo_50"
-        ]
-        
-        let requestUrl = apiURL + ApiRequests.friends.rawValue
-        
-        let params = defaultParams.merging(friendsParams, uniquingKeysWith: { currentKey, _ in currentKey })
-        
-        AF.request(requestUrl, method: .get, parameters: params)
-            .validate(statusCode: 200..<300)
-            .responseData { response in
-                switch response.result {
-                case let .success(data):
-                    do {
-                        let decodedModel = try JSONDecoder().decode(VKResponse<Friend>.self, from: data)
-                        if let responseData = decodedModel.response {
-                            //                                                        print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
-                            //                                                        print(responseData.items)
-                            RealmService.manager.removeAllObjects(Friend.self)
-                            RealmService.manager.saveObjects(responseData.items)
-                            completion()
+                            completion(responseData.items)
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
@@ -178,28 +118,26 @@ class VKApi {
     }
     
     func getPhotos(ownerId: Int, completion: @escaping () -> Void) {
-        let photosParams: Parameters = [
+        let requestUrl = apiURL + ApiRequests.photos.rawValue
+        
+        let params: Parameters = [
+            "access_token": Session.shared.token,
+            "v": "5.103",
             "album_id": "profile",
             "owner_id": "\(ownerId)",
         ]
         
-        let requestUrl = apiURL + ApiRequests.photos.rawValue
-        
-        let params = defaultParams.merging(photosParams, uniquingKeysWith: { currentKey, _ in currentKey })
         
         AF.request(requestUrl, method: .get, parameters: params)
             .validate(statusCode: 200..<300)
             .responseData { response in
-                print(response)
                 switch response.result {
                 case let .success(data):
                     do {
                         let decodedModel = try JSONDecoder().decode(VKResponse<Photo>.self, from: data)
                         if let responseData = decodedModel.response {
-                            //                                                        print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
-                            //                                                        print(responseData.items)
-                            RealmService.manager.removeAllObjects(Photo.self)
-                            RealmService.manager.saveObjects(responseData.items)
+                            RealmService.manager.removeAllObjects(Size.self)
+                            RealmService.manager.removePhotosThanSave(of: Photo.self, objects: responseData.items, userId: ownerId)
                             completion()
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
@@ -233,7 +171,6 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(PostResponse.self, from: data)
                         if let responseData = decodedModel.response {
-                            //                            print(responseData)
                             completion(responseData)
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
@@ -251,7 +188,7 @@ class VKApi {
     }
     
     func getUserInfo(userId: String, completion: @escaping () -> Void) {
-        let userParams: Parameters = [
+        let params: Parameters = [
             "access_token": Session.shared.token,
             "v": "5.103",
             "user_ids": userId,
@@ -260,7 +197,7 @@ class VKApi {
         
         let requestUrl = apiURL + ApiRequests.userInfo.rawValue
         
-        AF.request(requestUrl, method: .get, parameters: userParams)
+        AF.request(requestUrl, method: .get, parameters: params)
             .validate(statusCode: 200..<300)
             .responseData { response in
                 switch response.result {
@@ -268,8 +205,7 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(UserResponse.self, from: data)
                         if let responseData = decodedModel.response {
-                            RealmService.manager.removeAllObjects(User.self)
-                            RealmService.manager.saveObjects(responseData)
+                            RealmService.manager.removeObjectsThanSave(of: User.self, objects: responseData)
                             completion()
                         } else if
                             let errorCode = decodedModel.error?.errorCode,

@@ -13,8 +13,8 @@ class RealmService {
     static let manager = RealmService()
     
     private init() {}
-
-//MARK: - Save & Remove
+    
+    //MARK: - Save & Remove
     func saveObject(_ object: Object) {
         do {
             let realm = try Realm()
@@ -51,13 +51,42 @@ class RealmService {
     func removeAllObjects<T: Object>(_ object: T.Type) {
         do {
             let realm = try Realm()
-            try? realm.write {
-                realm.delete(getAllObjects(of: object))
-            }
+            realm.beginWrite()
+            let oldObjects = realm.objects(object).compactMap { $0 }
+            realm.delete(oldObjects)
+            try realm.commitWrite()
         } catch {
             print("❌❌❌ Realm error\n \(error) ❌❌❌")
         }
     }
+    
+    func removeObjectsThanSave<T: Object>(of object: T.Type, objects: [Object]) {
+        do {
+            let realm = try Realm()
+            let oldObjects = realm.objects(object).compactMap { $0 }
+            realm.beginWrite()
+            realm.delete(oldObjects)
+            realm.add(objects, update: .modified)
+            try realm.commitWrite()
+        } catch {
+            print("❌❌❌ Realm error\n \(error) ❌❌❌")
+        }
+    }
+    
+    func removePhotosThanSave<T: Object>(of object: T.Type, objects: [Object], userId: Int) {
+           do {
+               let realm = try Realm()
+               let oldObjects = realm.objects(object).filter("ownerId == %@", userId)
+               realm.beginWrite()
+               realm.delete(oldObjects)
+               realm.add(objects, update: .modified)
+               try realm.commitWrite()
+           } catch {
+               print("❌❌❌ Realm error\n \(error) ❌❌❌")
+           }
+       }
+    
+    
     
     //MARK: - Get
     func getAllObjects<T: Object>(of type: T.Type) -> [T] {
