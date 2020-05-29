@@ -160,7 +160,7 @@ class VKApi {
             "access_token": Session.shared.token,
             "v": "5.103",
             "filters": "post",
-            "count": "5"
+            "count": "10"
         ]
         
         AF.request(requestUrl, method: .get, parameters: params)

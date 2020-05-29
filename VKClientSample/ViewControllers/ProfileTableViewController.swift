@@ -17,6 +17,7 @@ class ProfileTableViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.register(ProfileTVCell.self, forCellReuseIdentifier: ProfileTVCell.reuseId)
+        tableView.tableFooterView = UIView()
         
         requestProfileInfo()
     }

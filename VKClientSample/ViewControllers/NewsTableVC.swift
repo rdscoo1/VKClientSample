@@ -26,9 +26,21 @@ class NewsTableVC: UITableViewController {
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
         
-        setupActionHideKeyboard()
         
         requestFromApi()
+        vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
+            let user = RealmService.manager.getAllObjects(of: User.self)
+            self?.userPhotoUrl = user[0].photo100
+            self?.tableView.reloadData()
+        }
+        configureRefreshControl()
+    }
+    
+    private func configureRefreshControl() {
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.tintColor = Constants.Colors.vkDarkGray
+        tableView.refreshControl?.attributedTitle = NSMutableAttributedString(string: "Pull to refresh", attributes: [.foregroundColor: Constants.Colors.vkDarkGray])
+        tableView.refreshControl?.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
     }
     
     private func requestFromApi() {
@@ -36,11 +48,11 @@ class NewsTableVC: UITableViewController {
             self?.posts = items
             self?.tableView.reloadData()
         }
-        
-        vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
-            let user = RealmService.manager.getAllObjects(of: User.self)
-            self?.userPhotoUrl = user[0].photo100
-        }
+    }
+    
+    @objc func refresh(sender:AnyObject) {
+        self.requestFromApi()
+        self.refreshControl?.endRefreshing()
     }
     
     // MARK: - Table view data source
@@ -86,6 +98,7 @@ class NewsTableVC: UITableViewController {
                 }
             } else {
                 let community = postItem.groups.first(where: { $0.id == abs(post.sourceId) })
+                postCell.postAuthor.text = community?.name
                 if let photoUrl = URL(string: community?.photo50 ?? "") {
                     postCell.postAuthorImage.kf.setImage(with: photoUrl)
                 }
@@ -118,14 +131,5 @@ class NewsTableVC: UITableViewController {
         } else {
             return UITableView.automaticDimension
         }
-    }
-    
-    private func setupActionHideKeyboard() {
-        let tapOnView = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        tableView.addGestureRecognizer(tapOnView)
-    }
-    
-    @objc func hideKeyboard() {
-        view.endEditing(true)
     }
 }
