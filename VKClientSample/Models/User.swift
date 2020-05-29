@@ -17,7 +17,7 @@ struct UserResponse: Decodable {
     dynamic var id: Int = 0
     dynamic var firstName: String = ""
     dynamic var lastName: String = ""
-    dynamic var status: String = ""
+    dynamic var status: String? = nil
     dynamic var photo100: String? = nil
     
     enum CodingKeys: String, CodingKey {
@@ -30,5 +30,9 @@ struct UserResponse: Decodable {
     
     override static func primaryKey() -> String? { // По `id`  при совпадении: перезаписывает, а не дублирует
         return "id"
+    }
+    
+    func getFullName() -> String {
+        "\(self.firstName) \(self.lastName)"
     }
 }

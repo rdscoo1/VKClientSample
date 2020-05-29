@@ -39,8 +39,9 @@ class CommunitiesVC: UIViewController {
     }
     
     private func requestSearchedCommunitiesFromApi(groupName: String) {
-        vkApi.getSearchedGroups(groupName: groupName) { [weak self] in
-            self?.loadData()
+        vkApi.getSearchedGroups(groupName: groupName) { [weak self] communities in
+            self?.communities = communities
+            self?.tableView.reloadData()
         }
     }
     
@@ -69,11 +70,9 @@ extension CommunitiesVC: UITableViewDelegate, UITableViewDataSource {
 extension CommunitiesVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if !searchText.isEmpty {
-            vkApi.getSearchedGroups(groupName: searchText) { [weak self] in
-                self?.loadData()
-            }
+            requestSearchedCommunitiesFromApi(groupName: searchText)
         } else {
-            requestCommunitiesFromApi()
+            loadData()
         }
     }
 }

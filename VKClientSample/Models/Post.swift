@@ -14,6 +14,7 @@ struct PostResponse: Decodable {
     
     struct Response: Decodable {
         let items: [Post]
+        let profiles: [User]
         let groups: [Community]
     }
 }
@@ -24,7 +25,8 @@ struct Post: Decodable {
     let postId: Int
     let date: Double
     let text: String?
-    let attachments: [Attachment]?
+    let attachments: [Attachment] = []
+    let photos: [Photo]?
     let comments: Comments
     let likes: Likes?
     let reposts: Reposts
@@ -37,6 +39,7 @@ struct Post: Decodable {
         case date
         case text
         case attachments
+        case photos
         case comments
         case likes
         case reposts
@@ -73,6 +76,6 @@ struct Post: Decodable {
 
 extension Post: CustomDebugStringConvertible {
     var debugDescription: String {
-        return "<Post:\(postId)>\nText\(String(describing: text)) published \(Date(timeIntervalSince1970: date).getElapsedInterval()) ago. It has photo with url \(String(describing: attachments?[0].photo?.highResPhoto)).\n This post got \(String(describing: likes?.count)) likes, \(comments.count) comments, \(reposts.count) reposts and \(String(describing: views?.count)) views."
+        return "<Post:\(postId)>\nText\(String(describing: text)) published \(Date(timeIntervalSince1970: date).getElapsedInterval()) ago. It has photo with url .\n This post got \(String(describing: likes?.count)) likes, \(comments.count) comments, \(reposts.count) reposts and \(String(describing: views?.count)) views."
     }
 }
