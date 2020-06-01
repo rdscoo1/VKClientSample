@@ -108,9 +108,11 @@ class NewsTableVC: UITableViewController {
             postCell.publishDate.text = "\(date) ago"
             postCell.postText.text = post.text
             
-            if !post.attachments.isEmpty {
-                if let photoUrl = URL(string: post.attachments[0].photo?.highResPhoto ?? "") {
-                    postCell.postImageView.kf.setImage(with: photoUrl)
+            if let attachments = post.attachments {
+                if !attachments.isEmpty {
+                    if let photoUrl = URL(string: attachments[0].photo?.highResPhoto ?? "") {
+                        postCell.postImageView.kf.setImage(with: photoUrl)
+                    }
                 }
             } else if post.photos != nil {
                 if let photoUrl = URL(string: post.photos?[0].highResPhoto ?? "") {
