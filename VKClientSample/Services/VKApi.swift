@@ -82,8 +82,6 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(VKResponse<Community>.self, from: data)
                         if let responseData = decodedModel.response {
-                            //                                                        print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
-                            //                                                        print(responseData.items)
                             RealmService.manager.removeObjectsThanSave(of: Community.self, objects: responseData.items)
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
@@ -154,7 +152,6 @@ class VKApi {
             "owner_id": "\(ownerId)",
         ]
         
-        
         AF.request(requestUrl, method: .get, parameters: params)
             .validate(statusCode: 200..<300)
             .responseData { response in
@@ -163,8 +160,7 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(VKResponse<Photo>.self, from: data)
                         if let responseData = decodedModel.response {
-                            RealmService.manager.removeAllObjects(Size.self)
-                            RealmService.manager.removeObjectsThanSave(of: Photo.self, objects: responseData.items)
+                            RealmService.manager.removePhotosThanSave(Photo.self, ownerId: ownerId, objects: responseData.items)
                             completion()
                         } else if
                             let errorCode = decodedModel.error?.errorCode,

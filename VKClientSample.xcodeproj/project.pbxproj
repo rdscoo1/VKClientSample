@@ -65,6 +65,7 @@
 		E8CD1C9723DB29D300C5D668 /* ShadowPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CD1C9623DB29D300C5D668 /* ShadowPhotoView.swift */; };
 		E8CD1C9923DB2AF900C5D668 /* LikeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CD1C9823DB2AF900C5D668 /* LikeControl.swift */; };
 		E8D51AAE2475D7570056B945 /* VKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D51AAD2475D7570056B945 /* VKError.swift */; };
+		E8DBDE4E24887C660093920C /* RealmCascadeDeletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DBDE4D24887C660093920C /* RealmCascadeDeletion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -129,6 +130,7 @@
 		E8CD1C9623DB29D300C5D668 /* ShadowPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowPhotoView.swift; sourceTree = "<group>"; };
 		E8CD1C9823DB2AF900C5D668 /* LikeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeControl.swift; sourceTree = "<group>"; };
 		E8D51AAD2475D7570056B945 /* VKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKError.swift; sourceTree = "<group>"; };
+		E8DBDE4D24887C660093920C /* RealmCascadeDeletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCascadeDeletion.swift; sourceTree = "<group>"; };
 		FA61B0E00B803FDF8FE9BD4C /* Pods_VKClientSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VKClientSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -225,8 +227,8 @@
 			children = (
 				E8068CD723DC485C0083FBBE /* PostCell.swift */,
 				E8068CE623E1C7150083FBBE /* StoriesCell.swift */,
-				E8068CEA23E384C10083FBBE /* WhatsNewCell.swift */,
 				E8068CEE23E4FE0C0083FBBE /* StoryCell.swift */,
+				E8068CEA23E384C10083FBBE /* WhatsNewCell.swift */,
 				E8068CF023E4FE5B0083FBBE /* AddStoryCell.swift */,
 			);
 			path = News;
@@ -327,6 +329,7 @@
 				E8757B1D242844AA002F92A7 /* Data+PrettyPrintJSON.swift */,
 				E85E8310246CD6B20090FBEC /* UserDefaults+extensions.swift */,
 				E871F964247DD13B00EF78BE /* Date+extension.swift */,
+				E8DBDE4D24887C660093920C /* RealmCascadeDeletion.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -486,6 +489,7 @@
 				E8CD1C9923DB2AF900C5D668 /* LikeControl.swift in Sources */,
 				E8068CED23E3A7890083FBBE /* AddStoryPhotoView.swift in Sources */,
 				E86CCCB123EC669900F3AAA6 /* PhotoPreviewVC.swift in Sources */,
+				E8DBDE4E24887C660093920C /* RealmCascadeDeletion.swift in Sources */,
 				E8757B14241EC81D002F92A7 /* VKResponse.swift in Sources */,
 				E829F961240491F900ED148B /* VKApi.swift in Sources */,
 				E829F95F2404839400ED148B /* VkAuthorizationViewController.swift in Sources */,
