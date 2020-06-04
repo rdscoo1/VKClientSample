@@ -11,9 +11,7 @@ import Kingfisher
 
 class NewsTableVC: UITableViewController {
     
-    var posts = [Post]()
-    var communities = [Community]()
-    var photos = [String?]()
+    var posts: PostResponse.Response?
     let vkApi = VKApi()
     var userPhotoUrl: String? = ""
     
@@ -28,39 +26,33 @@ class NewsTableVC: UITableViewController {
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
         
-        setupActionHideKeyboard()
         
         requestFromApi()
-    }
-    
-    private func requestFromApi() {
-        vkApi.getNewsfeed { [weak self] (post) in
-            let items = post.items
-            self?.posts = items
-            self?.communities = post.groups
-            
-            items.forEach {
-                guard let attachment = $0.attachments?.first else {
-                    return
-                }
-                
-                if
-                    attachment.type == "photo",
-                    let sizes = attachment.photo?.sizes,
-                    let photoLink = sizes.first(where: { $0.type == "x" })?.url
-                    {
-                        self?.photos.append(photoLink)
-                    } else {
-                        print("post -> ", attachment)
-                    }
-            }
-            self?.tableView.reloadData()
-        }
-        
         vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
             let user = RealmService.manager.getAllObjects(of: User.self)
             self?.userPhotoUrl = user[0].photo100
+            self?.tableView.reloadData()
         }
+        configureRefreshControl()
+    }
+    
+    private func configureRefreshControl() {
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.tintColor = Constants.Colors.vkDarkGray
+        tableView.refreshControl?.attributedTitle = NSMutableAttributedString(string: "Pull to refresh", attributes: [.foregroundColor: Constants.Colors.vkDarkGray])
+        tableView.refreshControl?.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
+    }
+    
+    private func requestFromApi() {
+        vkApi.getNewsfeed { [weak self] items in
+            self?.posts = items
+            self?.tableView.reloadData()
+        }
+    }
+    
+    @objc func refresh(sender:AnyObject) {
+        self.requestFromApi()
+        self.refreshControl?.endRefreshing()
     }
     
     // MARK: - Table view data source
@@ -75,7 +67,7 @@ class NewsTableVC: UITableViewController {
         } else if section == 1 {
             return 1
         } else {
-            return posts.count
+            return posts?.items.count ?? 0
         }
     }
     
@@ -85,22 +77,48 @@ class NewsTableVC: UITableViewController {
             if let photoUrl = URL(string: userPhotoUrl!) {
                 whatsNewCell.profilePhoto.kf.setImage(with: photoUrl)
             }
-            
             return whatsNewCell
+            
         } else if indexPath.section == 1 {
-             guard let storiesCell = tableView.dequeueReusableCell(withIdentifier: StoriesCell.reuseId, for: indexPath) as? StoriesCell else { return UITableViewCell() }
-            
+            guard let storiesCell = tableView.dequeueReusableCell(withIdentifier: StoriesCell.reuseId, for: indexPath) as? StoriesCell else { return UITableViewCell() }
             return storiesCell
-        } else {
-             guard let postCell = tableView.dequeueReusableCell(withIdentifier: PostCell.reuseId, for: indexPath) as? PostCell else { return UITableViewCell() }
             
-            let post = posts[indexPath.row]
-            let community = communities[indexPath.row]
-//            let photo = photos[indexPath.row]
-
-            print(post.debugDescription)
+        } else {
+            guard let postCell = tableView.dequeueReusableCell(withIdentifier: PostCell.reuseId, for: indexPath) as? PostCell else { return UITableViewCell() }
+            guard let postItem = posts, !postItem.items.isEmpty else {
+                return UITableViewCell()
+            }
+            
+            let post = postItem.items[indexPath.row]
+            if post.sourceId > 0 {
+                let user = postItem.profiles.first(where: { $0.id == abs(post.sourceId) })
+                postCell.postAuthor.text = user?.getFullName()
+                if let photoUrl = URL(string: user?.photo100 ?? "") {
+                    postCell.postAuthorImage.kf.setImage(with: photoUrl)
+                }
+            } else {
+                let community = postItem.groups.first(where: { $0.id == abs(post.sourceId) })
+                postCell.postAuthor.text = community?.name
+                if let photoUrl = URL(string: community?.photo50 ?? "") {
+                    postCell.postAuthorImage.kf.setImage(with: photoUrl)
+                }
+            }
+            
+            let date = Date(timeIntervalSince1970: post.date).getElapsedInterval()
+            postCell.publishDate.text = "\(date) ago"
+            postCell.postText.text = post.text
+            
+            if !post.attachments.isEmpty {
+                if let photoUrl = URL(string: post.attachments[0].photo?.highResPhoto ?? "") {
+                    postCell.postImageView.kf.setImage(with: photoUrl)
+                }
+            } else if post.photos != nil {
+                if let photoUrl = URL(string: post.photos?[0].highResPhoto ?? "") {
+                    postCell.postImageView.kf.setImage(with: photoUrl)
+                }
+            }
+            
             postCell.postFooter.updateControls(likes: post.likes?.count ?? 0, comments: post.comments.count, reposts: post.reposts.count, views: post.views?.count ?? 0)
-            postCell.setPosts(post: post, community: community, photo: "")
             return postCell
         }
     }
@@ -113,14 +131,5 @@ class NewsTableVC: UITableViewController {
         } else {
             return UITableView.automaticDimension
         }
-    }
-    
-    private func setupActionHideKeyboard() {
-        let tapOnView = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        tableView.addGestureRecognizer(tapOnView)
-    }
-    
-    @objc func hideKeyboard() {
-        view.endEditing(true)
     }
 }

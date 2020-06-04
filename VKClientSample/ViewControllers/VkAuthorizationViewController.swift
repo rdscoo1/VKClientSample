@@ -14,6 +14,11 @@ class VkAuthorizationViewController: UIViewController {
 
     private let webView = WKWebView()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -55,8 +60,10 @@ class VkAuthorizationViewController: UIViewController {
     }
     
     private func goToTabBar() {
-        let tabBarController = storyboard?.instantiateViewController(withIdentifier: "TabBarVC")
-        self.navigationController?.pushViewController(tabBarController!, animated: true)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let tabBarController = storyboard.instantiateViewController(withIdentifier: "TabBarVC")
+
+        self.navigationController?.pushViewController(tabBarController, animated: true)
     }
 }
 

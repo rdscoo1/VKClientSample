@@ -32,23 +32,6 @@ class PostCell: UITableViewCell {
         setupUI()
     }
     
-    func setPosts(post: Post, community: Community, photo: String?) {
-        postAuthor.text = community.name
-        let date = Date(timeIntervalSince1970: post.date).getElapsedInterval()
-        publishDate.text = "\(date) ago"
-        postText.text = post.text
-        if let photoUrl = URL(string: community.photo50) {
-            postAuthorImage.kf.setImage(with: photoUrl)
-        }
-        
-        guard let photo = photo else {
-            return
-        }
-        if let photoUrl = URL(string: photo) {
-            postImageView.kf.setImage(with: photoUrl)
-        }
-    }
-    
     private func setupUI() {
         topSeparator.backgroundColor = .lightGray
         topSeparator.alpha = 0.3
@@ -56,13 +39,13 @@ class PostCell: UITableViewCell {
         postAuthorImage.layer.cornerRadius = 24
         postAuthorImage.layer.masksToBounds = true
         
-        postAuthor.text = "Apple | iPhone | iPad"
+        postAuthor.text = ""
         postAuthor.textColor = .black
-        postAuthor.font = .systemFont(ofSize: 16, weight: UIFont.Weight.medium)
+        postAuthor.font = .systemFont(ofSize: 14, weight: UIFont.Weight.medium)
         
-        publishDate.text = "вчера в \(Int.random(in: 10...23)):\(Int.random(in: 10...59))"
+        publishDate.text = ""
         publishDate.textColor = Constants.Colors.vkDarkGray
-        publishDate.font = .systemFont(ofSize: 15, weight: UIFont.Weight.regular)
+        publishDate.font = .systemFont(ofSize: 13, weight: UIFont.Weight.regular)
         
         moreButton.setImage(.moreButton, for: .normal)
         
@@ -122,7 +105,7 @@ class PostCell: UITableViewCell {
         
         postText.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            postText.topAnchor.constraint(equalTo: postAuthorImage.bottomAnchor, constant: 16),
+            postText.topAnchor.constraint(equalTo: postAuthorImage.bottomAnchor, constant: 8),
             postText.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
             postText.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
         ])

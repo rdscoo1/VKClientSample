@@ -137,7 +137,7 @@ class VKApi {
                         let decodedModel = try JSONDecoder().decode(VKResponse<Photo>.self, from: data)
                         if let responseData = decodedModel.response {
                             RealmService.manager.removeAllObjects(Size.self)
-                            RealmService.manager.removePhotosThanSave(of: Photo.self, objects: responseData.items, userId: ownerId)
+                            RealmService.manager.removeObjectsThanSave(of: Photo.self, objects: responseData.items)
                             completion()
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
@@ -160,7 +160,7 @@ class VKApi {
             "access_token": Session.shared.token,
             "v": "5.103",
             "filters": "post",
-            "count": "5"
+            "count": "10"
         ]
         
         AF.request(requestUrl, method: .get, parameters: params)

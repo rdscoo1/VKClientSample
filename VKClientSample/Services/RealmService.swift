@@ -72,21 +72,7 @@ class RealmService {
             print("❌❌❌ Realm error\n \(error) ❌❌❌")
         }
     }
-    
-    func removePhotosThanSave<T: Object>(of object: T.Type, objects: [Object], userId: Int) {
-           do {
-               let realm = try Realm()
-               let oldObjects = realm.objects(object).filter("ownerId == %@", userId)
-               realm.beginWrite()
-               realm.delete(oldObjects)
-               realm.add(objects, update: .modified)
-               try realm.commitWrite()
-           } catch {
-               print("❌❌❌ Realm error\n \(error) ❌❌❌")
-           }
-       }
-    
-    
+
     
     //MARK: - Get
     func getAllObjects<T: Object>(of type: T.Type) -> [T] {
