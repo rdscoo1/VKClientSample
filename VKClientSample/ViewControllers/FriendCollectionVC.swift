@@ -19,7 +19,7 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         loadData()
         
         vkApi.getPhotos(ownerId: friendId) { [weak self] in
@@ -28,14 +28,16 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     private func loadData() {
-        self.friendPhotos = RealmService.manager.getAllObjects(of: Photo.self)
+        self.friendPhotos = RealmService.manager.getAllObjects(of: Photo.self, with: NSPredicate(format: "ownerId == %ld", friendId))
         self.handleArray(of: friendPhotos)
         self.collectionView.reloadData()
     }
     
     private func handleArray(of array: [Photo]) {
+        photosUrlsLowRes = [String?]()
+        photosUrlsHighRes = [String?]()
         array.forEach {
-            let photoLinklowRes = $0.sizes.first(where: { $0.type == "m" })?.url
+            let photoLinklowRes = $0.sizes.first(where: { $0.type == "o" })?.url
             self.photosUrlsLowRes.append(photoLinklowRes)
             
             let photoLinkhighRes = $0.sizes.first(where: { $0.type == "x" })?.url

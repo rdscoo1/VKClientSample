@@ -64,13 +64,38 @@ class VKApi {
     }
     
     
-    func getGroups(completion: @escaping () -> Void) {
-        let params: Parameters = [
+    func getGroups() {
+        let inputParams: Parameters = [
             "extended" : "1",
             "fields": "activity"
         ]
         
-        makeRequest(apiMethod: .groups, params: params, objectType: Community.self, completion: completion)
+        let requestUrl = apiURL + ApiRequests.groups.rawValue
+        
+        let params = defaultParams.merging(inputParams, uniquingKeysWith: { currentKey, _ in currentKey })
+        
+        AF.request(requestUrl, method: .get, parameters: params)
+            .validate(statusCode: 200..<300)
+            .responseData { response in
+                switch response.result {
+                case let .success(data):
+                    do {
+                        let decodedModel = try JSONDecoder().decode(VKResponse<Community>.self, from: data)
+                        if let responseData = decodedModel.response {
+                            RealmService.manager.removeObjectsThanSave(of: Community.self, objects: responseData.items)
+                        } else if
+                            let errorCode = decodedModel.error?.errorCode,
+                            let errorMsg = decodedModel.error?.errorMessage
+                        {
+                            print("❌ VKApi error\n\(errorCode) \(errorMsg) ❌")
+                        }
+                    } catch {
+                        print("❌ Decoding failed\n\(error) ❌")
+                    }
+                case let .failure(error):
+                    print("❌ Alamofire error\n \(error) ❌")
+                }
+        }
     }
     
     func getFriends(completion: @escaping () -> Void) {
@@ -83,7 +108,7 @@ class VKApi {
         makeRequest(apiMethod: .friends, params: params, objectType: Friend.self, completion: completion)
     }
     
-    func getSearchedGroups(groupName: String, completion: @escaping ([Community]) -> Void) {
+    func getSearchedGroups(groupName: String) {
         let searchParams: Parameters = [
             "q" : groupName,
             "fields": "activity"
@@ -101,7 +126,7 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(VKResponse<Community>.self, from: data)
                         if let responseData = decodedModel.response {
-                            completion(responseData.items)
+                            RealmService.manager.removeObjectsThanSave(of: Community.self, objects: responseData.items)
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
@@ -127,7 +152,6 @@ class VKApi {
             "owner_id": "\(ownerId)",
         ]
         
-        
         AF.request(requestUrl, method: .get, parameters: params)
             .validate(statusCode: 200..<300)
             .responseData { response in
@@ -136,8 +160,7 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(VKResponse<Photo>.self, from: data)
                         if let responseData = decodedModel.response {
-                            RealmService.manager.removeAllObjects(Size.self)
-                            RealmService.manager.removeObjectsThanSave(of: Photo.self, objects: responseData.items)
+                            RealmService.manager.removePhotosThanSave(Photo.self, ownerId: ownerId, objects: responseData.items)
                             completion()
                         } else if
                             let errorCode = decodedModel.error?.errorCode,

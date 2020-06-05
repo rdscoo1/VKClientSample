@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import RealmSwift
 
 class CommunitiesVC: UIViewController {
     
+    var notificationToken: NotificationToken?
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    private var communities = [Community]()
+    private var communities: Results<Community>?
     private let vkApi = VKApi()
     
     override func viewDidLoad() {
@@ -20,8 +22,9 @@ class CommunitiesVC: UIViewController {
         
         searchBar.delegate = self
         configureTableView()
-        loadData()
-        requestCommunitiesFromApi()
+        
+        vkApi.getGroups()
+        configureNotification()
     }
     
     private func configureTableView() {
@@ -32,35 +35,36 @@ class CommunitiesVC: UIViewController {
         tableView.dataSource = self
     }
     
-    private func requestCommunitiesFromApi() {
-        vkApi.getGroups { [weak self] in
-            self?.loadData()
+    private func configureNotification() {
+        guard let realm = try? Realm() else { return }
+        communities = realm.objects(Community.self)
+        notificationToken = communities?.observe { [weak self] (changes: RealmCollectionChange) in
+            switch changes {
+            case .initial:
+                self?.tableView.reloadData()
+            case .update(_, let deletions, let insertions, let modifications):
+                self?.tableView.beginUpdates()
+                self?.tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+                self?.tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+                self?.tableView.reloadRows(at: modifications.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+                self?.tableView.endUpdates()
+            case .error(let error):
+                fatalError("\(error)")
+            }
         }
-    }
-    
-    private func requestSearchedCommunitiesFromApi(groupName: String) {
-        vkApi.getSearchedGroups(groupName: groupName) { [weak self] communities in
-            self?.communities = communities
-            self?.tableView.reloadData()
-        }
-    }
-    
-    private func loadData() {
-        self.communities = RealmService.manager.getAllObjects(of: Community.self)
-        self.tableView.reloadData()
     }
 }
 
 extension CommunitiesVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return communities.count
+        return communities?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CommunityCell.reuseId, for: indexPath) as? CommunityCell else {
             return UITableViewCell()
         }
-        let community = communities[indexPath.row]
+        let community = communities![indexPath.row]
         cell.configure(with: community)
         
         return cell
@@ -70,9 +74,9 @@ extension CommunitiesVC: UITableViewDelegate, UITableViewDataSource {
 extension CommunitiesVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if !searchText.isEmpty {
-            requestSearchedCommunitiesFromApi(groupName: searchText)
+            vkApi.getSearchedGroups(groupName: searchText)
         } else {
-            loadData()
+            vkApi.getGroups()
         }
     }
 }

@@ -25,7 +25,7 @@ struct Post: Decodable {
     let postId: Int
     let date: Double
     let text: String?
-    let attachments: [Attachment]
+    let attachments: [Attachment]?
     let photos: [Photo]?
     let comments: Comments
     let likes: Likes?

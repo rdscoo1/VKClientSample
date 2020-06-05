@@ -14,7 +14,8 @@ class RealmService {
     
     private init() {}
     
-    //MARK: - Save & Remove
+//MARK: - Save objects
+    
     func saveObject(_ object: Object) {
         do {
             let realm = try Realm()
@@ -37,6 +38,8 @@ class RealmService {
         }
     }
     
+//MARK: - Delete objects
+    
     func removeObject(_ object: Object) {
         do {
             let realm = try Realm()
@@ -48,22 +51,23 @@ class RealmService {
         }
     }
     
-    func removeAllObjects<T: Object>(_ object: T.Type) {
+    func removeAllObjects<T: Object>(_ type: T.Type) {
+        guard let realm  = try? Realm() else { return }
+        let oldObjects = realm.objects(type)
         do {
-            let realm = try Realm()
-            realm.beginWrite()
-            let oldObjects = realm.objects(object).compactMap { $0 }
-            realm.delete(oldObjects)
-            try realm.commitWrite()
+            try realm.write {
+                realm.delete(oldObjects)
+            }
         } catch {
             print("❌❌❌ Realm error\n \(error) ❌❌❌")
         }
     }
     
-    func removeObjectsThanSave<T: Object>(of object: T.Type, objects: [Object]) {
+    func removeObjectsThanSave<T: Object>(of type: T.Type, objects: [Object]) {
+        guard let realm  = try? Realm() else { return }
+        let oldObjects = realm.objects(type)
+        
         do {
-            let realm = try Realm()
-            let oldObjects = realm.objects(object).compactMap { $0 }
             realm.beginWrite()
             realm.delete(oldObjects)
             realm.add(objects, update: .modified)
@@ -72,9 +76,23 @@ class RealmService {
             print("❌❌❌ Realm error\n \(error) ❌❌❌")
         }
     }
+    
+    func removePhotosThanSave<T: Object>(_ type: T.Type, ownerId: Int, objects: [Object]) {
+        guard let realm  = try? Realm() else { return }
+        let oldObjects = realm.objects(type).filter("ownerId == %@", ownerId)
+        do {
+            realm.beginWrite()
+            realm.delete(oldObjects, cascading: true)
+            realm.add(objects, update: .modified)
+            try realm.commitWrite()
+        } catch {
+            print("❌❌❌ Realm error\n \(error) ❌❌❌")
+        }
+    }
 
     
-    //MARK: - Get
+    //MARK: - Get objects
+    
     func getAllObjects<T: Object>(of type: T.Type) -> [T] {
         do {
             let realm = try Realm()
@@ -85,7 +103,7 @@ class RealmService {
         }
     }
     
-    func getAllObjects<T: Object>(_ type: T.Type, with filter: NSPredicate) -> [T] {
+    func getAllObjects<T: Object>(of type: T.Type, with filter: NSPredicate) -> [T] {
         do {
             let realm = try Realm()
             return realm.objects(T.self).filter(filter).compactMap { $0 }
