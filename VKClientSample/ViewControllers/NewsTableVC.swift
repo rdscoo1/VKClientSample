@@ -112,16 +112,13 @@ class NewsTableVC: UITableViewController {
             
             if let attachments = post.attachments {
                 if attachments[0].type.contains("photo") || attachments[0].type.contains("post") {
-                    NSLayoutConstraint.deactivate(postCell.postTextBottomConstraint)
-                    NSLayoutConstraint.activate(postCell.imageViewConstraints)
-                    postCell.layoutIfNeeded()
-                    if let photoUrl = URL(string: attachments[0].photo?.highResPhoto ?? "") {
-                        postCell.postImageView.kf.setImage(with: photoUrl)
-                    }
+                        postCell.postImageViewHeightConstraint.constant = 288
+                        postCell.layoutIfNeeded()
+                        postCell.postImageView.kf.setImage(with: URL(string: attachments[0].photo?.highResPhoto ?? ""))
                 } else {
+                    print("дратути")
                     postCell.postImageView.image = nil
-                    NSLayoutConstraint.deactivate(postCell.imageViewConstraints)
-                    NSLayoutConstraint.activate(postCell.postTextBottomConstraint)
+                    postCell.postImageViewHeightConstraint.constant = 0
                     postCell.layoutIfNeeded()
                 }
             } else if post.photos != nil {

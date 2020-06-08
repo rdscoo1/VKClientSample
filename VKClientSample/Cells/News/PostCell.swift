@@ -21,9 +21,8 @@ class PostCell: UITableViewCell {
     let postText = UILabel()
     var postImageView = UIImageView()
     let postFooter = PostFooter()
-    
-    var imageViewConstraints: [NSLayoutConstraint] = []
-    var postTextBottomConstraint: [NSLayoutConstraint] = []
+
+    var postImageViewHeightConstraint: NSLayoutConstraint!
         
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -54,7 +53,7 @@ class PostCell: UITableViewCell {
         
         postText.numberOfLines = 0
         
-        postImageView.contentMode = .scaleAspectFill
+        postImageView.contentMode = .scaleAspectFit
         postImageView.clipsToBounds = true
         
         addSubview(topSeparator)
@@ -71,67 +70,56 @@ class PostCell: UITableViewCell {
     
     private func configureConstraints() {
         topSeparator.translatesAutoresizingMaskIntoConstraints = false
+        postAuthorImage.translatesAutoresizingMaskIntoConstraints = false
+        postAuthor.translatesAutoresizingMaskIntoConstraints = false
+        publishDate.translatesAutoresizingMaskIntoConstraints = false
+        moreButton.translatesAutoresizingMaskIntoConstraints = false
+        postText.translatesAutoresizingMaskIntoConstraints = false
+        postImageView.translatesAutoresizingMaskIntoConstraints = false
+        postFooter.translatesAutoresizingMaskIntoConstraints = false
+
+        postImageViewHeightConstraint = postImageView.heightAnchor.constraint(equalToConstant: 288)
+        
         NSLayoutConstraint.activate([
             topSeparator.topAnchor.constraint(equalTo: topAnchor),
             topSeparator.leadingAnchor.constraint(equalTo: leadingAnchor),
             topSeparator.trailingAnchor.constraint(equalTo: trailingAnchor),
-            topSeparator.heightAnchor.constraint(equalToConstant: 10)
-        ])
-        
-        postAuthorImage.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+            topSeparator.heightAnchor.constraint(equalToConstant: 10),
+            
             postAuthorImage.topAnchor.constraint(equalTo: topSeparator.bottomAnchor, constant: 8),
             postAuthorImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             postAuthorImage.heightAnchor.constraint(equalToConstant: 48),
-            postAuthorImage.widthAnchor.constraint(equalToConstant: 48)
-        ])
-        
-        postAuthor.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+            postAuthorImage.widthAnchor.constraint(equalToConstant: 48),
+            
             postAuthor.centerYAnchor.constraint(equalTo: postAuthorImage.centerYAnchor, constant: -8),
             postAuthor.leadingAnchor.constraint(equalTo: postAuthorImage.trailingAnchor, constant: 8),
-            postAuthor.trailingAnchor.constraint(lessThanOrEqualTo: moreButton.leadingAnchor, constant: -8)
-        ])
-        
-        publishDate.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+            postAuthor.trailingAnchor.constraint(lessThanOrEqualTo: moreButton.leadingAnchor, constant: -8),
+            
             publishDate.leadingAnchor.constraint(equalTo: postAuthor.leadingAnchor),
             publishDate.trailingAnchor.constraint(equalTo: postAuthor.trailingAnchor),
-            publishDate.topAnchor.constraint(equalTo: postAuthor.bottomAnchor, constant: 2)
-        ])
-        
-        moreButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+            publishDate.topAnchor.constraint(equalTo: postAuthor.bottomAnchor, constant: 2),
+            
             moreButton.centerYAnchor.constraint(equalTo: postAuthor.centerYAnchor),
-            moreButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
-        ])
-        
-        postText.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+            moreButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            
             postText.topAnchor.constraint(equalTo: postAuthorImage.bottomAnchor, constant: 8),
             postText.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
             postText.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
-        ])
-        postTextBottomConstraint.append(postText.bottomAnchor.constraint(equalTo: postFooter.topAnchor, constant: -8)) 
-        
-        
-        postImageView.translatesAutoresizingMaskIntoConstraints = false
-        imageViewConstraints = [
+            
             postImageView.topAnchor.constraint(equalTo: postText.bottomAnchor, constant: 8),
             postImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             postImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             postImageView.bottomAnchor.constraint(equalTo: postFooter.topAnchor),
-            postImageView.heightAnchor.constraint(equalTo: postImageView.widthAnchor)
-        ]
-//        NSLayoutConstraint.activate(imageViewConstraints)
-        
-        postFooter.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+            postImageViewHeightConstraint,
+            
             postFooter.leadingAnchor.constraint(equalTo: leadingAnchor),
             postFooter.trailingAnchor.constraint(equalTo: trailingAnchor),
-            postFooter.bottomAnchor.constraint(equalTo: bottomAnchor),
+            {
+                let c = postFooter.bottomAnchor.constraint(equalTo: bottomAnchor)
+                c.priority = .defaultHigh
+                return c
+            }(),
             postFooter.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
-    
 }
