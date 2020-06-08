@@ -114,15 +114,16 @@ class NewsTableVC: UITableViewController {
                 if attachments[0].type.contains("photo") || attachments[0].type.contains("post") {
                         postCell.postImageViewHeightConstraint.constant = 288
                         postCell.layoutIfNeeded()
+                        postCell.postImageView.kf.indicatorType = .activity
                         postCell.postImageView.kf.setImage(with: URL(string: attachments[0].photo?.highResPhoto ?? ""))
                 } else {
-                    print("дратути")
                     postCell.postImageView.image = nil
                     postCell.postImageViewHeightConstraint.constant = 0
                     postCell.layoutIfNeeded()
                 }
             } else if post.photos != nil {
                 if let photoUrl = URL(string: post.photos?[0].highResPhoto ?? "") {
+                    postCell.postImageView.kf.indicatorType = .activity
                     postCell.postImageView.kf.setImage(with: photoUrl)
                 }
             }
@@ -145,7 +146,6 @@ class NewsTableVC: UITableViewController {
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if scrollView.contentOffset.y > scrollView.contentSize.height / 1.4 {
             vkApi.getNewsfeed(nextBatch: nextFrom) { [weak self] items in
-//                print("✅✅✅ nextBatch ✅✅✅",items)
                 self?.nextFrom = items.nextFrom
                 self?.posts?.items.append(contentsOf: items.items)
                 self?.posts?.groups.append(contentsOf: items.groups)
@@ -153,5 +153,9 @@ class NewsTableVC: UITableViewController {
                 self?.tableView.reloadData()
             }
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.imageView?.kf.cancelDownloadTask()
     }
 }

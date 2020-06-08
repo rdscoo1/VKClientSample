@@ -53,7 +53,11 @@ class PhotoPreviewVC: UIViewController {
         currentPhoto.isUserInteractionEnabled = true
         
         if let photoUrl = URL(string: friendPreviewPhotos[selectedPhoto]!) {
-            currentPhoto.kf.setImage(with: photoUrl)
+            currentPhoto.kf.indicatorType = .activity
+            currentPhoto.kf.setImage(with: photoUrl,
+                                     options: [
+                                         .transition(.fade(1)),
+                                     ])
         }
         
         photosPreviewNavBar.alpha = 0.0
