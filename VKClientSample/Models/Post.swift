@@ -13,9 +13,17 @@ struct PostResponse: Decodable {
     let error: VKError?
     
     struct Response: Decodable {
-        let items: [Post]
-        let profiles: [User]
-        let groups: [Community]
+        var items: [Post]
+        var profiles: [User]
+        var groups: [Community]
+        let nextFrom: String?
+        
+        enum CodingKeys: String, CodingKey {
+            case items
+            case profiles
+            case groups
+            case nextFrom = "next_from"
+        }
     }
 }
 
@@ -74,8 +82,8 @@ struct Post: Decodable {
     }
 }
 
-extension Post: CustomDebugStringConvertible {
-    var debugDescription: String {
-        return "<Post:\(postId)>\nText\(String(describing: text)) published \(Date(timeIntervalSince1970: date).getElapsedInterval()) ago. It has photo with url .\n This post got \(String(describing: likes?.count)) likes, \(comments.count) comments, \(reposts.count) reposts and \(String(describing: views?.count)) views."
-    }
-}
+//extension Post: CustomDebugStringConvertible {
+//    var debugDescription: String {
+//        return "<Post:\(postId)> Text\(String(describing: text)) published \(Date(timeIntervalSince1970: date).getElapsedInterval()) ago.\n This post has photos \(String(describing: photos))\nThis post got \(String(describing: likes?.count)) likes, \(comments.count) comments, \(reposts.count) reposts and \(String(describing: views?.count)) views.\n"
+//    }
+//}
