@@ -17,6 +17,10 @@ class CommunityCell: UITableViewCell {
     
     static let reuseId = "CommunityCell"
     
+    static func nib() -> UINib {
+        return UINib(nibName: "CommunityCell", bundle: nil)
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
