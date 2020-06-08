@@ -16,7 +16,7 @@ class PostFooter: UIView {
     let viewsControl = ViewsControl()
     let containerStackView = UIStackView()
     
-    init(likes: Int) {
+    init() {
         super.init(frame: .zero)
         setupUI()
     }

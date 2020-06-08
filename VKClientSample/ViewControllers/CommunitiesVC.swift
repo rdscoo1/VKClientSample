@@ -24,7 +24,7 @@ class CommunitiesVC: UIViewController {
         configureTableView()
         
         vkApi.getGroups()
-        configureNotification()
+        handleRealmNotification()
     }
     
     private func configureTableView() {
@@ -35,7 +35,7 @@ class CommunitiesVC: UIViewController {
         tableView.dataSource = self
     }
     
-    private func configureNotification() {
+    private func handleRealmNotification() {
         guard let realm = try? Realm() else { return }
         communities = realm.objects(Community.self)
         notificationToken = communities?.observe { [weak self] (changes: RealmCollectionChange) in

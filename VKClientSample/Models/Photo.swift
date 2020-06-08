@@ -65,3 +65,9 @@ import RealmSwift
         return ["height", "width"]
     }
 }
+
+extension Photo {
+    override var debugDescription: String {
+        return "<Photo:\(id)> with url \(highResPhoto)"
+    }
+}
