@@ -14,6 +14,7 @@ class NewsTableVC: UITableViewController {
     var posts: PostResponse.Response?
     let vkApi = VKApi()
     var userPhotoUrl: String? = ""
+    var nextFrom: String? = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +45,8 @@ class NewsTableVC: UITableViewController {
     }
     
     private func requestFromApi() {
-        vkApi.getNewsfeed { [weak self] items in
+        vkApi.getNewsfeed(nextBatch: nil) { [weak self] items in
+            self?.nextFrom = items.nextFrom
             self?.posts = items
             self?.tableView.reloadData()
         }
@@ -109,10 +111,18 @@ class NewsTableVC: UITableViewController {
             postCell.postText.text = post.text
             
             if let attachments = post.attachments {
-                if !attachments.isEmpty {
+                if attachments[0].type.contains("photo") || attachments[0].type.contains("post") {
+                    NSLayoutConstraint.deactivate(postCell.postTextBottomConstraint)
+                    NSLayoutConstraint.activate(postCell.imageViewConstraints)
+                    postCell.layoutIfNeeded()
                     if let photoUrl = URL(string: attachments[0].photo?.highResPhoto ?? "") {
                         postCell.postImageView.kf.setImage(with: photoUrl)
                     }
+                } else {
+                    postCell.postImageView.image = nil
+                    NSLayoutConstraint.deactivate(postCell.imageViewConstraints)
+                    NSLayoutConstraint.activate(postCell.postTextBottomConstraint)
+                    postCell.layoutIfNeeded()
                 }
             } else if post.photos != nil {
                 if let photoUrl = URL(string: post.photos?[0].highResPhoto ?? "") {
@@ -132,6 +142,19 @@ class NewsTableVC: UITableViewController {
             return 112
         } else {
             return UITableView.automaticDimension
+        }
+    }
+    
+    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView.contentOffset.y > scrollView.contentSize.height / 1.4 {
+            vkApi.getNewsfeed(nextBatch: nextFrom) { [weak self] items in
+//                print("✅✅✅ nextBatch ✅✅✅",items)
+                self?.nextFrom = items.nextFrom
+                self?.posts?.items.append(contentsOf: items.items)
+                self?.posts?.groups.append(contentsOf: items.groups)
+                self?.posts?.profiles.append(contentsOf: items.profiles)
+                self?.tableView.reloadData()
+            }
         }
     }
 }

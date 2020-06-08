@@ -19,8 +19,11 @@ class PostCell: UITableViewCell {
     let publishDate = UILabel()
     let moreButton = UIButton()
     let postText = UILabel()
-    let postImageView = UIImageView(image: .postImage)
-    let postFooter = PostFooter(likes: 100)
+    var postImageView = UIImageView()
+    let postFooter = PostFooter()
+    
+    var imageViewConstraints: [NSLayoutConstraint] = []
+    var postTextBottomConstraint: [NSLayoutConstraint] = []
         
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -109,15 +112,18 @@ class PostCell: UITableViewCell {
             postText.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
             postText.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
         ])
+        postTextBottomConstraint.append(postText.bottomAnchor.constraint(equalTo: postFooter.topAnchor, constant: -8)) 
+        
         
         postImageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+        imageViewConstraints = [
             postImageView.topAnchor.constraint(equalTo: postText.bottomAnchor, constant: 8),
             postImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             postImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            postImageView.heightAnchor.constraint(equalTo: postImageView.widthAnchor),
-            postImageView.bottomAnchor.constraint(equalTo: postFooter.topAnchor)
-        ])
+            postImageView.bottomAnchor.constraint(equalTo: postFooter.topAnchor),
+            postImageView.heightAnchor.constraint(equalTo: postImageView.widthAnchor)
+        ]
+//        NSLayoutConstraint.activate(imageViewConstraints)
         
         postFooter.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

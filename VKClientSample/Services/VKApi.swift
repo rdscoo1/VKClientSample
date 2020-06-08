@@ -177,13 +177,14 @@ class VKApi {
         }
     }
     
-    func getNewsfeed(completion: @escaping (PostResponse.Response) -> Void) {
+    func getNewsfeed(nextBatch: String?, completion: @escaping (PostResponse.Response) -> Void) {
         let requestUrl = apiURL + ApiRequests.newsfeed.rawValue
         let params: Parameters = [
             "access_token": Session.shared.token,
             "v": "5.103",
             "filters": "post",
-            "count": "10"
+//            "count": "10",
+            "start_from": "\(nextBatch ?? "")"
         ]
         
         AF.request(requestUrl, method: .get, parameters: params)
@@ -194,6 +195,8 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(PostResponse.self, from: data)
                         if let responseData = decodedModel.response {
+//                            print("📩📩📩 Methood \(ApiRequests.newsfeed.rawValue) response: 📩📩📩")
+//                            print(responseData)
                             completion(responseData)
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
