@@ -17,6 +17,7 @@ class StoriesCell: UITableViewCell {
     var storiesCollectionView: UICollectionView!
     var items: [FriendFactory] = FriendFactory.friends
     var userPhoto: String? = ""
+    var userName: String? = ""
     
     var layout: UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
@@ -45,6 +46,7 @@ class StoriesCell: UITableViewCell {
         vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
             let user = RealmService.manager.getAllObjects(of: User.self)
             self?.userPhoto = user[0].photo100
+            self?.userName = user[0].firstName
             self?.storiesCollectionView.reloadData()
         }
     }
@@ -101,6 +103,7 @@ extension StoriesCell: UICollectionViewDataSource {
             if let photoUrl = URL(string: userPhoto!) {
                 addStoryCell.addStoryPhotoView.photoImageView.kf.setImage(with: photoUrl)
             }
+            addStoryCell.storyAuthor.text = userName
             
             return addStoryCell
         } else {
