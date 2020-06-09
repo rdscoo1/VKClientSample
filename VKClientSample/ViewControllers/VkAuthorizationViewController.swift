@@ -9,6 +9,7 @@
 import UIKit
 import WebKit
 import SnapKit
+import FirebaseDatabase
 
 class VkAuthorizationViewController: UIViewController {
 
@@ -91,7 +92,9 @@ extension VkAuthorizationViewController: WKNavigationDelegate {
         
         Session.shared.token = params["access_token"] ?? ""
         Session.shared.userId = params["user_id"] ?? ""
-               
+        
+        Database.database().reference(withPath: "LoggedInUsers").child(Session.shared.userId).setValue(["id": Session.shared.userId])
+        
         goToTabBar()
         decisionHandler(.cancel)
     }
