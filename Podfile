@@ -11,5 +11,7 @@ target 'VKClientSample' do
   pod 'Alamofire'
   pod 'RealmSwift'
   pod 'Kingfisher'
+  pod 'Firebase/Core'
+  pod 'Firebase/Database'
 
 end
