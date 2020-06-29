@@ -28,6 +28,6 @@ import RealmSwift
 
 extension Community {
     override var debugDescription: String {
-       return "<Community with id:\(id)> \(name), which activity is \(String(describing: activity)).\n His photo url is \(String(describing: photo50))\n"
+       return "\n📓<Community with id:\(id)> \(name), which activity is \(String(describing: activity)).📓 His photo url is \(String(describing: photo50))"
     }
 }

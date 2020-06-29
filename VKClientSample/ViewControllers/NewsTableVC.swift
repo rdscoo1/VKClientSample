@@ -45,10 +45,12 @@ class NewsTableVC: UITableViewController {
     }
     
     private func requestFromApi() {
-        vkApi.getNewsfeed(nextBatch: nil) { [weak self] items in
-            self?.nextFrom = items.nextFrom
-            self?.posts = items
-            self?.tableView.reloadData()
+        DispatchQueue.global().async {
+            self.vkApi.getNewsfeed(nextBatch: nil) { [weak self] items in
+                self?.nextFrom = items.nextFrom
+                self?.posts = items
+                self?.tableView.reloadData()
+            }
         }
     }
     
