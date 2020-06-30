@@ -48,7 +48,7 @@ class CommunitiesTableVC: UITableViewController {
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {        
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
-        self.navigationController!.navigationBar.tintColor = Constants.Colors.vkBlue
+        self.navigationController?.navigationBar.tintColor = Constants.Colors.vkBlue
     }
 }
 

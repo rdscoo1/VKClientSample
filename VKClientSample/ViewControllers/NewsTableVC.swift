@@ -13,8 +13,8 @@ class NewsTableVC: UITableViewController {
     
     private var posts: PostResponse.Response?
     private let vkApi = VKApi()
-    private var userPhotoUrl: String? = ""
-    private var nextFrom: String? = ""
+    private var userPhotoUrl = ""
+    private var nextFrom = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +31,7 @@ class NewsTableVC: UITableViewController {
         requestFromApi()
         vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
             let user = RealmService.manager.getAllObjects(of: User.self)
-            self?.userPhotoUrl = user[0].photo100
+            self?.userPhotoUrl = user[0].photo100 ?? ""
             self?.tableView.reloadData()
         }
         configureRefreshControl()
@@ -47,7 +47,7 @@ class NewsTableVC: UITableViewController {
     private func requestFromApi() {
         DispatchQueue.global().async { [weak self] in
             self?.vkApi.getNewsfeed(nextBatch: nil) { items in
-                self?.nextFrom = items.nextFrom
+                self?.nextFrom = items.nextFrom ?? ""
                 self?.posts = items
                 self?.tableView.reloadData()
             }
@@ -78,7 +78,7 @@ class NewsTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             guard let whatsNewCell = tableView.dequeueReusableCell(withIdentifier: WhatsNewCell.reuseId, for: indexPath) as? WhatsNewCell else { return UITableViewCell() }
-            if let photoUrl = URL(string: userPhotoUrl!) {
+            if let photoUrl = URL(string: userPhotoUrl) {
                 whatsNewCell.profilePhoto.kf.setImage(with: photoUrl)
             }
             return whatsNewCell
@@ -148,7 +148,7 @@ class NewsTableVC: UITableViewController {
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if scrollView.contentOffset.y > scrollView.contentSize.height / 1.4 {
             vkApi.getNewsfeed(nextBatch: nextFrom) { [weak self] items in
-                self?.nextFrom = items.nextFrom
+                self?.nextFrom = items.nextFrom ?? ""
                 self?.posts?.items.append(contentsOf: items.items)
                 self?.posts?.groups.append(contentsOf: items.groups)
                 self?.posts?.profiles.append(contentsOf: items.profiles)

@@ -72,7 +72,7 @@ class FriendsTableVC: UITableViewController {
         }
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
-        self.navigationController!.navigationBar.tintColor = Constants.Colors.vkBlue
+        self.navigationController?.navigationBar.tintColor = Constants.Colors.vkBlue
     }
 }
 
@@ -94,7 +94,9 @@ extension FriendsTableVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell") as! FriendCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell") as? FriendCell else {
+            return UITableViewCell()
+        }
         let friend = friendsInSection[indexPath.section].items[indexPath.row]
         cell.configure(with: friend)
         
