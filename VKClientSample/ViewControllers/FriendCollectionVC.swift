@@ -10,12 +10,11 @@ import UIKit
 
 class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    let vkApi = VKApi()
-    
+    private let vkApi = VKApi()
     var friendId = Int()
-    var friendPhotos = [Photo]()
-    var photosUrlsLowRes = [String?]()
-    var photosUrlsHighRes = [String?]()
+    private var friendPhotos = [Photo]()
+    private var photosUrlsLowRes = [String?]()
+    private var photosUrlsHighRes = [String?]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

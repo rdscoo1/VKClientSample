@@ -15,7 +15,7 @@ class FriendsTableVC: UITableViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     
     private var friends = [Friend]()
-    var friendsInSection = [FriendSection]()
+    private var friendsInSection = [FriendSection]()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

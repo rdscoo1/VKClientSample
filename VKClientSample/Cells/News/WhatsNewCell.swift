@@ -10,11 +10,11 @@ import UIKit
 
 class WhatsNewCell: UITableViewCell {
     
-    let topSeparator = UIView()
+    private let topSeparator = UIView()
     let profilePhoto = UIImageView()
-    let whatsNewTF = UITextField()
-    let addPhotoButton = UIButton()
-    let startStreamButton = UIButton()
+    private let whatsNewTF = UITextField()
+    private let addPhotoButton = UIButton()
+    private let startStreamButton = UIButton()
     
     static let reuseId = "WhatsNewCell"
     

@@ -10,10 +10,10 @@ import UIKit
 
 class PhotoPreviewFooter: UIView {
 
-    let likeControl = LikeControl()
-    let commentControl = CommentControl()
-    let repostControl = RepostControl()
-    let containerStackView = UIStackView()
+    private let likeControl = LikeControl()
+    private let commentControl = CommentControl()
+    private let repostControl = RepostControl()
+    private let containerStackView = UIStackView()
     
     init() {
         super.init(frame: .zero)

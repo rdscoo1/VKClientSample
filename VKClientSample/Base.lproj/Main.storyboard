@@ -173,7 +173,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="maria" translatesAutoresizingMaskIntoConstraints="NO" id="LL0-an-Sab">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anya" translatesAutoresizingMaskIntoConstraints="NO" id="LL0-an-Sab">
                                             <rect key="frame" x="16" y="8" width="48" height="48"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="48" id="qVE-Ps-FD2"/>
@@ -545,7 +545,6 @@
         <image name="anya" width="200" height="200"/>
         <image name="communities" width="37" height="18"/>
         <image name="friends" width="31" height="20"/>
-        <image name="maria" width="225" height="338"/>
         <image name="newsfeed" width="28" height="28"/>
         <image name="profile" width="25" height="24"/>
         <image name="vklogo" width="143" height="143"/>

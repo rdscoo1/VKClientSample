@@ -10,7 +10,7 @@
 		717B010CBE93350D2C78A9F2 /* Pods_VKClientSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA61B0E00B803FDF8FE9BD4C /* Pods_VKClientSample.framework */; };
 		E8068CD223DC47E80083FBBE /* NewsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CD123DC47E80083FBBE /* NewsTableVC.swift */; };
 		E8068CD923DC485C0083FBBE /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CD723DC485C0083FBBE /* PostCell.swift */; };
-		E8068CDC23E0BE360083FBBE /* PostFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CDB23E0BE360083FBBE /* PostFooter.swift */; };
+		E8068CDC23E0BE360083FBBE /* PostStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CDB23E0BE360083FBBE /* PostStatistics.swift */; };
 		E8068CDF23E0C1E00083FBBE /* CommentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CDE23E0C1E00083FBBE /* CommentControl.swift */; };
 		E8068CE123E0C1EE0083FBBE /* RepostControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CE023E0C1EE0083FBBE /* RepostControl.swift */; };
 		E8068CE323E0C4290083FBBE /* ViewsControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CE223E0C4290083FBBE /* ViewsControl.swift */; };
@@ -73,7 +73,7 @@
 		6A367E63F19424BE27114643 /* Pods-VKClientSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VKClientSample.release.xcconfig"; path = "Target Support Files/Pods-VKClientSample/Pods-VKClientSample.release.xcconfig"; sourceTree = "<group>"; };
 		E8068CD123DC47E80083FBBE /* NewsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableVC.swift; sourceTree = "<group>"; };
 		E8068CD723DC485C0083FBBE /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
-		E8068CDB23E0BE360083FBBE /* PostFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFooter.swift; sourceTree = "<group>"; };
+		E8068CDB23E0BE360083FBBE /* PostStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStatistics.swift; sourceTree = "<group>"; };
 		E8068CDE23E0C1E00083FBBE /* CommentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentControl.swift; sourceTree = "<group>"; };
 		E8068CE023E0C1EE0083FBBE /* RepostControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepostControl.swift; sourceTree = "<group>"; };
 		E8068CE223E0C4290083FBBE /* ViewsControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewsControl.swift; sourceTree = "<group>"; };
@@ -360,7 +360,7 @@
 				E80D57EF23F9F455002C53CB /* PhotoPreview */,
 				E8068CDD23E0C1BB0083FBBE /* Controls */,
 				E8CD1C9623DB29D300C5D668 /* ShadowPhotoView.swift */,
-				E8068CDB23E0BE360083FBBE /* PostFooter.swift */,
+				E8068CDB23E0BE360083FBBE /* PostStatistics.swift */,
 				E8068CEC23E3A7890083FBBE /* AddStoryPhotoView.swift */,
 				E87BB7F323E8CE39006C14F6 /* LoadView.swift */,
 			);
@@ -496,7 +496,7 @@
 				E8068CDF23E0C1E00083FBBE /* CommentControl.swift in Sources */,
 				E8CD1C9023D65EA600C5D668 /* FriendCell.swift in Sources */,
 				E8CD1C9423D6AF6100C5D668 /* FriendCVCell.swift in Sources */,
-				E8068CDC23E0BE360083FBBE /* PostFooter.swift in Sources */,
+				E8068CDC23E0BE360083FBBE /* PostStatistics.swift in Sources */,
 				E8068CD923DC485C0083FBBE /* PostCell.swift in Sources */,
 				E8757B10241CEAC0002F92A7 /* Community.swift in Sources */,
 				E8954A9523B162B300A93209 /* UIColor+hex.swift in Sources */,

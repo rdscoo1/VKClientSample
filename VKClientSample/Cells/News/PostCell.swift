@@ -13,14 +13,14 @@ class PostCell: UITableViewCell {
     
     static let reuseId = "PostCell"
 
-    let topSeparator = UIView()
+    private let topSeparator = UIView()
     let postAuthorImage = UIImageView()
     let postAuthor = UILabel()
     let publishDate = UILabel()
-    let moreButton = UIButton()
+    private let moreButton = UIButton()
     let postText = UILabel()
     var postImageView = UIImageView()
-    let postFooter = PostFooter()
+    let postStatistics = PostStatistics()
 
     var postImageViewHeightConstraint: NSLayoutConstraint!
         
@@ -63,7 +63,7 @@ class PostCell: UITableViewCell {
         addSubview(moreButton)
         addSubview(postText)
         addSubview(postImageView)
-        addSubview(postFooter)
+        addSubview(postStatistics)
         
         configureConstraints()
     }
@@ -76,7 +76,7 @@ class PostCell: UITableViewCell {
         moreButton.translatesAutoresizingMaskIntoConstraints = false
         postText.translatesAutoresizingMaskIntoConstraints = false
         postImageView.translatesAutoresizingMaskIntoConstraints = false
-        postFooter.translatesAutoresizingMaskIntoConstraints = false
+        postStatistics.translatesAutoresizingMaskIntoConstraints = false
 
         postImageViewHeightConstraint = postImageView.heightAnchor.constraint(equalToConstant: 288)
         
@@ -109,17 +109,17 @@ class PostCell: UITableViewCell {
             postImageView.topAnchor.constraint(equalTo: postText.bottomAnchor, constant: 8),
             postImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             postImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            postImageView.bottomAnchor.constraint(equalTo: postFooter.topAnchor),
+            postImageView.bottomAnchor.constraint(equalTo: postStatistics.topAnchor),
             postImageViewHeightConstraint,
             
-            postFooter.leadingAnchor.constraint(equalTo: leadingAnchor),
-            postFooter.trailingAnchor.constraint(equalTo: trailingAnchor),
+            postStatistics.leadingAnchor.constraint(equalTo: leadingAnchor),
+            postStatistics.trailingAnchor.constraint(equalTo: trailingAnchor),
             {
-                let c = postFooter.bottomAnchor.constraint(equalTo: bottomAnchor)
+                let c = postStatistics.bottomAnchor.constraint(equalTo: bottomAnchor)
                 c.priority = .defaultHigh
                 return c
             }(),
-            postFooter.heightAnchor.constraint(equalToConstant: 40)
+            postStatistics.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
 }

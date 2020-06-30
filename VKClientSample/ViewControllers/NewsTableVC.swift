@@ -11,10 +11,10 @@ import Kingfisher
 
 class NewsTableVC: UITableViewController {
     
-    var posts: PostResponse.Response?
-    let vkApi = VKApi()
-    var userPhotoUrl: String? = ""
-    var nextFrom: String? = ""
+    private var posts: PostResponse.Response?
+    private let vkApi = VKApi()
+    private var userPhotoUrl: String? = ""
+    private var nextFrom: String? = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +45,8 @@ class NewsTableVC: UITableViewController {
     }
     
     private func requestFromApi() {
-        DispatchQueue.global().async {
-            self.vkApi.getNewsfeed(nextBatch: nil) { [weak self] items in
+        DispatchQueue.global().async { [weak self] in
+            self?.vkApi.getNewsfeed(nextBatch: nil) { items in
                 self?.nextFrom = items.nextFrom
                 self?.posts = items
                 self?.tableView.reloadData()
@@ -130,7 +130,7 @@ class NewsTableVC: UITableViewController {
                 }
             }
             
-            postCell.postFooter.updateControls(likes: post.likes?.count ?? 0, comments: post.comments.count, reposts: post.reposts.count, views: post.views?.count ?? 0)
+            postCell.postStatistics.updateControls(likes: post.likes?.count ?? 0, comments: post.comments.count, reposts: post.reposts.count, views: post.views?.count ?? 0)
             return postCell
         }
     }

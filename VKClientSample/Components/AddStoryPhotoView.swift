@@ -11,10 +11,10 @@ import UIKit
 class AddStoryPhotoView: UIView {
 
     let photoImageView = UIImageView()
-    let plusImageViewContainer = UIView()
-    let plusImageView = UIImageView(image: .plusIconToAddStory)
-    let photoSize: CGFloat = 56
-    let plusIconSize: CGFloat = 20
+    private let plusImageViewContainer = UIView()
+    private let plusImageView = UIImageView(image: .plusIconToAddStory)
+    private let photoSize: CGFloat = 56
+    private let plusIconSize: CGFloat = 20
 
     
     override init(frame: CGRect) {

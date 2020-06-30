@@ -9,9 +9,9 @@
 import UIKit
 
 class StoryCell: UICollectionViewCell {
-    let storyContainerView = UIView()
-    let storyImageView = UIImageView()
-    let storyAuthor = UILabel()
+    private let storyContainerView = UIView()
+    private let storyImageView = UIImageView()
+    private let storyAuthor = UILabel()
     
     static let reuseId = "StoryCell"
     

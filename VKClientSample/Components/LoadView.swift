@@ -11,8 +11,8 @@ import UIKit
 
 class LoadView: UIView {
     
-    var circles = [CALayer]()
-    let containerView = UIView()
+    private var circles = [CALayer]()
+    private let containerView = UIView()
 
     init() {
         super.init(frame: .zero)

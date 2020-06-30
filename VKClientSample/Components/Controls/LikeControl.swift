@@ -10,10 +10,10 @@ import UIKit
 
 class LikeControl: UIControl {
     
-    let likeImageView = UIImageView(image: .heart)
-    let likeCounterLabel = UILabel()
-    var likeCounter = Int()
-    var isLiked: Bool = false
+    private let likeImageView = UIImageView(image: .heart)
+    private let likeCounterLabel = UILabel()
+    private var likeCounter = Int()
+    private var isLiked: Bool = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -11,13 +11,13 @@ import Kingfisher
 
 class StoriesCell: UITableViewCell {
     
-    let vkApi = VKApi()
-    let topSeparator = UIView()
-    let containerView = UIView()
-    var storiesCollectionView: UICollectionView!
-    var items: [FriendFactory] = FriendFactory.friends
-    var userPhoto: String? = ""
-    var userName: String? = ""
+    private let vkApi = VKApi()
+    private let topSeparator = UIView()
+    private let containerView = UIView()
+    private var storiesCollectionView: UICollectionView!
+    private var items: [FriendFactory] = FriendFactory.friends
+    private var userPhoto: String? = ""
+    private var userName: String? = ""
     
     var layout: UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
