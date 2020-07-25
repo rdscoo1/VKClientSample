@@ -38,25 +38,41 @@ class NewsTableVC: UITableViewController {
     }
     
     private func configureRefreshControl() {
-        tableView.refreshControl = UIRefreshControl()
-        tableView.refreshControl?.tintColor = Constants.Colors.vkDarkGray
-        tableView.refreshControl?.attributedTitle = NSMutableAttributedString(string: "Pull to refresh", attributes: [.foregroundColor: Constants.Colors.vkDarkGray])
-        tableView.refreshControl?.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
+        refreshControl = UIRefreshControl()
+        refreshControl?.tintColor = Constants.Colors.vkDarkGray
+        refreshControl?.attributedTitle = NSMutableAttributedString(string: "Refreshing...", attributes: [.foregroundColor: Constants.Colors.vkDarkGray])
+        refreshControl?.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
+        tableView.refreshControl = refreshControl
     }
     
     private func requestFromApi() {
-        DispatchQueue.global().async { [weak self] in
-            self?.vkApi.getNewsfeed(nextBatch: nil) { items in
-                self?.nextFrom = items.nextFrom ?? ""
-                self?.posts = items
-                self?.tableView.reloadData()
-            }
+        self.vkApi.getNewsfeed(nextBatch: nil, startTime: nil) { [weak self] items in
+            self?.nextFrom = items.nextFrom ?? ""
+            self?.posts = items
+            self?.tableView.reloadData()
         }
     }
     
     @objc func refresh(sender:AnyObject) {
-        self.requestFromApi()
-        self.refreshControl?.endRefreshing()
+        self.refreshControl?.beginRefreshing()
+        
+        let freshestNews = Int(self.posts?.items.first?.date ?? Date().timeIntervalSince1970)
+        
+        vkApi.getNewsfeed(nextBatch: nil, startTime: String(freshestNews + 1)) { [weak self] items in
+            guard let self = self else { return }
+            self.refreshControl?.endRefreshing()
+            print(items.items.count)
+            
+            guard items.items.count > 0 else {
+                return
+            }
+            self.posts?.addToBeggining(news: items)
+            
+            let indexPathes = items.items.enumerated().map { offset, _ in
+                IndexPath(row: offset, section: 2)
+            }
+            self.tableView.insertRows(at: indexPathes, with: .automatic)
+        }
     }
     
     // MARK: - Table view data source
@@ -114,10 +130,12 @@ class NewsTableVC: UITableViewController {
             
             if let attachments = post.attachments {
                 if attachments[0].type.contains("photo") || attachments[0].type.contains("post") {
-                        postCell.postImageViewHeightConstraint.constant = 288
-                        postCell.layoutIfNeeded()
-                        postCell.postImageView.kf.indicatorType = .activity
-                        postCell.postImageView.kf.setImage(with: URL(string: attachments[0].photo?.highResPhoto ?? ""))
+                    postCell.postImageViewHeightConstraint.constant = 288
+                    postCell.layoutIfNeeded()
+                    let retry = DelayRetryStrategy(maxRetryCount: 3, retryInterval: .seconds(1))
+                    postCell.postImageView.kf.indicatorType = .activity
+                    postCell.postImageView.kf.setImage(with: URL(string: attachments[0].photo?.highResPhoto ?? ""),
+                                                       options: [.retryStrategy(retry)])
                 } else {
                     postCell.postImageView.image = nil
                     postCell.postImageViewHeightConstraint.constant = 0
@@ -147,7 +165,7 @@ class NewsTableVC: UITableViewController {
     
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if scrollView.contentOffset.y > scrollView.contentSize.height / 1.4 {
-            vkApi.getNewsfeed(nextBatch: nextFrom) { [weak self] items in
+            vkApi.getNewsfeed(nextBatch: nextFrom, startTime: nil) { [weak self] items in
                 self?.nextFrom = items.nextFrom ?? ""
                 self?.posts?.items.append(contentsOf: items.items)
                 self?.posts?.groups.append(contentsOf: items.groups)

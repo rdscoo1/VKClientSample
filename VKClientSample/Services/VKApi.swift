@@ -177,26 +177,30 @@ class VKApi {
         }
     }
     
-    func getNewsfeed(nextBatch: String?, completion: @escaping (PostResponse.Response) -> Void) {
+    func getNewsfeed(nextBatch: String?, startTime: String?, completion: @escaping (PostResponse.Response) -> Void) {
         let requestUrl = apiURL + ApiRequests.newsfeed.rawValue
         let params: Parameters = [
             "access_token": Session.shared.token,
-            "v": "5.103",
+            "v": "5.120",
             "filters": "post",
-            "start_from": "\(nextBatch ?? "")"
+            "start_from": "\(nextBatch ?? "")",
+            "start_time": "\(startTime ?? "")"
         ]
         
         AF.request(requestUrl, method: .get, parameters: params)
             .validate(statusCode: 200..<300)
-            .responseData { response in
+            .responseData(queue: .global(qos: .utility)) { response in
                 switch response.result {
                 case let .success(data):
                     do {
                         let decodedModel = try JSONDecoder().decode(PostResponse.self, from: data)
                         if let responseData = decodedModel.response {
-//                            print("📩📩📩 Methood \(ApiRequests.newsfeed.rawValue) response: 📩📩📩")
-//                            print(responseData)
-                            completion(responseData)
+                            //                            print("📩📩📩 Methood \(ApiRequests.newsfeed.rawValue) response: 📩📩📩")
+                            //                            print(responseData)
+                            DispatchQueue.main.async {
+                                completion(responseData)
+                                
+                            }
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage

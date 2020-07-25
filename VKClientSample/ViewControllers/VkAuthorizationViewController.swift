@@ -43,9 +43,7 @@ class VkAuthorizationViewController: UIViewController {
         ]
         
         let request = URLRequest(url: urlComponents.url!)
-        
-        print(request)
-        
+                
         webView.load(request)
     }
     

@@ -24,6 +24,18 @@ struct PostResponse: Decodable {
             case groups
             case nextFrom = "next_from"
         }
+        
+        mutating func addToBeggining(news: Response) {
+            self.items = news.items + self.items
+            self.profiles = news.profiles + self.profiles
+            self.groups = news.groups + self.groups
+        }
+        
+        mutating func addToEnd(news: Response) {
+            self.items = self.items + news.items
+            self.profiles = self.profiles + news.profiles
+            self.groups = self.groups + news.groups
+        }
     }
 }
 
