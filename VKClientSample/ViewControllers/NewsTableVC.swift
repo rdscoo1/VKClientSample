@@ -15,26 +15,40 @@ class NewsTableVC: UITableViewController {
     private let vkApi = VKApi()
     private var userPhotoUrl = ""
     private var nextFrom = ""
+    private var isLoading = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureTableView()
+        requestFromApi()
+        configureRefreshControl()
+    }
+    
+    private func configureTableView() {
         tableView.register(WhatsNewCell.self, forCellReuseIdentifier: WhatsNewCell.reuseId)
         tableView.register(StoriesCell.self, forCellReuseIdentifier: StoriesCell.reuseId)
         tableView.register(PostCell.self, forCellReuseIdentifier: PostCell.reuseId)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.prefetchDataSource = self
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
-        
-        
-        requestFromApi()
+    }
+    
+    private func requestFromApi() {
         vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
             let user = RealmService.manager.getAllObjects(of: User.self)
             self?.userPhotoUrl = user[0].photo100 ?? ""
+            self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0), IndexPath(row: 0, section: 1)],
+                                       with: .automatic)
+        }
+        
+        self.vkApi.getNewsfeed(nextBatch: nil, startTime: nil) { [weak self] items in
+            self?.nextFrom = items.nextFrom ?? ""
+            self?.posts = items
             self?.tableView.reloadData()
         }
-        configureRefreshControl()
     }
     
     private func configureRefreshControl() {
@@ -43,14 +57,6 @@ class NewsTableVC: UITableViewController {
         refreshControl?.attributedTitle = NSMutableAttributedString(string: "Refreshing...", attributes: [.foregroundColor: Constants.Colors.vkDarkGray])
         refreshControl?.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
-    }
-    
-    private func requestFromApi() {
-        self.vkApi.getNewsfeed(nextBatch: nil, startTime: nil) { [weak self] items in
-            self?.nextFrom = items.nextFrom ?? ""
-            self?.posts = items
-            self?.tableView.reloadData()
-        }
     }
     
     @objc func refresh(sender:AnyObject) {
@@ -74,9 +80,12 @@ class NewsTableVC: UITableViewController {
             self.tableView.insertRows(at: indexPathes, with: .automatic)
         }
     }
-    
-    // MARK: - Table view data source
-    
+}
+
+
+// MARK: - TableView DataSource
+
+extension NewsTableVC {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
@@ -113,15 +122,11 @@ class NewsTableVC: UITableViewController {
             if post.sourceId > 0 {
                 let user = postItem.profiles.first(where: { $0.id == abs(post.sourceId) })
                 postCell.postAuthor.text = user?.getFullName()
-                if let photoUrl = URL(string: user?.photo100 ?? "") {
-                    postCell.postAuthorImage.kf.setImage(with: photoUrl)
-                }
+                postCell.postAuthorImage.kf.setImage(with: URL(string: user?.photo100 ?? ""))
             } else {
                 let community = postItem.groups.first(where: { $0.id == abs(post.sourceId) })
                 postCell.postAuthor.text = community?.name
-                if let photoUrl = URL(string: community?.photo50 ?? "") {
-                    postCell.postAuthorImage.kf.setImage(with: photoUrl)
-                }
+                postCell.postAuthorImage.kf.setImage(with: URL(string: community?.photo50 ?? ""))
             }
             
             let date = Date(timeIntervalSince1970: post.date).getElapsedInterval()
@@ -163,19 +168,44 @@ class NewsTableVC: UITableViewController {
         }
     }
     
-    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if scrollView.contentOffset.y > scrollView.contentSize.height / 1.4 {
-            vkApi.getNewsfeed(nextBatch: nextFrom, startTime: nil) { [weak self] items in
-                self?.nextFrom = items.nextFrom ?? ""
-                self?.posts?.items.append(contentsOf: items.items)
-                self?.posts?.groups.append(contentsOf: items.groups)
-                self?.posts?.profiles.append(contentsOf: items.profiles)
-                self?.tableView.reloadData()
-            }
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.imageView?.kf.cancelDownloadTask()
+    }
+}
+
+// MARK: - TableView Prefetching
+
+extension NewsTableVC: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        guard
+            let maxRow = indexPaths.map({ $0.row }).max(),
+            let previousPostQuntity = posts?.items.count
+        else { return }
+        
+        print("maxRow: ", maxRow)
+        
+        if maxRow > previousPostQuntity - 5,
+            isLoading == false {
+            isLoading = true
+            
+            vkApi.getNewsfeed(nextBatch: nextFrom, startTime: nil) { [weak self] items in
+                guard
+                    let self = self,
+                    items.items.count > 0,
+                    let oldIndex = self.posts?.items.count
+                else { return }
+                
+                var indexPathes: [IndexPath] = []
+                self.nextFrom = items.nextFrom ?? ""
+                self.posts?.addToEnd(news: items)
+                for i in oldIndex..<(self.posts?.items.count)! {
+                    indexPathes.append(IndexPath(row: i, section: 2))
+                }
+                print("indexs: ", indexPaths)
+                self.tableView.insertRows(at: indexPathes, with: .automatic)
+                
+                self.isLoading = false
+            }
+        }
     }
 }

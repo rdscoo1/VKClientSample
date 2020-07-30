@@ -68,12 +68,6 @@ class PostCell: UITableViewCell {
         configureConstraints()
     }
     
-//    func configure(with post: Post) {
-//        if post.sourceId > 0 {
-//            let user = post
-//        }
-//    }
-    
     private func configureConstraints() {
         topSeparator.translatesAutoresizingMaskIntoConstraints = false
         postAuthorImage.translatesAutoresizingMaskIntoConstraints = false
