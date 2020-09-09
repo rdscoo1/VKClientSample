@@ -7,12 +7,26 @@
 //
 
 import UIKit
-import Kingfisher
+
+enum SectionTypes: Int, CaseIterable {
+    case whatsNew = 0
+    case stories = 1
+    case post = 2
+    
+    static func numberOfSections() -> Int {
+        return self.allCases.count
+    }
+    
+    static func getSection(_ section: Int) -> SectionTypes {
+        return self.allCases[section]
+    }
+}
 
 class NewsTableVC: UITableViewController {
     
     private var posts: PostResponse.Response?
     private let vkApi = VKApi()
+    var photoService: PhotoService?
     private var userPhotoUrl = ""
     private var nextFrom = ""
     private var isLoading = false
@@ -20,6 +34,7 @@ class NewsTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        photoService = PhotoService.init(container: tableView)
         configureTableView()
         requestFromApi()
         configureRefreshControl()
@@ -40,13 +55,15 @@ class NewsTableVC: UITableViewController {
         vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
             let user = RealmService.manager.getAllObjects(of: User.self)
             self?.userPhotoUrl = user[0].photo100 ?? ""
-            self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0), IndexPath(row: 0, section: 1)],
+            self?.tableView.reloadRows(at: [IndexPath(row: 0, section: SectionTypes.whatsNew.rawValue),
+                                            IndexPath(row: 0, section: SectionTypes.stories.rawValue)],
                                        with: .automatic)
         }
         
         self.vkApi.getNewsfeed(nextBatch: nil, startTime: nil) { [weak self] items in
             self?.nextFrom = items.nextFrom ?? ""
             self?.posts = items
+            print("❗️❗️❗️ \(items.items)")
             self?.tableView.reloadData()
         }
     }
@@ -75,7 +92,7 @@ class NewsTableVC: UITableViewController {
             self.posts?.addToBeggining(news: items)
             
             let indexPathes = items.items.enumerated().map { offset, _ in
-                IndexPath(row: offset, section: 2)
+                IndexPath(row: offset, section: SectionTypes.post.rawValue)
             }
             self.tableView.insertRows(at: indexPathes, with: .automatic)
         }
@@ -87,83 +104,50 @@ class NewsTableVC: UITableViewController {
 
 extension NewsTableVC {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return SectionTypes.numberOfSections()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        switch SectionTypes.getSection(section) {
+        case .whatsNew:
             return 1
-        } else if section == 1 {
+        case .stories:
             return 1
-        } else {
+        case .post:
             return posts?.items.count ?? 0
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        switch SectionTypes.getSection(indexPath.section) {
+        case .whatsNew:
             guard let whatsNewCell = tableView.dequeueReusableCell(withIdentifier: WhatsNewCell.reuseId, for: indexPath) as? WhatsNewCell else { return UITableViewCell() }
-            if let photoUrl = URL(string: userPhotoUrl) {
-                whatsNewCell.profilePhoto.kf.setImage(with: photoUrl)
-            }
+                whatsNewCell.profilePhoto.image = photoService?.photo(atIndexpath: indexPath, byUrl: userPhotoUrl)
             return whatsNewCell
-            
-        } else if indexPath.section == 1 {
+        case .stories:
             guard let storiesCell = tableView.dequeueReusableCell(withIdentifier: StoriesCell.reuseId, for: indexPath) as? StoriesCell else { return UITableViewCell() }
             return storiesCell
-            
-        } else {
+        case .post:
             guard let postCell = tableView.dequeueReusableCell(withIdentifier: PostCell.reuseId, for: indexPath) as? PostCell else { return UITableViewCell() }
+            
             guard let postItem = posts, !postItem.items.isEmpty else {
                 return UITableViewCell()
             }
-            
             let post = postItem.items[indexPath.row]
-            if post.sourceId > 0 {
-                let user = postItem.profiles.first(where: { $0.id == abs(post.sourceId) })
-                postCell.postAuthor.text = user?.getFullName()
-                postCell.postAuthorImage.kf.setImage(with: URL(string: user?.photo100 ?? ""))
-            } else {
-                let community = postItem.groups.first(where: { $0.id == abs(post.sourceId) })
-                postCell.postAuthor.text = community?.name
-                postCell.postAuthorImage.kf.setImage(with: URL(string: community?.photo50 ?? ""))
-            }
             
-            let date = Date(timeIntervalSince1970: post.date).getElapsedInterval()
-            postCell.publishDate.text = "\(date) ago"
-            postCell.postText.text = post.text
+            postCell.configure(with: post, author: postItem)
             
-            if let attachments = post.attachments {
-                if attachments[0].type.contains("photo") || attachments[0].type.contains("post") {
-                    postCell.postImageViewHeightConstraint.constant = 288
-                    postCell.layoutIfNeeded()
-                    let retry = DelayRetryStrategy(maxRetryCount: 3, retryInterval: .seconds(1))
-                    postCell.postImageView.kf.indicatorType = .activity
-                    postCell.postImageView.kf.setImage(with: URL(string: attachments[0].photo?.highResPhoto ?? ""),
-                                                       options: [.retryStrategy(retry)])
-                } else {
-                    postCell.postImageView.image = nil
-                    postCell.postImageViewHeightConstraint.constant = 0
-                    postCell.layoutIfNeeded()
-                }
-            } else if post.photos != nil {
-                if let photoUrl = URL(string: post.photos?[0].highResPhoto ?? "") {
-                    postCell.postImageView.kf.indicatorType = .activity
-                    postCell.postImageView.kf.setImage(with: photoUrl)
-                }
-            }
-            
-            postCell.postStatistics.updateControls(likes: post.likes?.count ?? 0, comments: post.comments.count, reposts: post.reposts.count, views: post.views?.count ?? 0)
             return postCell
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 64
-        } else if indexPath.section == 1 {
-            return 112
-        } else {
+        switch SectionTypes.getSection(indexPath.section) {
+        case .whatsNew:
+            return 64.0
+        case .stories:
+            return 112.0
+        case .post:
             return UITableView.automaticDimension
         }
     }
@@ -182,8 +166,6 @@ extension NewsTableVC: UITableViewDataSourcePrefetching {
             let previousPostQuntity = posts?.items.count
         else { return }
         
-        print("maxRow: ", maxRow)
-        
         if maxRow > previousPostQuntity - 5,
             isLoading == false {
             isLoading = true
@@ -194,14 +176,14 @@ extension NewsTableVC: UITableViewDataSourcePrefetching {
                     items.items.count > 0,
                     let oldIndex = self.posts?.items.count
                 else { return }
-                
+                print("❗️New Posts❗️ \(items.items)")
                 var indexPathes: [IndexPath] = []
                 self.nextFrom = items.nextFrom ?? ""
                 self.posts?.addToEnd(news: items)
                 for i in oldIndex..<(self.posts?.items.count)! {
-                    indexPathes.append(IndexPath(row: i, section: 2))
+                    indexPathes.append(IndexPath(row: i, section: SectionTypes.post.rawValue))
                 }
-                print("indexs: ", indexPaths)
+                
                 self.tableView.insertRows(at: indexPathes, with: .automatic)
                 
                 self.isLoading = false

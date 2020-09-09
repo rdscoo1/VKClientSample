@@ -30,7 +30,6 @@ extension UIImage {
     static let writePost = UIImage(imageLiteralResourceName: "writePost")
     static let camera = UIImage(imageLiteralResourceName: "camera")
     
-    static let helen = UIImage(imageLiteralResourceName: "helen")
-    static let john = UIImage(imageLiteralResourceName: "john")
+    static let anya = UIImage(imageLiteralResourceName: "anya")
     static let postImage = UIImage(imageLiteralResourceName: "postImage")
 }

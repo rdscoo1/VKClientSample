@@ -25,6 +25,11 @@ struct PostResponse: Decodable {
             case nextFrom = "next_from"
         }
         
+        mutating func addTo(news: Response) {
+//            if news.items
+            self.items = news.items
+        }
+        
         mutating func addToBeggining(news: Response) {
             self.items = news.items + self.items
             self.profiles = news.profiles + self.profiles
@@ -69,6 +74,15 @@ struct Post: Decodable {
     struct Attachment: Decodable {
         let type: String
         let photo: Photo?
+        let link: Link?
+        
+        struct Link: Decodable {
+            let url: String
+            let title: String
+            let description: String?
+            let caption: String?
+            let photo: Photo?
+        }
     }
     
     struct Comments: Decodable {
