@@ -46,8 +46,8 @@ class StoriesCell: UITableViewCell {
         
         vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
             let user = RealmService.manager.getAllObjects(of: User.self)
-            self?.userPhoto = user[0].photo100
-            self?.userName = user[0].firstName
+//            self?.userPhoto = user[0].imageUrl
+//            self?.userName = user[0].firstName
             self?.alpha = 1.0
             self?.storiesCollectionView.reloadData()
         }

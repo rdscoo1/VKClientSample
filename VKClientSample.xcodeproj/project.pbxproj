@@ -65,9 +65,15 @@
 		E8CD1C9423D6AF6100C5D668 /* FriendCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CD1C9323D6AF6000C5D668 /* FriendCVCell.swift */; };
 		E8CD1C9723DB29D300C5D668 /* ShadowPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CD1C9623DB29D300C5D668 /* ShadowPhotoView.swift */; };
 		E8CD1C9923DB2AF900C5D668 /* LikeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CD1C9823DB2AF900C5D668 /* LikeControl.swift */; };
+		E8D4290025193C4600A326E9 /* PostCommunity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D428FF25193C4600A326E9 /* PostCommunity.swift */; };
+		E8D4290425193C6200A326E9 /* PostProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D4290325193C6200A326E9 /* PostProfile.swift */; };
+		E8D4290725193CB100A326E9 /* PostLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D4290625193CB100A326E9 /* PostLink.swift */; };
+		E8D4290A25193D3B00A326E9 /* PostPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D4290925193D3B00A326E9 /* PostPhoto.swift */; };
+		E8D4290D25193D6000A326E9 /* PostPhotoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D4290C25193D6000A326E9 /* PostPhotoSize.swift */; };
 		E8D45F8A25023A04005120D8 /* PostLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D45F8925023A04005120D8 /* PostLinkView.swift */; };
 		E8D51AAE2475D7570056B945 /* VKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D51AAD2475D7570056B945 /* VKError.swift */; };
 		E8DBDE4E24887C660093920C /* RealmCascadeDeletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DBDE4D24887C660093920C /* RealmCascadeDeletion.swift */; };
+		E8F6214F25195B8800C830A6 /* PostAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F6214E25195B8800C830A6 /* PostAttachment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -132,9 +138,15 @@
 		E8CD1C9323D6AF6000C5D668 /* FriendCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCVCell.swift; sourceTree = "<group>"; };
 		E8CD1C9623DB29D300C5D668 /* ShadowPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowPhotoView.swift; sourceTree = "<group>"; };
 		E8CD1C9823DB2AF900C5D668 /* LikeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeControl.swift; sourceTree = "<group>"; };
+		E8D428FF25193C4600A326E9 /* PostCommunity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommunity.swift; sourceTree = "<group>"; };
+		E8D4290325193C6200A326E9 /* PostProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostProfile.swift; sourceTree = "<group>"; };
+		E8D4290625193CB100A326E9 /* PostLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLink.swift; sourceTree = "<group>"; };
+		E8D4290925193D3B00A326E9 /* PostPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhoto.swift; sourceTree = "<group>"; };
+		E8D4290C25193D6000A326E9 /* PostPhotoSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhotoSize.swift; sourceTree = "<group>"; };
 		E8D45F8925023A04005120D8 /* PostLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLinkView.swift; sourceTree = "<group>"; };
 		E8D51AAD2475D7570056B945 /* VKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKError.swift; sourceTree = "<group>"; };
 		E8DBDE4D24887C660093920C /* RealmCascadeDeletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCascadeDeletion.swift; sourceTree = "<group>"; };
+		E8F6214E25195B8800C830A6 /* PostAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttachment.swift; sourceTree = "<group>"; };
 		FA61B0E00B803FDF8FE9BD4C /* Pods_VKClientSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VKClientSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -241,6 +253,7 @@
 		E861CD9B23D274BF00D3E9B3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E8D428FE25193C2F00A326E9 /* News */,
 				E87624182472A9AF00FB62B6 /* Outdated */,
 				E8757B13241EC81D002F92A7 /* VKResponse.swift */,
 				E8D51AAD2475D7570056B945 /* VKError.swift */,
@@ -248,7 +261,6 @@
 				E8757B11241CECED002F92A7 /* Friend.swift */,
 				E8757B1924278B57002F92A7 /* Photo.swift */,
 				E836E3B9246CB46D0053A065 /* User.swift */,
-				E89ACE3F246DAE7300E269DA /* Post.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -373,6 +385,20 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		E8D428FE25193C2F00A326E9 /* News */ = {
+			isa = PBXGroup;
+			children = (
+				E89ACE3F246DAE7300E269DA /* Post.swift */,
+				E8D428FF25193C4600A326E9 /* PostCommunity.swift */,
+				E8D4290325193C6200A326E9 /* PostProfile.swift */,
+				E8D4290625193CB100A326E9 /* PostLink.swift */,
+				E8D4290925193D3B00A326E9 /* PostPhoto.swift */,
+				E8D4290C25193D6000A326E9 /* PostPhotoSize.swift */,
+				E8F6214E25195B8800C830A6 /* PostAttachment.swift */,
+			);
+			path = News;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -402,7 +428,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Roman Khodukin";
 				TargetAttributes = {
 					E8954A7423B15FEA00A93209 = {
@@ -499,11 +525,13 @@
 				E8DBDE4E24887C660093920C /* RealmCascadeDeletion.swift in Sources */,
 				E8757B14241EC81D002F92A7 /* VKResponse.swift in Sources */,
 				E829F961240491F900ED148B /* VKApi.swift in Sources */,
+				E8F6214F25195B8800C830A6 /* PostAttachment.swift in Sources */,
 				E829F95F2404839400ED148B /* VkAuthorizationViewController.swift in Sources */,
 				E8068CDF23E0C1E00083FBBE /* CommentControl.swift in Sources */,
 				E8CD1C9023D65EA600C5D668 /* FriendCell.swift in Sources */,
 				E8CD1C9423D6AF6100C5D668 /* FriendCVCell.swift in Sources */,
 				E8068CDC23E0BE360083FBBE /* PostStatistics.swift in Sources */,
+				E8D4290D25193D6000A326E9 /* PostPhotoSize.swift in Sources */,
 				E8068CD923DC485C0083FBBE /* PostCell.swift in Sources */,
 				E8757B10241CEAC0002F92A7 /* Community.swift in Sources */,
 				E8954A9523B162B300A93209 /* UIColor+hex.swift in Sources */,
@@ -521,6 +549,7 @@
 				E885799823D1D7F200C97694 /* AddCommunitiyTableVC.swift in Sources */,
 				E861CD9923D271EA00D3E9B3 /* CommunityCell.swift in Sources */,
 				E89ACE40246DAE7300E269DA /* Post.swift in Sources */,
+				E8D4290725193CB100A326E9 /* PostLink.swift in Sources */,
 				E836E3BA246CB46D0053A065 /* User.swift in Sources */,
 				E8954A7923B15FEA00A93209 /* AppDelegate.swift in Sources */,
 				E8CD1C9223D6AC0200C5D668 /* FriendCollectionVC.swift in Sources */,
@@ -530,6 +559,8 @@
 				E871F965247DD13B00EF78BE /* Date+extension.swift in Sources */,
 				E87624172472A22D00FB62B6 /* RealmService.swift in Sources */,
 				E829F96324049DBD00ED148B /* GetDataViewController.swift in Sources */,
+				E8D4290425193C6200A326E9 /* PostProfile.swift in Sources */,
+				E8D4290025193C4600A326E9 /* PostCommunity.swift in Sources */,
 				E8068CD223DC47E80083FBBE /* NewsTableVC.swift in Sources */,
 				E85E8311246CD6B20090FBEC /* UserDefaults+extensions.swift in Sources */,
 				E8068CE723E1C7150083FBBE /* StoriesCell.swift in Sources */,
@@ -544,6 +575,7 @@
 				E8B5E33024046C9D009A5494 /* Session.swift in Sources */,
 				E8068CEB23E384C10083FBBE /* WhatsNewCell.swift in Sources */,
 				E87BB7F423E8CE39006C14F6 /* LoadView.swift in Sources */,
+				E8D4290A25193D3B00A326E9 /* PostPhoto.swift in Sources */,
 				E861CD9F23D274E700D3E9B3 /* FriendFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -596,6 +628,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -656,6 +689,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -694,7 +728,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AC7SNZV8BM;
 				INFOPLIST_FILE = VKClientSample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -717,7 +751,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AC7SNZV8BM;
 				INFOPLIST_FILE = VKClientSample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

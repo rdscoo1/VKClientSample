@@ -44,8 +44,9 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(VKResponse<ResponseType>.self, from: data)
                         if let responseData = decodedModel.response {
-                            //                                                        print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
-                            //                                                        print(responseData.items)
+                            print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
+                            print(responseData.items)
+                            
                             RealmService.manager.removeObjectsThanSave(of: ResponseType.self, objects: responseData.items)
                             completion()
                         } else if
@@ -177,7 +178,7 @@ class VKApi {
         }
     }
     
-    func getNewsfeed(nextBatch: String?, startTime: String?, completion: @escaping (PostResponse.Response) -> Void) {
+    func getNewsfeed(nextBatch: String?, startTime: String?, completion: @escaping (Response) -> Void) {
         let requestUrl = apiURL + ApiRequests.newsfeed.rawValue
         let params: Parameters = [
             "access_token": Session.shared.token,
@@ -199,8 +200,9 @@ class VKApi {
                             //                            print("📩📩📩 Methood \(ApiRequests.newsfeed.rawValue) response: 📩📩📩")
                             //                            print(responseData)
                             DispatchQueue.main.async {
+                                RealmService.manager.removePostsThanSave(Response.self, object: responseData)
                                 completion(responseData)
-                                
+                                print(responseData.items[0].attachments)
                             }
                         } else if
                             let errorCode = decodedModel.error?.errorCode,

@@ -24,7 +24,7 @@ enum SectionTypes: Int, CaseIterable {
 
 class NewsTableVC: UITableViewController {
     
-    private var posts: PostResponse.Response?
+    private var posts: Response?
     private let vkApi = VKApi()
     var photoService: PhotoService?
     private var userPhotoUrl = ""
@@ -54,7 +54,7 @@ class NewsTableVC: UITableViewController {
     private func requestFromApi() {
         vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
             let user = RealmService.manager.getAllObjects(of: User.self)
-            self?.userPhotoUrl = user[0].photo100 ?? ""
+//            self?.userPhotoUrl = user[0].imageUrl ?? ""
             self?.tableView.reloadRows(at: [IndexPath(row: 0, section: SectionTypes.whatsNew.rawValue),
                                             IndexPath(row: 0, section: SectionTypes.stories.rawValue)],
                                        with: .automatic)
@@ -63,7 +63,7 @@ class NewsTableVC: UITableViewController {
         self.vkApi.getNewsfeed(nextBatch: nil, startTime: nil) { [weak self] items in
             self?.nextFrom = items.nextFrom ?? ""
             self?.posts = items
-            print("❗️❗️❗️ \(items.items)")
+//            print("❗️❗️❗️ \(items.items)")
             self?.tableView.reloadData()
         }
     }
@@ -89,7 +89,7 @@ class NewsTableVC: UITableViewController {
             guard items.items.count > 0 else {
                 return
             }
-            self.posts?.addToBeggining(news: items)
+//            self.posts?.addToBeggining(news: items)
             
             let indexPathes = items.items.enumerated().map { offset, _ in
                 IndexPath(row: offset, section: SectionTypes.post.rawValue)
@@ -179,7 +179,7 @@ extension NewsTableVC: UITableViewDataSourcePrefetching {
                 print("❗️New Posts❗️ \(items.items)")
                 var indexPathes: [IndexPath] = []
                 self.nextFrom = items.nextFrom ?? ""
-                self.posts?.addToEnd(news: items)
+//                self.posts?.addToEnd(news: items)
                 for i in oldIndex..<(self.posts?.items.count)! {
                     indexPathes.append(IndexPath(row: i, section: SectionTypes.post.rawValue))
                 }

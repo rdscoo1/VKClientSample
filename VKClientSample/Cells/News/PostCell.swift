@@ -12,8 +12,8 @@ import Kingfisher
 class PostCell: UITableViewCell {
     
     static let reuseId = "PostCell"
-
-//MARK: - UI Elements
+    
+    //MARK: - UI Elements
     
     private let topSeparator = UIView()
     private let postAuthorImage = UIImageView()
@@ -22,13 +22,12 @@ class PostCell: UITableViewCell {
     private let moreButton = UIButton()
     private let postText = UILabel()
     private var postImageView = UIImageView()
-    private let postLinkView = PostLinkView()
     private let postStatistics = PostStatistics()
-
+    
     private var postImageViewHeightConstraint: NSLayoutConstraint!
     
-    var dateTextCache: [String: Int] = [:]
-            
+    var dateCache: [String: Int] = [:]
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -38,48 +37,50 @@ class PostCell: UITableViewCell {
         super.init(coder: coder)
         setupUI()
     }
-   
-//MARK: - CellForRowAt configuration
     
-    func configure(with post: Post, author: PostResponse.Response?) {
+    //MARK: - CellForRowAt configuration
+    
+    func configure(with post: Post, author: Response?) {
         if post.sourceId > 0 {
             let user = author?.profiles.first(where: { $0.id == abs(post.sourceId) })
-            postAuthor.text = user?.getFullName()
-            postAuthorImage.kf.setImage(with: URL(string: user?.photo100 ?? ""))
+            postAuthor.text = user?.name
+            postAuthorImage.kf.setImage(with: URL(string: user?.imageUrl ?? ""))
         } else {
             let community = author?.groups.first(where: { $0.id == abs(post.sourceId) })
             postAuthor.text = community?.name
-            postAuthorImage.kf.setImage(with: URL(string: community?.photo50 ?? ""))
+            postAuthorImage.kf.setImage(with: URL(string: community?.imageUrl ?? ""))
         }
         
         let date = Date(timeIntervalSince1970: post.date).getElapsedInterval()
         publishDate.text = "\(date) ago"
         postText.text = post.text
         
-        if let attachments = post.attachments {
-            if attachments[0].type.contains("photo") || attachments[0].type.contains("post") {
-                postImageViewHeightConstraint.constant = 288
-                layoutIfNeeded()
-                let retry = DelayRetryStrategy(maxRetryCount: 3, retryInterval: .seconds(1))
-                postImageView.kf.indicatorType = .activity
-                postImageView.kf.setImage(with: URL(string: attachments[0].photo?.highResPhoto ?? ""),
-                                                   options: [.retryStrategy(retry)])
-            } else {
-                postImageView.image = nil
-                postImageViewHeightConstraint.constant = 0
-                layoutIfNeeded()
-            }
-        } else if post.photos != nil {
-            if let photoUrl = URL(string: post.photos?[0].highResPhoto ?? "") {
-                postImageView.kf.indicatorType = .activity
-                postImageView.kf.setImage(with: photoUrl)
-            }
+        let attachments = post.attachments
+        if attachments[0].type.contains("photo") || attachments[0].type.contains("post") {
+            postImageViewHeightConstraint.constant = 288
+            layoutIfNeeded()
+            let retry = DelayRetryStrategy(maxRetryCount: 3, retryInterval: .seconds(1))
+            postImageView.kf.indicatorType = .activity
+            postImageView.kf.setImage(with: URL(string: attachments[0].photo?.highResPhoto ?? ""),
+                                      options: [.retryStrategy(retry)])
+        } else {
+            postImageView.image = nil
+            postImageViewHeightConstraint.constant = 0
+            layoutIfNeeded()
         }
         
-        postStatistics.updateControls(likes: post.likes?.count ?? 0, comments: post.comments.count, reposts: post.reposts.count, views: post.views?.count ?? 0)
+        //        if post.photos != nil {
+        //            if let photoUrl = URL(string: post.photos?[0].highResPhoto ?? "") {
+        //                postImageView.kf.indicatorType = .activity
+        //                postImageView.kf.setImage(with: photoUrl)
+        //            }
+        //        }
+        
+        postStatistics.updateControls(likes: post.likes, comments: post.comments, reposts: post.reposts, views: post.views)
     }
     
-//MARK: - Setting UI of elements
+    
+    //MARK: - Setting UI of elements
     
     private func setupUI() {
         topSeparator.backgroundColor = .lightGray
@@ -103,10 +104,6 @@ class PostCell: UITableViewCell {
         postImageView.contentMode = .scaleAspectFit
         postImageView.clipsToBounds = true
         
-        postLinkView.layer.cornerRadius = 10
-        postLinkView.layer.borderWidth = 1
-        postLinkView.layer.borderColor = UIColor.gray.cgColor
-        
         addSubview(topSeparator)
         addSubview(postAuthorImage)
         addSubview(postAuthor)
@@ -114,7 +111,6 @@ class PostCell: UITableViewCell {
         addSubview(moreButton)
         addSubview(postText)
         addSubview(postImageView)
-        addSubview(postLinkView)
         addSubview(postStatistics)
         
         configureConstraints()
@@ -128,9 +124,8 @@ class PostCell: UITableViewCell {
         moreButton.translatesAutoresizingMaskIntoConstraints = false
         postText.translatesAutoresizingMaskIntoConstraints = false
         postImageView.translatesAutoresizingMaskIntoConstraints = false
-        postLinkView.translatesAutoresizingMaskIntoConstraints = false
         postStatistics.translatesAutoresizingMaskIntoConstraints = false
-
+        
         postImageViewHeightConstraint = postImageView.heightAnchor.constraint(equalToConstant: 288)
         
         NSLayoutConstraint.activate([
@@ -162,14 +157,8 @@ class PostCell: UITableViewCell {
             postImageView.topAnchor.constraint(equalTo: postText.bottomAnchor, constant: 8),
             postImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             postImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-//            postImageView.bottomAnchor.constraint(equalTo: postLinkView.topAnchor),
+            postImageView.bottomAnchor.constraint(equalTo: postStatistics.topAnchor),
             postImageViewHeightConstraint,
-            
-            postLinkView.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: 8),
-            postLinkView.bottomAnchor.constraint(equalTo: postStatistics.topAnchor, constant: -4),
-            postLinkView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            postLinkView.rightAnchor.constraint(equalTo: rightAnchor, constant: -8),
-            postLinkView.heightAnchor.constraint(equalToConstant: 144),
             
             postStatistics.leadingAnchor.constraint(equalTo: leadingAnchor),
             postStatistics.trailingAnchor.constraint(equalTo: trailingAnchor),

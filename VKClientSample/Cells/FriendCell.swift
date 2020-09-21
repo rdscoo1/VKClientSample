@@ -13,7 +13,7 @@ class FriendCell: UITableViewCell {
     @IBOutlet weak var friendPhoto: UIImageView!
     @IBOutlet weak var friendFullName: UILabel!
     
-    override func awakeFromNib() {
+    override func awakeFromNib() { 
         super.awakeFromNib()
         
         friendPhoto.layer.cornerRadius = 24
@@ -22,7 +22,7 @@ class FriendCell: UITableViewCell {
     
     func configure(with friend: Friend) {
         friendFullName.text = "\(friend.firstName) \(friend.lastName)"
-        if  let photoLink = friend.photo50,
+        if  let photoLink = friend.imageUrl,
             let photoUrl = URL(string: photoLink) {
             friendPhoto.kf.setImage(with: photoUrl)
         }

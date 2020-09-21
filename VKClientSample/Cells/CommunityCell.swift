@@ -31,7 +31,7 @@ class CommunityCell: UITableViewCell {
     func configure(with community: Community) {
         communityTitle.text = community.name
         communityDescription.text = community.activity
-        if let imageUrl = URL(string: community.photo50) {
+        if let imageUrl = URL(string: community.imageUrl ?? "") {
             communityPhoto.kf.setImage(with: imageUrl)
         }
     }
