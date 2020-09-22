@@ -17,6 +17,18 @@ import RealmSwift
     dynamic var city: String? = nil
     dynamic var imageUrl: String? = nil
     
+    var onlineStatus: OnlineStatusSwitcher {
+        if online == 1 {
+            if onlineMobile.value == 1 {
+                return .mobile
+            } else {
+                return .online
+            }
+        } else {
+            return .offline
+        }
+    }
+    
     enum CodingKeys: String, CodingKey {
         case id
         case firstName = "first_name"

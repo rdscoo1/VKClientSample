@@ -49,8 +49,6 @@ class NewsTableVC: UITableViewController {
         tableView.prefetchDataSource = self
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .white
-        tableView.alpha = 0.0
     }
     
     private func requestFromApi() {
@@ -65,7 +63,6 @@ class NewsTableVC: UITableViewController {
         self.vkApi.getNewsfeed(nextBatch: nil, startTime: nil) { [weak self] items in
             self?.nextFrom = items.nextFrom ?? ""
             self?.posts = items
-            self?.tableView.alpha = 1.0
 //            print("❗️❗️❗️ \(items.items)")
             self?.tableView.reloadData()
         }

@@ -485,8 +485,8 @@
                         <color key="selectedImageTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
-                        <segue destination="avM-3d-OPd" kind="relationship" relationship="viewControllers" id="Dxc-Iy-DR7"/>
                         <segue destination="2Q5-50-Lng" kind="relationship" relationship="viewControllers" id="v4b-I3-Fo1"/>
+                        <segue destination="avM-3d-OPd" kind="relationship" relationship="viewControllers" id="Dxc-Iy-DR7"/>
                         <segue destination="Syz-Hf-mdV" kind="relationship" relationship="viewControllers" id="8Wv-bi-IPn"/>
                         <segue destination="02R-z9-njK" kind="relationship" relationship="viewControllers" id="V3X-qe-ZyF"/>
                     </connections>

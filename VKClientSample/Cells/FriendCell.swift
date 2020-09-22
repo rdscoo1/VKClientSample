@@ -13,8 +13,12 @@ class FriendCell: UITableViewCell {
     static let reuseId = "FriendCell"
     
     private let friendPhoto = UIImageView()
-    private let onlineStatus = UIImageView(image: .online)
+    private let onlineStatus = UIImageView()
+    private let onlineStatusContainer = UIView()
     private let friendFullName = UILabel()
+    
+    private var onlineContainerHeight: NSLayoutConstraint!
+    private var onlineContainerWidth: NSLayoutConstraint!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -22,8 +26,18 @@ class FriendCell: UITableViewCell {
         friendPhoto.layer.cornerRadius = 24
         friendPhoto.layer.masksToBounds = true
         
-        friendPhoto.addSubview(onlineStatus)
+        onlineStatusContainer.alpha = 0.0
+        if #available(iOS 13.0, *) {
+            onlineStatusContainer.backgroundColor = .systemBackground
+            onlineStatus.backgroundColor = .systemBackground
+        } else {
+            onlineStatus.backgroundColor = .white
+            onlineStatusContainer.backgroundColor = .white
+        }
+                
+        onlineStatusContainer.addSubview(onlineStatus)
         addSubview(friendPhoto)
+        addSubview(onlineStatusContainer)
         addSubview(friendFullName)
         
         configureConstraints()
@@ -33,17 +47,52 @@ class FriendCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setOnlineStatus(_ status: OnlineStatusSwitcher) {
+        switch status {
+        case .offline:
+            onlineStatusContainer.alpha = 0.0
+        case .online:
+            onlineStatus.image = .online
+            onlineContainerHeight.constant = 10
+            onlineContainerWidth.constant = 14
+            onlineStatusContainer.layer.cornerRadius = 7
+            onlineStatus.layer.cornerRadius = 5
+            layoutIfNeeded()
+            onlineStatusContainer.alpha = 1.0
+        case .mobile:
+            onlineContainerHeight.constant = 14
+            onlineContainerWidth.constant = 12
+            onlineStatusContainer.layer.cornerRadius = 4
+            layoutIfNeeded()
+            onlineStatus.image = .onlineMobile
+            onlineStatusContainer.alpha = 1.0
+        }
+    }
+    
     private func configureConstraints() {
         friendPhoto.translatesAutoresizingMaskIntoConstraints = false
+        onlineStatusContainer.translatesAutoresizingMaskIntoConstraints = false
+        onlineStatus.translatesAutoresizingMaskIntoConstraints = false
         friendFullName.translatesAutoresizingMaskIntoConstraints = false
+        
+        onlineContainerHeight = onlineStatus.heightAnchor.constraint(equalToConstant: 12)
+        onlineContainerWidth = onlineStatusContainer.widthAnchor.constraint(equalToConstant: 12)
+        
         NSLayoutConstraint.activate([
             friendPhoto.centerYAnchor.constraint(equalTo: centerYAnchor),
             friendPhoto.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             friendPhoto.widthAnchor.constraint(equalToConstant: 48),
             friendPhoto.heightAnchor.constraint(equalToConstant: 48),
             
-            onlineStatus.bottomAnchor.constraint(equalTo: friendPhoto.bottomAnchor),
-            onlineStatus.trailingAnchor.constraint(equalTo: friendPhoto.trailingAnchor),
+            onlineStatusContainer.bottomAnchor.constraint(equalTo: friendPhoto.bottomAnchor),
+            onlineStatusContainer.trailingAnchor.constraint(equalTo: friendPhoto.trailingAnchor),
+            onlineContainerHeight,
+            onlineContainerWidth,
+            
+            onlineStatus.topAnchor.constraint(equalTo: onlineStatusContainer.topAnchor, constant: 2),
+            onlineStatus.trailingAnchor.constraint(equalTo: onlineStatusContainer.trailingAnchor, constant: -2),
+            onlineStatus.bottomAnchor.constraint(equalTo: onlineStatusContainer.bottomAnchor, constant: -2),
+            onlineStatus.leadingAnchor.constraint(equalTo: onlineStatusContainer.leadingAnchor, constant: 2),
             
             friendFullName.centerYAnchor.constraint(equalTo: friendPhoto.centerYAnchor),
             friendFullName.leadingAnchor.constraint(equalTo: friendPhoto.trailingAnchor, constant: 16),
@@ -51,11 +100,12 @@ class FriendCell: UITableViewCell {
         ])
     }
     
-    func configure(with friend: Friend) {
+    func configure(with friend: Friend, onlineStatus: OnlineStatusSwitcher) {
         friendFullName.text = "\(friend.firstName) \(friend.lastName)"
         if  let photoLink = friend.imageUrl,
             let photoUrl = URL(string: photoLink) {
             friendPhoto.kf.setImage(with: photoUrl)
         }
+        setOnlineStatus(onlineStatus)
     }
 }

@@ -44,8 +44,8 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(VKResponse<ResponseType>.self, from: data)
                         if let responseData = decodedModel.response {
-                            print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
-                            print(responseData.items)
+//                            print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
+//                            print(responseData.items)
                             
                             RealmService.manager.removeObjectsThanSave(of: ResponseType.self, objects: responseData.items)
                             completion()

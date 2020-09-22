@@ -34,7 +34,11 @@ class AddStoryPhotoView: UIView {
         photoImageView.layer.masksToBounds = true
         photoImageView.contentMode = .scaleAspectFill
         
-        plusImageViewContainer.backgroundColor = .white
+        if #available(iOS 13.0, *) {
+            plusImageViewContainer.backgroundColor = .systemBackground
+        } else {
+            plusImageViewContainer.backgroundColor = .white
+        }
         plusImageViewContainer.layer.cornerRadius = plusIconSize / 2
         plusImageViewContainer.layer.masksToBounds = true
         

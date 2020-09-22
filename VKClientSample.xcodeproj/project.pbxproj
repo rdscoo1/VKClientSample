@@ -74,6 +74,7 @@
 		E8D51AAE2475D7570056B945 /* VKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D51AAD2475D7570056B945 /* VKError.swift */; };
 		E8DBDE4E24887C660093920C /* RealmCascadeDeletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DBDE4D24887C660093920C /* RealmCascadeDeletion.swift */; };
 		E8F6214F25195B8800C830A6 /* PostAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F6214E25195B8800C830A6 /* PostAttachment.swift */; };
+		E8F62175251A4F3200C830A6 /* OnlineStatusSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F62174251A4F3200C830A6 /* OnlineStatusSwitcher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -147,6 +148,7 @@
 		E8D51AAD2475D7570056B945 /* VKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKError.swift; sourceTree = "<group>"; };
 		E8DBDE4D24887C660093920C /* RealmCascadeDeletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCascadeDeletion.swift; sourceTree = "<group>"; };
 		E8F6214E25195B8800C830A6 /* PostAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttachment.swift; sourceTree = "<group>"; };
+		E8F62174251A4F3200C830A6 /* OnlineStatusSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineStatusSwitcher.swift; sourceTree = "<group>"; };
 		FA61B0E00B803FDF8FE9BD4C /* Pods_VKClientSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VKClientSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -261,6 +263,7 @@
 				E8757B11241CECED002F92A7 /* Friend.swift */,
 				E8757B1924278B57002F92A7 /* Photo.swift */,
 				E836E3B9246CB46D0053A065 /* User.swift */,
+				E8F62174251A4F3200C830A6 /* OnlineStatusSwitcher.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -577,6 +580,7 @@
 				E87BB7F423E8CE39006C14F6 /* LoadView.swift in Sources */,
 				E8D4290A25193D3B00A326E9 /* PostPhoto.swift in Sources */,
 				E861CD9F23D274E700D3E9B3 /* FriendFactory.swift in Sources */,
+				E8F62175251A4F3200C830A6 /* OnlineStatusSwitcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

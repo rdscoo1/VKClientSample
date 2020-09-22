@@ -38,7 +38,11 @@ class WhatsNewCell: UITableViewCell {
                                             attributes: [NSAttributedString.Key.foregroundColor: Constants.Colors.vkDarkGray,
                                             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)])
         whatsNewTF.attributedPlaceholder = attributes
-        whatsNewTF.backgroundColor = Constants.Colors.vkLightGray
+        if #available(iOS 13.0, *) {
+            whatsNewTF.backgroundColor = .systemGray6
+        } else {
+            whatsNewTF.backgroundColor = Constants.Colors.vkLightGray
+        }
         whatsNewTF.layer.cornerRadius = 8
         whatsNewTF.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: self.frame.height))
         whatsNewTF.leftViewMode = .always

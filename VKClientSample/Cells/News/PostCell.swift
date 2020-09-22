@@ -89,11 +89,13 @@ class PostCell: UITableViewCell {
         postAuthorImage.layer.cornerRadius = 24
         postAuthorImage.layer.masksToBounds = true
         
-        postAuthor.text = ""
-        postAuthor.textColor = .black
+        if #available(iOS 13.0, *) {
+            postAuthor.textColor = .label
+        } else {
+            postAuthor.textColor = .black
+        }
         postAuthor.font = .systemFont(ofSize: 14, weight: UIFont.Weight.medium)
         
-        publishDate.text = ""
         publishDate.textColor = Constants.Colors.vkDarkGray
         publishDate.font = .systemFont(ofSize: 13, weight: UIFont.Weight.regular)
         

@@ -99,7 +99,7 @@ extension FriendsTableVC {
             return UITableViewCell()
         }
         let friend = friendsInSection[indexPath.section].items[indexPath.row]
-        cell.configure(with: friend)
+        cell.configure(with: friend, onlineStatus: friend.onlineStatus)
         
         return cell
     }
