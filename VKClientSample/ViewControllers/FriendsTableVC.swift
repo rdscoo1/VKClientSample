@@ -27,6 +27,7 @@ class FriendsTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.register(FriendCell.self, forCellReuseIdentifier: FriendCell.reuseId)
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 64
         searchBar.delegate = self
@@ -94,7 +95,7 @@ extension FriendsTableVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell") as? FriendCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FriendCell.reuseId) as? FriendCell else {
             return UITableViewCell()
         }
         let friend = friendsInSection[indexPath.section].items[indexPath.row]
