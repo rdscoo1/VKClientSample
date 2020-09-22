@@ -8,7 +8,8 @@
 
 import RealmSwift
 
-@objcMembers class PostProfile: Object, Decodable {
+@objcMembers 
+class PostProfile: Object, Decodable {
     dynamic var id: Int = 0
     dynamic var firstName: String = ""
     dynamic var lastName: String = ""

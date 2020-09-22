@@ -49,12 +49,14 @@ class NewsTableVC: UITableViewController {
         tableView.prefetchDataSource = self
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .white
+        tableView.alpha = 0.0
     }
     
     private func requestFromApi() {
         vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
             let user = RealmService.manager.getAllObjects(of: User.self)
-//            self?.userPhotoUrl = user[0].imageUrl ?? ""
+            self?.userPhotoUrl = user[0].imageUrl ?? ""
             self?.tableView.reloadRows(at: [IndexPath(row: 0, section: SectionTypes.whatsNew.rawValue),
                                             IndexPath(row: 0, section: SectionTypes.stories.rawValue)],
                                        with: .automatic)
@@ -63,6 +65,7 @@ class NewsTableVC: UITableViewController {
         self.vkApi.getNewsfeed(nextBatch: nil, startTime: nil) { [weak self] items in
             self?.nextFrom = items.nextFrom ?? ""
             self?.posts = items
+            self?.tableView.alpha = 1.0
 //            print("❗️❗️❗️ \(items.items)")
             self?.tableView.reloadData()
         }

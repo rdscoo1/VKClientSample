@@ -8,12 +8,13 @@
 
 import RealmSwift
 
+@objcMembers
 class PostLink: Object, Decodable {
-    @objc dynamic var url: String = ""
-    @objc dynamic var title: String = ""
-    @objc dynamic var descript: String? = nil
-    @objc dynamic var caption: String? = nil
-    @objc dynamic var photo: Photo?
+    dynamic var url: String = ""
+    dynamic var title: String = ""
+    dynamic var descript: String? = nil
+    dynamic var caption: String? = nil
+    dynamic var photo: Photo?
 
     enum CodingKeys: String, CodingKey {
         case url

@@ -49,20 +49,21 @@ class Response: Object, Decodable {
     }
 }
 
+@objcMembers
 class Post: Object, Decodable {
-    @objc dynamic var type: String = ""
-    @objc dynamic var sourceId: Int = 0
-    @objc dynamic var postId: Int = 0
-    @objc dynamic var date: Double = 0.0
-    @objc dynamic var text: String? = nil
+    dynamic var type: String = ""
+    dynamic var sourceId: Int = 0
+    dynamic var postId: Int = 0
+    dynamic var date: Double = 0.0
+    dynamic var text: String? = nil
     var attachments = List<PostAttachment>()
     //    @objc dynamic var attachmentType: String = ""
     //    var photo = List<PostPhoto>()
     //    var photos: [Photo]?
-    @objc dynamic var comments: Int = 0
-    @objc dynamic var likes: Int = 0
-    @objc dynamic var reposts: Int = 0
-    @objc dynamic var views: Int = 0
+    dynamic var comments: Int = 0
+    dynamic var likes: Int = 0
+    dynamic var reposts: Int = 0
+    dynamic var views: Int = 0
     
     enum CodingKeys: String, CodingKey {
         case type

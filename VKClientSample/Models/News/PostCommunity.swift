@@ -8,7 +8,8 @@
 
 import RealmSwift
 
-@objcMembers class PostCommunity: Object, Decodable {
+@objcMembers 
+class PostCommunity: Object, Decodable {
     dynamic var id: Int = 0
     dynamic var name: String = ""
     dynamic var imageUrl: String? = ""

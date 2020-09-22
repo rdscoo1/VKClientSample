@@ -103,7 +103,7 @@ class VKApi {
         let params: Parameters = [
             "user_id": Session.shared.userId,
             "order": "hints",
-            "fields": "city, photo_50"
+            "fields": "city, photo_50, online"
         ]
         
         makeRequest(apiMethod: .friends, params: params, objectType: Friend.self, completion: completion)
@@ -202,7 +202,6 @@ class VKApi {
                             DispatchQueue.main.async {
                                 RealmService.manager.removePostsThanSave(Response.self, object: responseData)
                                 completion(responseData)
-                                print(responseData.items[0].attachments)
                             }
                         } else if
                             let errorCode = decodedModel.error?.errorCode,

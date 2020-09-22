@@ -8,18 +8,8 @@
 
 import RealmSwift
 
-//struct PostPhoto: Decodable {
-//    let id: Int
-//    let sizes: [PostPhotoSize]
-//    var highResPhoto: String {
-//        guard let photoLinkhighRes = sizes.first(where: { $0.type == "x" })?.url else {
-//            return ""
-//        }
-//        return photoLinkhighRes
-//    }
-//}
-
-@objcMembers class PostPhoto: Object, Decodable {
+@objcMembers 
+class PostPhoto: Object, Decodable {
     dynamic var id: Int = 0
     var sizes = List<PostPhotoSize>()
     dynamic var highResPhoto: String {

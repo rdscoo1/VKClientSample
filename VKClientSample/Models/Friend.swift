@@ -8,13 +8,12 @@
 
 import RealmSwift
 
-
-
 @objcMembers class Friend: Object, Decodable {
     dynamic var id: Int = 0
     dynamic var firstName: String = ""
     dynamic var lastName: String = ""
     dynamic var online: Int = 0
+    dynamic var onlineMobile = RealmOptional<Int>()
     dynamic var city: String? = nil
     dynamic var imageUrl: String? = nil
     
@@ -23,6 +22,7 @@ import RealmSwift
         case firstName = "first_name"
         case lastName = "last_name"
         case online
+        case onlineMobile = "online_mobile"
         case city
         case imageUrl = "photo_50"
         
@@ -36,8 +36,9 @@ import RealmSwift
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(Int.self, forKey: .id)
         firstName = try container.decode(String.self, forKey: .firstName)
-        lastName = try container.decode(String.self, forKey: .firstName)
+        lastName = try container.decode(String.self, forKey: .lastName)
         online = try container.decode(Int.self, forKey: .online)
+        onlineMobile.value = try container.decodeIfPresent(Int.self, forKey: .onlineMobile)
         imageUrl = try container.decodeIfPresent(String.self, forKey: .imageUrl)
         
         if let cityContainer = try? container.nestedContainer(keyedBy: CodingKeys.CityKeys.self, forKey: .city) {
