@@ -311,9 +311,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Profile" id="phv-LR-CKj">
-                        <barButtonItem key="leftBarButtonItem" title="Log Out" style="done" id="iio-Ce-arl">
+                        <barButtonItem key="leftBarButtonItem" tag="1" title="Log Out" style="done" id="iio-Ce-arl">
                             <color key="tintColor" red="0.27450980390000002" green="0.50196078430000002" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
+                                <action selector="logOut:" destination="cai-XP-eCa" id="gmO-fT-bJW"/>
                                 <segue destination="jx1-zI-Rax" kind="unwind" unwindAction="logOut:" id="vJj-Kx-lt0"/>
                             </connections>
                         </barButtonItem>

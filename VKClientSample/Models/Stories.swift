@@ -1,15 +1,24 @@
 //
-//  PostCommunity.swift
+//  Stories.swift
 //  VKClientSample
 //
-//  Created by Roman Khodukin on 9/21/20.
+//  Created by Roman Khodukin on 9/28/20.
 //  Copyright © 2020 Roman Khodukin. All rights reserved.
 //
 
 import RealmSwift
 
-@objcMembers 
-class PostCommunity: Object, Decodable {
+struct StoriesResponse: Decodable {
+    var response: StoryResponse?
+    let error: VKError?
+}
+
+struct StoryResponse: Decodable {
+    var groups: [StoriesCommunity]?
+}
+
+@objcMembers
+class StoriesCommunity: Object, Decodable {
     dynamic var id: Int = 0
     dynamic var name: String = ""
     dynamic var imageUrl: String? = ""
@@ -17,7 +26,7 @@ class PostCommunity: Object, Decodable {
     enum CodingKeys: String, CodingKey {
         case id
         case name
-        case imageUrl = "photo_50"
+        case imageUrl = "photo_100"
     }
     
     override class func primaryKey() -> String? {

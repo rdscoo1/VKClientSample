@@ -60,6 +60,7 @@
 		E8954A9523B162B300A93209 /* UIColor+hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8954A9423B162B200A93209 /* UIColor+hex.swift */; };
 		E89ACE40246DAE7300E269DA /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89ACE3F246DAE7300E269DA /* Post.swift */; };
 		E8B5E33024046C9D009A5494 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B5E32F24046C9D009A5494 /* Session.swift */; };
+		E8BC2D7A25214F9000182C7B /* Stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BC2D7925214F9000182C7B /* Stories.swift */; };
 		E8CD1C9023D65EA600C5D668 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CD1C8F23D65EA600C5D668 /* FriendCell.swift */; };
 		E8CD1C9223D6AC0200C5D668 /* FriendCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CD1C9123D6AC0200C5D668 /* FriendCollectionVC.swift */; };
 		E8CD1C9423D6AF6100C5D668 /* FriendCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CD1C9323D6AF6000C5D668 /* FriendCVCell.swift */; };
@@ -75,6 +76,7 @@
 		E8DBDE4E24887C660093920C /* RealmCascadeDeletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DBDE4D24887C660093920C /* RealmCascadeDeletion.swift */; };
 		E8F6214F25195B8800C830A6 /* PostAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F6214E25195B8800C830A6 /* PostAttachment.swift */; };
 		E8F62175251A4F3200C830A6 /* OnlineStatusSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F62174251A4F3200C830A6 /* OnlineStatusSwitcher.swift */; };
+		E8FE44A9252126C6004146B7 /* ActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FE44A8252126C6004146B7 /* ActivityIndicatorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -134,6 +136,7 @@
 		E8954A9423B162B200A93209 /* UIColor+hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+hex.swift"; sourceTree = "<group>"; };
 		E89ACE3F246DAE7300E269DA /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		E8B5E32F24046C9D009A5494 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		E8BC2D7925214F9000182C7B /* Stories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stories.swift; sourceTree = "<group>"; };
 		E8CD1C8F23D65EA600C5D668 /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
 		E8CD1C9123D6AC0200C5D668 /* FriendCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionVC.swift; sourceTree = "<group>"; };
 		E8CD1C9323D6AF6000C5D668 /* FriendCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCVCell.swift; sourceTree = "<group>"; };
@@ -149,6 +152,7 @@
 		E8DBDE4D24887C660093920C /* RealmCascadeDeletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCascadeDeletion.swift; sourceTree = "<group>"; };
 		E8F6214E25195B8800C830A6 /* PostAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttachment.swift; sourceTree = "<group>"; };
 		E8F62174251A4F3200C830A6 /* OnlineStatusSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineStatusSwitcher.swift; sourceTree = "<group>"; };
+		E8FE44A8252126C6004146B7 /* ActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorView.swift; sourceTree = "<group>"; };
 		FA61B0E00B803FDF8FE9BD4C /* Pods_VKClientSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VKClientSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -264,6 +268,7 @@
 				E8757B1924278B57002F92A7 /* Photo.swift */,
 				E836E3B9246CB46D0053A065 /* User.swift */,
 				E8F62174251A4F3200C830A6 /* OnlineStatusSwitcher.swift */,
+				E8BC2D7925214F9000182C7B /* Stories.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -384,6 +389,7 @@
 				E8068CEC23E3A7890083FBBE /* AddStoryPhotoView.swift */,
 				E87BB7F323E8CE39006C14F6 /* LoadView.swift */,
 				E8D45F8925023A04005120D8 /* PostLinkView.swift */,
+				E8FE44A8252126C6004146B7 /* ActivityIndicatorView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -571,12 +577,14 @@
 				E8757B0B241BEE49002F92A7 /* CustomInteractionNavigationController.swift in Sources */,
 				E8068CEF23E4FE0C0083FBBE /* StoryCell.swift in Sources */,
 				E8757B21242C0708002F92A7 /* ProfileTableViewController.swift in Sources */,
+				E8BC2D7A25214F9000182C7B /* Stories.swift in Sources */,
 				E84FF665250425B700272297 /* PhotoService.swift in Sources */,
 				E8757B12241CECED002F92A7 /* Friend.swift in Sources */,
 				E8757B1E242844AA002F92A7 /* Data+PrettyPrintJSON.swift in Sources */,
 				E8954A9323B162A700A93209 /* Constants.swift in Sources */,
 				E8B5E33024046C9D009A5494 /* Session.swift in Sources */,
 				E8068CEB23E384C10083FBBE /* WhatsNewCell.swift in Sources */,
+				E8FE44A9252126C6004146B7 /* ActivityIndicatorView.swift in Sources */,
 				E87BB7F423E8CE39006C14F6 /* LoadView.swift in Sources */,
 				E8D4290A25193D3B00A326E9 /* PostPhoto.swift in Sources */,
 				E861CD9F23D274E700D3E9B3 /* FriendFactory.swift in Sources */,

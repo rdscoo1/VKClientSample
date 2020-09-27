@@ -28,7 +28,7 @@ class AddStoryCell: UICollectionViewCell {
         storyAuthor.text = "Roman"
         storyAuthor.textAlignment = .center
         storyAuthor.numberOfLines = 0
-        storyAuthor.textColor = Constants.Colors.vkDarkGray
+        storyAuthor.textColor = Constants.Colors.vkGray
         storyAuthor.font = .systemFont(ofSize: 12, weight: UIFont.Weight.regular)
 
         

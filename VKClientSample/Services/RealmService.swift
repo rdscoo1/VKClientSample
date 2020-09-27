@@ -38,6 +38,17 @@ class RealmService {
         }
     }
     
+    func writeToBackgroung(object: Object) {
+        DispatchQueue(label: "background").async {
+            autoreleasepool {
+                let realm = try! Realm()
+                realm.beginWrite()
+                realm.add(object)
+                try! realm.commitWrite()
+            }
+        }
+    }
+    
 //MARK: - Delete objects
     
     func removeObject(_ object: Object) {
@@ -127,3 +138,33 @@ class RealmService {
         }
     }
 }
+
+
+extension Realm {
+    func writeAsync<T: ThreadConfined>(obj: T, errorHandler: @escaping ((_ error : Swift.Error) -> Void) = { _ in return }, block: @escaping ((Realm, T?) -> Void)) {
+        let wrappedObj = ThreadSafeReference(to: obj)
+        DispatchQueue(label: "background").async {
+            autoreleasepool {
+                do {
+                    let realm = try Realm()
+                    let obj = realm.resolve(wrappedObj)
+
+                    try realm.write {
+                        block(realm, obj)
+                    }
+                }
+                catch {
+                    errorHandler(error)
+                }
+            }
+        }
+    }
+}
+
+//Use example
+
+//var readEmails = realm.objects(Email.self).filter("read == true")
+//
+//realm.asyncWrite(readEmails) { (realm, readEmails) in
+//    realm.delete(readEmails)
+//}

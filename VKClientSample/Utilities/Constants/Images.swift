@@ -34,4 +34,5 @@ extension UIImage {
     
     static let anya = UIImage(imageLiteralResourceName: "anya")
     static let postImage = UIImage(imageLiteralResourceName: "postImage")
+    static let loadingIcon = UIImage(imageLiteralResourceName: "loadingIcon")
 }

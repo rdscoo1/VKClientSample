@@ -17,6 +17,7 @@ enum ApiRequests: String {
     case groupsSearch = "groups.search"
     case photos = "photos.get"
     case newsfeed = "newsfeed.get"
+    case stories = "stories.get"
 }
 
 class VKApi {
@@ -53,10 +54,10 @@ class VKApi {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ VKApi error\n\(errorCode) \(errorMsg) ❌")
+                            print("❌ VKApi \(apiMethod.rawValue) error\n\(errorCode) \(errorMsg) ❌")
                         }
                     } catch {
-                        print("❌ Decoding failed\n\(error) ❌")
+                        print("❌ Decoding \(VKResponse<ResponseType>.self) failed\n\(error) ❌")
                     }
                 case let .failure(error):
                     print("❌ Alamofire error\n \(error) ❌")
@@ -88,10 +89,10 @@ class VKApi {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ VKApi error\n\(errorCode) \(errorMsg) ❌")
+                            print("❌ VKApi \(ApiRequests.groups.rawValue) error\n\(errorCode) \(errorMsg) ❌")
                         }
                     } catch {
-                        print("❌ Decoding failed\n\(error) ❌")
+                        print("❌ Decoding \(VKResponse<Community>.self) failed\n\(error) ❌")
                     }
                 case let .failure(error):
                     print("❌ Alamofire error\n \(error) ❌")
@@ -132,10 +133,10 @@ class VKApi {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ VKApi error ❌\n\(errorCode) \(errorMsg)")
+                            print("❌ VKApi \(ApiRequests.groupsSearch.rawValue) error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
-                        print("❌ Decoding failed ❌\n\(error) ")
+                        print("❌ Decoding \(VKResponse<Community>.self) failed ❌\n\(error) ")
                     }
                 case let .failure(error):
                     print("❌ Alamofire error ❌\n \(error)")
@@ -167,10 +168,10 @@ class VKApi {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ VKApi error ❌\n\(errorCode) \(errorMsg)")
+                            print("❌ VKApi \(ApiRequests.photos.rawValue) error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
-                        print("❌ Decoding failed ❌\n\(error) ")
+                        print("❌ Decoding \(VKResponse<Photo>.self) failed ❌\n\(error) ")
                     }
                 case let .failure(error):
                     print("❌ Alamofire error ❌\n \(error)")
@@ -200,17 +201,51 @@ class VKApi {
                             //                            print("📩📩📩 Methood \(ApiRequests.newsfeed.rawValue) response: 📩📩📩")
                             //                            print(responseData)
                             DispatchQueue.main.async {
-                                RealmService.manager.removePostsThanSave(Response.self, object: responseData)
                                 completion(responseData)
                             }
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ VKApi error ❌\n\(errorCode) \(errorMsg)")
+                            print("❌ VKApi \(ApiRequests.newsfeed.rawValue) error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
-                        print("❌ Decoding failed ❌\n\(error) ")
+                        print("❌ Decoding \(PostResponse.self) failed ❌\n\(error) ")
+                    }
+                case let .failure(error):
+                    print("❌ Alamofire error ❌\n \(error)")
+                }
+        }
+    }
+    
+    func getStories(completion: @escaping (StoryResponse) -> Void) {
+        let requestUrl = apiURL + ApiRequests.stories.rawValue
+        let params: Parameters = [
+            "access_token": Session.shared.token,
+            "v": "5.120",
+            "extended": 1
+        ]
+        
+        AF.request(requestUrl, method: .get, parameters: params)
+            .validate(statusCode: 200..<300)
+            .responseData(queue: .global(qos: .utility)) { response in
+                switch response.result {
+                case let .success(data):
+                    do {
+                        let decodedModel = try JSONDecoder().decode(StoriesResponse.self, from: data)
+                        if let responseData = decodedModel.response {
+                            //                            print("📩📩📩 Methood \(ApiRequests.stories.rawValue) response: 📩📩📩")
+                            DispatchQueue.main.async {
+                                completion(responseData)
+                            }
+                        } else if
+                            let errorCode = decodedModel.error?.errorCode,
+                            let errorMsg = decodedModel.error?.errorMessage
+                        {
+                            print("❌ VKApi \(ApiRequests.stories.rawValue) error ❌\n\(errorCode) \(errorMsg)")
+                        }
+                    } catch {
+                        print("❌ Decoding \(StoriesResponse.self) failed ❌\n\(error) ")
                     }
                 case let .failure(error):
                     print("❌ Alamofire error ❌\n \(error)")
@@ -242,10 +277,10 @@ class VKApi {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ VKApi error ❌\n\(errorCode) \(errorMsg)")
+                            print("❌ VKApi \(ApiRequests.userInfo.rawValue) error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
-                        print("❌ Decoding failed ❌\n\(error) ")
+                        print("❌ Decoding \(UserResponse.self) failed ❌\n\(error) ")
                     }
                 case let .failure(error):
                     print("❌ Alamofire error ❌\n \(error)")

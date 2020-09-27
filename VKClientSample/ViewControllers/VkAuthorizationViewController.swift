@@ -11,8 +11,9 @@ import WebKit
 import SnapKit
 
 class VkAuthorizationViewController: UIViewController {
-
+    
     private let webView = WKWebView()
+    private let activityIndicator = ActivityIndicatorView(image: .loadingIcon)
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -21,8 +22,12 @@ class VkAuthorizationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupWebView()
+        
+        activityIndicator.center = self.view.center
+        view.addSubview(activityIndicator)
+        
         configureWebView()
     }
     
@@ -37,13 +42,13 @@ class VkAuthorizationViewController: UIViewController {
             URLQueryItem(name: "client_id", value: "7334032"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
-            URLQueryItem(name: "scope", value: "270342"),
+            URLQueryItem(name: "scope", value: "270406"),
             URLQueryItem(name: "response_type", value: "token"),
             URLQueryItem(name: "v", value: "5.107")
         ]
         
         let request = URLRequest(url: urlComponents.url!)
-                
+        
         webView.load(request)
     }
     
@@ -60,8 +65,16 @@ class VkAuthorizationViewController: UIViewController {
     private func goToTabBar() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let tabBarController = storyboard.instantiateViewController(withIdentifier: "TabBarVC")
-
+        
         self.navigationController?.pushViewController(tabBarController, animated: true)
+    }
+    
+    func showActivityIndicator(show: Bool) {
+        if show {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
     }
 }
 
@@ -85,12 +98,24 @@ extension VkAuthorizationViewController: WKNavigationDelegate {
                 let value = param[1] //получаем значения параметров
                 dict[key] = value
                 return dict
-        }
+            }
         
         Session.shared.token = params["access_token"] ?? ""
         Session.shared.userId = params["user_id"] ?? ""
-               
+        
         goToTabBar()
         decisionHandler(.cancel)
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        activityIndicator.stopAnimating()
+    }
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        activityIndicator.startAnimating()
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        activityIndicator.stopAnimating()
     }
 }

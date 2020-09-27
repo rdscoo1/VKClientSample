@@ -83,8 +83,9 @@ class PostCell: UITableViewCell {
     //MARK: - Setting UI of elements
     
     private func setupUI() {
-        topSeparator.backgroundColor = .lightGray
-        topSeparator.alpha = 0.3
+        backgroundColor = Constants.Colors.theme
+        
+        topSeparator.backgroundColor = Constants.Colors.newsSeparator
         
         postAuthorImage.layer.cornerRadius = 24
         postAuthorImage.layer.masksToBounds = true
@@ -96,7 +97,7 @@ class PostCell: UITableViewCell {
         }
         postAuthor.font = .systemFont(ofSize: 14, weight: UIFont.Weight.medium)
         
-        publishDate.textColor = Constants.Colors.vkDarkGray
+        publishDate.textColor = Constants.Colors.vkGray
         publishDate.font = .systemFont(ofSize: 13, weight: UIFont.Weight.regular)
         
         moreButton.setImage(.moreButton, for: .normal)

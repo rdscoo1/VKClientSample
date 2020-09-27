@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 enum SectionTypes: Int, CaseIterable {
     case whatsNew = 0
@@ -28,6 +29,7 @@ class NewsTableVC: UITableViewController {
     private let vkApi = VKApi()
     var photoService: PhotoService?
     private var userPhotoUrl = ""
+    private var userName = ""
     private var nextFrom = ""
     private var isLoading = false
     
@@ -36,6 +38,7 @@ class NewsTableVC: UITableViewController {
         
         photoService = PhotoService.init(container: tableView)
         configureTableView()
+        readFromRealm()
         requestFromApi()
         configureRefreshControl()
     }
@@ -63,15 +66,21 @@ class NewsTableVC: UITableViewController {
         self.vkApi.getNewsfeed(nextBatch: nil, startTime: nil) { [weak self] items in
             self?.nextFrom = items.nextFrom ?? ""
             self?.posts = items
-//            print("❗️❗️❗️ \(items.items)")
+            //            print("❗️❗️❗️ \(items.items)")
             self?.tableView.reloadData()
         }
     }
     
+    private func readFromRealm() {
+        let user = RealmService.manager.getAllObjects(of: User.self)
+        userPhotoUrl = user[0].imageUrl ?? ""
+        userName = user[0].firstName
+    }
+    
     private func configureRefreshControl() {
         refreshControl = UIRefreshControl()
-        refreshControl?.tintColor = Constants.Colors.vkDarkGray
-        refreshControl?.attributedTitle = NSMutableAttributedString(string: "Refreshing...", attributes: [.foregroundColor: Constants.Colors.vkDarkGray])
+        refreshControl?.tintColor = Constants.Colors.vkGray
+        refreshControl?.attributedTitle = NSMutableAttributedString(string: "Refreshing...", attributes: [.foregroundColor: Constants.Colors.vkGray])
         refreshControl?.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
     }
@@ -89,7 +98,7 @@ class NewsTableVC: UITableViewController {
             guard items.items.count > 0 else {
                 return
             }
-//            self.posts?.addToBeggining(news: items)
+            //            self.posts?.addToBeggining(news: items)
             
             let indexPathes = items.items.enumerated().map { offset, _ in
                 IndexPath(row: offset, section: SectionTypes.post.rawValue)
@@ -122,10 +131,12 @@ extension NewsTableVC {
         switch SectionTypes.getSection(indexPath.section) {
         case .whatsNew:
             guard let whatsNewCell = tableView.dequeueReusableCell(withIdentifier: WhatsNewCell.reuseId, for: indexPath) as? WhatsNewCell else { return UITableViewCell() }
-                whatsNewCell.profilePhoto.image = photoService?.photo(atIndexpath: indexPath, byUrl: userPhotoUrl)
+            whatsNewCell.profilePhoto.image = photoService?.photo(atIndexpath: indexPath, byUrl: userPhotoUrl)
             return whatsNewCell
         case .stories:
             guard let storiesCell = tableView.dequeueReusableCell(withIdentifier: StoriesCell.reuseId, for: indexPath) as? StoriesCell else { return UITableViewCell() }
+            storiesCell.userPhoto = userPhotoUrl
+            storiesCell.userName = userName
             return storiesCell
         case .post:
             guard let postCell = tableView.dequeueReusableCell(withIdentifier: PostCell.reuseId, for: indexPath) as? PostCell else { return UITableViewCell() }
@@ -167,7 +178,7 @@ extension NewsTableVC: UITableViewDataSourcePrefetching {
         else { return }
         
         if maxRow > previousPostQuntity - 5,
-            isLoading == false {
+           isLoading == false {
             isLoading = true
             
             vkApi.getNewsfeed(nextBatch: nextFrom, startTime: nil) { [weak self] items in
@@ -179,7 +190,7 @@ extension NewsTableVC: UITableViewDataSourcePrefetching {
                 print("❗️New Posts❗️ \(items.items)")
                 var indexPathes: [IndexPath] = []
                 self.nextFrom = items.nextFrom ?? ""
-//                self.posts?.addToEnd(news: items)
+                //                self.posts?.addToEnd(news: items)
                 for i in oldIndex..<(self.posts?.items.count)! {
                     indexPathes.append(IndexPath(row: i, section: SectionTypes.post.rawValue))
                 }
