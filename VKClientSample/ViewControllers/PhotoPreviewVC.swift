@@ -15,7 +15,7 @@ class PhotoPreviewVC: UIViewController {
     private var isToolBarOpened: Bool = false
     
     private let currentPhoto = UIImageView()
-    var friendPreviewPhotos = [String?]()
+    var friendPreviewPhotos = [String]()
     var friendPhotosQuantity = Int()
     var selectedPhoto = Int()
     
@@ -52,8 +52,12 @@ class PhotoPreviewVC: UIViewController {
         currentPhoto.clipsToBounds = true
         currentPhoto.isUserInteractionEnabled = true
         
-        if let photoUrl = URL(string: friendPreviewPhotos[selectedPhoto]!) {
-            currentPhoto.kf.setImage(with: photoUrl)
+        if let photoUrl = URL(string: friendPreviewPhotos[selectedPhoto]) {
+            currentPhoto.kf.indicatorType = .activity
+            currentPhoto.kf.setImage(with: photoUrl,
+                                     options: [
+                                         .transition(.fade(1)),
+                                     ])
         }
         
         photosPreviewNavBar.alpha = 0.0
@@ -138,7 +142,7 @@ extension PhotoPreviewVC: UIGestureRecognizerDelegate {
             case UISwipeGestureRecognizer.Direction.left:
                 if selectedPhoto != friendPreviewPhotos.count - 1 {
                     selectedPhoto += 1
-                    if let photoUrl = URL(string: friendPreviewPhotos[selectedPhoto]!) {
+                    if let photoUrl = URL(string: friendPreviewPhotos[selectedPhoto]) {
                         currentPhoto.kf.setImage(with: photoUrl)
                     }
                     photosPreviewNavBar.setNavBarTitle(selectedPhotoNumber: selectedPhoto, photoQuantity: friendPhotosQuantity)
@@ -146,7 +150,7 @@ extension PhotoPreviewVC: UIGestureRecognizerDelegate {
             case UISwipeGestureRecognizer.Direction.right:
                 if selectedPhoto != 0 {
                     selectedPhoto -= 1
-                    if let photoUrl = URL(string: friendPreviewPhotos[selectedPhoto]!) {
+                    if let photoUrl = URL(string: friendPreviewPhotos[selectedPhoto]) {
                         currentPhoto.kf.setImage(with: photoUrl)
                     }
                     photosPreviewNavBar.setNavBarTitle(selectedPhotoNumber: selectedPhoto, photoQuantity: friendPhotosQuantity)

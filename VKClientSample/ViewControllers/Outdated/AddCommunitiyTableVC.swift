@@ -58,7 +58,7 @@ class AddCommunitiyTableVC: UITableViewController {
         let community = communities[indexPath.row]
         cell.communityTitle.text = community.name
         cell.communityDescription.text = community.activity
-        if let imageUrl = URL(string: community.photo50) {
+        if let imageUrl = URL(string: community.imageUrl ?? "") {
             cell.communityPhoto.kf.setImage(with: imageUrl)
         }
         

@@ -47,7 +47,7 @@ class ProfileTVCell: UITableViewCell {
         
         online.text = "online"
         online.font = .systemFont(ofSize: 15)
-        online.textColor = Constants.Colors.vkDarkGray
+        online.textColor = Constants.Colors.vkGray
     }
     
     private func setConstraints() {

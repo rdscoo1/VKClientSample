@@ -11,7 +11,7 @@ import RealmSwift
 
 class CommunitiesVC: UIViewController {
     
-    var notificationToken: NotificationToken?
+    private var notificationToken: NotificationToken?
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     private var communities: Results<Community>?

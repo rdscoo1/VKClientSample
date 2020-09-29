@@ -15,7 +15,7 @@ class FriendsTableVC: UITableViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     
     private var friends = [Friend]()
-    var friendsInSection = [FriendSection]()
+    private var friendsInSection = [FriendSection]()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -27,6 +27,7 @@ class FriendsTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.register(FriendCell.self, forCellReuseIdentifier: FriendCell.reuseId)
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 64
         searchBar.delegate = self
@@ -72,7 +73,7 @@ class FriendsTableVC: UITableViewController {
         }
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
-        self.navigationController!.navigationBar.tintColor = Constants.Colors.vkBlue
+        self.navigationController?.navigationBar.tintColor = Constants.Colors.vkBlue
     }
 }
 
@@ -94,9 +95,11 @@ extension FriendsTableVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell") as! FriendCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FriendCell.reuseId) as? FriendCell else {
+            return UITableViewCell()
+        }
         let friend = friendsInSection[indexPath.section].items[indexPath.row]
-        cell.configure(with: friend)
+        cell.configure(with: friend, onlineStatus: friend.onlineStatus)
         
         return cell
     }

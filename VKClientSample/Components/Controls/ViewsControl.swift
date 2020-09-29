@@ -10,8 +10,8 @@ import UIKit
 
 class ViewsControl: UIView {
     
-    let viewIcon = UIImageView(image: .eye)
-    let viewCounterLabel = UILabel()
+    private let viewIcon = UIImageView(image: .eye)
+    private let viewCounterLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -10,8 +10,8 @@ import UIKit
 
 class CommentControl: UIControl {
     
-    let commentImageView = UIImageView(image: .commentButton)
-    let commentCounterLabel = UILabel()
+    private let commentImageView = UIImageView(image: .commentButton)
+    private let commentCounterLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

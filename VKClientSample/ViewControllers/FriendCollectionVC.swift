@@ -10,12 +10,11 @@ import UIKit
 
 class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    let vkApi = VKApi()
-    
+    private let vkApi = VKApi()
     var friendId = Int()
-    var friendPhotos = [Photo]()
-    var photosUrlsLowRes = [String?]()
-    var photosUrlsHighRes = [String?]()
+    private var friendPhotos = [Photo]()
+    private var photosUrlsLowRes = [String?]()
+    private var photosUrlsHighRes = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,19 +34,19 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
     
     private func handleArray(of array: [Photo]) {
         photosUrlsLowRes = [String?]()
-        photosUrlsHighRes = [String?]()
+        photosUrlsHighRes = [String]()
         array.forEach {
             let photoLinklowRes = $0.sizes.first(where: { $0.type == "o" })?.url
             self.photosUrlsLowRes.append(photoLinklowRes)
             
             let photoLinkhighRes = $0.sizes.first(where: { $0.type == "x" })?.url
-            self.photosUrlsHighRes.append(photoLinkhighRes)
+            self.photosUrlsHighRes.append(photoLinkhighRes ?? "")
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
-        self.navigationController!.navigationBar.tintColor = Constants.Colors.vkBlue
+        self.navigationController?.navigationBar.tintColor = Constants.Colors.vkBlue
     }
 }
 
@@ -65,6 +64,7 @@ extension FriendCollectionVC {
         }
         
         if let photoUrl = URL(string: friendPhotos) {
+            cell.friendPhoto.kf.indicatorType = .activity
             cell.friendPhoto.kf.setImage(with: photoUrl)
         }
         
@@ -72,7 +72,9 @@ extension FriendCollectionVC {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "PhotoPreviewVC") as! PhotoPreviewVC
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "PhotoPreviewVC") as? PhotoPreviewVC else {
+            return
+        }
         
         vc.friendPreviewPhotos = photosUrlsHighRes
         vc.selectedPhoto = indexPath.row

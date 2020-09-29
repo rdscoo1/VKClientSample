@@ -48,7 +48,7 @@ class CommunitiesTableVC: UITableViewController {
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {        
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
-        self.navigationController!.navigationBar.tintColor = Constants.Colors.vkBlue
+        self.navigationController?.navigationBar.tintColor = Constants.Colors.vkBlue
     }
 }
 
@@ -65,7 +65,7 @@ extension CommunitiesTableVC {
         let community = communities[indexPath.row]
         cell.communityTitle.text = community.name
         cell.communityDescription.text = community.activity
-        if let imageUrl = URL(string: community.photo50) {
+        if let imageUrl = URL(string: community.imageUrl ?? "") {
             cell.communityPhoto.kf.setImage(with: imageUrl)
         }
         

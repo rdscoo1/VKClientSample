@@ -10,10 +10,13 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    //MARK: - IB Outlets
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    
+    //MARK: - Private Properties
     private let secureTextEntryButton = UIButton()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

@@ -10,9 +10,8 @@ import UIKit
 
 class RepostControl: UIControl {
     
-    let repostImageView = UIImageView(image: .shareButton)
-//    let repostCounterLabel = UILabel(frame: CGRect(x: 28, y: 0, width: 40, height: 25))
-    let repostCounterLabel = UILabel()
+    private let repostImageView = UIImageView(image: .shareButton)
+    private let repostCounterLabel = UILabel()
 
     
     override init(frame: CGRect) {

@@ -10,9 +10,9 @@ import UIKit
 
 class PhotoPreviewNavBarView: UIView {
 
-    let backButton = UIButton()
-    let photosQuantityLabel = UILabel()
-    let moreButton = UIButton()
+    private let backButton = UIButton()
+    private let photosQuantityLabel = UILabel()
+    private let moreButton = UIButton()
     
     init() {
         super.init(frame: .zero)

@@ -1,5 +1,5 @@
 //
-//  PostFooter.swift
+//  PostStatistics.swift
 //  VKClientSample
 //
 //  Created by Roman Khodukin on 28.01.2020.
@@ -8,13 +8,13 @@
 
 import UIKit
 
-class PostFooter: UIView {
+class PostStatistics: UIView {
     
-    let likeControl = LikeControl()
-    let commentControl = CommentControl()
-    let shareControl = RepostControl()
-    let viewsControl = ViewsControl()
-    let containerStackView = UIStackView()
+    private let likeControl = LikeControl()
+    private let commentControl = CommentControl()
+    private let shareControl = RepostControl()
+    private let viewsControl = ViewsControl()
+    private let containerStackView = UIStackView()
     
     init() {
         super.init(frame: .zero)

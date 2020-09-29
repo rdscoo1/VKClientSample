@@ -9,7 +9,7 @@
 import UIKit
 
 class StoryCell: UICollectionViewCell {
-    let storyContainerView = UIView()
+    private let storyContainerView = UIView()
     let storyImageView = UIImageView()
     let storyAuthor = UILabel()
     
@@ -23,11 +23,6 @@ class StoryCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUI()
-    }
-    
-    func setStories(story: FriendFactory) {
-        storyImageView.image = UIImage(imageLiteralResourceName: story.avatar)
-        storyAuthor.text = "\(story.name) \(story.surname)"
     }
     
     private func setupUI() {

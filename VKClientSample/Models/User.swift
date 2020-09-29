@@ -18,21 +18,19 @@ struct UserResponse: Decodable {
     dynamic var firstName: String = ""
     dynamic var lastName: String = ""
     dynamic var status: String? = nil
-    dynamic var photo100: String? = nil
+    dynamic var imageUrl: String? = nil
+    
+    var name: String { return "\(lastName) \(firstName)" }
     
     enum CodingKeys: String, CodingKey {
         case id
         case firstName = "first_name"
         case lastName = "last_name"
         case status
-        case photo100 = "photo_100"
+        case imageUrl = "photo_100"
     }
     
     override static func primaryKey() -> String? { // По `id`  при совпадении: перезаписывает, а не дублирует
         return "id"
-    }
-    
-    func getFullName() -> String {
-        "\(self.firstName) \(self.lastName)"
     }
 }

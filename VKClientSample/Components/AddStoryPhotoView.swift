@@ -11,10 +11,10 @@ import UIKit
 class AddStoryPhotoView: UIView {
 
     let photoImageView = UIImageView()
-    let plusImageViewContainer = UIView()
-    let plusImageView = UIImageView(image: .plusIconToAddStory)
-    let photoSize: CGFloat = 56
-    let plusIconSize: CGFloat = 20
+    private let plusImageViewContainer = UIView()
+    private let plusImageView = UIImageView(image: .plusIconToAddStory)
+    private let photoSize: CGFloat = 56
+    private let plusIconSize: CGFloat = 20
 
     
     override init(frame: CGRect) {
@@ -34,7 +34,11 @@ class AddStoryPhotoView: UIView {
         photoImageView.layer.masksToBounds = true
         photoImageView.contentMode = .scaleAspectFill
         
-        plusImageViewContainer.backgroundColor = .white
+        if #available(iOS 13.0, *) {
+            plusImageViewContainer.backgroundColor = .systemBackground
+        } else {
+            plusImageViewContainer.backgroundColor = .white
+        }
         plusImageViewContainer.layer.cornerRadius = plusIconSize / 2
         plusImageViewContainer.layer.masksToBounds = true
         

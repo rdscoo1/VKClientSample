@@ -13,7 +13,7 @@ class ShadowPhotoView: UIView {
     @IBInspectable var shadowColor: UIColor = .black
     @IBInspectable var shadowOpacity: Float = 0.5
     
-    let friendPhoto = UIImageView()
+    private let friendPhoto = UIImageView()
     
     init(image: UIImage, size: CGFloat) {
         super.init(frame: .zero)

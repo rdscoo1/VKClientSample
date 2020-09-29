@@ -11,12 +11,13 @@ import Kingfisher
 
 class StoriesCell: UITableViewCell {
     
-    let vkApi = VKApi()
-    let topSeparator = UIView()
-    let containerView = UIView()
-    var storiesCollectionView: UICollectionView!
-    var items: [FriendFactory] = FriendFactory.friends
+    private let vkApi = VKApi()
+    private let topSeparator = UIView()
+    private let containerView = UIView()
+    private var storiesCollectionView: UICollectionView!
+    private var stories: [StoriesCommunity]?
     var userPhoto: String? = ""
+    var userName: String? = ""
     
     var layout: UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
@@ -32,21 +33,21 @@ class StoriesCell: UITableViewCell {
         
         storiesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
-        topSeparator.backgroundColor = .lightGray
-        topSeparator.alpha = 0.3
+        backgroundColor = Constants.Colors.theme
+        topSeparator.backgroundColor = Constants.Colors.newsSeparator
         
         containerView.addSubview(storiesCollectionView)
         addSubview(topSeparator)
         addSubview(containerView)
         
+        vkApi.getStories { stories in
+            self.stories = stories.groups
+            self.storiesCollectionView.reloadData()
+        }
+        
         configureConstraints()
         setupCollectionView()
-        
-        vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
-            let user = RealmService.manager.getAllObjects(of: User.self)
-            self?.userPhoto = user[0].photo100
-            self?.storiesCollectionView.reloadData()
-        }
+        self.alpha = 0.0
     }
     
     required init?(coder: NSCoder) {
@@ -90,7 +91,7 @@ class StoriesCell: UITableViewCell {
 
 extension StoriesCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -101,14 +102,17 @@ extension StoriesCell: UICollectionViewDataSource {
             if let photoUrl = URL(string: userPhoto!) {
                 addStoryCell.addStoryPhotoView.photoImageView.kf.setImage(with: photoUrl)
             }
+            addStoryCell.storyAuthor.text = userName
             
             return addStoryCell
         } else {
             guard let storiesCell = collectionView.dequeueReusableCell(withReuseIdentifier: StoryCell.reuseId, for: indexPath) as? StoryCell else {
                 return UICollectionViewCell()
             }
-            let story = items[indexPath.row]
-            storiesCell.setStories(story: story)
+            let story = stories?[indexPath.row]
+            print(stories?.count)
+            storiesCell.storyAuthor.text = story?.name
+            storiesCell.storyImageView.kf.setImage(with: URL(string: story?.imageUrl ?? ""))
             return storiesCell
         }
 

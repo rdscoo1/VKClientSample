@@ -29,8 +29,10 @@ extension UIImage {
     static let plusIconToAddStory = UIImage(imageLiteralResourceName: "plusIconToAddStory")
     static let writePost = UIImage(imageLiteralResourceName: "writePost")
     static let camera = UIImage(imageLiteralResourceName: "camera")
+    static let online = UIImage(imageLiteralResourceName: "onlineDot")
+    static let onlineMobile = UIImage(imageLiteralResourceName: "onlineMobile")
     
-    static let helen = UIImage(imageLiteralResourceName: "helen")
-    static let john = UIImage(imageLiteralResourceName: "john")
+    static let anya = UIImage(imageLiteralResourceName: "anya")
     static let postImage = UIImage(imageLiteralResourceName: "postImage")
+    static let loadingIcon = UIImage(imageLiteralResourceName: "loadingIcon")
 }

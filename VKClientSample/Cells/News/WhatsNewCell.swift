@@ -10,11 +10,11 @@ import UIKit
 
 class WhatsNewCell: UITableViewCell {
     
-    let topSeparator = UIView()
+    private let topSeparator = UIView()
     let profilePhoto = UIImageView()
-    let whatsNewTF = UITextField()
-    let addPhotoButton = UIButton()
-    let startStreamButton = UIButton()
+    private let whatsNewTF = UITextField()
+    private let addPhotoButton = UIButton()
+    private let startStreamButton = UIButton()
     
     static let reuseId = "WhatsNewCell"
     
@@ -28,25 +28,26 @@ class WhatsNewCell: UITableViewCell {
     }
     
     private func setupUI() {
+        backgroundColor = Constants.Colors.theme
+        
         profilePhoto.layer.cornerRadius = 16
         profilePhoto.layer.masksToBounds = true
         
-        topSeparator.backgroundColor = .lightGray
-        topSeparator.alpha = 0.3
+        topSeparator.backgroundColor = Constants.Colors.newsSeparator
         
         let attributes = NSAttributedString(string: "What's new?",
-                                            attributes: [NSAttributedString.Key.foregroundColor: Constants.Colors.vkDarkGray,
-                                            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)])
+                                            attributes: [NSAttributedString.Key.foregroundColor: Constants.Colors.vkGray,
+                                                         NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)])
         whatsNewTF.attributedPlaceholder = attributes
-        whatsNewTF.backgroundColor = Constants.Colors.vkLightGray
+        whatsNewTF.backgroundColor = Constants.Colors.textField
         whatsNewTF.layer.cornerRadius = 8
         whatsNewTF.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: self.frame.height))
         whatsNewTF.leftViewMode = .always
         
         addPhotoButton.setImage(.photoIcon, for: .normal)
-        addPhotoButton.tintColor = .lightGray
+        addPhotoButton.tintColor = Constants.Colors.vkGray
         startStreamButton.setImage(.streamIcon, for: .normal)
-        startStreamButton.tintColor = .lightGray
+        startStreamButton.tintColor = Constants.Colors.vkGray
         
         addSubview(topSeparator)
         addSubview(profilePhoto)
