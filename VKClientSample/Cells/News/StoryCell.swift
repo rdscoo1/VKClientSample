@@ -33,6 +33,7 @@ class StoryCell: UICollectionViewCell {
         storyAuthor.textAlignment = .center
         storyAuthor.numberOfLines = 0
         storyAuthor.textColor = Constants.Colors.vkBlue
+        storyAuthor.backgroundColor = Constants.Colors.theme
         storyAuthor.font = .systemFont(ofSize: 12, weight: UIFont.Weight.medium)
         
         storyContainerView.layer.cornerRadius = 32

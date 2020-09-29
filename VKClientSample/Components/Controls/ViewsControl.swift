@@ -31,6 +31,7 @@ class ViewsControl: UIView {
     
     private func setupUI() {
         viewCounterLabel.textColor = UIColor(hex: "#67707a")
+        viewCounterLabel.backgroundColor = Constants.Colors.theme
         viewCounterLabel.font = .systemFont(ofSize: 12, weight: .medium)
         
         viewIcon.tintColor = UIColor(hex: "#909399")

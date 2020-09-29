@@ -49,15 +49,15 @@ class NewsTableVC: UITableViewController {
         tableView.register(PostCell.self, forCellReuseIdentifier: PostCell.reuseId)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.prefetchDataSource = self
+//        tableView.prefetchDataSource = self
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
     }
     
     private func requestFromApi() {
         vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
-            let user = RealmService.manager.getAllObjects(of: User.self)
-            self?.userPhotoUrl = user[0].imageUrl ?? ""
+            let user = RealmService.manager.getAllObjects(of: User.self).first(where: { $0.id == Int(Session.shared.userId) })
+            self?.userPhotoUrl = user?.imageUrl ?? ""
             self?.tableView.reloadRows(at: [IndexPath(row: 0, section: SectionTypes.whatsNew.rawValue),
                                             IndexPath(row: 0, section: SectionTypes.stories.rawValue)],
                                        with: .automatic)
@@ -71,10 +71,11 @@ class NewsTableVC: UITableViewController {
         }
     }
     
+    
     private func readFromRealm() {
-        let user = RealmService.manager.getAllObjects(of: User.self)
-        userPhotoUrl = user[0].imageUrl ?? ""
-        userName = user[0].firstName
+        let user = RealmService.manager.getAllObjects(of: User.self).first(where: { $0.id == Int(Session.shared.userId) })
+        userPhotoUrl = user?.imageUrl ?? ""
+        userName = user?.firstName ?? ""
     }
     
     private func configureRefreshControl() {
@@ -169,36 +170,36 @@ extension NewsTableVC {
 }
 
 // MARK: - TableView Prefetching
-
-extension NewsTableVC: UITableViewDataSourcePrefetching {
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        guard
-            let maxRow = indexPaths.map({ $0.row }).max(),
-            let previousPostQuntity = posts?.items.count
-        else { return }
-        
-        if maxRow > previousPostQuntity - 5,
-           isLoading == false {
-            isLoading = true
-            
-            vkApi.getNewsfeed(nextBatch: nextFrom, startTime: nil) { [weak self] items in
-                guard
-                    let self = self,
-                    items.items.count > 0,
-                    let oldIndex = self.posts?.items.count
-                else { return }
-                print("❗️New Posts❗️ \(items.items)")
-                var indexPathes: [IndexPath] = []
-                self.nextFrom = items.nextFrom ?? ""
-                //                self.posts?.addToEnd(news: items)
-                for i in oldIndex..<(self.posts?.items.count)! {
-                    indexPathes.append(IndexPath(row: i, section: SectionTypes.post.rawValue))
-                }
-                
-                self.tableView.insertRows(at: indexPathes, with: .automatic)
-                
-                self.isLoading = false
-            }
-        }
-    }
-}
+//
+//extension NewsTableVC: UITableViewDataSourcePrefetching {
+//    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+//        guard
+//            let maxRow = indexPaths.map({ $0.row }).max(),
+//            let previousPostQuntity = posts?.items.count
+//        else { return }
+//
+//        if maxRow > previousPostQuntity - 5,
+//           isLoading == false {
+//            isLoading = true
+//
+//            vkApi.getNewsfeed(nextBatch: nextFrom, startTime: nil) { [weak self] items in
+//                guard
+//                    let self = self,
+//                    items.items.count > 0,
+//                    let oldIndex = self.posts?.items.count
+//                else { return }
+//                print("❗️New Posts❗️ \(items.items)")
+//                var indexPathes: [IndexPath] = []
+//                self.nextFrom = items.nextFrom ?? ""
+//                //                self.posts?.addToEnd(news: items)
+//                for i in oldIndex..<(self.posts?.items.count)! {
+//                    indexPathes.append(IndexPath(row: i, section: SectionTypes.post.rawValue))
+//                }
+//
+//                self.tableView.insertRows(at: indexPathes, with: .automatic)
+//
+//                self.isLoading = false
+//            }
+//        }
+//    }
+//}

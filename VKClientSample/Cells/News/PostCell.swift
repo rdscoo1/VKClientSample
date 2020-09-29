@@ -96,25 +96,28 @@ class PostCell: UITableViewCell {
             postAuthor.textColor = .black
         }
         postAuthor.font = .systemFont(ofSize: 14, weight: UIFont.Weight.medium)
+        postAuthor.backgroundColor = Constants.Colors.theme
         
         publishDate.textColor = Constants.Colors.vkGray
+        publishDate.backgroundColor = Constants.Colors.theme
         publishDate.font = .systemFont(ofSize: 13, weight: UIFont.Weight.regular)
         
         moreButton.setImage(.moreButton, for: .normal)
         
         postText.numberOfLines = 0
+        postText.backgroundColor = Constants.Colors.theme
         
         postImageView.contentMode = .scaleAspectFit
         postImageView.clipsToBounds = true
         
-        addSubview(topSeparator)
-        addSubview(postAuthorImage)
-        addSubview(postAuthor)
-        addSubview(publishDate)
-        addSubview(moreButton)
-        addSubview(postText)
-        addSubview(postImageView)
-        addSubview(postStatistics)
+        contentView.addSubview(topSeparator)
+        contentView.addSubview(postAuthorImage)
+        contentView.addSubview(postAuthor)
+        contentView.addSubview(publishDate)
+        contentView.addSubview(moreButton)
+        contentView.addSubview(postText)
+        contentView.addSubview(postImageView)
+        contentView.addSubview(postStatistics)
         
         configureConstraints()
     }
@@ -132,13 +135,13 @@ class PostCell: UITableViewCell {
         postImageViewHeightConstraint = postImageView.heightAnchor.constraint(equalToConstant: 288)
         
         NSLayoutConstraint.activate([
-            topSeparator.topAnchor.constraint(equalTo: topAnchor),
-            topSeparator.leadingAnchor.constraint(equalTo: leadingAnchor),
-            topSeparator.trailingAnchor.constraint(equalTo: trailingAnchor),
+            topSeparator.topAnchor.constraint(equalTo: contentView.topAnchor),
+            topSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            topSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             topSeparator.heightAnchor.constraint(equalToConstant: 10),
             
             postAuthorImage.topAnchor.constraint(equalTo: topSeparator.bottomAnchor, constant: 8),
-            postAuthorImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            postAuthorImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             postAuthorImage.heightAnchor.constraint(equalToConstant: 48),
             postAuthorImage.widthAnchor.constraint(equalToConstant: 48),
             
@@ -154,19 +157,19 @@ class PostCell: UITableViewCell {
             moreButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
             postText.topAnchor.constraint(equalTo: postAuthorImage.bottomAnchor, constant: 8),
-            postText.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
-            postText.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
+            postText.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            postText.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
             postImageView.topAnchor.constraint(equalTo: postText.bottomAnchor, constant: 8),
-            postImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            postImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            postImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            postImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             postImageView.bottomAnchor.constraint(equalTo: postStatistics.topAnchor),
             postImageViewHeightConstraint,
             
-            postStatistics.leadingAnchor.constraint(equalTo: leadingAnchor),
-            postStatistics.trailingAnchor.constraint(equalTo: trailingAnchor),
+            postStatistics.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            postStatistics.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             {
-                let c = postStatistics.bottomAnchor.constraint(equalTo: bottomAnchor)
+                let c = postStatistics.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
                 c.priority = .defaultHigh
                 return c
             }(),
