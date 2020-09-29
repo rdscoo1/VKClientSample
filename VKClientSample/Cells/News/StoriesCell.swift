@@ -11,8 +11,9 @@ import Kingfisher
 
 class StoriesCell: UITableViewCell {
     
+    static let reuseId = "StoriesCell"
+    
     private let vkApi = VKApi()
-    private let topSeparator = UIView()
     private let containerView = UIView()
     private var storiesCollectionView: UICollectionView!
     private var stories: [StoriesCommunity]?
@@ -25,8 +26,6 @@ class StoriesCell: UITableViewCell {
         layout.scrollDirection = .horizontal
         return layout
     }
-    
-    static let reuseId = "StoriesCell"
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -34,11 +33,9 @@ class StoriesCell: UITableViewCell {
         storiesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
         backgroundColor = Constants.Colors.theme
-        topSeparator.backgroundColor = Constants.Colors.newsSeparator
         
         containerView.addSubview(storiesCollectionView)
-        addSubview(topSeparator)
-        addSubview(containerView)
+        contentView.addSubview(containerView)
         
         vkApi.getStories { stories in
             self.stories = stories.groups
@@ -47,7 +44,6 @@ class StoriesCell: UITableViewCell {
         
         configureConstraints()
         setupCollectionView()
-        self.alpha = 0.0
     }
     
     required init?(coder: NSCoder) {
@@ -63,17 +59,9 @@ class StoriesCell: UITableViewCell {
     }
     
     private func configureConstraints() {
-        topSeparator.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            topSeparator.topAnchor.constraint(equalTo: topAnchor),
-            topSeparator.leadingAnchor.constraint(equalTo: leadingAnchor),
-            topSeparator.trailingAnchor.constraint(equalTo: trailingAnchor),
-            topSeparator.heightAnchor.constraint(equalToConstant: 10)
-        ])
-        
         containerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: topSeparator.bottomAnchor),
+            containerView.topAnchor.constraint(equalTo: topAnchor),
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
             containerView.bottomAnchor.constraint(equalTo: bottomAnchor)
@@ -89,9 +77,9 @@ class StoriesCell: UITableViewCell {
     }
 }
 
-extension StoriesCell: UICollectionViewDataSource {
+extension StoriesCell: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return stories?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -110,12 +98,10 @@ extension StoriesCell: UICollectionViewDataSource {
                 return UICollectionViewCell()
             }
             let story = stories?[indexPath.row]
-            print(stories?.count)
             storiesCell.storyAuthor.text = story?.name
             storiesCell.storyImageView.kf.setImage(with: URL(string: story?.imageUrl ?? ""))
             return storiesCell
         }
-
     }
 }
 

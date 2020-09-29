@@ -10,8 +10,8 @@ import UIKit
 import Kingfisher
 
 enum SectionTypes: Int, CaseIterable {
-    case whatsNew = 0
-    case stories = 1
+    case stories = 0
+    case whatsNew = 1
     case post = 2
     
     static func numberOfSections() -> Int {
@@ -118,9 +118,9 @@ extension NewsTableVC {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch SectionTypes.getSection(section) {
-        case .whatsNew:
-            return 1
         case .stories:
+            return 1
+        case .whatsNew:
             return 1
         case .post:
             return posts?.items.count ?? 0
@@ -129,15 +129,15 @@ extension NewsTableVC {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch SectionTypes.getSection(indexPath.section) {
-        case .whatsNew:
-            guard let whatsNewCell = tableView.dequeueReusableCell(withIdentifier: WhatsNewCell.reuseId, for: indexPath) as? WhatsNewCell else { return UITableViewCell() }
-            whatsNewCell.profilePhoto.image = photoService?.photo(atIndexpath: indexPath, byUrl: userPhotoUrl)
-            return whatsNewCell
         case .stories:
             guard let storiesCell = tableView.dequeueReusableCell(withIdentifier: StoriesCell.reuseId, for: indexPath) as? StoriesCell else { return UITableViewCell() }
             storiesCell.userPhoto = userPhotoUrl
             storiesCell.userName = userName
             return storiesCell
+        case .whatsNew:
+            guard let whatsNewCell = tableView.dequeueReusableCell(withIdentifier: WhatsNewCell.reuseId, for: indexPath) as? WhatsNewCell else { return UITableViewCell() }
+            whatsNewCell.profilePhoto.image = photoService?.photo(atIndexpath: indexPath, byUrl: userPhotoUrl)
+            return whatsNewCell
         case .post:
             guard let postCell = tableView.dequeueReusableCell(withIdentifier: PostCell.reuseId, for: indexPath) as? PostCell else { return UITableViewCell() }
             
@@ -154,10 +154,10 @@ extension NewsTableVC {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch SectionTypes.getSection(indexPath.section) {
-        case .whatsNew:
-            return 64.0
         case .stories:
             return 112.0
+        case .whatsNew:
+            return 64.0
         case .post:
             return UITableView.automaticDimension
         }

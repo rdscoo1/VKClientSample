@@ -345,7 +345,7 @@
         <!--Photos-->
         <scene sceneID="gsN-Hu-4Nq">
             <objects>
-                <collectionViewController id="daE-qE-JWY" customClass="FriendCollectionVC" customModule="VKClientSample" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="friendPhotos" id="daE-qE-JWY" customClass="FriendCollectionVC" customModule="VKClientSample" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="caF-9U-TTB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

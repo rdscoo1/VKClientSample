@@ -103,6 +103,19 @@ extension FriendsTableVC {
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let friendPhotos = storyboard.instantiateViewController(withIdentifier: "friendPhotos") as? FriendCollectionVC else { return }
+        
+        if let selectedIndex = tableView.indexPathForSelectedRow {
+            friendPhotos.friendId = friendsInSection[selectedIndex.section].items[selectedIndex.row].id
+        }
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+        self.navigationController?.navigationBar.tintColor = Constants.Colors.vkBlue
+        
+        self.navigationController?.pushViewController(friendPhotos, animated: true)
+    }
 }
 
 extension FriendsTableVC: UISearchBarDelegate {
