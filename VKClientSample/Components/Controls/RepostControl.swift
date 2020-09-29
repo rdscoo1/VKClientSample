@@ -37,6 +37,7 @@ class RepostControl: UIControl {
         repostImageView.tintColor = UIColor(hex: "#909399")
         
         repostCounterLabel.textColor = UIColor(hex: "#67707a")
+        repostCounterLabel.backgroundColor = Constants.Colors.theme
         repostCounterLabel.font = .systemFont(ofSize: 12, weight: .medium)
                 
         repostImageView.translatesAutoresizingMaskIntoConstraints = false

@@ -39,6 +39,7 @@ class LikeControl: UIControl {
         likeImageView.tintColor = UIColor(hex: "#909399")
         
         likeCounterLabel.textColor = UIColor(hex: "#67707a")
+        likeCounterLabel.backgroundColor = Constants.Colors.theme
         likeCounterLabel.font = .systemFont(ofSize: 12, weight: .medium)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(tappedLike))

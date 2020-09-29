@@ -37,6 +37,7 @@ class WhatsNewCell: UITableViewCell {
         
         let attributes = NSAttributedString(string: "What's new?",
                                             attributes: [NSAttributedString.Key.foregroundColor: Constants.Colors.vkGray,
+                                                         NSAttributedString.Key.backgroundColor: Constants.Colors.textField,
                                                          NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)])
         whatsNewTF.attributedPlaceholder = attributes
         whatsNewTF.backgroundColor = Constants.Colors.textField

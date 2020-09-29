@@ -36,6 +36,7 @@ class CommentControl: UIControl {
         commentImageView.tintColor = UIColor(hex: "#909399")
         
         commentCounterLabel.textColor = UIColor(hex: "#67707a")
+        commentCounterLabel.backgroundColor = Constants.Colors.theme
         commentCounterLabel.font = .systemFont(ofSize: 12, weight: .medium)
         
         
