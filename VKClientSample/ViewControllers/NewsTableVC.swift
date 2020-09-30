@@ -9,6 +9,8 @@
 import UIKit
 import Kingfisher
 
+// MARK: - Types
+
 enum SectionTypes: Int, CaseIterable {
     case stories = 0
     case whatsNew = 1
@@ -24,24 +26,30 @@ enum SectionTypes: Int, CaseIterable {
 }
 
 class NewsTableVC: UITableViewController {
-    
+
+    // MARK: - Private Properties
+
     private var posts: Response?
     private let vkApi = VKApi()
-    var photoService: PhotoService?
+    private var photoService: PhotoService?
     private var userPhotoUrl = ""
     private var userName = ""
     private var nextFrom = ""
     private var isLoading = false
     
+    // MARK: - LifeCycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         photoService = PhotoService.init(container: tableView)
         configureTableView()
-        readFromRealm()
+//        readFromRealm()
         requestFromApi()
         configureRefreshControl()
     }
+    
+    // MARK: - Private Methods
     
     private func configureTableView() {
         tableView.register(WhatsNewCell.self, forCellReuseIdentifier: WhatsNewCell.reuseId)
@@ -55,9 +63,11 @@ class NewsTableVC: UITableViewController {
     }
     
     private func requestFromApi() {
-        vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
+        vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] users in
+            RealmService.manager.saveObjects(users)
             let user = RealmService.manager.getAllObjects(of: User.self).first(where: { $0.id == Int(Session.shared.userId) })
             self?.userPhotoUrl = user?.imageUrl ?? ""
+            self?.userName = user?.firstName ?? ""
             self?.tableView.reloadRows(at: [IndexPath(row: 0, section: SectionTypes.whatsNew.rawValue),
                                             IndexPath(row: 0, section: SectionTypes.stories.rawValue)],
                                        with: .automatic)
@@ -72,11 +82,11 @@ class NewsTableVC: UITableViewController {
     }
     
     
-    private func readFromRealm() {
-        let user = RealmService.manager.getAllObjects(of: User.self).first(where: { $0.id == Int(Session.shared.userId) })
-        userPhotoUrl = user?.imageUrl ?? ""
-        userName = user?.firstName ?? ""
-    }
+//    private func readFromRealm() {
+//        let user = RealmService.manager.getAllObjects(of: User.self).first(where: { $0.id == Int(Session.shared.userId) })
+//        userPhotoUrl = user?.imageUrl ?? ""
+//        userName = user?.firstName ?? ""
+//    }
     
     private func configureRefreshControl() {
         refreshControl = UIRefreshControl()
@@ -86,7 +96,9 @@ class NewsTableVC: UITableViewController {
         tableView.refreshControl = refreshControl
     }
     
-    @objc func refresh(sender:AnyObject) {
+    // MARK: - Action
+    
+    @objc private func refresh(sender:AnyObject) {
         self.refreshControl?.beginRefreshing()
         
         let freshestNews = Int(self.posts?.items.first?.date ?? Date().timeIntervalSince1970)
@@ -110,7 +122,7 @@ class NewsTableVC: UITableViewController {
 }
 
 
-// MARK: - TableView DataSource
+// MARK: - UITableViewDataSource
 
 extension NewsTableVC {
     override func numberOfSections(in tableView: UITableView) -> Int {

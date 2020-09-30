@@ -183,9 +183,9 @@ class VKApi {
         let requestUrl = apiURL + ApiRequests.newsfeed.rawValue
         let params: Parameters = [
             "access_token": Session.shared.token,
-            "v": "5.120",
+            "v": "5.124",
             "filters": "post",
-            "count": "20",
+            "count": "1",
             "start_from": "\(nextBatch ?? "")",
             "start_time": "\(startTime ?? "")"
         ]
@@ -198,8 +198,8 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(PostResponse.self, from: data)
                         if let responseData = decodedModel.response {
-                            //                            print("📩📩📩 Methood \(ApiRequests.newsfeed.rawValue) response: 📩📩📩")
-                            //                            print(responseData)
+                                                        print("📩📩📩 Methood \(ApiRequests.newsfeed.rawValue) response: 📩📩📩")
+                                                        print(responseData)
                             DispatchQueue.main.async {
                                 completion(responseData)
                             }
@@ -253,7 +253,7 @@ class VKApi {
         }
     }
     
-    func getUserInfo(userId: String, completion: @escaping () -> Void) {
+    func getUserInfo(userId: String, completion: @escaping ([User]) -> Void) {
         let params: Parameters = [
             "access_token": Session.shared.token,
             "v": "5.103",
@@ -271,8 +271,8 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(UserResponse.self, from: data)
                         if let responseData = decodedModel.response {
-                            RealmService.manager.removeObjectsThanSave(of: User.self, objects: responseData)
-                            completion()
+//                            RealmService.manager.removeObjectsThanSave(of: User.self, objects: responseData)
+                            completion(responseData)
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage

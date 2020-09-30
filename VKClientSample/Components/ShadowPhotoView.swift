@@ -80,7 +80,7 @@ class ShadowPhotoView: UIView {
         }
     }
     
-    @objc func shadowPhotoTapped() {
+    @objc private func shadowPhotoTapped() {
         animateButtonTap()
     }
 }

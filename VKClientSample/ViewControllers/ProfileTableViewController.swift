@@ -10,8 +10,12 @@ import UIKit
 
 class ProfileTableViewController: UITableViewController {
     
+    // MARK: - Variables
+    
     private let vkApi = VKApi()
     private var profile = [User]()
+    
+    // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,16 +26,19 @@ class ProfileTableViewController: UITableViewController {
         requestProfileInfo()
     }
     
+    // MARK: - Private Methods
+    
     private func requestProfileInfo() {
-        vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
+        vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] users in
+            //            RealmService.manager.saveObjects(users)
             self?.loadData()
         }
     }
     
     private func loadData() {
-           self.profile = RealmService.manager.getAllObjects(of: User.self)
-           self.tableView.reloadData()
-       }
+        self.profile = RealmService.manager.getAllObjects(of: User.self)
+        self.tableView.reloadData()
+    }
     
     // MARK: - Table view data source
     
@@ -42,7 +49,6 @@ class ProfileTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return profile.count
     }
-    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTVCell.reuseId, for: indexPath) as? ProfileTVCell else {
@@ -58,7 +64,6 @@ class ProfileTableViewController: UITableViewController {
         
         return cell
     }
-    
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 102.0

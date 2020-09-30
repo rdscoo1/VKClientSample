@@ -87,7 +87,7 @@ extension StoriesCell: UICollectionViewDataSource, UICollectionViewDelegate {
             guard let addStoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddStoryCell.reuseId, for: indexPath) as? AddStoryCell else {
                 return UICollectionViewCell()
             }
-            if let photoUrl = URL(string: userPhoto!) {
+            if let photoUrl = URL(string: userPhoto ?? "") {
                 addStoryCell.addStoryPhotoView.photoImageView.kf.setImage(with: photoUrl)
             }
             addStoryCell.storyAuthor.text = userName

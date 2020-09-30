@@ -31,7 +31,9 @@ class PhotoPreviewNavBarView: UIView {
     }
     
     func setNavBarTitle(selectedPhotoNumber: Int, photoQuantity: Int) {
-        photosQuantityLabel.text = "\(selectedPhotoNumber + 1) of \(photoQuantity)"
+        let ofWord = NSLocalizedString("of", comment: "")
+        print(ofWord)
+        photosQuantityLabel.text = "\(selectedPhotoNumber + 1) \(ofWord) \(photoQuantity)"
     }
     
     private func configureUI() {

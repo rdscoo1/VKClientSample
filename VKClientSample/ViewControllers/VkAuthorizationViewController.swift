@@ -12,26 +12,32 @@ import SnapKit
 
 class VkAuthorizationViewController: UIViewController {
     
+    // MARK: - Variables
+    
     private let webView = WKWebView()
-    private let activityIndicator = ActivityIndicatorView(image: .loadingIcon)
+    private let activityIndicator = CustomActivityIndicator(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
+    // MARK: - LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupWebView()
         
-        activityIndicator.center = self.view.center
         view.addSubview(activityIndicator)
+        activityIndicator.center = self.view.center
         
         configureWebView()
     }
     
-    func configureWebView() {
+    // MARK: - Private Methods
+    
+    private func configureWebView() {
         var urlComponents = URLComponents()
         
         urlComponents.scheme = "https"
@@ -62,21 +68,17 @@ class VkAuthorizationViewController: UIViewController {
         }
     }
     
+    // MARK: - Navigation
+
     private func goToTabBar() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let tabBarController = storyboard.instantiateViewController(withIdentifier: "TabBarVC")
         
         self.navigationController?.pushViewController(tabBarController, animated: true)
     }
-    
-    func showActivityIndicator(show: Bool) {
-        if show {
-            activityIndicator.startAnimating()
-        } else {
-            activityIndicator.stopAnimating()
-        }
-    }
 }
+
+// MARK: - WKNavigationDelegate
 
 extension VkAuthorizationViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {

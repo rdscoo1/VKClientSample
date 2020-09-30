@@ -10,23 +10,27 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
-    //MARK: - IB Outlets
+    // MARK: - IB Outlets
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     
-    //MARK: - Private Properties
+    // MARK: - Private Properties
+    
     private let secureTextEntryButton = UIButton()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }
     
+    // MARK: - LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setUI()
+        setupUI()
         setupActionHideKeyboard()
         correctCredentials()
         showPassword()
@@ -40,7 +44,7 @@ class LoginViewController: UIViewController {
         // Второе — когда она пропадает
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
-            setNeedsStatusBarAppearanceUpdate()
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -50,7 +54,9 @@ class LoginViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    private func setUI() {
+    // MARK: - Private Methods
+    
+    private func setupUI() {
         loginButton.backgroundColor = UIColor(hex: "#466e9c", alpha: 0.5)
         loginButton.layer.cornerRadius = 10
         
@@ -58,7 +64,12 @@ class LoginViewController: UIViewController {
         passwordTF.delegate = self
     }
     
-    func showPassword() {
+    private func correctCredentials() {
+        emailTF.text = "admin"
+        passwordTF.text = "12345"
+    }
+    
+    private func showPassword() {
         secureTextEntryButton.setImage(.eye, for: .normal)
         secureTextEntryButton.tintColor = .gray
         secureTextEntryButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
@@ -68,7 +79,9 @@ class LoginViewController: UIViewController {
         passwordTF.rightViewMode = .always
     }
     
-    @objc func showPasswordTapped() {
+    // MARK: - Action
+    
+    @objc private func showPasswordTapped() {
         if passwordTF.isSecureTextEntry == true {
             passwordTF.isSecureTextEntry = !passwordTF.isSecureTextEntry
             UIView.animate(withDuration: 0.4, animations: {
@@ -82,10 +95,7 @@ class LoginViewController: UIViewController {
         }
     }
     
-    private func correctCredentials() {
-        emailTF.text = "admin"
-        passwordTF.text = "12345"
-    }
+    // MARK: - Navigation
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         let email = emailTF.text!
@@ -104,6 +114,8 @@ class LoginViewController: UIViewController {
     }
 }
 
+// MARK: - UITextFieldDelegate
+
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -112,8 +124,9 @@ extension LoginViewController: UITextFieldDelegate {
 }
 
 // MARK: - Show/Hide keyboard
+
 extension LoginViewController {
-    @objc func keyboardWasShown(notification: Notification) {
+    @objc private func keyboardWasShown(notification: Notification) {
         // Получаем размер клавиатуры
         let info = notification.userInfo! as NSDictionary
         let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size
@@ -125,7 +138,7 @@ extension LoginViewController {
     }
     
     //Когда клавиатура исчезает
-    @objc func keyboardWillBeHidden(notification: Notification) {
+    @objc private func keyboardWillBeHidden(notification: Notification) {
         // Устанавливаем отступ внизу UIScrollView, равный 0
         let contentInsets = UIEdgeInsets.zero
         scrollView?.contentInset = contentInsets
@@ -136,14 +149,7 @@ extension LoginViewController {
         view.addGestureRecognizer(tapGesture)
     }
     
-    @objc func hideKeyboard() {
+    @objc private func hideKeyboard() {
         view.endEditing(true)
     }
 }
-
-extension LoginViewController {
-    @IBAction func logOut(_ segue: UIStoryboardSegue) {
-    }
-}
-
-

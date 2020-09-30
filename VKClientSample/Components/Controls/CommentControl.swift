@@ -10,7 +10,7 @@ import UIKit
 
 class CommentControl: UIControl {
     
-    private let commentImageView = UIImageView(image: .commentButton)
+    private let commentImageView = UIImageView(image: .commentIcon)
     private let commentCounterLabel = UILabel()
     
     override init(frame: CGRect) {
@@ -29,16 +29,15 @@ class CommentControl: UIControl {
         }
     }
     
-    func configureCommentControl() {
-        addSubview(commentImageView)
-        addSubview(commentCounterLabel)
+    private func configureCommentControl() {
+        commentImageView.tintColor = Constants.Colors.vkGray
         
-        commentImageView.tintColor = UIColor(hex: "#909399")
-        
-        commentCounterLabel.textColor = UIColor(hex: "#67707a")
+        commentCounterLabel.textColor = Constants.Colors.vkGray
         commentCounterLabel.backgroundColor = Constants.Colors.theme
         commentCounterLabel.font = .systemFont(ofSize: 12, weight: .medium)
         
+        addSubview(commentImageView)
+        addSubview(commentCounterLabel)
         
         commentImageView.translatesAutoresizingMaskIntoConstraints = false
         commentImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true

@@ -11,12 +11,19 @@ import RealmSwift
 
 class CommunitiesVC: UIViewController {
     
-    private var notificationToken: NotificationToken?
+    // MARK: - IBOutlets
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    
+    // MARK: - Variables
+    
+    private var notificationToken: NotificationToken?
     private var communities: Results<Community>?
     private let vkApi = VKApi()
     
+    // MARK: - LifeCycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,11 +34,12 @@ class CommunitiesVC: UIViewController {
         handleRealmNotification()
     }
     
+    // MARK: - Private Methods
+    
     private func configureTableView() {
         tableView.register(UINib(nibName: CommunityCell.reuseId, bundle: nil), forCellReuseIdentifier: CommunityCell.reuseId)
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 64
-        tableView.delegate = self
         tableView.dataSource = self
     }
     
@@ -55,7 +63,9 @@ class CommunitiesVC: UIViewController {
     }
 }
 
-extension CommunitiesVC: UITableViewDelegate, UITableViewDataSource {
+// MARK: - UITableViewDataSource
+
+extension CommunitiesVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return communities?.count ?? 0
     }
@@ -70,6 +80,8 @@ extension CommunitiesVC: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 }
+
+// MARK: - UISearchBarDelegate
 
 extension CommunitiesVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

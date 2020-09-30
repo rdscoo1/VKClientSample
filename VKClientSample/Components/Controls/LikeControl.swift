@@ -10,7 +10,7 @@ import UIKit
 
 class LikeControl: UIControl {
     
-    private let likeImageView = UIImageView(image: .heart)
+    private let likeImageView = UIImageView(image: .heartIcon)
     private let likeCounterLabel = UILabel()
     private var likeCounter = Int()
     private var isLiked: Bool = false
@@ -33,14 +33,13 @@ class LikeControl: UIControl {
     }
     
     private func configureLikeControl() {
+        likeImageView.tintColor = Constants.Colors.vkGray
+        
+        likeCounterLabel.textColor = Constants.Colors.vkGray
+        likeCounterLabel.font = .systemFont(ofSize: 12, weight: .medium)
+        
         addSubview(likeImageView)
         addSubview(likeCounterLabel)
-        
-        likeImageView.tintColor = UIColor(hex: "#909399")
-        
-        likeCounterLabel.textColor = UIColor(hex: "#67707a")
-        likeCounterLabel.backgroundColor = Constants.Colors.theme
-        likeCounterLabel.font = .systemFont(ofSize: 12, weight: .medium)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(tappedLike))
         addGestureRecognizer(tap)
@@ -48,14 +47,14 @@ class LikeControl: UIControl {
         likeImageView.translatesAutoresizingMaskIntoConstraints = false
         likeImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         likeImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        likeImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        likeImageView.heightAnchor.constraint(equalToConstant: 19).isActive = true
         
         likeCounterLabel.translatesAutoresizingMaskIntoConstraints = false
         likeCounterLabel.leadingAnchor.constraint(equalTo: likeImageView.trailingAnchor, constant: 4).isActive = true
         likeCounterLabel.centerYAnchor.constraint(equalTo: likeImageView.centerYAnchor).isActive = true
     }
     
-    @objc func tappedLike() {
+    @objc private func tappedLike() {
         isLiked = !isLiked
         
         if isLiked {
@@ -70,11 +69,11 @@ class LikeControl: UIControl {
             generator.impactOccurred()
         } else {
             likeCounterLabel.text = "\(likeCounter)"
-            likeImageView.image = .heart
+            likeImageView.image = .heartIcon
             likeImageView.tintColor = .gray
             
             UIView.animate(withDuration: 0.3, delay: 0.0, animations: {
-                self.likeCounterLabel.textColor = .lightGray
+                self.likeCounterLabel.textColor = Constants.Colors.vkGray
                 self.layoutIfNeeded()
             })
         }

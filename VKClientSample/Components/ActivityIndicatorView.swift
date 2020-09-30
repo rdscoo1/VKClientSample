@@ -9,6 +9,8 @@
 import UIKit
 import QuartzCore
 
+//MARK: - ActivityIndicator using image
+
 class ActivityIndicatorView: UIView {
     
     // MARK - Variables

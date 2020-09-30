@@ -26,6 +26,8 @@ class PostCell: UITableViewCell {
     
     private var postImageViewHeightConstraint: NSLayoutConstraint!
     
+    private let agoWord = NSLocalizedString("ago", comment: "")
+    
     var dateCache: [String: Int] = [:]
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -52,7 +54,7 @@ class PostCell: UITableViewCell {
         }
         
         let date = Date(timeIntervalSince1970: post.date).getElapsedInterval()
-        publishDate.text = "\(date) ago"
+        publishDate.text = "\(date) \(agoWord)"
         postText.text = post.text
         
         let attachments = post.attachments
@@ -173,7 +175,7 @@ class PostCell: UITableViewCell {
                 c.priority = .defaultHigh
                 return c
             }(),
-            postStatistics.heightAnchor.constraint(equalToConstant: 40)
+            postStatistics.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
 }

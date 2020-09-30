@@ -47,21 +47,28 @@ class PostStatistics: UIView {
         shareControl.contentMode = .center
         commentControl.contentMode = .center
         
-        [likeControl, commentControl, shareControl, viewsControl].forEach {
+        [likeControl, commentControl, shareControl].forEach {
             containerStackView.addArrangedSubview($0)
         }
         addSubview(containerStackView)
+        addSubview(viewsControl)
         
         configureConstraints()
     }
     
     private func configureConstraints() {
         containerStackView.translatesAutoresizingMaskIntoConstraints = false
+        viewsControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             containerStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            containerStackView.leftAnchor.constraint(equalTo: leftAnchor),
-            containerStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20),
-            containerStackView.heightAnchor.constraint(equalToConstant: 32)
+            containerStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            containerStackView.rightAnchor.constraint(equalTo: centerXAnchor, constant: 16),
+            containerStackView.heightAnchor.constraint(equalToConstant: 32),
+            
+            viewsControl.centerYAnchor.constraint(equalTo: centerYAnchor),
+            viewsControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -48),
+            viewsControl.heightAnchor.constraint(equalToConstant: 16)
         ])
+        
     }
 }
