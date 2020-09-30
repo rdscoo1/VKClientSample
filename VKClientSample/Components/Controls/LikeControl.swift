@@ -10,10 +10,17 @@ import UIKit
 
 class LikeControl: UIControl {
     
+    //MARK: - Private Properties
+    
     private let likeImageView = UIImageView(image: .heartIcon)
     private let likeCounterLabel = UILabel()
+    
+    //MARK: - Private Variables
+    
     private var likeCounter = Int()
     private var isLiked: Bool = false
+    
+    //MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,12 +32,16 @@ class LikeControl: UIControl {
         configureLikeControl()
     }
     
+    //MARK: - Public Methods
+    
     func updateLikeControl(quantity: Int) {
         if quantity > 0 {
             self.likeCounter = quantity
             likeCounterLabel.text = "\(quantity)"
         }
     }
+    
+    //MARK: - Private Methods
     
     private func configureLikeControl() {
         likeImageView.tintColor = Constants.Colors.vkGray
@@ -53,6 +64,30 @@ class LikeControl: UIControl {
         likeCounterLabel.leadingAnchor.constraint(equalTo: likeImageView.trailingAnchor, constant: 4).isActive = true
         likeCounterLabel.centerYAnchor.constraint(equalTo: likeImageView.centerYAnchor).isActive = true
     }
+    
+    private func animateButtonTap() {
+        UIView.animate(
+            withDuration: 0.15,
+            delay: 0,
+            usingSpringWithDamping: 0.7,
+            initialSpringVelocity: 0.5,
+            options: .curveEaseIn,
+            animations: {
+                self.likeImageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            }) { (_) in
+            UIView.animate(
+                withDuration: 0.2,
+                delay: 0,
+                usingSpringWithDamping: 0.4,
+                initialSpringVelocity: 0.5,
+                options: .curveEaseIn,
+                animations: {
+                    self.likeImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                }, completion: nil)
+        }
+    }
+    
+    //MARK: - Actions
     
     @objc private func tappedLike() {
         isLiked = !isLiked
@@ -79,27 +114,5 @@ class LikeControl: UIControl {
         }
         
         animateButtonTap()
-    }
-    
-    private func animateButtonTap() {
-        UIView.animate(
-            withDuration: 0.15,
-            delay: 0,
-            usingSpringWithDamping: 0.7,
-            initialSpringVelocity: 0.5,
-            options: .curveEaseIn,
-            animations: {
-                self.likeImageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-        }) { (_) in
-            UIView.animate(
-                withDuration: 0.2,
-                delay: 0,
-                usingSpringWithDamping: 0.4,
-                initialSpringVelocity: 0.5,
-                options: .curveEaseIn,
-                animations: {
-                    self.likeImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
-            }, completion: nil)
-        }
     }
 }

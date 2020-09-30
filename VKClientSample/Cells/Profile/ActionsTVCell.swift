@@ -10,6 +10,8 @@ import UIKit
 
 class ActionsTVCell: UITableViewCell {
 
+    //MARK: - Initializers
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

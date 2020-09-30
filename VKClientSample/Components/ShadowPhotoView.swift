@@ -10,17 +10,16 @@ import UIKit
 
 class ShadowPhotoView: UIView {
     
+    //MARK: - IBInspectables
+    
     @IBInspectable var shadowColor: UIColor = .black
     @IBInspectable var shadowOpacity: Float = 0.5
     
+    //MARK: - Private Properties
+    
     private let friendPhoto = UIImageView()
     
-    init(image: UIImage, size: CGFloat) {
-        super.init(frame: .zero)
-        setupUI()
-        setImage(image: image)
-        configureFriendPhotoView(size: size)
-    }
+    //MARK: - Initializers
     
     init() {
         super.init(frame: .zero)
@@ -32,11 +31,22 @@ class ShadowPhotoView: UIView {
         setupUI()
     }
     
+    init(image: UIImage, size: CGFloat) {
+        super.init(frame: .zero)
+        setupUI()
+        setImage(image: image)
+        configureFriendPhotoView(size: size)
+    }
+    
+    //MARK: - Public Methods
+    
     func setImage(image: UIImage) {
         friendPhoto.image = image
     }
     
-    func setupUI() {
+    //MARK: - Private Methods
+    
+    private func setupUI() {
         backgroundColor = .clear
         addSubview(friendPhoto)
         configureShadow()
@@ -44,21 +54,21 @@ class ShadowPhotoView: UIView {
         self.addGestureRecognizer(tap)
     }
     
-    func configureFriendPhotoView(size: CGFloat) {
+    private func configureFriendPhotoView(size: CGFloat) {
         friendPhoto.layer.cornerRadius = size / 2
         friendPhoto.layer.masksToBounds = true
         friendPhoto.frame = CGRect(origin: .zero, size: CGSize(width: size, height: size))
         friendPhoto.contentMode = .scaleAspectFill
     }
     
-    func configureShadow() {
+    private func configureShadow() {
         layer.shadowColor = shadowColor.cgColor
         layer.shadowOpacity = shadowOpacity
         layer.shadowRadius = 8
         layer.shadowOffset = CGSize(width: 0, height: 4)
     }
     
-    func animateButtonTap() {
+    private func animateButtonTap() {
         UIView.animate(
             withDuration: 0.15,
             delay: 0,
@@ -66,8 +76,8 @@ class ShadowPhotoView: UIView {
             initialSpringVelocity: 0.5,
             options: .curveEaseIn,
             animations: {
-            self.friendPhoto.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-        }) { (_) in
+                self.friendPhoto.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            }) { (_) in
             UIView.animate(
                 withDuration: 0.2,
                 delay: 0,
@@ -75,8 +85,8 @@ class ShadowPhotoView: UIView {
                 initialSpringVelocity: 0.5,
                 options: .curveEaseIn,
                 animations: {
-                self.friendPhoto.transform = CGAffineTransform(scaleX: 1, y: 1)
-            }, completion: nil)
+                    self.friendPhoto.transform = CGAffineTransform(scaleX: 1, y: 1)
+                }, completion: nil)
         }
     }
     

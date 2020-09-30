@@ -10,19 +10,18 @@ import UIKit
 
 class PostStatistics: UIView {
     
+    //MARK: - Private Properties
+    
     private let likeControl = LikeControl()
     private let commentControl = CommentControl()
     private let shareControl = RepostControl()
     private let viewsControl = ViewsControl()
     private let containerStackView = UIStackView()
     
+    //MARK: - Initializers
+    
     init() {
         super.init(frame: .zero)
-        setupUI()
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
         setupUI()
     }
     
@@ -31,6 +30,8 @@ class PostStatistics: UIView {
         setupUI()
     }
     
+    //MARK: - Public Methods
+    
     func updateControls(likes: Int, comments: Int, reposts: Int, views: Int) {
         likeControl.updateLikeControl(quantity: likes)
         commentControl.updateCommentControl(quantity: comments)
@@ -38,6 +39,7 @@ class PostStatistics: UIView {
         viewsControl.updateViewsControl(quantity: views)
     }
     
+    //MARK: - Private Methods
     
     private func setupUI() {
         containerStackView.distribution = .fillEqually
@@ -62,13 +64,12 @@ class PostStatistics: UIView {
         NSLayoutConstraint.activate([
             containerStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
             containerStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            containerStackView.rightAnchor.constraint(equalTo: centerXAnchor, constant: 16),
+            containerStackView.trailingAnchor.constraint(equalTo: centerXAnchor, constant: 16),
             containerStackView.heightAnchor.constraint(equalToConstant: 32),
             
             viewsControl.centerYAnchor.constraint(equalTo: centerYAnchor),
             viewsControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -48),
             viewsControl.heightAnchor.constraint(equalToConstant: 16)
         ])
-        
     }
 }

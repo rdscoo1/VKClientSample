@@ -9,11 +9,17 @@
 import UIKit
 
 
+//MARK: - LoadingView with 3 blinking dots
+
 class LoadView: UIView {
+    
+    //MARK: - Private Properties
     
     private var circles = [CALayer]()
     private let containerView = UIView()
-
+    
+    //MARK: - Initializers
+    
     init() {
         super.init(frame: .zero)
         setupCircles()
@@ -23,6 +29,8 @@ class LoadView: UIView {
         super.init(coder: coder)
         setupCircles()
     }
+    
+    //MARK: - Private Methods
     
     private func setupCircles() {
         let circleColor = UIColor.gray
@@ -34,10 +42,10 @@ class LoadView: UIView {
             let circle = CAShapeLayer()
             circle.opacity = 1
             circle.path = UIBezierPath(ovalIn: CGRect(
-                x: (size + offset) * CGFloat(i),
-                y: 10,
-                width: size,
-                height: size)).cgPath
+                                        x: (size + offset) * CGFloat(i),
+                                        y: 10,
+                                        width: size,
+                                        height: size)).cgPath
             
             circle.fillColor = circleColor.cgColor
             containerView.layer.addSublayer(circle)
@@ -64,13 +72,13 @@ class LoadView: UIView {
         scaleDown.toValue = 1.0
         scaleDown.duration = 1
         scaleDown.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
-
+        
         let group = CAAnimationGroup()
         group.animations = [scaleDown]
         group.repeatCount = Float.infinity
         
         group.duration = CFTimeInterval(0.8)
-
+        
         return group
     }
 }

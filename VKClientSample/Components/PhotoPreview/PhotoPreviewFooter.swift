@@ -9,11 +9,15 @@
 import UIKit
 
 class PhotoPreviewFooter: UIView {
-
+    
+    //MARK: - Private Properties
+    
     private let likeControl = LikeControl()
     private let commentControl = CommentControl()
     private let repostControl = RepostControl()
     private let containerStackView = UIStackView()
+    
+    //MARK: - Initializers
     
     init() {
         super.init(frame: .zero)
@@ -32,11 +36,15 @@ class PhotoPreviewFooter: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Public Methods
+    
     func updateControls(likes: Int, comments: Int, reposts: Int) {
         likeControl.updateLikeControl(quantity: likes)
         commentControl.updateCommentControl(quantity: comments)
         repostControl.updateRepostControl(quantity: reposts)
     }
+    
+    //MARK: - Private Methods
     
     private func setupUI() {
         backgroundColor = .clear
@@ -61,5 +69,4 @@ class PhotoPreviewFooter: UIView {
             containerStackView.heightAnchor.constraint(equalToConstant: 36)
         ])
     }
-
 }

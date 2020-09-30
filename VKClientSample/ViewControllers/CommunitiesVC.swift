@@ -23,7 +23,7 @@ class CommunitiesVC: UIViewController {
     private let vkApi = VKApi()
     
     // MARK: - LifeCycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

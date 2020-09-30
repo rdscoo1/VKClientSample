@@ -19,10 +19,10 @@ class FriendCollectionVC: UICollectionViewController {
     private var photosUrlsHighRes = [String]()
     
     // MARK: - LifeCycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         loadData()
         
         vkApi.getPhotos(ownerId: friendId) { [weak self] in
@@ -65,7 +65,7 @@ extension FriendCollectionVC {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FriendCVCell.reuseId, for: indexPath) as? FriendCVCell
-            else { return UICollectionViewCell() }
+        else { return UICollectionViewCell() }
         guard let friendPhotos = photosUrlsLowRes[indexPath.row] else {
             return UICollectionViewCell()
         }

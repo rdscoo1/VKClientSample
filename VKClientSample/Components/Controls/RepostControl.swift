@@ -10,9 +10,12 @@ import UIKit
 
 class RepostControl: UIControl {
     
+    //MARK: - Private Properties
+    
     private let repostImageView = UIImageView(image: .shareIcon)
     private let repostCounterLabel = UILabel()
-
+    
+    //MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,11 +27,15 @@ class RepostControl: UIControl {
         configureRepostControl()
     }
     
+    //MARK: - Public Methods
+    
     func updateRepostControl(quantity: Int) {
         if quantity > 0 {
             repostCounterLabel.text = "\(quantity)"
         }
     }
+    
+    //MARK: - Private Methods
     
     private func configureRepostControl() {
         repostImageView.tintColor = Constants.Colors.vkGray
@@ -39,7 +46,7 @@ class RepostControl: UIControl {
         
         addSubview(repostImageView)
         addSubview(repostCounterLabel)
-                
+        
         repostImageView.translatesAutoresizingMaskIntoConstraints = false
         repostImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         repostImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true

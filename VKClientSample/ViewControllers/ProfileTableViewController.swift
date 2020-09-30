@@ -10,7 +10,7 @@ import UIKit
 
 class ProfileTableViewController: UITableViewController {
     
-    // MARK: - Variables
+    // MARK: - Private Properties
     
     private let vkApi = VKApi()
     private var profile = [User]()
@@ -39,9 +39,11 @@ class ProfileTableViewController: UITableViewController {
         self.profile = RealmService.manager.getAllObjects(of: User.self)
         self.tableView.reloadData()
     }
-    
-    // MARK: - Table view data source
-    
+}
+
+//MARK: - UITableViewDataSource
+
+extension ProfileTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -57,10 +59,7 @@ class ProfileTableViewController: UITableViewController {
         
         let profileInfo = profile[indexPath.row]
         
-        cell.configureWith(name: profileInfo.firstName, surname: profileInfo.lastName, status: profileInfo.status ?? "")
-        if let imageUrl = URL(string: profileInfo.imageUrl!) {
-            cell.avatarImageView.kf.setImage(with: imageUrl)
-        }
+        cell.configure(user: profileInfo)
         
         return cell
     }

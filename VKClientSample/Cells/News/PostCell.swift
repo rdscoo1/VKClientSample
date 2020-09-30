@@ -13,7 +13,7 @@ class PostCell: UITableViewCell {
     
     static let reuseId = "PostCell"
     
-    //MARK: - UI Elements
+    // MARK: - Private Properties
     
     private let topSeparator = UIView()
     private let postAuthorImage = UIImageView()
@@ -27,8 +27,8 @@ class PostCell: UITableViewCell {
     private var postImageViewHeightConstraint: NSLayoutConstraint!
     
     private let agoWord = NSLocalizedString("ago", comment: "")
-    
-    var dateCache: [String: Int] = [:]
+        
+    // MARK: - Initializers
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -40,7 +40,7 @@ class PostCell: UITableViewCell {
         setupUI()
     }
     
-    //MARK: - CellForRowAt configuration
+    // MARK: - CellForRowAt configuration
     
     func configure(with post: Post, author: Response?) {
         if post.sourceId > 0 {
@@ -82,7 +82,7 @@ class PostCell: UITableViewCell {
     }
     
     
-    //MARK: - Setting UI of elements
+    // MARK: - Private Methods
     
     private func setupUI() {
         backgroundColor = Constants.Colors.theme

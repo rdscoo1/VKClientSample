@@ -11,6 +11,8 @@ import Kingfisher
 
 class CommunityCell: UITableViewCell {
     
+    // MARK: - IBOutlets
+    
     @IBOutlet weak var communityPhoto: UIImageView!
     @IBOutlet weak var communityTitle: UILabel!
     @IBOutlet weak var communityDescription: UILabel!
@@ -21,12 +23,16 @@ class CommunityCell: UITableViewCell {
         return UINib(nibName: "CommunityCell", bundle: nil)
     }
     
+    // MARK: - Initializers
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         communityPhoto.layer.cornerRadius = 24
         communityPhoto.layer.masksToBounds = true
     }
+    
+    //MARK: - Public Methods
     
     func configure(with community: Community) {
         communityTitle.text = community.name

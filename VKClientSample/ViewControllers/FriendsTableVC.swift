@@ -20,9 +20,9 @@ class FriendsTableVC: UITableViewController {
     private let vkApi = VKApi()
     private var friends = [Friend]()
     private var friendsInSection = [FriendSection]()
-
+    
     // MARK: - LifeCycle
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let selectionIndexPath = self.tableView.indexPathForSelectedRow {
@@ -70,12 +70,12 @@ class FriendsTableVC: UITableViewController {
     
     
     // MARK: - Navigation
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let segueId = segue.identifier,
-            segueId == "friendPhotosSegue",
-            let friendPhotos = segue.destination as? FriendCollectionVC,
-            let selectedIndex = tableView.indexPathForSelectedRow {
+           segueId == "friendPhotosSegue",
+           let friendPhotos = segue.destination as? FriendCollectionVC,
+           let selectedIndex = tableView.indexPathForSelectedRow {
             friendPhotos.friendId = friendsInSection[selectedIndex.section].items[selectedIndex.row].id
         }
         

@@ -12,6 +12,8 @@ class FriendCell: UITableViewCell {
 
     static let reuseId = "FriendCell"
     
+    // MARK: - Private Properties
+    
     private let friendPhoto = UIImageView()
     private let onlineStatus = UIImageView()
     private let onlineStatusContainer = UIView()
@@ -19,6 +21,8 @@ class FriendCell: UITableViewCell {
     
     private var onlineContainerHeight: NSLayoutConstraint!
     private var onlineContainerWidth: NSLayoutConstraint!
+    
+    // MARK: - Initializers
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -46,6 +50,19 @@ class FriendCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //MARK: - Public Methods
+    
+    func configure(with friend: Friend, onlineStatus: OnlineStatusSwitcher) {
+        friendFullName.text = "\(friend.firstName) \(friend.lastName)"
+        if  let photoLink = friend.imageUrl,
+            let photoUrl = URL(string: photoLink) {
+            friendPhoto.kf.setImage(with: photoUrl)
+        }
+        setOnlineStatus(onlineStatus)
+    }
+    
+    //MARK: - Private Methods
     
     private func setOnlineStatus(_ status: OnlineStatusSwitcher) {
         switch status {
@@ -98,14 +115,5 @@ class FriendCell: UITableViewCell {
             friendFullName.leadingAnchor.constraint(equalTo: friendPhoto.trailingAnchor, constant: 16),
             friendFullName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
-    }
-    
-    func configure(with friend: Friend, onlineStatus: OnlineStatusSwitcher) {
-        friendFullName.text = "\(friend.firstName) \(friend.lastName)"
-        if  let photoLink = friend.imageUrl,
-            let photoUrl = URL(string: photoLink) {
-            friendPhoto.kf.setImage(with: photoUrl)
-        }
-        setOnlineStatus(onlineStatus)
     }
 }

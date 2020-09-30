@@ -26,9 +26,9 @@ enum SectionTypes: Int, CaseIterable {
 }
 
 class NewsTableVC: UITableViewController {
-
+    
     // MARK: - Private Properties
-
+    
     private var posts: Response?
     private let vkApi = VKApi()
     private var photoService: PhotoService?
@@ -38,13 +38,13 @@ class NewsTableVC: UITableViewController {
     private var isLoading = false
     
     // MARK: - LifeCycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         photoService = PhotoService.init(container: tableView)
         configureTableView()
-//        readFromRealm()
+        //        readFromRealm()
         requestFromApi()
         configureRefreshControl()
     }
@@ -57,7 +57,7 @@ class NewsTableVC: UITableViewController {
         tableView.register(PostCell.self, forCellReuseIdentifier: PostCell.reuseId)
         tableView.delegate = self
         tableView.dataSource = self
-//        tableView.prefetchDataSource = self
+        //        tableView.prefetchDataSource = self
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
     }
@@ -82,11 +82,11 @@ class NewsTableVC: UITableViewController {
     }
     
     
-//    private func readFromRealm() {
-//        let user = RealmService.manager.getAllObjects(of: User.self).first(where: { $0.id == Int(Session.shared.userId) })
-//        userPhotoUrl = user?.imageUrl ?? ""
-//        userName = user?.firstName ?? ""
-//    }
+    //    private func readFromRealm() {
+    //        let user = RealmService.manager.getAllObjects(of: User.self).first(where: { $0.id == Int(Session.shared.userId) })
+    //        userPhotoUrl = user?.imageUrl ?? ""
+    //        userName = user?.firstName ?? ""
+    //    }
     
     private func configureRefreshControl() {
         refreshControl = UIRefreshControl()

@@ -9,10 +9,15 @@
 import UIKit
 
 class AddStoryCell: UICollectionViewCell {
-    let addStoryPhotoView = AddStoryPhotoView()
-    let storyAuthor = UILabel()
     
     static let reuseId = "AddStoryCell"
+    
+    //MARK: - Private Properties
+    
+    private let addStoryPhotoView = AddStoryPhotoView()
+    private let storyAuthor = UILabel()
+        
+    // MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,6 +29,15 @@ class AddStoryCell: UICollectionViewCell {
         setupUI()
     }
     
+    //MARK: - Public Methods
+    
+    func configureWith(author: String?, photo: String?) {
+        addStoryPhotoView.setImage(photo)
+        storyAuthor.text = author
+    }
+    
+    //MARK: - Private Methods
+    
     private func setupUI() {
         storyAuthor.text = "Roman"
         storyAuthor.textAlignment = .center
@@ -32,7 +46,6 @@ class AddStoryCell: UICollectionViewCell {
         storyAuthor.backgroundColor = Constants.Colors.theme
         storyAuthor.font = .systemFont(ofSize: 12, weight: UIFont.Weight.regular)
 
-        
         addSubview(addStoryPhotoView)
         addSubview(storyAuthor)
         
@@ -47,8 +60,8 @@ class AddStoryCell: UICollectionViewCell {
         storyAuthor.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             storyAuthor.topAnchor.constraint(equalTo: addStoryPhotoView.bottomAnchor, constant: 2),
-            storyAuthor.rightAnchor.constraint(equalTo: rightAnchor),
-            storyAuthor.leftAnchor.constraint(equalTo: leftAnchor),
+            storyAuthor.trailingAnchor.constraint(equalTo: trailingAnchor),
+            storyAuthor.leadingAnchor.constraint(equalTo: leadingAnchor),
             storyAuthor.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }

@@ -10,8 +10,12 @@ import UIKit
 
 class ViewsControl: UIView {
     
+    //MARK: - Private Properties
+    
     private let viewIcon = UIImageView(image: .eye)
     private let viewCounterLabel = UILabel()
+    
+    //MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,11 +27,15 @@ class ViewsControl: UIView {
         setupUI()
     }
     
+    //MARK: - Public Methods
+    
     func updateViewsControl(quantity: Int) {
         if quantity > 0 {
             viewCounterLabel.text = "\(quantity)"
         }
     }
+    
+    //MARK: - Private Methods
     
     private func setupUI() {
         viewIcon.tintColor = Constants.Colors.vkGray
@@ -51,10 +59,10 @@ class ViewsControl: UIView {
         
         viewCounterLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            viewCounterLabel.leftAnchor.constraint(equalTo: viewIcon.rightAnchor, constant: 4),
+            viewCounterLabel.leadingAnchor.constraint(equalTo: viewIcon.trailingAnchor, constant: 4),
             viewCounterLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
     
-
+    
 }

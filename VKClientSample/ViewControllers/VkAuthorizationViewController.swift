@@ -69,7 +69,7 @@ class VkAuthorizationViewController: UIViewController {
     }
     
     // MARK: - Navigation
-
+    
     private func goToTabBar() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let tabBarController = storyboard.instantiateViewController(withIdentifier: "TabBarVC")

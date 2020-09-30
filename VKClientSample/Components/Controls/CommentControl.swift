@@ -10,8 +10,12 @@ import UIKit
 
 class CommentControl: UIControl {
     
+    //MARK: - Private Properties
+    
     private let commentImageView = UIImageView(image: .commentIcon)
     private let commentCounterLabel = UILabel()
+    
+    //MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,11 +27,15 @@ class CommentControl: UIControl {
         configureCommentControl()
     }
     
+    //MARK: - Public Methods
+    
     func updateCommentControl(quantity: Int) {
         if quantity > 0 {
             commentCounterLabel.text = "\(quantity)"
         }
     }
+    
+    //MARK: - Private Methods
     
     private func configureCommentControl() {
         commentImageView.tintColor = Constants.Colors.vkGray

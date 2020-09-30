@@ -9,15 +9,56 @@
 import UIKit
 
 class CustomActivityIndicator: UIView {
+    
+    //MARK: - Private Properties
+    
     var circleLayer: CAShapeLayer!
+    
+    //MARK: - Variables
     
     var isAnimating : Bool = false
     var hidesWhenStopped : Bool = true
+    
+    //MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear
         
+        configureCircle()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - Public Methods
+    
+    func startAnimating() {
+        if isAnimating {
+            return
+        }
+        
+        if hidesWhenStopped {
+            self.isHidden = false
+        }
+        resume(layer: circleLayer)
+    }
+    
+    func stopAnimating() {
+        if hidesWhenStopped {
+            self.isHidden = true
+        }
+        pause(layer: circleLayer)
+    }
+    
+    func settingStrokeEnd(value: CGFloat) {
+        circleLayer.strokeEnd = value
+    }
+    
+    //MARK: - Private Methods
+    
+    private func configureCircle() {
         let radius = (frame.size.width - 10)/2
         let startAngle = CGFloat(-Double.pi / 2)
         let endAngle = CGFloat(5 * Double.pi / 4)
@@ -45,40 +86,10 @@ class CustomActivityIndicator: UIView {
         // Add the circleLayer to the view's layer's sublayers
         self.layer.addSublayer(circleLayer)
         
-        animateFullCircle(duration: 1)
+        addRotation()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func animateCircle(duration: TimeInterval) {
-        // We want to animate the strokeEnd property of the circleLayer
-        let animation = CABasicAnimation(keyPath: "strokeEnd")
-
-        // Set the animation duration appropriately
-        animation.duration = duration
-
-        // Animate from 0 (no circle) to 1 (full circle)
-        animation.fromValue = 0
-        animation.toValue = 1
-
-        // Do a linear animation (i.e. the speed of the animation stays the same)
-        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
-
-        // Set the circleLayer's strokeEnd property to 1.0 now so that it's the
-        // right value when the animation ends.
-        circleLayer.strokeEnd = 0.1
-
-        // Do the actual animation
-        circleLayer.add(animation, forKey: "animateCircle")
-    }
-    
-    func settingStrokeEnd(value: CGFloat) {
-        circleLayer.strokeEnd = value
-    }
-    
-    private func addRotation(forLayer layer : CALayer) {
+    private func addRotation() {
         circleLayer.strokeEnd = 1.0
         let rotation: CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
         
@@ -114,57 +125,27 @@ class CustomActivityIndicator: UIView {
         isAnimating = true
     }
     
-    func startAnimating () {
+    //MARK: - Animation with StrokeEnd
+    
+    func animateCircle(duration: TimeInterval) {
+        // We want to animate the strokeEnd property of the circleLayer
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
         
-        if isAnimating {
-            return
-        }
+        // Set the animation duration appropriately
+        animation.duration = duration
         
-        if hidesWhenStopped {
-            self.isHidden = false
-        }
-        resume(layer: circleLayer)
+        // Animate from 0 (no circle) to 1 (full circle)
+        animation.fromValue = 0
+        animation.toValue = 1
+        
+        // Do a linear animation (i.e. the speed of the animation stays the same)
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+        
+        // Set the circleLayer's strokeEnd property to 1.0 now so that it's the
+        // right value when the animation ends.
+        circleLayer.strokeEnd = 0.1
+        
+        // Do the actual animation
+        circleLayer.add(animation, forKey: "animateCircle")
     }
-    
-    func stopAnimating () {
-        if hidesWhenStopped {
-            self.isHidden = true
-        }
-        pause(layer: circleLayer)
-    }
-    
-    func animateFullCircle(duration: TimeInterval) {
-        circleLayer.strokeEnd = 1.0
-        let rotation: CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-        
-        rotation.duration = 1.0
-        rotation.isRemovedOnCompletion = false
-        rotation.repeatCount = HUGE
-        rotation.fillMode = CAMediaTimingFillMode.forwards
-        rotation.fromValue = 0
-        rotation.toValue = CGFloat(Double.pi * 2)
-        
-        layer.add(rotation, forKey: "rotate")
-    }
-    
-    
-    
-//    func animateCircleFull(duration: TimeInterval) {
-//        if self.isAnimating{
-//            CATransaction.begin()
-//            let animation = CABasicAnimation(keyPath: "strokeEnd")
-//            animation.duration = duration
-//            animation.fromValue = 0
-//            animation.toValue = 1
-//            animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-//            circleLayer.strokeEnd = 1.0
-//            CATransaction.setCompletionBlock {
-//                self.setCircleCounterClockwise()
-//                self.animateCircleEmpty(duration: duration)
-//            }
-//            // Do the actual animation
-//            circleLayer.add(animation, forKey: "animateCircle")
-//            CATransaction.commit()
-//        }
-//    }
 }

@@ -8,17 +8,25 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class ProfileTVCell: UITableViewCell {
+    
     static let reuseId = "ProfileTVCell"
 
-    let avatarImageView = UIImageView()
-    private let avatarSize: CGFloat = 80
+    //MARK: - Private Properties
     
+    private let avatarImageView = UIImageView()
     private let name = UILabel()
     private let status = UILabel()
     private let online = UILabel()
     private let onlineImageView = UIImageView()
+    
+    //MARK: - Constants
+    
+    private let avatarSize: CGFloat = 80
+    
+    //MARK: - Initializers
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -35,6 +43,8 @@ class ProfileTVCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //MARK: - Private Metods
     
     private func configureUI() {
         avatarImageView.layer.cornerRadius = avatarSize / 2
@@ -76,9 +86,14 @@ class ProfileTVCell: UITableViewCell {
         }
     }
     
-    func configureWith(name: String, surname: String, status: String) {
-        self.name.text = "\(name) \(surname)"
-        self.status.text = "\(status)"
+    //MARK: - Public Metods
+   
+    func configure(user: User) {
+        name.text = "\(user.firstName) \(user.lastName)"
+        status.text = "\(user.status ?? "")"
+        if let imageUrl = URL(string: user.imageUrl ?? "") {
+            avatarImageView.kf.setImage(with: imageUrl)
+        }
     }
     
 }
