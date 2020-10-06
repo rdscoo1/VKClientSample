@@ -1,0 +1,39 @@
+
+/* Class = "UIButton"; normalTitle = "Log In"; ObjectID = "7NH-Cf-0QK"; */
+"7NH-Cf-0QK.normalTitle" = "Войти";
+
+/* Class = "UINavigationItem"; title = "Photos"; ObjectID = "8GE-B3-msT"; */
+"8GE-B3-msT.title" = "Фотографии";
+
+/* Class = "UITextField"; placeholder = "Email or Phone"; ObjectID = "Gqw-Md-8r9"; */
+"Gqw-Md-8r9.placeholder" = "Почта или телефон";
+
+/* Class = "UINavigationItem"; title = "Add Community"; ObjectID = "KgO-WG-tcb"; */
+"KgO-WG-tcb.title" = "Добавить сообщество";
+
+/* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "Le3-ym-KIR"; */
+"Le3-ym-KIR.placeholder" = "Поиск";
+
+/* Class = "UINavigationItem"; title = "News"; ObjectID = "UU2-RS-Db0"; */
+"UU2-RS-Db0.title" = "Новости";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "Vg7-tq-9Ii"; */
+"Vg7-tq-9Ii.placeholder" = "Пароль";
+
+/* Class = "UINavigationItem"; title = "Communities"; ObjectID = "Zi5-Ui-G5c"; */
+"Zi5-Ui-G5c.title" = "Сообщества";
+
+/* Class = "UINavigationItem"; title = "Communities"; ObjectID = "bq4-vZ-M4B"; */
+"bq4-vZ-M4B.title" = "Сообщества";
+
+/* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "cT1-xA-Y9r"; */
+"cT1-xA-Y9r.placeholder" = "Поиск";
+
+/* Class = "UIBarButtonItem"; title = "Log Out"; ObjectID = "iio-Ce-arl"; */
+"iio-Ce-arl.title" = "Выйти";
+
+/* Class = "UINavigationItem"; title = "Friends"; ObjectID = "p9k-Wd-Bdq"; */
+"p9k-Wd-Bdq.title" = "Друзья";
+
+/* Class = "UINavigationItem"; title = "Profile"; ObjectID = "phv-LR-CKj"; */
+"phv-LR-CKj.title" = "Профиль";

@@ -7,15 +7,22 @@
 //
 
 import UIKit
+import Kingfisher
 
 class AddStoryPhotoView: UIView {
-
-    let photoImageView = UIImageView()
+    
+    //MARK: - Private Properties
+    
+    private let photoImageView = UIImageView()
     private let plusImageViewContainer = UIView()
     private let plusImageView = UIImageView(image: .plusIconToAddStory)
+    
+    //MARK: - Constants
+    
     private let photoSize: CGFloat = 56
     private let plusIconSize: CGFloat = 20
-
+    
+    //MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,6 +33,16 @@ class AddStoryPhotoView: UIView {
         super.init(coder: coder)
         setupUI()
     }
+    
+    //MARK: - Public Methods
+    
+    func setImage(_ url: String?) {
+        if let photoUrl = URL(string: url ?? "") {
+            photoImageView.kf.setImage(with: photoUrl)
+        }
+    }
+    
+    //MARK: - Private Methods
     
     private func setupUI() {
         backgroundColor = .clear
@@ -66,7 +83,7 @@ class AddStoryPhotoView: UIView {
         NSLayoutConstraint.activate([
             plusImageViewContainer.heightAnchor.constraint(equalToConstant: plusIconSize),
             plusImageViewContainer.widthAnchor.constraint(equalToConstant: plusIconSize),
-            plusImageViewContainer.rightAnchor.constraint(equalTo: photoImageView.rightAnchor),
+            plusImageViewContainer.trailingAnchor.constraint(equalTo: photoImageView.trailingAnchor),
             plusImageViewContainer.bottomAnchor.constraint(equalTo: photoImageView.bottomAnchor)
         ])
         
@@ -78,5 +95,5 @@ class AddStoryPhotoView: UIView {
             plusImageView.centerYAnchor.constraint(equalTo: plusImageViewContainer.centerYAnchor)
         ])
     }
-
+    
 }

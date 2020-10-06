@@ -9,10 +9,14 @@
 import UIKit
 
 class PhotoPreviewNavBarView: UIView {
-
+    
+    //MARK: - Private Properties
+    
     private let backButton = UIButton()
     private let photosQuantityLabel = UILabel()
     private let moreButton = UIButton()
+    
+    //MARK: - Initializers
     
     init() {
         super.init(frame: .zero)
@@ -30,9 +34,19 @@ class PhotoPreviewNavBarView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Public Methods
+    
     func setNavBarTitle(selectedPhotoNumber: Int, photoQuantity: Int) {
-        photosQuantityLabel.text = "\(selectedPhotoNumber + 1) of \(photoQuantity)"
+        let ofWord = NSLocalizedString("of", comment: "")
+        print(ofWord)
+        photosQuantityLabel.text = "\(selectedPhotoNumber + 1) \(ofWord) \(photoQuantity)"
     }
+    
+    func addButtonTarget(target: Any?, action: Selector) {
+        backButton.addTarget(target, action: action, for: .touchUpInside)
+    }
+    
+    //MARK: - Private Methods
     
     private func configureUI() {
         backgroundColor = UIColor(hex: "#2E2E2E", alpha: 0.8)
@@ -69,9 +83,5 @@ class PhotoPreviewNavBarView: UIView {
             moreButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             moreButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
         ])
-    }
-    
-    func addButtonTarget(target: Any?, action: Selector) {
-        backButton.addTarget(target, action: action, for: .touchUpInside)
     }
 }

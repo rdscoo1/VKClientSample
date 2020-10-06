@@ -7,38 +7,41 @@
 //
 
 import UIKit
-import Kingfisher
 
 class StoriesCell: UITableViewCell {
     
+    static let reuseId = "StoriesCell"
+    
+    // MARK: - Private Properties
+    
     private let vkApi = VKApi()
-    private let topSeparator = UIView()
     private let containerView = UIView()
     private var storiesCollectionView: UICollectionView!
     private var stories: [StoriesCommunity]?
-    var userPhoto: String? = ""
-    var userName: String? = ""
     
-    var layout: UICollectionViewFlowLayout {
+    private var layout: UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 68, height: 84)
         layout.scrollDirection = .horizontal
         return layout
     }
     
-    static let reuseId = "StoriesCell"
+    // MARK: - Public Properties
+    
+    var userPhoto: String? = ""
+    var userName: String? = ""
 
+    // MARK: - Initializers
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         storiesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
         backgroundColor = Constants.Colors.theme
-        topSeparator.backgroundColor = Constants.Colors.newsSeparator
         
         containerView.addSubview(storiesCollectionView)
-        addSubview(topSeparator)
-        addSubview(containerView)
+        contentView.addSubview(containerView)
         
         vkApi.getStories { stories in
             self.stories = stories.groups
@@ -47,12 +50,13 @@ class StoriesCell: UITableViewCell {
         
         configureConstraints()
         setupCollectionView()
-        self.alpha = 0.0
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //MARK: - Private Methods
     
     private func setupCollectionView() {
         storiesCollectionView.dataSource = self
@@ -63,17 +67,9 @@ class StoriesCell: UITableViewCell {
     }
     
     private func configureConstraints() {
-        topSeparator.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            topSeparator.topAnchor.constraint(equalTo: topAnchor),
-            topSeparator.leadingAnchor.constraint(equalTo: leadingAnchor),
-            topSeparator.trailingAnchor.constraint(equalTo: trailingAnchor),
-            topSeparator.heightAnchor.constraint(equalToConstant: 10)
-        ])
-        
         containerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: topSeparator.bottomAnchor),
+            containerView.topAnchor.constraint(equalTo: topAnchor),
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
             containerView.bottomAnchor.constraint(equalTo: bottomAnchor)
@@ -89,9 +85,11 @@ class StoriesCell: UITableViewCell {
     }
 }
 
+//MARK: - UICollectionViewDataSource
+
 extension StoriesCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return stories?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -99,10 +97,8 @@ extension StoriesCell: UICollectionViewDataSource {
             guard let addStoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddStoryCell.reuseId, for: indexPath) as? AddStoryCell else {
                 return UICollectionViewCell()
             }
-            if let photoUrl = URL(string: userPhoto!) {
-                addStoryCell.addStoryPhotoView.photoImageView.kf.setImage(with: photoUrl)
-            }
-            addStoryCell.storyAuthor.text = userName
+            
+            addStoryCell.configureWith(author: userName, photo: userPhoto)
             
             return addStoryCell
         } else {
@@ -110,12 +106,11 @@ extension StoriesCell: UICollectionViewDataSource {
                 return UICollectionViewCell()
             }
             let story = stories?[indexPath.row]
-            print(stories?.count)
-            storiesCell.storyAuthor.text = story?.name
-            storiesCell.storyImageView.kf.setImage(with: URL(string: story?.imageUrl ?? ""))
+            
+            storiesCell.configure(with: story)
+            
             return storiesCell
         }
-
     }
 }
 

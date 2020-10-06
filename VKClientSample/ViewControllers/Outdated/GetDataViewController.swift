@@ -35,7 +35,7 @@ class GetDataViewController: UIViewController {
         }
     }
     
-    @objc func getDataButtonTapped() {
+    @objc private func getDataButtonTapped() {
 //        vkApi.getGroups { result in
 //            print(result)
 //        }

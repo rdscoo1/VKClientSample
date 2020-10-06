@@ -10,9 +10,13 @@ import UIKit
 
 class PostLinkView: UIView {
     
+    //MARK: - Private Properties
+    
     private let linkPhoto = UIImageView(image: .anya)
     private let linkTitle = UILabel()
     private let linkCaption = UILabel()
+    
+    //MARK: - Initializers
     
     init() {
         super.init(frame: .zero)
@@ -31,11 +35,15 @@ class PostLinkView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Public Methods
+    
     func setPostLinkView(image: UIImage, title: String, caption: String) {
         linkPhoto.image = image
         linkTitle.text = title
         linkCaption.text = caption
     }
+    
+    //MARK: - Private Methods
     
     private func setupUI() {
         linkTitle.font = .systemFont(ofSize: 16, weight: .semibold)

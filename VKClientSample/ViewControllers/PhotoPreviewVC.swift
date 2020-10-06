@@ -10,22 +10,28 @@ import UIKit
 
 class PhotoPreviewVC: UIViewController {
     
-    let photosPreviewNavBar = PhotoPreviewNavBarView()
+    // MARK: - Private Properties
+    
     private let photoPreviewFooter = PhotoPreviewFooter()
     private var isToolBarOpened: Bool = false
-    
     private let currentPhoto = UIImageView()
-    var friendPreviewPhotos = [String]()
-    var friendPhotosQuantity = Int()
-    var selectedPhoto = Int()
     
-    var isStatusBarHidden: Bool = true {
+    private var isStatusBarHidden: Bool = true {
         didSet {
             if oldValue != self.isStatusBarHidden {
                 self.setNeedsStatusBarAppearanceUpdate()
             }
         }
     }
+    
+    // MARK: - Public Properties
+    
+    let photosPreviewNavBar = PhotoPreviewNavBarView()
+    var friendPreviewPhotos = [String]()
+    var friendPhotosQuantity = Int()
+    var selectedPhoto = Int()
+    
+    // MARK: - LifeCycle
     
     override var prefersStatusBarHidden: Bool {
         return self.isStatusBarHidden
@@ -46,6 +52,8 @@ class PhotoPreviewVC: UIViewController {
         configureSwipeGestures()
     }
     
+    // MARK: - Private Methods
+    
     private func configureUI() {
         currentPhoto.autoresizingMask = UIView.AutoresizingMask(rawValue: UIView.AutoresizingMask.flexibleBottomMargin.rawValue | UIView.AutoresizingMask.flexibleHeight.rawValue | UIView.AutoresizingMask.flexibleRightMargin.rawValue | UIView.AutoresizingMask.flexibleLeftMargin.rawValue | UIView.AutoresizingMask.flexibleTopMargin.rawValue | UIView.AutoresizingMask.flexibleWidth.rawValue)
         currentPhoto.contentMode = .scaleAspectFit
@@ -56,7 +64,7 @@ class PhotoPreviewVC: UIViewController {
             currentPhoto.kf.indicatorType = .activity
             currentPhoto.kf.setImage(with: photoUrl,
                                      options: [
-                                         .transition(.fade(1)),
+                                        .transition(.fade(1)),
                                      ])
         }
         
@@ -96,11 +104,13 @@ class PhotoPreviewVC: UIViewController {
         ])
     }
     
-    @objc func dissmissPhotoPreviewVC() {
+    //MARK: - Actions
+    
+    @objc private func dissmissPhotoPreviewVC() {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @objc func handeTapGesture(sender: UITapGestureRecognizer) {
+    @objc private func handeTapGesture(sender: UITapGestureRecognizer) {
         isToolBarOpened = !isToolBarOpened
         
         if isToolBarOpened {
@@ -119,6 +129,8 @@ class PhotoPreviewVC: UIViewController {
     }
 }
 
+// MARK: - UIGestureRecognizerDelegate
+
 extension PhotoPreviewVC: UIGestureRecognizerDelegate {
     private func configureSwipeGestures() {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(gesture:)))
@@ -134,7 +146,7 @@ extension PhotoPreviewVC: UIGestureRecognizerDelegate {
         self.view.addGestureRecognizer(swipeDown)
     }
     
-    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+    @objc private func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizer.Direction.down:

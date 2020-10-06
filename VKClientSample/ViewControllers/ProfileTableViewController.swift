@@ -10,8 +10,12 @@ import UIKit
 
 class ProfileTableViewController: UITableViewController {
     
+    // MARK: - Private Properties
+    
     private let vkApi = VKApi()
     private var profile = [User]()
+    
+    // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,19 +26,24 @@ class ProfileTableViewController: UITableViewController {
         requestProfileInfo()
     }
     
+    // MARK: - Private Methods
+    
     private func requestProfileInfo() {
-        vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] in
+        vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] users in
+            //            RealmService.manager.saveObjects(users)
             self?.loadData()
         }
     }
     
     private func loadData() {
-           self.profile = RealmService.manager.getAllObjects(of: User.self)
-           self.tableView.reloadData()
-       }
-    
-    // MARK: - Table view data source
-    
+        self.profile = RealmService.manager.getAllObjects(of: User.self)
+        self.tableView.reloadData()
+    }
+}
+
+//MARK: - UITableViewDataSource
+
+extension ProfileTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -43,7 +52,6 @@ class ProfileTableViewController: UITableViewController {
         return profile.count
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTVCell.reuseId, for: indexPath) as? ProfileTVCell else {
             return UITableViewCell()
@@ -51,14 +59,10 @@ class ProfileTableViewController: UITableViewController {
         
         let profileInfo = profile[indexPath.row]
         
-        cell.configureWith(name: profileInfo.firstName, surname: profileInfo.lastName, status: profileInfo.status ?? "")
-        if let imageUrl = URL(string: profileInfo.imageUrl!) {
-            cell.avatarImageView.kf.setImage(with: imageUrl)
-        }
+        cell.configure(user: profileInfo)
         
         return cell
     }
-    
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 102.0

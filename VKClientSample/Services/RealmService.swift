@@ -14,7 +14,7 @@ class RealmService {
     
     private init() {}
     
-//MARK: - Save objects
+    //MARK: - Save objects
     
     func saveObject(_ object: Object) {
         do {
@@ -49,7 +49,7 @@ class RealmService {
         }
     }
     
-//MARK: - Delete objects
+    //MARK: - Delete objects
     
     func removeObject(_ object: Object) {
         do {
@@ -114,7 +114,7 @@ class RealmService {
             print("❌❌❌ Realm error\n \(error) ❌❌❌")
         }
     }
-
+    
     
     //MARK: - Get objects
     
@@ -148,7 +148,7 @@ extension Realm {
                 do {
                     let realm = try Realm()
                     let obj = realm.resolve(wrappedObj)
-
+                    
                     try realm.write {
                         block(realm, obj)
                     }

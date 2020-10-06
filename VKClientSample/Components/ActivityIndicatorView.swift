@@ -9,18 +9,22 @@
 import UIKit
 import QuartzCore
 
+//MARK: - ActivityIndicator using image
+
 class ActivityIndicatorView: UIView {
     
-    // MARK - Variables
+    //MARK: - Private Properties
     
     lazy private var animationLayer : CALayer = {
         return CALayer()
     }()
     
+    // MARK: - Variables
+    
     var isAnimating : Bool = false
     var hidesWhenStopped : Bool = true
     
-    // MARK - Init
+    // MARK: - Initializers
     
     init(image: UIImage) {
         let frame: CGRect = CGRect(x: 0.0, y: 0.0, width: image.size.width, height: image.size.height)
@@ -52,42 +56,7 @@ class ActivityIndicatorView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK - Func
-    
-    func addRotation(forLayer layer : CALayer) {
-        let rotation : CABasicAnimation = CABasicAnimation(keyPath:"transform.rotation.z")
-        
-        rotation.duration = 1.0
-        rotation.isRemovedOnCompletion = false
-        rotation.repeatCount = HUGE
-        rotation.fillMode = CAMediaTimingFillMode.forwards
-        rotation.fromValue = NSNumber(value: 0.0)
-        rotation.toValue = NSNumber(value: 3.14 * 2.0)
-        
-        layer.add(rotation, forKey: "rotate")
-    }
-    
-    func pause(layer: CALayer) {
-        let pausedTime = layer.convertTime(CACurrentMediaTime(), from: nil)
-        
-        layer.speed = 0.0
-        layer.timeOffset = pausedTime
-        
-        isAnimating = false
-    }
-    
-    func resume(layer: CALayer) {
-        let pausedTime : CFTimeInterval = layer.timeOffset
-        
-        layer.speed = 1.0
-        layer.timeOffset = 0.0
-        layer.beginTime = 0.0
-        
-        let timeSincePause = layer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
-        layer.beginTime = timeSincePause
-        
-        isAnimating = true
-    }
+    // MARK: - Public Methods
     
     func startAnimating () {
         
@@ -106,5 +75,42 @@ class ActivityIndicatorView: UIView {
             self.isHidden = true
         }
         pause(layer: animationLayer)
+    }
+    
+    // MARK: - Private Methods
+    
+    private func addRotation(forLayer layer : CALayer) {
+        let rotation : CABasicAnimation = CABasicAnimation(keyPath:"transform.rotation.z")
+        
+        rotation.duration = 1.0
+        rotation.isRemovedOnCompletion = false
+        rotation.repeatCount = HUGE
+        rotation.fillMode = CAMediaTimingFillMode.forwards
+        rotation.fromValue = NSNumber(value: 0.0)
+        rotation.toValue = NSNumber(value: 3.14 * 2.0)
+        
+        layer.add(rotation, forKey: "rotate")
+    }
+    
+    private func pause(layer: CALayer) {
+        let pausedTime = layer.convertTime(CACurrentMediaTime(), from: nil)
+        
+        layer.speed = 0.0
+        layer.timeOffset = pausedTime
+        
+        isAnimating = false
+    }
+    
+    private func resume(layer: CALayer) {
+        let pausedTime : CFTimeInterval = layer.timeOffset
+        
+        layer.speed = 1.0
+        layer.timeOffset = 0.0
+        layer.beginTime = 0.0
+        
+        let timeSincePause = layer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
+        layer.beginTime = timeSincePause
+        
+        isAnimating = true
     }
 }

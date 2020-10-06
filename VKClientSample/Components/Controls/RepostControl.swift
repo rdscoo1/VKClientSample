@@ -10,9 +10,12 @@ import UIKit
 
 class RepostControl: UIControl {
     
-    private let repostImageView = UIImageView(image: .shareButton)
+    //MARK: - Private Properties
+    
+    private let repostImageView = UIImageView(image: .shareIcon)
     private let repostCounterLabel = UILabel()
-
+    
+    //MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,25 +27,30 @@ class RepostControl: UIControl {
         configureRepostControl()
     }
     
+    //MARK: - Public Methods
+    
     func updateRepostControl(quantity: Int) {
         if quantity > 0 {
             repostCounterLabel.text = "\(quantity)"
         }
     }
     
-    func configureRepostControl() {
+    //MARK: - Private Methods
+    
+    private func configureRepostControl() {
+        repostImageView.tintColor = Constants.Colors.vkGray
+        
+        repostCounterLabel.textColor = Constants.Colors.vkGray
+        repostCounterLabel.backgroundColor = Constants.Colors.theme
+        repostCounterLabel.font = .systemFont(ofSize: 12, weight: .medium)
+        
         addSubview(repostImageView)
         addSubview(repostCounterLabel)
         
-        repostImageView.tintColor = UIColor(hex: "#909399")
-        
-        repostCounterLabel.textColor = UIColor(hex: "#67707a")
-        repostCounterLabel.font = .systemFont(ofSize: 12, weight: .medium)
-                
         repostImageView.translatesAutoresizingMaskIntoConstraints = false
         repostImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         repostImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        repostImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        repostImageView.heightAnchor.constraint(equalToConstant: 17).isActive = true
         
         repostCounterLabel.translatesAutoresizingMaskIntoConstraints = false
         repostCounterLabel.leadingAnchor.constraint(equalTo: repostImageView.trailingAnchor, constant: 4).isActive = true

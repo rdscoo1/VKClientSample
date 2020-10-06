@@ -11,11 +11,17 @@ import SnapKit
 
 class FriendsTableVC: UITableViewController {
     
-    private let vkApi = VKApi()
+    // MARK: - IBOutlets
+    
     @IBOutlet weak var searchBar: UISearchBar!
     
+    // MARK: - Properties
+    
+    private let vkApi = VKApi()
     private var friends = [Friend]()
     private var friendsInSection = [FriendSection]()
+    
+    // MARK: - LifeCycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -36,8 +42,9 @@ class FriendsTableVC: UITableViewController {
         requestFromApi()
     }
     
+    // MARK: - Private Methods
     
-    func handleFriends(items: [Friend]) -> [FriendSection] {
+    private func handleFriends(items: [Friend]) -> [FriendSection] {
         return Dictionary(grouping: items) { $0.lastName.prefix(1) }
             .map { FriendSection(firstLetter: "\($0.key)", items: $0.value) }
             .sorted(by: { $0.firstLetter < $1.firstLetter })
@@ -63,12 +70,12 @@ class FriendsTableVC: UITableViewController {
     
     
     // MARK: - Navigation
-    //
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let segueId = segue.identifier,
-            segueId == "friendPhotosSegue",
-            let friendPhotos = segue.destination as? FriendCollectionVC,
-            let selectedIndex = tableView.indexPathForSelectedRow {
+           segueId == "friendPhotosSegue",
+           let friendPhotos = segue.destination as? FriendCollectionVC,
+           let selectedIndex = tableView.indexPathForSelectedRow {
             friendPhotos.friendId = friendsInSection[selectedIndex.section].items[selectedIndex.row].id
         }
         
@@ -76,6 +83,8 @@ class FriendsTableVC: UITableViewController {
         self.navigationController?.navigationBar.tintColor = Constants.Colors.vkBlue
     }
 }
+
+// MARK: - UITableViewDataSource
 
 extension FriendsTableVC {
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -104,6 +113,25 @@ extension FriendsTableVC {
         return cell
     }
 }
+
+//MARK: - UITableViewDelegate
+
+extension FriendsTableVC {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let friendPhotos = storyboard.instantiateViewController(withIdentifier: "friendPhotos") as? FriendCollectionVC else { return }
+        
+        if let selectedIndex = tableView.indexPathForSelectedRow {
+            friendPhotos.friendId = friendsInSection[selectedIndex.section].items[selectedIndex.row].id
+        }
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+        self.navigationController?.navigationBar.tintColor = Constants.Colors.vkBlue
+        
+        self.navigationController?.pushViewController(friendPhotos, animated: true)
+    }
+}
+
+//MARK: - UISearchBarDelegate
 
 extension FriendsTableVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

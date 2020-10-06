@@ -8,7 +8,9 @@
 
 import UIKit
 
-class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class FriendCollectionVC: UICollectionViewController {
+    
+    // MARK: - Properties
     
     private let vkApi = VKApi()
     var friendId = Int()
@@ -16,15 +18,24 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
     private var photosUrlsLowRes = [String?]()
     private var photosUrlsHighRes = [String]()
     
+    // MARK: - LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         loadData()
         
         vkApi.getPhotos(ownerId: friendId) { [weak self] in
             self?.loadData()
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+        self.navigationController?.navigationBar.tintColor = Constants.Colors.vkBlue
+    }
+    
+    // MARK: - Private Methods
     
     private func loadData() {
         self.friendPhotos = RealmService.manager.getAllObjects(of: Photo.self, with: NSPredicate(format: "ownerId == %ld", friendId))
@@ -43,13 +54,9 @@ class FriendCollectionVC: UICollectionViewController, UICollectionViewDelegateFl
             self.photosUrlsHighRes.append(photoLinkhighRes ?? "")
         }
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
-        self.navigationController?.navigationBar.tintColor = Constants.Colors.vkBlue
-    }
 }
 
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 
 extension FriendCollectionVC {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -58,7 +65,7 @@ extension FriendCollectionVC {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FriendCVCell.reuseId, for: indexPath) as? FriendCVCell
-            else { return UICollectionViewCell() }
+        else { return UICollectionViewCell() }
         guard let friendPhotos = photosUrlsLowRes[indexPath.row] else {
             return UICollectionViewCell()
         }
@@ -70,7 +77,11 @@ extension FriendCollectionVC {
         
         return cell
     }
-    
+}
+
+//MARK: - UICollectionViewDelegate
+
+extension FriendCollectionVC {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let vc = storyboard?.instantiateViewController(withIdentifier: "PhotoPreviewVC") as? PhotoPreviewVC else {
             return
@@ -83,8 +94,11 @@ extension FriendCollectionVC {
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
     }
-    
-    //MARK: - Layout
+}
+
+//MARK: - UICollectionViewDelegateFlowLayout
+
+extension FriendCollectionVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {

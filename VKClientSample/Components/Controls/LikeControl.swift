@@ -10,10 +10,17 @@ import UIKit
 
 class LikeControl: UIControl {
     
-    private let likeImageView = UIImageView(image: .heart)
+    //MARK: - Private Properties
+    
+    private let likeImageView = UIImageView(image: .heartIcon)
     private let likeCounterLabel = UILabel()
+    
+    //MARK: - Private Variables
+    
     private var likeCounter = Int()
     private var isLiked: Bool = false
+    
+    //MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,6 +32,8 @@ class LikeControl: UIControl {
         configureLikeControl()
     }
     
+    //MARK: - Public Methods
+    
     func updateLikeControl(quantity: Int) {
         if quantity > 0 {
             self.likeCounter = quantity
@@ -32,14 +41,16 @@ class LikeControl: UIControl {
         }
     }
     
+    //MARK: - Private Methods
+    
     private func configureLikeControl() {
+        likeImageView.tintColor = Constants.Colors.vkGray
+        
+        likeCounterLabel.textColor = Constants.Colors.vkGray
+        likeCounterLabel.font = .systemFont(ofSize: 12, weight: .medium)
+        
         addSubview(likeImageView)
         addSubview(likeCounterLabel)
-        
-        likeImageView.tintColor = UIColor(hex: "#909399")
-        
-        likeCounterLabel.textColor = UIColor(hex: "#67707a")
-        likeCounterLabel.font = .systemFont(ofSize: 12, weight: .medium)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(tappedLike))
         addGestureRecognizer(tap)
@@ -47,14 +58,38 @@ class LikeControl: UIControl {
         likeImageView.translatesAutoresizingMaskIntoConstraints = false
         likeImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         likeImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        likeImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        likeImageView.heightAnchor.constraint(equalToConstant: 19).isActive = true
         
         likeCounterLabel.translatesAutoresizingMaskIntoConstraints = false
         likeCounterLabel.leadingAnchor.constraint(equalTo: likeImageView.trailingAnchor, constant: 4).isActive = true
         likeCounterLabel.centerYAnchor.constraint(equalTo: likeImageView.centerYAnchor).isActive = true
     }
     
-    @objc func tappedLike() {
+    private func animateButtonTap() {
+        UIView.animate(
+            withDuration: 0.15,
+            delay: 0,
+            usingSpringWithDamping: 0.7,
+            initialSpringVelocity: 0.5,
+            options: .curveEaseIn,
+            animations: {
+                self.likeImageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            }) { (_) in
+            UIView.animate(
+                withDuration: 0.2,
+                delay: 0,
+                usingSpringWithDamping: 0.4,
+                initialSpringVelocity: 0.5,
+                options: .curveEaseIn,
+                animations: {
+                    self.likeImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                }, completion: nil)
+        }
+    }
+    
+    //MARK: - Actions
+    
+    @objc private func tappedLike() {
         isLiked = !isLiked
         
         if isLiked {
@@ -69,37 +104,15 @@ class LikeControl: UIControl {
             generator.impactOccurred()
         } else {
             likeCounterLabel.text = "\(likeCounter)"
-            likeImageView.image = .heart
+            likeImageView.image = .heartIcon
             likeImageView.tintColor = .gray
             
             UIView.animate(withDuration: 0.3, delay: 0.0, animations: {
-                self.likeCounterLabel.textColor = .lightGray
+                self.likeCounterLabel.textColor = Constants.Colors.vkGray
                 self.layoutIfNeeded()
             })
         }
         
         animateButtonTap()
-    }
-    
-    private func animateButtonTap() {
-        UIView.animate(
-            withDuration: 0.15,
-            delay: 0,
-            usingSpringWithDamping: 0.7,
-            initialSpringVelocity: 0.5,
-            options: .curveEaseIn,
-            animations: {
-                self.likeImageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-        }) { (_) in
-            UIView.animate(
-                withDuration: 0.2,
-                delay: 0,
-                usingSpringWithDamping: 0.4,
-                initialSpringVelocity: 0.5,
-                options: .curveEaseIn,
-                animations: {
-                    self.likeImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
-            }, completion: nil)
-        }
     }
 }

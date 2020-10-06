@@ -10,7 +10,7 @@ import UIKit
 
 class FriendCVCell: UICollectionViewCell {
     
-    @IBOutlet weak var friendPhoto: UIImageView!
-    
     static let reuseId = "FriendPhotosСell"
+    
+    @IBOutlet weak var friendPhoto: UIImageView!
 }

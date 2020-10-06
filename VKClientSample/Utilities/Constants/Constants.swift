@@ -10,8 +10,7 @@ import UIKit
 
 struct Constants {
     enum Colors {
-//        static let vkBlue = UIColor(hex: "#408bdb")
-        static let vkBlue = UIColor(hex: "#7da5e5")
+        static let vkBlue = UIColor(hex: "#408bdb")
         
         static var vkGray: UIColor {
             if #available(iOS 13.0, *) {
@@ -30,13 +29,11 @@ struct Constants {
         static var newsSeparator: UIColor {
             if #available(iOS 13.0, *) {
                 return UIColor { (traits) -> UIColor in
-                    // Return one of two colors depending on light or dark mode
                     return traits.userInterfaceStyle == .dark ?
                         UIColor(hex: "#0a0a0a") :
                         UIColor(hex: "#ebecef")
                 }
             } else {
-                // Same old color used for iOS 12 and earlier
                 return UIColor(hex: "#ebecef")
             }
         }
@@ -44,13 +41,11 @@ struct Constants {
         static var theme: UIColor {
             if #available(iOS 13.0, *) {
                 return UIColor { (traits) -> UIColor in
-                    // Return one of two colors depending on light or dark mode
                     return traits.userInterfaceStyle == .dark ?
                         UIColor(hex: "#19191b") :
                         UIColor(hex: "#ffffff")
                 }
             } else {
-                // Same old color used for iOS 12 and earlier
                 return UIColor(hex: "#ffffff")
             }
         }
@@ -58,13 +53,11 @@ struct Constants {
         static var loadingIcon: UIColor {
             if #available(iOS 13.0, *) {
                 return UIColor { (traits) -> UIColor in
-                    // Return one of two colors depending on light or dark mode
                     return traits.userInterfaceStyle == .dark ?
                         UIColor(hex: "#5c5e60") :
                         UIColor(hex: "#afb8c1")
                 }
             } else {
-                // Same old color used for iOS 12 and earlier
                 return UIColor(hex: "#afb8c1")
             }
         }
@@ -72,18 +65,14 @@ struct Constants {
         static var textField: UIColor {
             if #available(iOS 13.0, *) {
                 return UIColor { (traits) -> UIColor in
-                    // Return one of two colors depending on light or dark mode
                     return traits.userInterfaceStyle == .dark ?
                         UIColor(hex: "#363739") :
                         UIColor(hex: "#ebecef")
                 }
             } else {
-                // Same old color used for iOS 12 and earlier
                 return UIColor(hex: "#ebecef")
             }
         }
-        
-        
     }
 }
 

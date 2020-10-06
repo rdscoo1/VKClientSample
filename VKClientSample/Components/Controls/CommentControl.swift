@@ -10,8 +10,12 @@ import UIKit
 
 class CommentControl: UIControl {
     
-    private let commentImageView = UIImageView(image: .commentButton)
+    //MARK: - Private Properties
+    
+    private let commentImageView = UIImageView(image: .commentIcon)
     private let commentCounterLabel = UILabel()
+    
+    //MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,21 +27,25 @@ class CommentControl: UIControl {
         configureCommentControl()
     }
     
+    //MARK: - Public Methods
+    
     func updateCommentControl(quantity: Int) {
         if quantity > 0 {
             commentCounterLabel.text = "\(quantity)"
         }
     }
     
-    func configureCommentControl() {
-        addSubview(commentImageView)
-        addSubview(commentCounterLabel)
+    //MARK: - Private Methods
+    
+    private func configureCommentControl() {
+        commentImageView.tintColor = Constants.Colors.vkGray
         
-        commentImageView.tintColor = UIColor(hex: "#909399")
-        
-        commentCounterLabel.textColor = UIColor(hex: "#67707a")
+        commentCounterLabel.textColor = Constants.Colors.vkGray
+        commentCounterLabel.backgroundColor = Constants.Colors.theme
         commentCounterLabel.font = .systemFont(ofSize: 12, weight: .medium)
         
+        addSubview(commentImageView)
+        addSubview(commentCounterLabel)
         
         commentImageView.translatesAutoresizingMaskIntoConstraints = false
         commentImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
