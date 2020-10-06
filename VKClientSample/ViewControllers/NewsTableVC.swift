@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-// MARK: - Types
+// MARK: - Section Types
 
 enum SectionTypes: Int, CaseIterable {
     case stories = 0
@@ -24,6 +24,7 @@ enum SectionTypes: Int, CaseIterable {
         return self.allCases[section]
     }
 }
+
 
 class NewsTableVC: UITableViewController {
     

@@ -193,7 +193,7 @@ class VKApi {
             "access_token": Session.shared.token,
             "v": "5.124",
             "filters": "post",
-            "count": "1",
+            "count": "20",
             "start_from": "\(nextBatch ?? "")",
             "start_time": "\(startTime ?? "")"
         ]

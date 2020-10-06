@@ -105,7 +105,7 @@ class LikeControl: UIControl {
         } else {
             likeCounterLabel.text = "\(likeCounter)"
             likeImageView.image = .heartIcon
-            likeImageView.tintColor = .gray
+            likeImageView.tintColor = Constants.Colors.vkGray
             
             UIView.animate(withDuration: 0.3, delay: 0.0, animations: {
                 self.likeCounterLabel.textColor = Constants.Colors.vkGray
