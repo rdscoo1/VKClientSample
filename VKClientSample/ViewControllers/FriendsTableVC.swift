@@ -15,7 +15,7 @@ class FriendsTableVC: UITableViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     
-    // MARK: - Properties
+    // MARK: - Private Properties
     
     private let vkApi = VKApi()
     private var friends = [Friend]()
@@ -25,8 +25,8 @@ class FriendsTableVC: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let selectionIndexPath = self.tableView.indexPathForSelectedRow {
-            self.tableView.deselectRow(at: selectionIndexPath, animated: animated)
+        if let selectionIndexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selectionIndexPath, animated: animated)
         }
     }
     

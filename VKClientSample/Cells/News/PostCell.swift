@@ -43,33 +43,48 @@ class PostCell: UITableViewCell {
     // MARK: - CellForRowAt configuration
     
     func configure(with post: Post, author: Response?) {
-        if post.sourceId > 0 {
-            let user = author?.profiles.first(where: { $0.id == abs(post.sourceId) })
-            postAuthor.text = user?.name
-            postAuthorImage.kf.setImage(with: URL(string: user?.imageUrl ?? ""))
-        } else {
-            let community = author?.groups.first(where: { $0.id == abs(post.sourceId) })
-            postAuthor.text = community?.name
-            postAuthorImage.kf.setImage(with: URL(string: community?.imageUrl ?? ""))
+        if let sourceId = post.sourceId {
+            if sourceId > 0 {
+                let user = author?.profiles.first(where: { $0.id == abs(sourceId) })
+                postAuthor.text = user?.name
+                postAuthorImage.kf.setImage(with: URL(string: user?.imageUrl ?? ""))
+            } else {
+                let community = author?.groups.first(where: { $0.id == abs(sourceId) })
+                postAuthor.text = community?.name
+                postAuthorImage.kf.setImage(with: URL(string: community?.imageUrl ?? ""))
+            }
+        } else if let ownerId = post.ownerId {
+            if ownerId > 0 {
+                let user = author?.profiles.first(where: { $0.id == abs(ownerId) })
+                postAuthor.text = user?.name
+                postAuthorImage.kf.setImage(with: URL(string: user?.imageUrl ?? ""))
+            } else {
+                let community = author?.groups.first(where: { $0.id == abs(ownerId) })
+                postAuthor.text = community?.name
+                postAuthorImage.kf.setImage(with: URL(string: community?.imageUrl ?? ""))
+            }
         }
+        
         
         let date = Date(timeIntervalSince1970: post.date).getElapsedInterval()
         publishDate.text = "\(date) \(agoWord)"
         postText.text = post.text
         
-        let attachments = post.attachments
-        if attachments[0].type.contains("photo") || attachments[0].type.contains("post") {
-            postImageViewHeightConstraint.constant = 288
-            layoutIfNeeded()
-            let retry = DelayRetryStrategy(maxRetryCount: 3, retryInterval: .seconds(1))
-            postImageView.kf.indicatorType = .activity
-            postImageView.kf.setImage(with: URL(string: attachments[0].photo?.highResPhoto ?? ""),
-                                      options: [.retryStrategy(retry)])
-        } else {
-            postImageView.image = nil
-            postImageViewHeightConstraint.constant = 0
-            layoutIfNeeded()
+        if let attachments = post.attachments {
+            if attachments[0].type.contains("photo") || attachments[0].type.contains("post") {
+                postImageViewHeightConstraint.constant = 288
+                layoutIfNeeded()
+                let retry = DelayRetryStrategy(maxRetryCount: 3, retryInterval: .seconds(1))
+                postImageView.kf.indicatorType = .activity
+                postImageView.kf.setImage(with: URL(string: attachments[0].photo?.highResPhoto ?? ""),
+                                          options: [.retryStrategy(retry)])
+            } else {
+                postImageView.image = nil
+                postImageViewHeightConstraint.constant = 0
+                layoutIfNeeded()
+            }
         }
+        
         
         //        if post.photos != nil {
         //            if let photoUrl = URL(string: post.photos?[0].highResPhoto ?? "") {
@@ -78,7 +93,8 @@ class PostCell: UITableViewCell {
         //            }
         //        }
         
-        postStatistics.updateControls(likes: post.likes, comments: post.comments, reposts: post.reposts, views: post.views)
+        postStatistics.updateControls(likes: post.likes ?? 0, comments: post.comments ?? 0, reposts: post.reposts ?? 0, views: post.views ?? 0
+        )
     }
     
     

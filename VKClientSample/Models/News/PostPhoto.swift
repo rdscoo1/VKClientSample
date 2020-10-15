@@ -6,20 +6,13 @@
 //  Copyright © 2020 Roman Khodukin. All rights reserved.
 //
 
-import RealmSwift
-
-@objcMembers 
-class PostPhoto: Object, Decodable {
-    dynamic var id: Int = 0
-    var sizes = List<PostPhotoSize>()
-    dynamic var highResPhoto: String {
-        guard let photoLinkhighRes = sizes.first(where: { $0.type == "x" })?.url else {
+struct PostPhoto: Decodable {
+    let id: Int
+    let sizes: [PostPhotoSize]?
+    var highResPhoto: String {
+        guard let photoLinkhighRes = sizes?.first(where: { $0.type == "x" })?.url else {
             return ""
         }
         return photoLinkhighRes
-    }
-    
-    override static func primaryKey() -> String? { // По `id`  при совпадении: перезаписывает, а не дублирует
-        return "id"
     }
 }

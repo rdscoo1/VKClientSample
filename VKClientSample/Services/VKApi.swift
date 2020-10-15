@@ -20,6 +20,7 @@ enum ApiRequests: String {
     case photos = "photos.get"
     case newsfeed = "newsfeed.get"
     case stories = "stories.get"
+    case wall = "wall.get"
 }
 
 class VKApi {
@@ -74,10 +75,20 @@ class VKApi {
     
     //MARK: - Public Methods
     
-    func getGroups() {
+    func getFriends(completion: @escaping () -> Void) {
+        let params: Parameters = [
+            "user_id": Session.shared.userId,
+            "order": "hints",
+            "fields": "city,photo_50,online"
+        ]
+        
+        makeRequest(apiMethod: .friends, params: params, objectType: Friend.self, completion: completion)
+    }
+    
+    func getGroups(completion: @escaping () -> Void) {
         let inputParams: Parameters = [
             "extended" : "1",
-            "fields": "activity"
+            "fields": "activity,status,members_count,cover"
         ]
         
         let requestUrl = apiURL + ApiRequests.groups.rawValue
@@ -86,13 +97,16 @@ class VKApi {
         
         AF.request(requestUrl, method: .get, parameters: params)
             .validate(statusCode: 200..<300)
-            .responseData { response in
+            .responseData(queue: .global(qos: .utility)) { response in
                 switch response.result {
                 case let .success(data):
                     do {
                         let decodedModel = try JSONDecoder().decode(VKResponse<Community>.self, from: data)
                         if let responseData = decodedModel.response {
-                            RealmService.manager.removeObjectsThanSave(of: Community.self, objects: responseData.items)
+                            DispatchQueue.main.async {
+                                RealmService.manager.removeObjectsThanSave(of: Community.self, objects: responseData.items)
+                                completion()
+                            }
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
@@ -108,20 +122,10 @@ class VKApi {
             }
     }
     
-    func getFriends(completion: @escaping () -> Void) {
-        let params: Parameters = [
-            "user_id": Session.shared.userId,
-            "order": "hints",
-            "fields": "city, photo_50, online"
-        ]
-        
-        makeRequest(apiMethod: .friends, params: params, objectType: Friend.self, completion: completion)
-    }
-    
-    func getSearchedGroups(groupName: String) {
+    func getSearchedGroups(groupName: String, completion: @escaping ([Community]) -> Void) {
         let searchParams: Parameters = [
             "q" : groupName,
-            "fields": "activity"
+            "fields": "activity,status,members_count,cover"
         ]
         
         let requestUrl = apiURL + ApiRequests.groupsSearch.rawValue
@@ -130,13 +134,15 @@ class VKApi {
         
         AF.request(requestUrl, method: .get, parameters: params)
             .validate(statusCode: 200..<300)
-            .responseData { response in
+            .responseData(queue: .global(qos: .utility)) { response in
                 switch response.result {
                 case let .success(data):
                     do {
                         let decodedModel = try JSONDecoder().decode(VKResponse<Community>.self, from: data)
                         if let responseData = decodedModel.response {
-                            RealmService.manager.removeObjectsThanSave(of: Community.self, objects: responseData.items)
+                            DispatchQueue.main.async {
+                                completion(responseData.items)
+                            }
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
@@ -206,8 +212,8 @@ class VKApi {
                     do {
                         let decodedModel = try JSONDecoder().decode(PostResponse.self, from: data)
                         if let responseData = decodedModel.response {
-                            print("📩📩📩 Methood \(ApiRequests.newsfeed.rawValue) response: 📩📩📩")
-                            print(responseData)
+//                            print("📩📩📩 Methood \(ApiRequests.newsfeed.rawValue) response: 📩📩📩")
+//                            print(responseData)
                             DispatchQueue.main.async {
                                 completion(responseData)
                             }
@@ -289,6 +295,43 @@ class VKApi {
                         }
                     } catch {
                         print("❌ Decoding \(UserResponse.self) failed ❌\n\(error) ")
+                    }
+                case let .failure(error):
+                    print("❌ Alamofire error ❌\n \(error)")
+                }
+            }
+    }
+    
+    func getWall(ownerId: Int, completion: @escaping (Response) -> Void) {
+        let requestUrl = apiURL + ApiRequests.wall.rawValue
+        let params: Parameters = [
+            "access_token": Session.shared.token,
+            "v": "5.124",
+            "extended": 1,
+            "owner_id": -ownerId
+        ]
+        
+        AF.request(requestUrl, method: .get, parameters: params)
+            .validate(statusCode: 200..<300)
+            .responseData(queue: .global(qos: .utility)) { response in
+                switch response.result {
+                case let .success(data):
+                    do {
+                        let decodedModel = try JSONDecoder().decode(PostResponse.self, from: data)
+                        if let responseData = decodedModel.response {
+//                            print("📩📩📩 Methood \(ApiRequests.newsfeed.rawValue) response: 📩📩📩")
+//                            print(responseData)
+                            DispatchQueue.main.async {
+                                completion(responseData)
+                            }
+                        } else if
+                            let errorCode = decodedModel.error?.errorCode,
+                            let errorMsg = decodedModel.error?.errorMessage
+                        {
+                            print("❌ VKApi \(ApiRequests.wall.rawValue) error ❌\n\(errorCode) \(errorMsg)")
+                        }
+                    } catch {
+                        print("❌ Decoding \(PostResponse.self) failed ❌\n\(error) ")
                     }
                 case let .failure(error):
                     print("❌ Alamofire error ❌\n \(error)")

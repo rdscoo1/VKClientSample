@@ -11,7 +11,7 @@ import QuartzCore
 
 //MARK: - ActivityIndicator using image
 
-class ActivityIndicatorView: UIView {
+class ActivityIndicatorWithImage: UIView {
     
     //MARK: - Private Properties
     

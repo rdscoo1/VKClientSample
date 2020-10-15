@@ -17,7 +17,7 @@ struct Constants {
                 return UIColor { (traits) -> UIColor in
                     // Return one of two colors depending on light or dark mode
                     return traits.userInterfaceStyle == .dark ?
-                        UIColor(hex: "#929599") :
+                        UIColor(hex: "#e1e3e6") :
                         UIColor(hex: "#848b96")
                 }
             } else {
@@ -26,15 +26,16 @@ struct Constants {
             }
         }
         
-        static var newsSeparator: UIColor {
+        
+        static var blueButton: UIColor {
             if #available(iOS 13.0, *) {
                 return UIColor { (traits) -> UIColor in
                     return traits.userInterfaceStyle == .dark ?
-                        UIColor(hex: "#0a0a0a") :
-                        UIColor(hex: "#ebecef")
+                        UIColor(hex: "#929599") :
+                        UIColor(hex: "#408bdb")
                 }
             } else {
-                return UIColor(hex: "#ebecef")
+                return UIColor(hex: "#408bdb")
             }
         }
         
@@ -50,6 +51,18 @@ struct Constants {
             }
         }
         
+        static var newsSeparator: UIColor {
+            if #available(iOS 13.0, *) {
+                return UIColor { (traits) -> UIColor in
+                    return traits.userInterfaceStyle == .dark ?
+                        UIColor(hex: "#0a0a0a") :
+                        UIColor(hex: "#ebecef")
+                }
+            } else {
+                return UIColor(hex: "#ebecef")
+            }
+        }
+
         static var loadingIcon: UIColor {
             if #available(iOS 13.0, *) {
                 return UIColor { (traits) -> UIColor in

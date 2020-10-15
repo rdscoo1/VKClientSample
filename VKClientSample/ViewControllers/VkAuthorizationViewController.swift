@@ -15,7 +15,7 @@ class VkAuthorizationViewController: UIViewController {
     // MARK: - Variables
     
     private let webView = WKWebView()
-    private let activityIndicator = CustomActivityIndicator(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    private let activityIndicator = CustomActivityIndicator(frame: CGRect(x: 0, y: 0, width: 96, height: 96))
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -30,7 +30,7 @@ class VkAuthorizationViewController: UIViewController {
         setupWebView()
         
         view.addSubview(activityIndicator)
-        activityIndicator.center = self.view.center
+        activityIndicator.center = view.center
         
         configureWebView()
     }
@@ -45,12 +45,12 @@ class VkAuthorizationViewController: UIViewController {
         urlComponents.path = "/authorize"
         
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: "7334032"),
+            URLQueryItem(name: "client_id", value: "7627564"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
             URLQueryItem(name: "scope", value: "270406"),
             URLQueryItem(name: "response_type", value: "token"),
-            URLQueryItem(name: "v", value: "5.107")
+            URLQueryItem(name: "v", value: "5.124")
         ]
         
         let request = URLRequest(url: urlComponents.url!)
@@ -104,6 +104,7 @@ extension VkAuthorizationViewController: WKNavigationDelegate {
         
         Session.shared.token = params["access_token"] ?? ""
         Session.shared.userId = params["user_id"] ?? ""
+        UserDefaults.standard.userId = params["user_id"] ?? ""
         
         goToTabBar()
         decisionHandler(.cancel)

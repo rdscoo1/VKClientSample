@@ -53,7 +53,7 @@ class PostStatistics: UIView {
             containerStackView.addArrangedSubview($0)
         }
         addSubview(containerStackView)
-        addSubview(viewsControl)
+//        addSubview(viewsControl)
         
         configureConstraints()
     }
@@ -67,9 +67,9 @@ class PostStatistics: UIView {
             containerStackView.trailingAnchor.constraint(equalTo: centerXAnchor, constant: 16),
             containerStackView.heightAnchor.constraint(equalToConstant: 32),
             
-            viewsControl.centerYAnchor.constraint(equalTo: centerYAnchor),
-            viewsControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -48),
-            viewsControl.heightAnchor.constraint(equalToConstant: 16)
+//            viewsControl.centerYAnchor.constraint(equalTo: centerYAnchor),
+//            viewsControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -48),
+//            viewsControl.heightAnchor.constraint(equalToConstant: 16)
         ])
     }
 }

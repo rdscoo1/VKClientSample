@@ -35,6 +35,8 @@ class CustomActivityIndicator: UIView {
     //MARK: - Public Methods
     
     func startAnimating() {
+        addRotation()
+        
         if isAnimating {
             return
         }
@@ -86,7 +88,7 @@ class CustomActivityIndicator: UIView {
         // Add the circleLayer to the view's layer's sublayers
         self.layer.addSublayer(circleLayer)
         
-        addRotation()
+//        addRotation()
     }
     
     private func addRotation() {

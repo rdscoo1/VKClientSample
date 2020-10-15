@@ -19,10 +19,19 @@ class CommunitiesVC: UIViewController {
     // MARK: - Variables
     
     private var notificationToken: NotificationToken?
-    private var communities: Results<Community>?
+    private var communities: [Community] = []
     private let vkApi = VKApi()
     
     // MARK: - LifeCycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let selectionIndexPath = self.tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selectionIndexPath, animated: animated)
+        }
+        
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,8 +39,10 @@ class CommunitiesVC: UIViewController {
         searchBar.delegate = self
         configureTableView()
         
-        vkApi.getGroups()
-        handleRealmNotification()
+        loadData()
+        vkApi.getGroups { [weak self] in
+            self?.loadData()
+        }
     }
     
     // MARK: - Private Methods
@@ -41,25 +52,12 @@ class CommunitiesVC: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 64
         tableView.dataSource = self
+        tableView.delegate = self
     }
     
-    private func handleRealmNotification() {
-        guard let realm = try? Realm() else { return }
-        communities = realm.objects(Community.self)
-        notificationToken = communities?.observe { [weak self] (changes: RealmCollectionChange) in
-            switch changes {
-            case .initial:
-                self?.tableView.reloadData()
-            case .update(_, let deletions, let insertions, let modifications):
-                self?.tableView.beginUpdates()
-                self?.tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
-                self?.tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
-                self?.tableView.reloadRows(at: modifications.map { IndexPath(row: $0, section: 0) }, with: .automatic)
-                self?.tableView.endUpdates()
-            case .error(let error):
-                fatalError("\(error)")
-            }
-        }
+    private func loadData() {
+        communities = RealmService.manager.getAllObjects(of: Community.self)
+        tableView.reloadData()
     }
 }
 
@@ -67,17 +65,31 @@ class CommunitiesVC: UIViewController {
 
 extension CommunitiesVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return communities?.count ?? 0
+        return communities.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CommunityCell.reuseId, for: indexPath) as? CommunityCell else {
             return UITableViewCell()
         }
-        let community = communities![indexPath.row]
+        let community = communities[indexPath.row]
         cell.configure(with: community)
         
         return cell
+    }
+}
+
+extension CommunitiesVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = CommunityVC()
+        
+        if let selectedIndex = tableView.indexPathForSelectedRow {
+            vc.communitity = communities[selectedIndex.row]
+        }
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+        self.navigationController!.navigationBar.tintColor = .white
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -86,9 +98,14 @@ extension CommunitiesVC: UITableViewDataSource {
 extension CommunitiesVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if !searchText.isEmpty {
-            vkApi.getSearchedGroups(groupName: searchText)
+            vkApi.getSearchedGroups(groupName: searchText) { [weak self] groups in
+                self?.communities = groups
+                self?.tableView.reloadData()
+            }
         } else {
-            vkApi.getGroups()
+            vkApi.getGroups { [weak self] in
+                self?.loadData()
+            }
         }
     }
 }
