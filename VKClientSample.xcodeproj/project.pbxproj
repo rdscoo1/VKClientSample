@@ -26,6 +26,9 @@
 		E829F961240491F900ED148B /* VKApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = E829F960240491F900ED148B /* VKApi.swift */; };
 		E829F96324049DBD00ED148B /* GetDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E829F96224049DBD00ED148B /* GetDataViewController.swift */; };
 		E836B0B02538AE7600E47521 /* StretchyTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836B0AF2538AE7600E47521 /* StretchyTableViewHeader.swift */; };
+		E836B0B62539B42D00E47521 /* UIButton+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836B0B52539B42D00E47521 /* UIButton+extension.swift */; };
+		E836B0B92539BA4600E47521 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836B0B82539BA4600E47521 /* UIImage+Extension.swift */; };
+		E836B0BD253A599D00E47521 /* CommunityResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836B0BC253A599D00E47521 /* CommunityResponse.swift */; };
 		E836E3B8246CAA900053A065 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836E3B7246CAA900053A065 /* CommunitiesVC.swift */; };
 		E836E3BA246CB46D0053A065 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836E3B9246CB46D0053A065 /* User.swift */; };
 		E84FF665250425B700272297 /* PhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84FF664250425B700272297 /* PhotoService.swift */; };
@@ -108,6 +111,9 @@
 		E829F960240491F900ED148B /* VKApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKApi.swift; sourceTree = "<group>"; };
 		E829F96224049DBD00ED148B /* GetDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDataViewController.swift; sourceTree = "<group>"; };
 		E836B0AF2538AE7600E47521 /* StretchyTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyTableViewHeader.swift; sourceTree = "<group>"; };
+		E836B0B52539B42D00E47521 /* UIButton+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+extension.swift"; sourceTree = "<group>"; };
+		E836B0B82539BA4600E47521 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		E836B0BC253A599D00E47521 /* CommunityResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityResponse.swift; sourceTree = "<group>"; };
 		E836E3B7246CAA900053A065 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
 		E836E3B9246CB46D0053A065 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E84FF664250425B700272297 /* PhotoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoService.swift; sourceTree = "<group>"; };
@@ -376,6 +382,8 @@
 				E85E8310246CD6B20090FBEC /* UserDefaults+extensions.swift */,
 				E871F964247DD13B00EF78BE /* Date+extension.swift */,
 				E8DBDE4D24887C660093920C /* RealmCascadeDeletion.swift */,
+				E836B0B52539B42D00E47521 /* UIButton+extension.swift */,
+				E836B0B82539BA4600E47521 /* UIImage+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -395,6 +403,7 @@
 				E8757B0F241CEAC0002F92A7 /* Community.swift */,
 				E897BCD3252FA760001746DA /* CommunityCover.swift */,
 				E897BCD7252FA781001746DA /* CommunityCoverImages.swift */,
+				E836B0BC253A599D00E47521 /* CommunityResponse.swift */,
 			);
 			path = Communities;
 			sourceTree = "<group>";
@@ -594,6 +603,7 @@
 				E885799223D1D72200C97694 /* CommunitiesTableVC.swift in Sources */,
 				E8068CE523E0E7270083FBBE /* PostFactory.swift in Sources */,
 				E885799423D1D73A00C97694 /* FriendsTableVC.swift in Sources */,
+				E836B0BD253A599D00E47521 /* CommunityResponse.swift in Sources */,
 				E885799823D1D7F200C97694 /* AddCommunitiyTableVC.swift in Sources */,
 				E861CD9923D271EA00D3E9B3 /* CommunityCell.swift in Sources */,
 				E89ACE40246DAE7300E269DA /* Post.swift in Sources */,
@@ -602,11 +612,13 @@
 				E8954A7923B15FEA00A93209 /* AppDelegate.swift in Sources */,
 				E8525476252F354F00BAE806 /* CommunityVC.swift in Sources */,
 				E8CD1C9223D6AC0200C5D668 /* FriendCollectionVC.swift in Sources */,
+				E836B0B92539BA4600E47521 /* UIImage+Extension.swift in Sources */,
 				E8CD1C9723DB29D300C5D668 /* ShadowPhotoView.swift in Sources */,
 				E8757B23242C073C002F92A7 /* ProfileTVCell.swift in Sources */,
 				E8068CE123E0C1EE0083FBBE /* RepostControl.swift in Sources */,
 				E88EC38F2524ACD400F3603D /* CustomActivityIndicator.swift in Sources */,
 				E871F965247DD13B00EF78BE /* Date+extension.swift in Sources */,
+				E836B0B62539B42D00E47521 /* UIButton+extension.swift in Sources */,
 				E87624172472A22D00FB62B6 /* RealmService.swift in Sources */,
 				E829F96324049DBD00ED148B /* GetDataViewController.swift in Sources */,
 				E8D4290425193C6200A326E9 /* PostProfile.swift in Sources */,

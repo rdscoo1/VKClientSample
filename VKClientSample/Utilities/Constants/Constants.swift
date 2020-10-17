@@ -26,6 +26,18 @@ struct Constants {
             }
         }
         
+        static var vkGrayWithAlpha: UIColor {
+            if #available(iOS 13.0, *) {
+                return UIColor { (traits) -> UIColor in
+                    return traits.userInterfaceStyle == .dark ?
+                        UIColor(hex: "#e1e3e6", alpha: 0.5) :
+                        UIColor(hex: "#848b96", alpha: 0.5)
+                }
+            } else {
+                return UIColor(hex: "#848b96", alpha: 0.5)
+            }
+        }
+        
         
         static var blueButton: UIColor {
             if #available(iOS 13.0, *) {

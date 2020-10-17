@@ -41,6 +41,8 @@ extension UIImage {
     
     static let plusIcon = UIImage(imageLiteralResourceName: "plusIcon")
     static let checkmarkIcon = UIImage(imageLiteralResourceName: "checkmarkIcon")
+    static let followingIcon = UIImage(imageLiteralResourceName: "followingIcon")
+    static let followIcon = UIImage(imageLiteralResourceName: "followIcon")
     
     // MARK: - Other
     

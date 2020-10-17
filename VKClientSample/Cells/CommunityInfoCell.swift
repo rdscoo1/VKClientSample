@@ -15,6 +15,7 @@ class CommunityInfoCell: UITableViewCell {
     
     // MARK: - Private Properties
     
+    private let insetView = UIView()
     private let name = UILabel()
     private let status = UILabel()
     private let photo = UIImageView()
@@ -56,6 +57,8 @@ class CommunityInfoCell: UITableViewCell {
     private func setupUI() {
         backgroundColor = Constants.Colors.theme
         
+        insetView.backgroundColor = Constants.Colors.vkGray
+        
         if #available(iOS 13.0, *) {
             name.textColor = .label
         } else {
@@ -68,10 +71,7 @@ class CommunityInfoCell: UITableViewCell {
         photo.layer.cornerRadius = 40
         photo.layer.masksToBounds = true
         
-        followButton.layer.cornerRadius = 4
-        followButton.layer.borderWidth = 1
-        followButton.layer.borderColor = Constants.Colors.blueButton.cgColor
-        
+        contentView.addSubview(insetView)
         contentView.addSubview(name)
         contentView.addSubview(status)
         contentView.addSubview(photo)
@@ -79,26 +79,34 @@ class CommunityInfoCell: UITableViewCell {
     }
     
     private func configureConstraints() {
+        insetView.translatesAutoresizingMaskIntoConstraints = false
         name.translatesAutoresizingMaskIntoConstraints = false
         status.translatesAutoresizingMaskIntoConstraints = false
         photo.translatesAutoresizingMaskIntoConstraints = false
         followButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            name.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 32),
-            name.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            
-            status.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 4),
-            status.leadingAnchor.constraint(equalTo: name.leadingAnchor),
+            insetView.heightAnchor.constraint(equalToConstant: 0.2),
+            insetView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+            insetView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            insetView.topAnchor.constraint(equalTo: contentView.topAnchor),
             
             photo.heightAnchor.constraint(equalToConstant: 80),
             photo.widthAnchor.constraint(equalToConstant: 80),
             photo.centerYAnchor.constraint(equalTo: name.bottomAnchor, constant: 4),
             photo.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
-            followButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 48),
-            followButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -48),
-            followButton.heightAnchor.constraint(equalToConstant: 32),
+            name.topAnchor.constraint(equalTo: insetView.topAnchor, constant: 32),
+            name.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            status.trailingAnchor.constraint(lessThanOrEqualTo: photo.leadingAnchor, constant: -8),
+            
+            status.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 4),
+            status.leadingAnchor.constraint(equalTo: name.leadingAnchor),
+            status.trailingAnchor.constraint(lessThanOrEqualTo: photo.leadingAnchor, constant: -8),
+            
+            followButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 160),
+            followButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -160),
+            followButton.heightAnchor.constraint(equalToConstant: 120),
             followButton.topAnchor.constraint(equalTo: photo.bottomAnchor, constant: 32)
         ])
     }

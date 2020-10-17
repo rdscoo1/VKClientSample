@@ -58,6 +58,8 @@ class CommunityVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.backgroundColor = Constants.Colors.theme
+        
         configureTableView()
         requestFromApi() 
     }
@@ -134,7 +136,7 @@ extension CommunityVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch CommunityWallSections.getSection(indexPath.section) {
         case .communityInfo:
-            return 180.0
+            return 250.0
         case .post:
             return UITableView.automaticDimension
         }

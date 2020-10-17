@@ -8,22 +8,45 @@
 
 import UIKit
 
+enum FollowState: Int {
+    case unfollow = 0
+    case follow = 1
+}
+
 class FollowButton: UIButton {
     
     // MARK: - Private Properties
     
+    private let vkApi = VKApi()
+    
+    // Button localisation
     private let toFollowPhrase = NSLocalizedString("Follow", comment: "")
     private let followingPhrase = NSLocalizedString("Following", comment: "")
     
+    // Tinted Icons
+    private let highlightedCheckmarkIcon = UIImage.followingIcon.tinted(color: Constants.Colors.vkGrayWithAlpha)
+    private let highlightedPlusIcon = UIImage.followIcon.tinted(color: Constants.Colors.vkGrayWithAlpha)
+    
+    private var followState: FollowSwitcher!
+
+    
     // MARK: - Initializers
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        centerVerticallyWith(padding: 4)
+    }
     
     init() {
         super.init(frame: .zero)
         
-        layer.cornerRadius = 12
-        layer.masksToBounds = true
         imageView?.contentMode = .scaleAspectFit
-        imageEdgeInsets = UIEdgeInsets(top: 8, left: -128, bottom: 8, right: 0)
+        imageView?.tintColor = Constants.Colors.vkGray
+        
+        setTitleColor(Constants.Colors.vkGray, for: .normal)
+        setTitleColor(Constants.Colors.vkGrayWithAlpha, for: .highlighted)
+        
+        addTarget(self, action: #selector(changeFollowState), for: .touchUpInside)
     }
 
     required init?(coder: NSCoder) {
@@ -33,23 +56,33 @@ class FollowButton: UIButton {
     // MARK: - Public Methods
     
     func setFollow(state: FollowSwitcher) {
+        followState = state
         switch state {
         case .following:
             setTitle(followingPhrase, for: .normal)
-            backgroundColor = UIColor.clear
-            layer.borderWidth = 1
-            layer.borderColor = Constants.Colors.vkGray.cgColor
-            setTitleColor(Constants.Colors.vkGray, for: .normal)
-            setImage(.checkmarkIcon, for: .normal)
-            imageView?.tintColor = Constants.Colors.vkGray
+            setImage(.followingIcon, for: .normal)
+            setImage(highlightedCheckmarkIcon, for: .highlighted)
         case .notFollowing:
             setTitle(toFollowPhrase, for: .normal)
-            setTitleColor(Constants.Colors.theme, for: .normal)
-            backgroundColor = Constants.Colors.blueButton
-            setImage(.plusIcon, for: .normal)
-            imageView?.tintColor = Constants.Colors.theme
+            setImage(.followIcon, for: .normal)
+            setImage(highlightedPlusIcon, for: .highlighted)
+        }
+    }
+    
+    @objc func changeFollowState() {
+        if followState == .following {
+            followState = .notFollowing
+            setFollow(state: followState)
+        } else {
+            vkApi.joinGroup(groupId: 6806539) {_ in
+                print("followed")
+            }
+            followState = .following
+            setFollow(state: followState)
         }
     }
     
     // MARK: - Private Methods
+    
+
 }

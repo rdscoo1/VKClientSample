@@ -15,12 +15,14 @@ import RealmSwift
 enum ApiRequests: String {
     case userInfo = "users.get"
     case friends = "friends.get"
+    case photos = "photos.get"
     case groups = "groups.get"
     case groupsSearch = "groups.search"
-    case photos = "photos.get"
+    case groupJoin = "groups.join"
+    case groupLeave = "groups.leave"
+    case wall = "wall.get"
     case newsfeed = "newsfeed.get"
     case stories = "stories.get"
-    case wall = "wall.get"
 }
 
 class VKApi {
@@ -83,6 +85,70 @@ class VKApi {
         ]
         
         makeRequest(apiMethod: .friends, params: params, objectType: Friend.self, completion: completion)
+    }
+    
+    // MARK: - Groups methods
+    
+    func joinGroup(groupId: Int, completion: @escaping (CommunityResponse) -> Void) {
+        let inputParams: Parameters = [ "group_id": groupId ]
+        
+        let requestUrl = apiURL + ApiRequests.groupJoin.rawValue
+        
+        let params = defaultParams.merging(inputParams, uniquingKeysWith: { currentKey, _ in currentKey })
+        
+        AF.request(requestUrl, method: .post, parameters: params)
+            .validate()
+            .responseData() { response in
+                switch response.result {
+                case .success(let data):
+                    do {
+                        let decodedModel = try JSONDecoder().decode(CommunityResponse.self, from: data)
+                        if decodedModel.response != nil {
+                                completion(decodedModel)
+                        } else if
+                            let errorCode = decodedModel.error?.errorCode,
+                            let errorMsg = decodedModel.error?.errorMessage
+                        {
+                            print("❌ VKApi \(ApiRequests.groupJoin.rawValue) error\n\(errorCode) \(errorMsg) ❌")
+                        }
+                    } catch {
+                        print("❌ Decoding \(CommunityResponse.self) failed\n\(error) ❌")
+                    }
+                case .failure(let error):
+                    print("❌ Alamofire error\n \(error) ❌")
+                }
+            }
+    }
+    
+    func leaveGroup(groupId: Int, completion: @escaping (CommunityResponse) -> Void) {
+        let inputParams: Parameters = [ "group_id": groupId ]
+        
+        let requestUrl = apiURL + ApiRequests.groupLeave.rawValue
+        
+        let params = defaultParams.merging(inputParams, uniquingKeysWith: { currentKey, _ in currentKey })
+        
+        AF.request(requestUrl, method: .post, parameters: params)
+            .validate()
+            .responseData() { response in
+                switch response.result {
+                case .success(let data):
+                    do {
+                        let decodedModel = try JSONDecoder().decode(CommunityResponse.self, from: data)
+                        if decodedModel.response != nil {
+                                completion(decodedModel)
+                        } else if
+                            let errorCode = decodedModel.error?.errorCode,
+                            let errorMsg = decodedModel.error?.errorMessage
+                        {
+                            print("❌ VKApi \(ApiRequests.groupLeave.rawValue) error\n\(errorCode) \(errorMsg) ❌")
+                        }
+                    } catch {
+                        print("❌ Decoding \(CommunityResponse.self) failed\n\(error) ❌")
+                    }
+                case .failure(let error):
+                    print("❌ Alamofire error\n \(error) ❌")
+                }
+            }
     }
     
     func getGroups(completion: @escaping () -> Void) {
