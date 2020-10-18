@@ -18,7 +18,6 @@ class CommunitiesVC: UIViewController {
     
     // MARK: - Variables
     
-    private var notificationToken: NotificationToken?
     private var communities: [Community] = []
     private let vkApi = VKApi()
     

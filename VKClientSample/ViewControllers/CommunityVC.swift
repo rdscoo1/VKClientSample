@@ -111,6 +111,7 @@ extension CommunityVC: UITableViewDataSource {
             }
             
             communityInfoCell.configure(with: communitity)
+//            communityInfoCell.configureFollowButton(with: communitity)
             
             return communityInfoCell
         case .post:

@@ -8,11 +8,6 @@
 
 import UIKit
 
-enum FollowState: Int {
-    case unfollow = 0
-    case follow = 1
-}
-
 class FollowButton: UIButton {
     
     // MARK: - Private Properties
@@ -69,15 +64,20 @@ class FollowButton: UIButton {
         }
     }
     
-    @objc func changeFollowState() {
+    @objc func changeFollowState(model: Community) {
         if followState == .following {
             followState = .notFollowing
+            vkApi.leaveGroup(groupId: model.id) {_ in
+                print("unfollowed")
+            }
+            RealmService.manager.removeCommunity(groupId: model.id)
             setFollow(state: followState)
         } else {
-            vkApi.joinGroup(groupId: 6806539) {_ in
+            followState = .following
+            vkApi.joinGroup(groupId: model.id) {_ in
                 print("followed")
             }
-            followState = .following
+            RealmService.manager.saveObject(model)
             setFollow(state: followState)
         }
     }

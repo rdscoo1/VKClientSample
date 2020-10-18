@@ -104,11 +104,22 @@ class RealmService {
     func removePostsThanSave<T: Object>(_ type: T.Type, object: Object) {
         guard let realm = try? Realm() else { return }
         let oldObject = realm.objects(type)
-        
         do {
             realm.beginWrite()
             realm.delete(oldObject, cascading: true)
             realm.add(object, update: .modified)
+            try realm.commitWrite()
+        } catch {
+            print("❌❌❌ Realm error\n \(error) ❌❌❌")
+        }
+    }
+    
+    func removeCommunity(groupId: Int) {
+        guard let realm = try? Realm() else { return }
+        let removingCommunity = realm.objects(Community.self).filter("id == %@", groupId)
+        do {
+            realm.beginWrite()
+            realm.delete(removingCommunity)
             try realm.commitWrite()
         } catch {
             print("❌❌❌ Realm error\n \(error) ❌❌❌")

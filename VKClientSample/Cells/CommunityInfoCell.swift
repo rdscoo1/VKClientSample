@@ -52,6 +52,10 @@ class CommunityInfoCell: UITableViewCell {
         followButton.setFollow(state: community.followState)
     }
     
+    func configureFollowButton(with model: Community) {
+        followButton.changeFollowState(model: model)
+    }
+    
     // MARK: - Private Methods
     
     private func setupUI() {
