@@ -22,4 +22,18 @@ extension UIViewController {
             }
         }
     }
+    
+    func getFollowActionSheet(removeHandler: @escaping (UIAlertAction) -> Void) -> UIAlertController {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let actionDelete = UIAlertAction(title: "Отписаться", style: .destructive, handler: removeHandler)
+        let actionCancel = UIAlertAction(title: "Отмена", style: .cancel)
+        actionDelete.setValue(UIColor.red, forKey: "titleTextColor")
+        
+        alertController.addAction(actionDelete)
+        alertController.addAction(actionCancel)
+        alertController.view.tintColor = Constants.Colors.vkBlue
+        
+        alertController.pruneNegativeWidthConstraints()
+        return alertController
+    }
 }

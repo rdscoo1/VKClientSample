@@ -8,6 +8,12 @@
 
 import UIKit
 
+enum AlertState {
+    case success
+    case loading
+    case failure
+}
+
 class AlertViewController: UIViewController {
     
     // MARK: - Private Properties

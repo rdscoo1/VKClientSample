@@ -33,6 +33,7 @@
 		E836B0E9253C805C00E47521 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836B0E8253C805C00E47521 /* UIViewController+Ext.swift */; };
 		E836B0EC253CAAA700E47521 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836B0EB253CAAA700E47521 /* HapticFeedback.swift */; };
 		E836B0F0253CE94B00E47521 /* DoneIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836B0EF253CE94B00E47521 /* DoneIconView.swift */; };
+		E836B116253DC28100E47521 /* UIAlertController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836B115253DC28100E47521 /* UIAlertController+Ext.swift */; };
 		E836E3B8246CAA900053A065 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836E3B7246CAA900053A065 /* CommunitiesVC.swift */; };
 		E836E3BA246CB46D0053A065 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836E3B9246CB46D0053A065 /* User.swift */; };
 		E84FF665250425B700272297 /* PhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84FF664250425B700272297 /* PhotoService.swift */; };
@@ -122,6 +123,7 @@
 		E836B0E8253C805C00E47521 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		E836B0EB253CAAA700E47521 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		E836B0EF253CE94B00E47521 /* DoneIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneIconView.swift; sourceTree = "<group>"; };
+		E836B115253DC28100E47521 /* UIAlertController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Ext.swift"; sourceTree = "<group>"; };
 		E836E3B7246CAA900053A065 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
 		E836E3B9246CB46D0053A065 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E84FF664250425B700272297 /* PhotoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoService.swift; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 				E836B0B52539B42D00E47521 /* UIButton+extension.swift */,
 				E836B0B82539BA4600E47521 /* UIImage+Extension.swift */,
 				E836B0E8253C805C00E47521 /* UIViewController+Ext.swift */,
+				E836B115253DC28100E47521 /* UIAlertController+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -658,6 +661,7 @@
 				E836B0B02538AE7600E47521 /* StretchyTableViewHeader.swift in Sources */,
 				E8FE44A9252126C6004146B7 /* ActivityIndicatorWithImage.swift in Sources */,
 				E87BB7F423E8CE39006C14F6 /* LoadView.swift in Sources */,
+				E836B116253DC28100E47521 /* UIAlertController+Ext.swift in Sources */,
 				E8D4290A25193D3B00A326E9 /* PostPhoto.swift in Sources */,
 				E861CD9F23D274E700D3E9B3 /* FriendFactory.swift in Sources */,
 				E8F62175251A4F3200C830A6 /* OnlineStatusSwitcher.swift in Sources */,

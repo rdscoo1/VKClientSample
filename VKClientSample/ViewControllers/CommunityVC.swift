@@ -37,10 +37,6 @@ class CommunityVC: UIViewController {
     
     // MARK: - LifeCycle
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -57,10 +53,6 @@ class CommunityVC: UIViewController {
                 navigationController?.navigationBar.tintColor = Constants.Colors.vkBlue
             }
         }
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            self.setNeedsStatusBarAppearanceUpdate()
-        })
     }
     
     override func viewDidLoad() {
@@ -118,9 +110,10 @@ extension CommunityVC: UITableViewDataSource {
                 return UITableViewCell()
             }
             
+            communityInfoCell.community = communitity
+            
             communityInfoCell.configure(with: communitity)
             communityInfoCell.delegate = self
-            //            communityInfoCell.configureFollowButton(with: communitity)
             
             return communityInfoCell
         case .post:
@@ -217,7 +210,32 @@ extension CommunityVC: UIScrollViewDelegate {
 
 extension CommunityVC: CommunityInfoCellDelegate {
     func changeFollowState() {
-        print("hello")
-        presentAlertOnMainTread(message: "Вы подписались на сообщество")
+        if communitity.isMember == 1 {
+            present(getFollowActionSheet(removeHandler: { [weak self] _ in
+                guard let self = self else { return }
+                
+                self.vkApi.leaveGroup(groupId: self.communitity.id) { [weak self] response in
+                    if response.response == 1 {
+                        self?.communitity.isMember = 0
+                        print("Left \(self?.communitity)")
+//                        RealmService.manager.removeCommunity(groupId: self!.communitity.id)
+                        let stoppedFollowingPhrase = NSLocalizedString("You have unfollowed the community", comment: "")
+                        self?.presentAlertOnMainTread(message: stoppedFollowingPhrase)
+                    }
+                }
+            }),
+            animated: true)
+            
+        } else {
+            let startedFollowingPhrase = NSLocalizedString("You are now following this community", comment: "")
+            self.vkApi.joinGroup(groupId: self.communitity.id) { [weak self] response in
+                if response.response == 1 {
+                    self?.communitity.isMember = 1
+                    print("Following \(self?.communitity)")
+//                    RealmService.manager.saveObject(self!.communitity)
+                    self?.presentAlertOnMainTread(message: startedFollowingPhrase)
+                }
+            }
+        }
     }
 }

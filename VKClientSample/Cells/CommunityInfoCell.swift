@@ -25,6 +25,12 @@ class CommunityInfoCell: UITableViewCell {
     private let photo = UIImageView()
     private let followButton = FollowButton()
     
+    private var inseViewHeightConstraint: NSLayoutConstraint!
+    
+    // MARK: - Public Properties
+    
+    var community: Community?
+    
     // MARK: - Delegate
     
     weak var delegate: CommunityInfoCellDelegate?
@@ -45,6 +51,12 @@ class CommunityInfoCell: UITableViewCell {
     // MARK: - Public Methods
     
     func configure(with community: Community) {
+        if community.cover?.enabled == 0 {
+            inseViewHeightConstraint.constant = 0
+        } else {
+            inseViewHeightConstraint.constant = 0.2
+        }
+        
         name.text = community.name
         
         if community.status == "" {
@@ -62,13 +74,10 @@ class CommunityInfoCell: UITableViewCell {
         followButton.setFollow(state: community.followState)
     }
     
-    func configureFollowButton(with model: Community) {
-        followButton.changeFollowState(model: model)
-    }
-    
     // MARK: - Private Methods
     
     @objc private func changeState() {
+        followButton.changeFollowState(model: community)
         delegate?.changeFollowState()
     }
     
@@ -103,8 +112,10 @@ class CommunityInfoCell: UITableViewCell {
         photo.translatesAutoresizingMaskIntoConstraints = false
         followButton.translatesAutoresizingMaskIntoConstraints = false
         
+        inseViewHeightConstraint = insetView.heightAnchor.constraint(equalToConstant: 0.2)
+        
         NSLayoutConstraint.activate([
-            insetView.heightAnchor.constraint(equalToConstant: 0.2),
+            inseViewHeightConstraint,
             insetView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             insetView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             insetView.topAnchor.constraint(equalTo: contentView.topAnchor),

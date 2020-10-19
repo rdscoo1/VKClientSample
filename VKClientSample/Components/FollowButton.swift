@@ -12,8 +12,6 @@ class FollowButton: UIButton {
     
     // MARK: - Private Properties
     
-    private let vkApi = VKApi()
-    
     // Button localisation
     private let toFollowPhrase = NSLocalizedString("Follow", comment: "")
     private let followingPhrase = NSLocalizedString("Following", comment: "")
@@ -41,8 +39,6 @@ class FollowButton: UIButton {
         setTitleColor(Constants.Colors.vkGray, for: .normal)
         setTitleColor(Constants.Colors.vkGrayWithAlpha, for: .highlighted)
         titleLabel?.font = .systemFont(ofSize: 14)
-        
-        addTarget(self, action: #selector(changeFollowState), for: .touchUpInside)
     }
 
     required init?(coder: NSCoder) {
@@ -65,22 +61,14 @@ class FollowButton: UIButton {
         }
     }
     
-    @objc func changeFollowState(model: Community) {
-//        if followState == .following {
-//            followState = .notFollowing
-//            vkApi.leaveGroup(groupId: model.id) {_ in
-//                print("unfollowed")
-//            }
-//            RealmService.manager.removeCommunity(groupId: model.id)
-//            setFollow(state: followState)
-//        } else {
-//            followState = .following
-//            vkApi.joinGroup(groupId: model.id) {_ in
-//                print("followed")
-//            }
-//            RealmService.manager.saveObject(model)
-//            setFollow(state: followState)
-//        }
+    func changeFollowState(model: Community?) {
+        if followState == .following {
+            followState = .notFollowing
+            setFollow(state: followState)
+        } else {
+            followState = .following
+            setFollow(state: followState)
+        }
     }
     
     // MARK: - Private Methods
