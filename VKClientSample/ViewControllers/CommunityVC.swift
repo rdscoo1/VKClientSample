@@ -37,8 +37,12 @@ class CommunityVC: UIViewController {
     
     // MARK: - LifeCycle
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)        
+        super.viewWillAppear(animated)
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = nil
@@ -53,6 +57,10 @@ class CommunityVC: UIViewController {
                 navigationController?.navigationBar.tintColor = Constants.Colors.vkBlue
             }
         }
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.setNeedsStatusBarAppearanceUpdate()
+        })
     }
     
     override func viewDidLoad() {
@@ -111,7 +119,8 @@ extension CommunityVC: UITableViewDataSource {
             }
             
             communityInfoCell.configure(with: communitity)
-//            communityInfoCell.configureFollowButton(with: communitity)
+            communityInfoCell.delegate = self
+            //            communityInfoCell.configureFollowButton(with: communitity)
             
             return communityInfoCell
         case .post:
@@ -201,5 +210,14 @@ extension CommunityVC: UIScrollViewDelegate {
                 navigationController?.navigationBar.tintColor = .white
             }
         }
+    }
+}
+
+// MARK: - CommunityInfoCellDelegate
+
+extension CommunityVC: CommunityInfoCellDelegate {
+    func changeFollowState() {
+        print("hello")
+        presentAlertOnMainTread(message: "Вы подписались на сообщество")
     }
 }

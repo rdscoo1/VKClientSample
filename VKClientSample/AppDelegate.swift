@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let vc = VkAuthorizationViewController()
         let navigationController = UINavigationController(rootViewController: vc)
+        navigationController.navigationBar.backgroundColor = Constants.Colors.theme
         
         window = UIWindow()
         window?.rootViewController = navigationController

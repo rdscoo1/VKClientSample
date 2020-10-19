@@ -29,7 +29,8 @@ class CommunitiesVC: UIViewController {
             tableView.deselectRow(at: selectionIndexPath, animated: animated)
         }
         
-        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.backgroundColor = Constants.Colors.theme
+        navigationController?.navigationBar.isTranslucent = false
     }
     
     override func viewDidLoad() {

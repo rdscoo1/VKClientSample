@@ -117,6 +117,7 @@ class RealmService {
     func removeCommunity(groupId: Int) {
         guard let realm = try? Realm() else { return }
         let removingCommunity = realm.objects(Community.self).filter("id == %@", groupId)
+        
         do {
             realm.beginWrite()
             realm.delete(removingCommunity)

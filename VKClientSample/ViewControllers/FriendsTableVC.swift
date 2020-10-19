@@ -28,6 +28,9 @@ class FriendsTableVC: UITableViewController {
         if let selectionIndexPath = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: selectionIndexPath, animated: animated)
         }
+        
+        navigationController?.navigationBar.backgroundColor = Constants.Colors.theme
+        navigationController?.navigationBar.isTranslucent = false
     }
     
     override func viewDidLoad() {

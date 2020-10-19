@@ -12,3 +12,5 @@
 "Follow" = "Подписаться";
 "Following" = "Вы подписаны";
 "Unfollow" = "Отписаться";
+"You are now following this community" = "Вы подписались на сообщество";
+"You have unfollowed the community" = "Вы отписались от сообщества";

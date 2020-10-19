@@ -29,6 +29,10 @@
 		E836B0B62539B42D00E47521 /* UIButton+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836B0B52539B42D00E47521 /* UIButton+extension.swift */; };
 		E836B0B92539BA4600E47521 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836B0B82539BA4600E47521 /* UIImage+Extension.swift */; };
 		E836B0BD253A599D00E47521 /* CommunityResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836B0BC253A599D00E47521 /* CommunityResponse.swift */; };
+		E836B0E6253C802600E47521 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836B0E5253C802600E47521 /* AlertViewController.swift */; };
+		E836B0E9253C805C00E47521 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836B0E8253C805C00E47521 /* UIViewController+Ext.swift */; };
+		E836B0EC253CAAA700E47521 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836B0EB253CAAA700E47521 /* HapticFeedback.swift */; };
+		E836B0F0253CE94B00E47521 /* DoneIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836B0EF253CE94B00E47521 /* DoneIconView.swift */; };
 		E836E3B8246CAA900053A065 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836E3B7246CAA900053A065 /* CommunitiesVC.swift */; };
 		E836E3BA246CB46D0053A065 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836E3B9246CB46D0053A065 /* User.swift */; };
 		E84FF665250425B700272297 /* PhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84FF664250425B700272297 /* PhotoService.swift */; };
@@ -114,6 +118,10 @@
 		E836B0B52539B42D00E47521 /* UIButton+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+extension.swift"; sourceTree = "<group>"; };
 		E836B0B82539BA4600E47521 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		E836B0BC253A599D00E47521 /* CommunityResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityResponse.swift; sourceTree = "<group>"; };
+		E836B0E5253C802600E47521 /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
+		E836B0E8253C805C00E47521 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
+		E836B0EB253CAAA700E47521 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
+		E836B0EF253CE94B00E47521 /* DoneIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneIconView.swift; sourceTree = "<group>"; };
 		E836E3B7246CAA900053A065 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
 		E836E3B9246CB46D0053A065 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E84FF664250425B700272297 /* PhotoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoService.swift; sourceTree = "<group>"; };
@@ -253,6 +261,7 @@
 				E8525475252F354F00BAE806 /* CommunityVC.swift */,
 				E8757B20242C0708002F92A7 /* ProfileTableViewController.swift */,
 				E829F95E2404839400ED148B /* VkAuthorizationViewController.swift */,
+				E836B0E5253C802600E47521 /* AlertViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -296,6 +305,7 @@
 				E836E3B9246CB46D0053A065 /* User.swift */,
 				E8F62174251A4F3200C830A6 /* OnlineStatusSwitcher.swift */,
 				E8BC2D7925214F9000182C7B /* Stories.swift */,
+				E836B0EB253CAAA700E47521 /* HapticFeedback.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -384,6 +394,7 @@
 				E8DBDE4D24887C660093920C /* RealmCascadeDeletion.swift */,
 				E836B0B52539B42D00E47521 /* UIButton+extension.swift */,
 				E836B0B82539BA4600E47521 /* UIImage+Extension.swift */,
+				E836B0E8253C805C00E47521 /* UIViewController+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -434,6 +445,7 @@
 				E88EC38E2524ACD400F3603D /* CustomActivityIndicator.swift */,
 				E897BCCE252F73BE001746DA /* FollowButton.swift */,
 				E836B0AF2538AE7600E47521 /* StretchyTableViewHeader.swift */,
+				E836B0EF253CE94B00E47521 /* DoneIconView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -583,6 +595,7 @@
 				E829F961240491F900ED148B /* VKApi.swift in Sources */,
 				E8F6214F25195B8800C830A6 /* PostAttachment.swift in Sources */,
 				E852547D252F45CB00BAE806 /* CommunityInfoCell.swift in Sources */,
+				E836B0F0253CE94B00E47521 /* DoneIconView.swift in Sources */,
 				E829F95F2404839400ED148B /* VkAuthorizationViewController.swift in Sources */,
 				E8068CDF23E0C1E00083FBBE /* CommentControl.swift in Sources */,
 				E8CD1C9023D65EA600C5D668 /* FriendCell.swift in Sources */,
@@ -593,6 +606,7 @@
 				E8757B10241CEAC0002F92A7 /* Community.swift in Sources */,
 				E8954A9523B162B300A93209 /* UIColor+hex.swift in Sources */,
 				E836E3B8246CAA900053A065 /* CommunitiesVC.swift in Sources */,
+				E836B0E6253C802600E47521 /* AlertViewController.swift in Sources */,
 				E8068CE323E0C4290083FBBE /* ViewsControl.swift in Sources */,
 				E8068CF123E4FE5B0083FBBE /* AddStoryCell.swift in Sources */,
 				E8D51AAE2475D7570056B945 /* VKError.swift in Sources */,
@@ -622,11 +636,13 @@
 				E87624172472A22D00FB62B6 /* RealmService.swift in Sources */,
 				E829F96324049DBD00ED148B /* GetDataViewController.swift in Sources */,
 				E8D4290425193C6200A326E9 /* PostProfile.swift in Sources */,
+				E836B0EC253CAAA700E47521 /* HapticFeedback.swift in Sources */,
 				E8D4290025193C4600A326E9 /* PostCommunity.swift in Sources */,
 				E8068CD223DC47E80083FBBE /* NewsTableVC.swift in Sources */,
 				E85E8311246CD6B20090FBEC /* UserDefaults+extensions.swift in Sources */,
 				E8068CE723E1C7150083FBBE /* StoriesCell.swift in Sources */,
 				E8757B0D241BEEA2002F92A7 /* NavigationTransition.swift in Sources */,
+				E836B0E9253C805C00E47521 /* UIViewController+Ext.swift in Sources */,
 				E8757B0B241BEE49002F92A7 /* CustomInteractionNavigationController.swift in Sources */,
 				E897BCCF252F73BE001746DA /* FollowButton.swift in Sources */,
 				E8068CEF23E4FE0C0083FBBE /* StoryCell.swift in Sources */,

@@ -9,6 +9,10 @@
 import UIKit
 import Kingfisher
 
+protocol CommunityInfoCellDelegate: AnyObject {
+    func changeFollowState()
+}
+
 class CommunityInfoCell: UITableViewCell {
     
     static let reuseId = "CommunityInfoCell"
@@ -20,6 +24,10 @@ class CommunityInfoCell: UITableViewCell {
     private let status = UILabel()
     private let photo = UIImageView()
     private let followButton = FollowButton()
+    
+    // MARK: - Delegate
+    
+    weak var delegate: CommunityInfoCellDelegate?
     
     // MARK: - Initializers
     
@@ -49,6 +57,8 @@ class CommunityInfoCell: UITableViewCell {
             photo.kf.setImage(with: imageUrl)
         }
         
+        followButton.addTarget(self, action: #selector(changeState), for: .touchUpInside)
+        
         followButton.setFollow(state: community.followState)
     }
     
@@ -57,6 +67,10 @@ class CommunityInfoCell: UITableViewCell {
     }
     
     // MARK: - Private Methods
+    
+    @objc private func changeState() {
+        delegate?.changeFollowState()
+    }
     
     private func setupUI() {
         backgroundColor = Constants.Colors.theme
@@ -108,9 +122,9 @@ class CommunityInfoCell: UITableViewCell {
             status.leadingAnchor.constraint(equalTo: name.leadingAnchor),
             status.trailingAnchor.constraint(lessThanOrEqualTo: photo.leadingAnchor, constant: -8),
             
-            followButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 160),
-            followButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -160),
-            followButton.heightAnchor.constraint(equalToConstant: 120),
+            followButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 144),
+            followButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -144),
+            followButton.heightAnchor.constraint(equalToConstant: 96),
             followButton.topAnchor.constraint(equalTo: photo.bottomAnchor, constant: 32)
         ])
     }

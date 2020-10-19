@@ -43,6 +43,12 @@ class NewsTableVC: UITableViewController {
     
     // MARK: - LifeCycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.backgroundColor = Constants.Colors.theme
+        navigationController?.navigationBar.isTranslucent = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
