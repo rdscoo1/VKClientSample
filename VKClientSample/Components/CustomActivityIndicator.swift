@@ -14,6 +14,10 @@ class CustomActivityIndicator: UIView {
     
     var circleLayer: CAShapeLayer!
     
+//    lazy var circleLayer: CAShapeLayer = {
+   //
+   //    }()
+    
     //MARK: - Variables
     
     var isAnimating : Bool = false

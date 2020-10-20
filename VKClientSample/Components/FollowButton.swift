@@ -20,7 +20,7 @@ class FollowButton: UIButton {
     private let highlightedCheckmarkIcon = UIImage.followingIcon.tinted(color: Constants.Colors.vkGrayWithAlpha)
     private let highlightedPlusIcon = UIImage.followIcon.tinted(color: Constants.Colors.vkGrayWithAlpha)
     
-    private var followState: FollowSwitcher!
+    private var followState: FollowButtonState = .notFollowing
 
     
     // MARK: - Initializers
@@ -47,7 +47,7 @@ class FollowButton: UIButton {
     
     // MARK: - Public Methods
     
-    func setFollow(state: FollowSwitcher) {
+    func setFollow(state: FollowButtonState) {
         followState = state
         switch state {
         case .following:

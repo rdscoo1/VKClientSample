@@ -44,14 +44,15 @@ class PostCell: UITableViewCell {
     
     func configure(with post: Post, author: Response?) {
         if let sourceId = post.sourceId {
+            let processor = RoundCornerImageProcessor(cornerRadius: 24)
             if sourceId > 0 {
                 let user = author?.profiles.first(where: { $0.id == abs(sourceId) })
                 postAuthor.text = user?.name
-                postAuthorImage.kf.setImage(with: URL(string: user?.imageUrl ?? ""))
+                postAuthorImage.kf.setImage(with: URL(string: user?.imageUrl ?? ""), options: [.processor(processor)])
             } else {
                 let community = author?.groups.first(where: { $0.id == abs(sourceId) })
                 postAuthor.text = community?.name
-                postAuthorImage.kf.setImage(with: URL(string: community?.imageUrl ?? ""))
+                postAuthorImage.kf.setImage(with: URL(string: community?.imageUrl ?? ""), options: [.processor(processor)])
             }
         } else if let ownerId = post.ownerId {
             if ownerId > 0 {
@@ -104,9 +105,6 @@ class PostCell: UITableViewCell {
         backgroundColor = Constants.Colors.theme
         
         topSeparator.backgroundColor = Constants.Colors.newsSeparator
-        
-        postAuthorImage.layer.cornerRadius = 24
-        postAuthorImage.layer.masksToBounds = true
         
         if #available(iOS 13.0, *) {
             postAuthor.textColor = .label

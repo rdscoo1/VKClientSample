@@ -8,7 +8,7 @@
 
 import RealmSwift
 
-enum FollowSwitcher {
+enum FollowButtonState {
     case following
     case notFollowing
 }
@@ -24,7 +24,7 @@ enum FollowSwitcher {
     dynamic var isMember: Int = 0
     dynamic var cover: CommunityCover?
     
-    var followState: FollowSwitcher{
+    var followState: FollowButtonState{
         if isMember == 0 {
             return .notFollowing
         } else {
