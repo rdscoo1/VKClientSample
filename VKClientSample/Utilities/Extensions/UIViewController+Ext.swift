@@ -23,9 +23,9 @@ extension UIViewController {
         }
     }
     
-    func getFollowActionSheet(removeHandler: @escaping (UIAlertAction) -> Void) -> UIAlertController {
+    func getFollowActionSheet(unfollowHandler: @escaping (UIAlertAction) -> Void) -> UIAlertController {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let actionDelete = UIAlertAction(title: "Отписаться", style: .destructive, handler: removeHandler)
+        let actionDelete = UIAlertAction(title: "Отписаться", style: .destructive, handler: unfollowHandler)
         let actionCancel = UIAlertAction(title: "Отмена", style: .cancel)
         actionDelete.setValue(UIColor.red, forKey: "titleTextColor")
         

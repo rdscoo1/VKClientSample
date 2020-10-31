@@ -67,7 +67,7 @@ class VKApi {
                             print("❌ VKApi \(apiMethod.rawValue) error\n\(errorCode) \(errorMsg) ❌")
                         }
                     } catch {
-                        print("❌ Decoding \(VKResponse<ResponseType>.self) failed\n\(error) ❌")
+                        print("❌ Decoding \(VKResponse<ResponseType>.self) failed ❌\n\(error)")
                     }
                 case let .failure(error):
                     print("❌ Alamofire error\n \(error) ❌")
@@ -112,7 +112,7 @@ class VKApi {
                             print("❌ VKApi \(ApiRequests.groupJoin.rawValue) error\n\(errorCode) \(errorMsg) ❌")
                         }
                     } catch {
-                        print("❌ Decoding \(CommunityResponse.self) failed\n\(error) ❌")
+                        print("❌ Decoding \(CommunityResponse.self) failed ❌\n\(error)")
                     }
                 case .failure(let error):
                     print("❌ Alamofire error\n \(error) ❌")
@@ -143,7 +143,7 @@ class VKApi {
                             print("❌ VKApi \(ApiRequests.groupLeave.rawValue) error\n\(errorCode) \(errorMsg) ❌")
                         }
                     } catch {
-                        print("❌ Decoding \(CommunityResponse.self) failed\n\(error) ❌")
+                        print("❌ Decoding \(CommunityResponse.self) failed ❌\n\(error)")
                     }
                 case .failure(let error):
                     print("❌ Alamofire error\n \(error) ❌")
@@ -180,7 +180,7 @@ class VKApi {
                             print("❌ VKApi \(ApiRequests.groups.rawValue) error\n\(errorCode) \(errorMsg) ❌")
                         }
                     } catch {
-                        print("❌ Decoding \(VKResponse<Community>.self) failed\n\(error) ❌")
+                        print("❌ Decoding \(VKResponse<Community>.self) failed ❌\n\(error)")
                     }
                 case let .failure(error):
                     print("❌ Alamofire error\n \(error) ❌")
@@ -216,7 +216,7 @@ class VKApi {
                             print("❌ VKApi \(ApiRequests.groupsSearch.rawValue) error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
-                        print("❌ Decoding \(VKResponse<Community>.self) failed ❌\n\(error) ")
+                        print("❌ Decoding \(VKResponse<Community>.self) failed ❌\n\(error)")
                     }
                 case let .failure(error):
                     print("❌ Alamofire error ❌\n \(error)")
@@ -251,7 +251,7 @@ class VKApi {
                             print("❌ VKApi \(ApiRequests.photos.rawValue) error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
-                        print("❌ Decoding \(VKResponse<Photo>.self) failed ❌\n\(error) ")
+                        print("❌ Decoding \(VKResponse<Photo>.self) failed ❌\n\(error)")
                     }
                 case let .failure(error):
                     print("❌ Alamofire error ❌\n \(error)")
@@ -290,7 +290,7 @@ class VKApi {
                             print("❌ VKApi \(ApiRequests.newsfeed.rawValue) error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
-                        print("❌ Decoding \(PostResponse.self) failed ❌\n\(error) ")
+                        print("❌ Decoding \(PostResponse.self) failed ❌\n\(error)")
                     }
                 case let .failure(error):
                     print("❌ Alamofire error ❌\n \(error)")
@@ -325,7 +325,7 @@ class VKApi {
                             print("❌ VKApi \(ApiRequests.stories.rawValue) error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
-                        print("❌ Decoding \(StoriesResponse.self) failed ❌\n\(error) ")
+                        print("❌ Decoding \(StoriesResponse.self) failed ❌\n\(error)")
                     }
                 case let .failure(error):
                     print("❌ Alamofire error ❌\n \(error)")
@@ -360,7 +360,7 @@ class VKApi {
                             print("❌ VKApi \(ApiRequests.userInfo.rawValue) error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
-                        print("❌ Decoding \(UserResponse.self) failed ❌\n\(error) ")
+                        print("❌ Decoding \(UserResponse.self) failed ❌\n\(error)")
                     }
                 case let .failure(error):
                     print("❌ Alamofire error ❌\n \(error)")
@@ -397,7 +397,7 @@ class VKApi {
                             print("❌ VKApi \(ApiRequests.wall.rawValue) error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
-                        print("❌ Decoding \(PostResponse.self) failed ❌\n\(error) ")
+                        print("❌ Decoding \(PostResponse.self) failed ❌\n\(error)")
                     }
                 case let .failure(error):
                     print("❌ Alamofire error ❌\n \(error)")

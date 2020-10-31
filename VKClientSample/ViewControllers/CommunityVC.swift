@@ -211,30 +211,33 @@ extension CommunityVC: UIScrollViewDelegate {
 extension CommunityVC: CommunityInfoCellDelegate {
     func changeFollowState() {
         if communitity.isMember == 1 {
-            present(getFollowActionSheet(removeHandler: { [weak self] _ in
+            present(getFollowActionSheet(unfollowHandler: { [weak self] _ in
                 guard let self = self else { return }
                 
                 self.vkApi.leaveGroup(groupId: self.communitity.id) { [weak self] response in
-                    if response.response == 1 {
-                        self?.communitity.isMember = 0
-                        print("Left \(self?.communitity)")
-//                        RealmService.manager.removeCommunity(groupId: self!.communitity.id)
-                        let stoppedFollowingPhrase = NSLocalizedString("You have unfollowed the community", comment: "")
-                        self?.presentAlertOnMainTread(message: stoppedFollowingPhrase)
+                    guard response.response == 1 else {
+                        print("Запрос отклонен")
+                        return
                     }
+                    self?.communitity.isMember = 0
+                    print("Left \(String(describing: self?.communitity))")
+                    //                        RealmService.manager.removeCommunity(groupId: self!.communitity.id)
+                    let stoppedFollowingPhrase = NSLocalizedString("You have unfollowed the community", comment: "")
+                    self?.presentAlertOnMainTread(message: stoppedFollowingPhrase)
                 }
             }),
             animated: true)
-            
         } else {
-            let startedFollowingPhrase = NSLocalizedString("You are now following this community", comment: "")
             self.vkApi.joinGroup(groupId: self.communitity.id) { [weak self] response in
-                if response.response == 1 {
-                    self?.communitity.isMember = 1
-                    print("Following \(self?.communitity)")
-//                    RealmService.manager.saveObject(self!.communitity)
-                    self?.presentAlertOnMainTread(message: startedFollowingPhrase)
+                guard response.response == 1 else {
+                    print("Запрос отклонен")
+                    return
                 }
+                self?.communitity.isMember = 1
+                print("Following \(String(describing: self?.communitity))")
+                //                    RealmService.manager.saveObject(self!.communitity)
+                let startedFollowingPhrase = NSLocalizedString("You are now following this community", comment: "")
+                self?.presentAlertOnMainTread(message: startedFollowingPhrase)
             }
         }
     }
