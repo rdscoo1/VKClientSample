@@ -10,18 +10,10 @@ import UIKit
 
 // MARK: - NewsSections
 
-enum NewsSections: Int, CaseIterable {
-    case stories = 0
-    case whatsNew = 1
-    case post = 2
-    
-    static func numberOfSections() -> Int {
-        return self.allCases.count
-    }
-    
-    static func getSection(_ section: Int) -> NewsSections {
-        return self.allCases[section]
-    }
+enum NewsSections {
+    case stories
+    case whatsNew
+    case posts(Response)
 }
 
 
@@ -33,6 +25,12 @@ class NewsTableVC: UITableViewController {
     private let vkApi = VKApi()
     private var photoService: PhotoService?
     private let activityIndicator = CustomActivityIndicator(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
+    
+    private var sections: [NewsSections] = [] {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
     
     // MARK: - Private Variables
     
@@ -81,16 +79,13 @@ class NewsTableVC: UITableViewController {
             let user = RealmService.manager.getAllObjects(of: User.self).first(where: { $0.id == Int(Session.shared.userId) })
             self?.userPhotoUrl = user?.imageUrl ?? ""
             self?.userName = user?.firstName ?? ""
-            self?.tableView.reloadRows(at: [IndexPath(row: 0, section: NewsSections.whatsNew.rawValue),
-                                            IndexPath(row: 0, section: NewsSections.stories.rawValue)],
-                                       with: .automatic)
+            self?.sections.append(.stories)
+            self?.sections.append(.whatsNew)
         }
         
         self.vkApi.getNewsfeed(nextBatch: nil, startTime: nil) { [weak self] items in
             self?.nextFrom = items.nextFrom ?? ""
-            self?.posts = items
-            //            print("❗️❗️❗️ \(items.items)")
-            self?.tableView.reloadData()
+            self?.sections.append(.posts(items))
         }
     }
     
@@ -98,9 +93,9 @@ class NewsTableVC: UITableViewController {
         let user = RealmService.manager.getAllObjects(of: User.self).first(where: { $0.id == Int(UserDefaults.standard.userId ?? "") })
         userPhotoUrl = user?.imageUrl ?? ""
         userName = user?.firstName ?? ""
-        tableView.reloadRows(at: [IndexPath(row: 0, section: NewsSections.whatsNew.rawValue),
-                                        IndexPath(row: 0, section: NewsSections.stories.rawValue)],
-                                   with: .automatic)
+        tableView.reloadRows(at: [IndexPath(row: 0, section: 0),
+                                  IndexPath(row: 0, section: 1)],
+                             with: .automatic)
     }
     
     private func configureRefreshControl() {
@@ -129,7 +124,7 @@ class NewsTableVC: UITableViewController {
             self.posts?.addToBeggining(news: items)
             
             let indexPathes = items.items.enumerated().map { offset, _ in
-                IndexPath(row: offset, section: NewsSections.post.rawValue)
+                IndexPath(row: offset, section: 2)
             }
             self.tableView.insertRows(at: indexPathes, with: .automatic)
         }
@@ -172,53 +167,52 @@ class NewsTableVC: UITableViewController {
 
 extension NewsTableVC {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return NewsSections.numberOfSections()
+        return sections.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch NewsSections.getSection(section) {
+        switch sections[section] {
         case .stories:
             return 1
+        case .posts(let posts):
+            return posts.items.count
         case .whatsNew:
             return 1
-        case .post:
-            return posts?.items.count ?? 0
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch NewsSections.getSection(indexPath.section) {
+        switch sections[indexPath.section] {
+        case .whatsNew:
+            guard let whatsNewCell = tableView.dequeueReusableCell(withIdentifier: WhatsNewCell.reuseId, for: indexPath) as? WhatsNewCell else { return UITableViewCell() }
+            whatsNewCell.profilePhoto.image = photoService?.photo(atIndexpath: indexPath, byUrl: userPhotoUrl)
+            return whatsNewCell
+        case .posts(let posts):
+            guard let postCell = tableView.dequeueReusableCell(withIdentifier: PostCell.reuseId, for: indexPath) as? PostCell else { return UITableViewCell() }
+            guard !posts.items.isEmpty else {
+                return UITableViewCell()
+            }
+            let post = posts.items[indexPath.row]
+            
+            postCell.configure(with: post, author: posts)
+            
+            return postCell
         case .stories:
             guard let storiesCell = tableView.dequeueReusableCell(withIdentifier: StoriesCell.reuseId, for: indexPath) as? StoriesCell else { return UITableViewCell() }
             storiesCell.userPhoto = userPhotoUrl
             storiesCell.userName = userName
             return storiesCell
-        case .whatsNew:
-            guard let whatsNewCell = tableView.dequeueReusableCell(withIdentifier: WhatsNewCell.reuseId, for: indexPath) as? WhatsNewCell else { return UITableViewCell() }
-            whatsNewCell.profilePhoto.image = photoService?.photo(atIndexpath: indexPath, byUrl: userPhotoUrl)
-            return whatsNewCell
-        case .post:
-            guard let postCell = tableView.dequeueReusableCell(withIdentifier: PostCell.reuseId, for: indexPath) as? PostCell else { return UITableViewCell() }
-            
-            guard let postItem = posts, !postItem.items.isEmpty else {
-                return UITableViewCell()
-            }
-            let post = postItem.items[indexPath.row]
-            
-            postCell.configure(with: post, author: postItem)
-            
-            return postCell
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch NewsSections.getSection(indexPath.section) {
+        switch sections[indexPath.section] {
         case .stories:
             return 112.0
+        case .posts(_):
+            return UITableView.automaticDimension
         case .whatsNew:
             return 64.0
-        case .post:
-            return UITableView.automaticDimension
         }
     }
     
@@ -251,7 +245,7 @@ extension NewsTableVC: UITableViewDataSourcePrefetching {
                 self.nextFrom = items.nextFrom ?? ""
                 self.posts?.addToEnd(news: items)
                 for i in oldIndex..<(self.posts?.items.count)! {
-                    indexPathes.append(IndexPath(row: i, section: NewsSections.post.rawValue))
+                    indexPathes.append(IndexPath(row: i, section: 2))
                 }
                 
                 self.tableView.insertRows(at: indexPathes, with: .automatic)
