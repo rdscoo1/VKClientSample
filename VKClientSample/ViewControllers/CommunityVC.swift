@@ -8,17 +8,11 @@
 
 import UIKit
 
-enum CommunityWallSections: Int, CaseIterable {
-    case communityInfo = 0
-    case post = 1
-    
-    static func numberOfSections() -> Int {
-        return self.allCases.count
-    }
-    
-    static func getSection(_ section: Int) -> CommunityWallSections {
-        return self.allCases[section]
-    }
+// MARK: - CommunityWallSections
+
+enum CommunityWallSections {
+    case communityInfo(followButtonState: FollowButtonState)
+    case post(Response)
 }
 
 class CommunityVC: UIViewController {
@@ -27,9 +21,16 @@ class CommunityVC: UIViewController {
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     private let headerView = StretchyTableViewHeader()
-    
     private let vkApi = VKApi()
+    
+    // MARK: - Private Variables
+    
     private var posts: Response?
+    private var sections: [CommunityWallSections] = [] {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
     
     // MARK: - Public Variables
     
@@ -61,6 +62,8 @@ class CommunityVC: UIViewController {
         tableView.backgroundColor = Constants.Colors.theme
         
         configureTableView()
+        
+        sections.append(.communityInfo(followButtonState: communitity.followState))
         requestFromApi() 
     }
     
@@ -68,8 +71,7 @@ class CommunityVC: UIViewController {
     
     private func requestFromApi() {
         vkApi.getWall(ownerId: communitity.id) { [weak self] items in
-            self?.posts = items
-            self?.tableView.reloadData()
+            self?.sections.append(.post(items))
         }
     }
     
@@ -91,21 +93,21 @@ class CommunityVC: UIViewController {
 
 extension CommunityVC: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return CommunityWallSections.numberOfSections()
+        return sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch CommunityWallSections.getSection(section) {
-        case .communityInfo:
+        switch sections[section] {
+        case .communityInfo(followButtonState: _):
             return 1
-        case .post:
-            return posts?.items.count ?? 0
+        case .post(let items):
+            return items.items.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch CommunityWallSections.getSection(indexPath.section) {
-        case .communityInfo:
+        switch sections[indexPath.section] {
+        case .communityInfo(followButtonState: _):
             guard let communityInfoCell = tableView.dequeueReusableCell(withIdentifier: CommunityInfoCell.reuseId, for: indexPath) as? CommunityInfoCell else {
                 return UITableViewCell()
             }
@@ -116,17 +118,17 @@ extension CommunityVC: UITableViewDataSource {
             communityInfoCell.delegate = self
             
             return communityInfoCell
-        case .post:
+        case .post(let posts):
             guard let postCell = tableView.dequeueReusableCell(withIdentifier: PostCell.reuseId, for: indexPath) as? PostCell else {
                 return UITableViewCell()
             }
             
-            guard let postItem = posts, !postItem.items.isEmpty else {
+            guard !posts.items.isEmpty else {
                 return UITableViewCell()
             }
             
-            let post = postItem.items[indexPath.row]
-            postCell.configure(with: post, author: postItem)
+            let post = posts.items[indexPath.row]
+            postCell.configure(with: post, author: posts)
             
             return postCell
         }
@@ -137,16 +139,16 @@ extension CommunityVC: UITableViewDataSource {
 
 extension CommunityVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch CommunityWallSections.getSection(indexPath.section) {
-        case .communityInfo:
+        switch sections[indexPath.section] {
+        case .communityInfo(followButtonState: _):
             return 250.0
-        case .post:
+        case .post(_):
             return UITableView.automaticDimension
         }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if CommunityWallSections.communityInfo.rawValue == section {
+        if section == 0 {
             headerView.frame = view.bounds
             headerView.setImage(url: communitity.cover?.imageUrl)
             
@@ -157,14 +159,14 @@ extension CommunityVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch CommunityWallSections.getSection(section) {
-        case .communityInfo:
+        switch sections[section] {
+        case .communityInfo(followButtonState: _):
             if communitity.cover?.enabled == 1 {
                 return 144.0
             } else {
                 return 0.0
             }
-        case .post:
+        case .post(_):
             return 0.0
         }
     }
