@@ -8,11 +8,17 @@
 
 import UIKit
 
-// MARK: - CommunityWallSections
+// MARK: - CommunitySections
 
-enum CommunityWallSections {
-    case communityInfo(followButtonState: FollowButtonState)
-    case post(Response)
+enum CommunityInfoSection: Equatable {
+    case coverInfo
+    case communityActions(followButtonState: FollowButtonState)
+    case communityInfo
+}
+
+enum CommunitySections {
+    case communityInfo([CommunityInfoSection])
+    case wall(Response)
 }
 
 class CommunityVC: UIViewController {
@@ -26,7 +32,7 @@ class CommunityVC: UIViewController {
     // MARK: - Private Variables
     
     private var posts: Response?
-    private var sections: [CommunityWallSections] = [] {
+    private var sections: [CommunitySections] = [] {
         didSet {
             self.tableView.reloadData()
         }
@@ -34,7 +40,7 @@ class CommunityVC: UIViewController {
     
     // MARK: - Public Variables
     
-    var communitity: Community!
+    var communitity = Community()
     
     // MARK: - LifeCycle
     
@@ -58,28 +64,32 @@ class CommunityVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.backgroundColor = Constants.Colors.theme
-        
         configureTableView()
         
-        sections.append(.communityInfo(followButtonState: communitity.followState))
-        requestFromApi() 
+        sections.append(.communityInfo([.coverInfo]))
+        sections.append(.communityInfo([.communityActions(followButtonState: communitity.followState)]))
+        sections.append(.communityInfo([.communityInfo]))
+        
+        requestFromApi()
     }
     
     // MARK: - Private Methods
     
     private func requestFromApi() {
         vkApi.getWall(ownerId: communitity.id) { [weak self] items in
-            self?.sections.append(.post(items))
+            self?.sections.append(.wall(items))
         }
     }
     
     private func configureTableView() {
+        tableView.backgroundColor = Constants.Colors.theme
+        
         view.addSubview(tableView)
         
-        tableView.register(PostCell.self, forCellReuseIdentifier: PostCell.reuseId)
+        tableView.register(CommunityCoverInfoCell.self, forCellReuseIdentifier: CommunityCoverInfoCell.reuseId)
+        tableView.register(CommunityActionsCell.self, forCellReuseIdentifier: CommunityActionsCell.reuseId)
         tableView.register(CommunityInfoCell.self, forCellReuseIdentifier: CommunityInfoCell.reuseId)
+        tableView.register(PostCell.self, forCellReuseIdentifier: PostCell.reuseId)
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
         tableView.dataSource = self
@@ -98,27 +108,44 @@ extension CommunityVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch sections[section] {
-        case .communityInfo(followButtonState: _):
-            return 1
-        case .post(let items):
-            return items.items.count
+        case .communityInfo(let cells):
+            return cells.count
+        case .wall(let posts):
+            return posts.items.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch sections[indexPath.section] {
-        case .communityInfo(followButtonState: _):
-            guard let communityInfoCell = tableView.dequeueReusableCell(withIdentifier: CommunityInfoCell.reuseId, for: indexPath) as? CommunityInfoCell else {
-                return UITableViewCell()
+        case .communityInfo(let cells):
+            switch cells[indexPath.row] {
+            case .coverInfo:
+                guard let communityCoverInfoCell = tableView.dequeueReusableCell(withIdentifier: CommunityCoverInfoCell.reuseId, for: indexPath) as? CommunityCoverInfoCell else {
+                    return UITableViewCell()
+                }
+                
+                communityCoverInfoCell.configure(with: communitity)
+                
+                return communityCoverInfoCell
+            case .communityActions(let followButtonState):
+                guard let communityActionsCell = tableView.dequeueReusableCell(withIdentifier: CommunityActionsCell.reuseId, for: indexPath) as? CommunityActionsCell else {
+                    return UITableViewCell()
+                }
+                
+                communityActionsCell.delegate = self
+                communityActionsCell.configure(with: followButtonState)
+                
+                return communityActionsCell
+            case .communityInfo:
+                guard let communityInfoCell = tableView.dequeueReusableCell(withIdentifier: CommunityInfoCell.reuseId, for: indexPath) as? CommunityInfoCell else {
+                    return UITableViewCell()
+                }
+                
+                communityInfoCell.configure(with: communitity.membersQuantity)
+                
+                return communityInfoCell
             }
-            
-            communityInfoCell.community = communitity
-            
-            communityInfoCell.configure(with: communitity)
-            communityInfoCell.delegate = self
-            
-            return communityInfoCell
-        case .post(let posts):
+        case .wall(let posts):
             guard let postCell = tableView.dequeueReusableCell(withIdentifier: PostCell.reuseId, for: indexPath) as? PostCell else {
                 return UITableViewCell()
             }
@@ -140,33 +167,53 @@ extension CommunityVC: UITableViewDataSource {
 extension CommunityVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch sections[indexPath.section] {
-        case .communityInfo(followButtonState: _):
-            return 250.0
-        case .post(_):
+        case .communityInfo(let cells):
+            switch cells[indexPath.row] {
+            case .coverInfo:
+                return 112.0
+            case .communityActions(_):
+                return 96.0
+            case .communityInfo:
+                return 48.0
+            }
+        case .wall(_):
             return UITableView.automaticDimension
         }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
-            headerView.frame = view.bounds
-            headerView.setImage(url: communitity.cover?.imageUrl)
-            
-            return headerView
-        } else {
+        switch sections[section] {
+        case .communityInfo(let cells):
+            for cell in cells {
+                if cell == .coverInfo {
+                    headerView.frame = view.bounds
+                    headerView.setImage(url: communitity.cover?.imageUrl)
+                    return headerView
+                } else {
+                    return nil
+                }
+            }
+            return nil
+        case .wall(_):
             return nil
         }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch sections[section] {
-        case .communityInfo(followButtonState: _):
-            if communitity.cover?.enabled == 1 {
-                return 144.0
-            } else {
-                return 0.0
+        case .communityInfo(let cells):
+            for cell in cells {
+                if cell == .coverInfo {
+                    guard communitity.cover?.enabled == 1 else {
+                        return 0.0
+                    }
+                    return 144.0
+                } else {
+                    return 0.0
+                }
             }
-        case .post(_):
+            return 0.0
+        case .wall(_):
             return 0.0
         }
     }
@@ -212,34 +259,41 @@ extension CommunityVC: UIScrollViewDelegate {
 
 extension CommunityVC: CommunityInfoCellDelegate {
     func changeFollowState() {
-        if communitity.isMember == 1 {
+        print("button tapped")
+        if communitity.followState == .following {
             present(getFollowActionSheet(unfollowHandler: { [weak self] _ in
                 guard let self = self else { return }
                 
                 self.vkApi.leaveGroup(groupId: self.communitity.id) { [weak self] response in
+                    guard let self = self else { return }
+                    
                     guard response.response == 1 else {
                         print("Запрос отклонен")
                         return
                     }
-                    self?.communitity.isMember = 0
-                    print("Left \(String(describing: self?.communitity))")
-                    //                        RealmService.manager.removeCommunity(groupId: self!.communitity.id)
+                    print("Left community \(String(describing: self.communitity))")
+//                    RealmService.manager.removeCommunity(groupId: self.communitity.id)
+                    self.tableView.reloadData()
                     let stoppedFollowingPhrase = NSLocalizedString("You have unfollowed the community", comment: "")
-                    self?.presentAlertOnMainTread(message: stoppedFollowingPhrase)
+                    self.presentAlertOnMainTread(message: stoppedFollowingPhrase)
                 }
             }),
             animated: true)
         } else {
             self.vkApi.joinGroup(groupId: self.communitity.id) { [weak self] response in
+                guard let self = self else { return }
+                
                 guard response.response == 1 else {
                     print("Запрос отклонен")
                     return
                 }
-                self?.communitity.isMember = 1
-                print("Following \(String(describing: self?.communitity))")
-                //                    RealmService.manager.saveObject(self!.communitity)
+                self.communitity.isMember = 1
+                print("Started following \(String(describing: self.communitity))")
+//                RealmService.manager.saveObject(self.communitity)
+                self.tableView.reloadData()
+                print(self.communitity.followState)
                 let startedFollowingPhrase = NSLocalizedString("You are now following this community", comment: "")
-                self?.presentAlertOnMainTread(message: startedFollowingPhrase)
+                self.presentAlertOnMainTread(message: startedFollowingPhrase)
             }
         }
     }
