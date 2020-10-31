@@ -25,10 +25,6 @@ class CommunitiesVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let selectionIndexPath = self.tableView.indexPathForSelectedRow {
-            tableView.deselectRow(at: selectionIndexPath, animated: animated)
-        }
-        
         navigationController?.navigationBar.backgroundColor = Constants.Colors.theme
         navigationController?.navigationBar.isTranslucent = false
     }
@@ -90,6 +86,7 @@ extension CommunitiesVC: UITableViewDelegate {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
         self.navigationController!.navigationBar.tintColor = .white
         self.navigationController?.pushViewController(vc, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

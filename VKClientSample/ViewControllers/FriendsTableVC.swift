@@ -25,10 +25,6 @@ class FriendsTableVC: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let selectionIndexPath = tableView.indexPathForSelectedRow {
-            tableView.deselectRow(at: selectionIndexPath, animated: animated)
-        }
-        
         navigationController?.navigationBar.backgroundColor = Constants.Colors.theme
         navigationController?.navigationBar.isTranslucent = false
     }
@@ -131,6 +127,7 @@ extension FriendsTableVC {
         self.navigationController?.navigationBar.tintColor = Constants.Colors.vkBlue
         
         self.navigationController?.pushViewController(friendPhotos, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

@@ -11,17 +11,39 @@ import UIKit
 class CustomActivityIndicator: UIView {
     
     //MARK: - Private Properties
+        
+    private lazy var circleLayer: CAShapeLayer = {
+        let radius = (frame.size.width - 10)/2
+        let startAngle = CGFloat(-Double.pi / 2)
+        let endAngle = CGFloat(5 * Double.pi / 4)
+        
+        // Use UIBezierPath as an easy way to create the CGPath for the layer.
+        // The path should be the entire circle.
+        let circlePath = UIBezierPath(arcCenter: CGPoint(x: frame.size.width / 2,
+                                                         y: frame.size.width / 2),
+                                      radius: radius,
+                                      startAngle: startAngle,
+                                      endAngle: endAngle,
+                                      clockwise: true)
+        
+        // Setup the CAShapeLayer with the path, colors, and line width
+        let circleLayer = CAShapeLayer()
+        circleLayer.path = circlePath.cgPath
+        circleLayer.fillColor = UIColor.clear.cgColor
+        circleLayer.strokeColor = Constants.Colors.vkGray.cgColor
+        circleLayer.lineWidth = 5.0
+        circleLayer.lineCap = .round
+        
+        // Don't draw the circle initially
+        circleLayer.strokeEnd = 0.0
+        
+        return circleLayer
+    }()
     
-    var circleLayer: CAShapeLayer!
+    //MARK: - Private Variables
     
-//    lazy var circleLayer: CAShapeLayer = {
-   //
-   //    }()
-    
-    //MARK: - Variables
-    
-    var isAnimating : Bool = false
-    var hidesWhenStopped : Bool = true
+    private var isAnimating : Bool = false
+    private var hidesWhenStopped : Bool = true
     
     //MARK: - Initializers
     
@@ -65,34 +87,10 @@ class CustomActivityIndicator: UIView {
     //MARK: - Private Methods
     
     private func configureCircle() {
-        let radius = (frame.size.width - 10)/2
-        let startAngle = CGFloat(-Double.pi / 2)
-        let endAngle = CGFloat(5 * Double.pi / 4)
-        
-        // Use UIBezierPath as an easy way to create the CGPath for the layer.
-        // The path should be the entire circle.
-        let circlePath = UIBezierPath(arcCenter: CGPoint(x: frame.size.width / 2,
-                                                         y: frame.size.width / 2),
-                                      radius: radius,
-                                      startAngle: startAngle,
-                                      endAngle: endAngle,
-                                      clockwise: true)
-        
-        // Setup the CAShapeLayer with the path, colors, and line width
-        circleLayer = CAShapeLayer()
-        circleLayer.path = circlePath.cgPath
-        circleLayer.fillColor = UIColor.clear.cgColor
-        circleLayer.strokeColor = Constants.Colors.vkGray.cgColor
-        circleLayer.lineWidth = 5.0
-        circleLayer.lineCap = .round
-        
-        // Don't draw the circle initially
-        circleLayer.strokeEnd = 0.0
-        
         // Add the circleLayer to the view's layer's sublayers
         self.layer.addSublayer(circleLayer)
         
-//        addRotation()
+        addRotation()
     }
     
     private func addRotation() {

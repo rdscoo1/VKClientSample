@@ -24,14 +24,14 @@ enum FollowButtonState {
     dynamic var isMember: Int = 0
     dynamic var cover: CommunityCover?
     
-    var followState: FollowButtonState{
+    var followState: FollowButtonState {
         if isMember == 0 {
             return .notFollowing
         } else {
             return .following
         }
     }
-        
+    
     enum CodingKeys: String, CodingKey {
         case id
         case name
