@@ -90,6 +90,7 @@
 		E8D4290D25193D6000A326E9 /* PostPhotoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D4290C25193D6000A326E9 /* PostPhotoSize.swift */; };
 		E8D45F8A25023A04005120D8 /* PostLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D45F8925023A04005120D8 /* PostLinkView.swift */; };
 		E8D51AAE2475D7570056B945 /* VKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D51AAD2475D7570056B945 /* VKError.swift */; };
+		E8D705D3254F92690093A573 /* ErrorIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D705D2254F92690093A573 /* ErrorIconView.swift */; };
 		E8DBDE4E24887C660093920C /* RealmCascadeDeletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DBDE4D24887C660093920C /* RealmCascadeDeletion.swift */; };
 		E8F6214F25195B8800C830A6 /* PostAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F6214E25195B8800C830A6 /* PostAttachment.swift */; };
 		E8F62175251A4F3200C830A6 /* OnlineStatusSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F62174251A4F3200C830A6 /* OnlineStatusSwitcher.swift */; };
@@ -187,6 +188,7 @@
 		E8D4290C25193D6000A326E9 /* PostPhotoSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhotoSize.swift; sourceTree = "<group>"; };
 		E8D45F8925023A04005120D8 /* PostLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLinkView.swift; sourceTree = "<group>"; };
 		E8D51AAD2475D7570056B945 /* VKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKError.swift; sourceTree = "<group>"; };
+		E8D705D2254F92690093A573 /* ErrorIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorIconView.swift; sourceTree = "<group>"; };
 		E8DBDE4D24887C660093920C /* RealmCascadeDeletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCascadeDeletion.swift; sourceTree = "<group>"; };
 		E8F6214E25195B8800C830A6 /* PostAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttachment.swift; sourceTree = "<group>"; };
 		E8F62174251A4F3200C830A6 /* OnlineStatusSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineStatusSwitcher.swift; sourceTree = "<group>"; };
@@ -450,19 +452,17 @@
 		E8CD1C9523DB29B800C5D668 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E8D705D5254F92B60093A573 /* News */,
+				E8D705D1254F92440093A573 /* AnimatedIconViews */,
 				E8757B09241BEE26002F92A7 /* Navigation */,
 				E80D57EF23F9F455002C53CB /* PhotoPreview */,
 				E8068CDD23E0C1BB0083FBBE /* Controls */,
 				E8CD1C9623DB29D300C5D668 /* ShadowPhotoView.swift */,
-				E8068CDB23E0BE360083FBBE /* PostStatistics.swift */,
-				E8068CEC23E3A7890083FBBE /* AddStoryPhotoView.swift */,
 				E87BB7F323E8CE39006C14F6 /* LoadView.swift */,
-				E8D45F8925023A04005120D8 /* PostLinkView.swift */,
 				E8FE44A8252126C6004146B7 /* ActivityIndicatorWithImage.swift */,
 				E88EC38E2524ACD400F3603D /* CustomActivityIndicator.swift */,
 				E897BCCE252F73BE001746DA /* FollowButton.swift */,
 				E836B0AF2538AE7600E47521 /* StretchyTableViewHeader.swift */,
-				E836B0EF253CE94B00E47521 /* DoneIconView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -477,6 +477,25 @@
 				E8D4290925193D3B00A326E9 /* PostPhoto.swift */,
 				E8D4290C25193D6000A326E9 /* PostPhotoSize.swift */,
 				E8F6214E25195B8800C830A6 /* PostAttachment.swift */,
+			);
+			path = News;
+			sourceTree = "<group>";
+		};
+		E8D705D1254F92440093A573 /* AnimatedIconViews */ = {
+			isa = PBXGroup;
+			children = (
+				E836B0EF253CE94B00E47521 /* DoneIconView.swift */,
+				E8D705D2254F92690093A573 /* ErrorIconView.swift */,
+			);
+			path = AnimatedIconViews;
+			sourceTree = "<group>";
+		};
+		E8D705D5254F92B60093A573 /* News */ = {
+			isa = PBXGroup;
+			children = (
+				E8068CEC23E3A7890083FBBE /* AddStoryPhotoView.swift */,
+				E8D45F8925023A04005120D8 /* PostLinkView.swift */,
+				E8068CDB23E0BE360083FBBE /* PostStatistics.swift */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -624,6 +643,7 @@
 				E8954A9523B162B300A93209 /* UIColor+hex.swift in Sources */,
 				E8C219AC254DB01D001CD400 /* CommunityInfoCell.swift in Sources */,
 				E836E3B8246CAA900053A065 /* CommunitiesVC.swift in Sources */,
+				E8D705D3254F92690093A573 /* ErrorIconView.swift in Sources */,
 				E8FDF8AF254DB9940089B11E /* CommunityCoverInfoCell.swift in Sources */,
 				E836B0E6253C802600E47521 /* AlertViewController.swift in Sources */,
 				E8068CE323E0C4290083FBBE /* ViewsControl.swift in Sources */,
