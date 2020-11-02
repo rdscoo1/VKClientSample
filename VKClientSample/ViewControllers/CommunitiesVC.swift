@@ -80,7 +80,7 @@ extension CommunitiesVC: UITableViewDelegate {
         let vc = CommunityVC()
         
         if let selectedIndex = tableView.indexPathForSelectedRow {
-            vc.communitity = communities[selectedIndex.row]
+            vc.community = communities[selectedIndex.row]
         }
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)

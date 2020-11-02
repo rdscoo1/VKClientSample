@@ -40,7 +40,7 @@ class CommunityVC: UIViewController {
     
     // MARK: - Public Variables
     
-    var communitity = Community()
+    var community = Community()
     
     // MARK: - LifeCycle
     
@@ -50,7 +50,7 @@ class CommunityVC: UIViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = nil
         
-        if communitity.cover?.enabled == 1 {
+        if community.cover?.enabled == 1 {
             navigationController?.navigationBar.isTranslucent = true
         } else {
             navigationController?.navigationBar.isTranslucent = false
@@ -67,7 +67,7 @@ class CommunityVC: UIViewController {
         configureTableView()
         
         sections.append(.communityInfo([.coverInfo]))
-        sections.append(.communityInfo([.communityActions(followButtonState: communitity.followState)]))
+        sections.append(.communityInfo([.communityActions(followButtonState: community.followState)]))
         sections.append(.communityInfo([.communityInfo]))
         
         requestFromApi()
@@ -76,7 +76,7 @@ class CommunityVC: UIViewController {
     // MARK: - Private Methods
     
     private func requestFromApi() {
-        vkApi.getWall(ownerId: communitity.id) { [weak self] items in
+        vkApi.getWall(ownerId: community.id) { [weak self] items in
             self?.sections.append(.wall(items))
         }
     }
@@ -124,7 +124,7 @@ extension CommunityVC: UITableViewDataSource {
                     return UITableViewCell()
                 }
                 
-                communityCoverInfoCell.configure(with: communitity)
+                communityCoverInfoCell.configure(with: community)
                 
                 return communityCoverInfoCell
             case .communityActions(let followButtonState):
@@ -141,7 +141,7 @@ extension CommunityVC: UITableViewDataSource {
                     return UITableViewCell()
                 }
                 
-                communityInfoCell.configure(with: communitity.membersQuantity)
+                communityInfoCell.configure(with: community.membersQuantity)
                 
                 return communityInfoCell
             }
@@ -187,7 +187,7 @@ extension CommunityVC: UITableViewDelegate {
             for cell in cells {
                 if cell == .coverInfo {
                     headerView.frame = view.bounds
-                    headerView.setImage(url: communitity.cover?.imageUrl)
+                    headerView.setImage(url: community.cover?.imageUrl)
                     return headerView
                 } else {
                     return nil
@@ -204,7 +204,7 @@ extension CommunityVC: UITableViewDelegate {
         case .communityInfo(let cells):
             for cell in cells {
                 if cell == .coverInfo {
-                    guard communitity.cover?.enabled == 1 else {
+                    guard community.cover?.enabled == 1 else {
                         return 0.0
                     }
                     return 144.0
@@ -225,7 +225,7 @@ extension CommunityVC: UIScrollViewDelegate {
     internal func scrollViewDidScroll(_ scrollView: UIScrollView) {
         headerView.scrollViewDidScroll(scrollView: scrollView)
         
-        if communitity.cover?.enabled == 1 {
+        if community.cover?.enabled == 1 {
             scrollView.contentInsetAdjustmentBehavior = .never
             
             let offset = scrollView.contentOffset.y
@@ -260,18 +260,18 @@ extension CommunityVC: UIScrollViewDelegate {
 extension CommunityVC: CommunityInfoCellDelegate {
     func changeFollowState() {
         print("button tapped")
-        if communitity.followState == .following {
+        if community.followState == .following {
             present(getFollowActionSheet(unfollowHandler: { [weak self] _ in
                 guard let self = self else { return }
                 
-                self.vkApi.leaveGroup(groupId: self.communitity.id) { [weak self] response in
+                self.vkApi.leaveGroup(groupId: self.community.id) { [weak self] response in
                     guard let self = self else { return }
                     
                     guard response.response == 1 else {
                         print("Запрос отклонен")
                         return
                     }
-                    print("Left community \(String(describing: self.communitity))")
+                    print("Left community \(String(describing: self.community))")
 //                    RealmService.manager.removeCommunity(groupId: self.communitity.id)
                     self.tableView.reloadData()
                     let stoppedFollowingPhrase = NSLocalizedString("You have unfollowed the community", comment: "")
@@ -280,18 +280,18 @@ extension CommunityVC: CommunityInfoCellDelegate {
             }),
             animated: true)
         } else {
-            self.vkApi.joinGroup(groupId: self.communitity.id) { [weak self] response in
+            self.vkApi.joinGroup(groupId: self.community.id) { [weak self] response in
                 guard let self = self else { return }
                 
                 guard response.response == 1 else {
                     print("Запрос отклонен")
                     return
                 }
-                self.communitity.isMember = 1
-                print("Started following \(String(describing: self.communitity))")
+                self.community.isMember = 1
+                print("Started following \(String(describing: self.community))")
 //                RealmService.manager.saveObject(self.communitity)
                 self.tableView.reloadData()
-                print(self.communitity.followState)
+                print(self.community.followState)
                 let startedFollowingPhrase = NSLocalizedString("You are now following this community", comment: "")
                 self.presentAlertOnMainTread(message: startedFollowingPhrase)
             }
