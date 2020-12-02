@@ -9,6 +9,21 @@
 import UIKit
 
 struct Constants {
+    static let baseUrl = "api.vk.com"
+    
+    enum Paths: String {
+        case userInfo = "users.get"
+        case friends = "friends.get"
+        case photos = "photos.get"
+        case groups = "groups.get"
+        case groupsSearch = "groups.search"
+        case groupJoin = "groups.join"
+        case groupLeave = "groups.leave"
+        case wall = "wall.get"
+        case newsfeed = "newsfeed.get"
+        case stories = "stories.get"
+    }
+    
     enum Colors {
         static let vkBlue = UIColor(hex: "#408bdb")
         

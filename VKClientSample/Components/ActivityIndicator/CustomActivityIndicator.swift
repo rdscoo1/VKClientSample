@@ -90,7 +90,7 @@ class CustomActivityIndicator: UIView {
         // Add the circleLayer to the view's layer's sublayers
         self.layer.addSublayer(circleLayer)
         
-        addRotation()
+//        addRotation()
     }
     
     private func addRotation() {

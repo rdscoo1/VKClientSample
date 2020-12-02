@@ -8,7 +8,7 @@
 
 import UIKit
 
-public enum HapticFeedback {
+enum HapticFeedback {
     
     case success
     case warning

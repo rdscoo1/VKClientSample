@@ -27,7 +27,7 @@ class CommunityVC: UIViewController {
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     private let headerView = StretchyTableViewHeader()
-    private let vkApi = VKApi()
+    private let vkApi = NetworkService()
     
     // MARK: - Private Variables
     

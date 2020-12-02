@@ -19,7 +19,7 @@ class CommunitiesVC: UIViewController {
     // MARK: - Variables
     
     private var communities: [Community] = []
-    private let vkApi = VKApi()
+    private let vkApi = NetworkService()
     
     // MARK: - LifeCycle
     

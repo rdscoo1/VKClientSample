@@ -14,7 +14,7 @@ class StoriesCell: UITableViewCell {
     
     // MARK: - Private Properties
     
-    private let vkApi = VKApi()
+    private let vkApi = NetworkService()
     private let containerView = UIView()
     private var storiesCollectionView: UICollectionView!
     private var stories: [StoriesCommunity]?

@@ -12,7 +12,7 @@ class FriendCollectionVC: UICollectionViewController {
     
     // MARK: - Properties
     
-    private let vkApi = VKApi()
+    private let vkApi = NetworkService()
     var friendId = Int()
     private var friendPhotos = [Photo]()
     private var photosUrlsLowRes = [String?]()

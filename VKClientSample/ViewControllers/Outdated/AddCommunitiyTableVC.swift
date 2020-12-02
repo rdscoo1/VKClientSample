@@ -12,7 +12,7 @@ class AddCommunitiyTableVC: UITableViewController {
     
     private var searchBar = UISearchBar()
     var communities = [Community]()
-    let vkApi = VKApi()
+    let vkApi = NetworkService()
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -12,7 +12,7 @@ class ProfileTableViewController: UITableViewController {
     
     // MARK: - Private Properties
     
-    private let vkApi = VKApi()
+    private let vkApi = NetworkService()
     private var profile = [User]()
     
     // MARK: - LifeCycle

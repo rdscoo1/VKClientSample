@@ -17,7 +17,7 @@ class FriendsTableVC: UITableViewController {
     
     // MARK: - Private Properties
     
-    private let vkApi = VKApi()
+    private let vkApi = NetworkService()
     private var friends = [Friend]()
     private var friendsInSection = [FriendSection]()
     
