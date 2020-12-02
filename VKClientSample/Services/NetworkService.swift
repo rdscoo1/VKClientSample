@@ -12,19 +12,6 @@ import RealmSwift
 
 //MARK: - Api Methods
 
-enum ApiPath: String {
-    case userInfo = "users.get"
-    case friends = "friends.get"
-    case photos = "photos.get"
-    case groups = "groups.get"
-    case groupsSearch = "groups.search"
-    case groupJoin = "groups.join"
-    case groupLeave = "groups.leave"
-    case wall = "wall.get"
-    case newsfeed = "newsfeed.get"
-    case stories = "stories.get"
-}
-
 class NetworkService {
     
     //MARK: - Constants
@@ -38,51 +25,62 @@ class NetworkService {
     //MARK: - Private Methods
     
     private func makeRequest<ResponseType>(
-        endpoint: Endpoint,
-        httpMethod: HTTPMethod = .get,
-        objectType: ResponseType.Type,
-        completion: @escaping () -> Void) where ResponseType: Object, ResponseType: Decodable {
-                
-        AF.request(endpoint.url, method: httpMethod)
-            .validate(statusCode: 200..<300)
-            .responseData { response in
-                switch response.result {
-                case let .success(data):
-                    do {
-                        let decodedModel = try JSONDecoder().decode(VKResponse<ResponseType>.self, from: data)
-                        if let responseData = decodedModel.response {
-                            //                            print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
-                            //                            print(responseData.items)
-                            
-                            RealmService.manager.removeObjectsThanSave(of: ResponseType.self, objects: responseData.items)
-                            completion()
-                        } else if
-                            let errorCode = decodedModel.error?.errorCode,
-                            let errorMsg = decodedModel.error?.errorMessage
-                        {
-                            print("❌ NetworkService \(endpoint.url) error\n\(errorCode) \(errorMsg) ❌")
+            apiPath: Constants.ApiPath,
+            params inputParams: Parameters,
+            httpMethod: HTTPMethod = .get,
+            objectType: ResponseType.Type,
+            completion: @escaping () -> Void) where ResponseType: Object, ResponseType: Decodable {
+            let requestUrl = apiURL + apiPath.rawValue
+            
+            let params = defaultParams.merging(inputParams, uniquingKeysWith: { currentKey, _ in currentKey })
+            
+            AF.request(requestUrl, method: httpMethod, parameters: params)
+                .validate(statusCode: 200..<300)
+                .responseData { response in
+                    switch response.result {
+                    case let .success(data):
+                        do {
+                            let decodedModel = try JSONDecoder().decode(VKResponse<ResponseType>.self, from: data)
+                            if let responseData = decodedModel.response {
+                                //                            print("📩📩📩 Method \(apiMethod.rawValue) response: 📩📩📩")
+                                //                            print(responseData.items)
+                                
+                                RealmService.manager.removeObjectsThanSave(of: ResponseType.self, objects: responseData.items)
+                                completion()
+                            } else if
+                                let errorCode = decodedModel.error?.errorCode,
+                                let errorMsg = decodedModel.error?.errorMessage
+                            {
+                                print("❌ VKApi \(apiPath.rawValue) error\n\(errorCode) \(errorMsg) ❌")
+                            }
+                        } catch {
+                            print("❌ Decoding \(VKResponse<ResponseType>.self) failed ❌\n\(error)")
                         }
-                    } catch {
-                        print("❌ Decoding \(VKResponse<ResponseType>.self) failed ❌\n\(error)")
+                    case let .failure(error):
+                        print("❌ Alamofire error\n \(error) ❌")
                     }
-                case let .failure(error):
-                    print("❌ Alamofire error\n \(error) ❌")
                 }
-            }
-    }
-    
-    //MARK: - Public Methods
-    
-    func getFriends(completion: @escaping () -> Void) {
-        makeRequest(endpoint: .friends, objectType: Friend.self, completion: completion)
-    }
+        }
+        
+        //MARK: - Public Methods
+        
+        func getFriends(completion: @escaping () -> Void) {
+            let params: Parameters = [
+                "user_id": Session.shared.userId,
+                "order": "hints",
+                "fields": "city,photo_50,online"
+            ]
+            
+            makeRequest(apiPath: .friends, params: params, objectType: Friend.self, completion: completion)
+        }
+
     
     // MARK: - Groups methods
     
     func joinGroup(groupId: Int, completion: @escaping (CommunityResponse) -> Void) {
         let inputParams: Parameters = [ "group_id": groupId ]
         
-        let requestUrl = apiURL + ApiPath.groupJoin.rawValue
+        let requestUrl = apiURL + Constants.ApiPath.groupJoin.rawValue
         
         let params = defaultParams.merging(inputParams, uniquingKeysWith: { currentKey, _ in currentKey })
         
@@ -99,7 +97,7 @@ class NetworkService {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ NetworkService \(ApiPath.groupJoin.rawValue) error\n\(errorCode) \(errorMsg) ❌")
+                            print("❌ NetworkService \(Constants.ApiPath.groupJoin.rawValue) error\n\(errorCode) \(errorMsg) ❌")
                         }
                     } catch {
                         print("❌ Decoding \(CommunityResponse.self) failed ❌\n\(error)")
@@ -113,7 +111,7 @@ class NetworkService {
     func leaveGroup(groupId: Int, completion: @escaping (CommunityResponse) -> Void) {
         let inputParams: Parameters = [ "group_id": groupId ]
         
-        let requestUrl = apiURL + ApiPath.groupLeave.rawValue
+        let requestUrl = apiURL + Constants.ApiPath.groupLeave.rawValue
         
         let params = defaultParams.merging(inputParams, uniquingKeysWith: { currentKey, _ in currentKey })
         
@@ -130,7 +128,7 @@ class NetworkService {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ NetworkService \(ApiPath.groupLeave.rawValue) error\n\(errorCode) \(errorMsg) ❌")
+                            print("❌ NetworkService \(Constants.ApiPath.groupLeave.rawValue) error\n\(errorCode) \(errorMsg) ❌")
                         }
                     } catch {
                         print("❌ Decoding \(CommunityResponse.self) failed ❌\n\(error)")
@@ -147,7 +145,7 @@ class NetworkService {
             "fields": "activity,status,members_count,cover"
         ]
         
-        let requestUrl = apiURL + ApiPath.groups.rawValue
+        let requestUrl = apiURL + Constants.ApiPath.groups.rawValue
         
         let params = defaultParams.merging(inputParams, uniquingKeysWith: { currentKey, _ in currentKey })
         
@@ -167,7 +165,7 @@ class NetworkService {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ NetworkService \(ApiPath.groups.rawValue) error\n\(errorCode) \(errorMsg) ❌")
+                            print("❌ NetworkService \(Constants.ApiPath.groups.rawValue) error\n\(errorCode) \(errorMsg) ❌")
                         }
                     } catch {
                         print("❌ Decoding \(VKResponse<Community>.self) failed ❌\n\(error)")
@@ -184,7 +182,7 @@ class NetworkService {
             "fields": "activity,status,members_count,cover"
         ]
         
-        let requestUrl = apiURL + ApiPath.groupsSearch.rawValue
+        let requestUrl = apiURL + Constants.ApiPath.groupsSearch.rawValue
         
         let params = defaultParams.merging(searchParams, uniquingKeysWith: { currentKey, _ in currentKey })
         
@@ -203,7 +201,7 @@ class NetworkService {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ NetworkService \(ApiPath.groupsSearch.rawValue) error ❌\n\(errorCode) \(errorMsg)")
+                            print("❌ NetworkService \(Constants.ApiPath.groupsSearch.rawValue) error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
                         print("❌ Decoding \(VKResponse<Community>.self) failed ❌\n\(error)")
@@ -215,7 +213,7 @@ class NetworkService {
     }
     
     func getPhotos(ownerId: Int, completion: @escaping () -> Void) {
-        let requestUrl = apiURL + ApiPath.photos.rawValue
+        let requestUrl = apiURL + Constants.ApiPath.photos.rawValue
         
         let params: Parameters = [
             "access_token": Session.shared.token,
@@ -238,7 +236,7 @@ class NetworkService {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ NetworkService \(ApiPath.photos.rawValue) error ❌\n\(errorCode) \(errorMsg)")
+                            print("❌ NetworkService \(Constants.ApiPath.photos.rawValue) error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
                         print("❌ Decoding \(VKResponse<Photo>.self) failed ❌\n\(error)")
@@ -250,7 +248,7 @@ class NetworkService {
     }
     
     func getNewsfeed(nextBatch: String?, startTime: String?, completion: @escaping (Response) -> Void) {
-        let requestUrl = apiURL + ApiPath.newsfeed.rawValue
+        let requestUrl = apiURL + Constants.ApiPath.newsfeed.rawValue
         let params: Parameters = [
             "access_token": Session.shared.token,
             "v": "5.124",
@@ -277,7 +275,7 @@ class NetworkService {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ NetworkService \(ApiPath.newsfeed.rawValue) error ❌\n\(errorCode) \(errorMsg)")
+                            print("❌ NetworkService \(Constants.ApiPath.newsfeed.rawValue) error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
                         print("❌ Decoding \(PostResponse.self) failed ❌\n\(error)")
@@ -289,7 +287,7 @@ class NetworkService {
     }
     
     func getStories(completion: @escaping (StoryResponse) -> Void) {
-        let requestUrl = apiURL + ApiPath.stories.rawValue
+        let requestUrl = apiURL + Constants.ApiPath.stories.rawValue
         let params: Parameters = [
             "access_token": Session.shared.token,
             "v": "5.120",
@@ -312,7 +310,7 @@ class NetworkService {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ NetworkService \(ApiPath.stories.rawValue) error ❌\n\(errorCode) \(errorMsg)")
+                            print("❌ NetworkService \(Constants.ApiPath.stories.rawValue) error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
                         print("❌ Decoding \(StoriesResponse.self) failed ❌\n\(error)")
@@ -331,7 +329,7 @@ class NetworkService {
             "fields": "photo_100, status"
         ]
         
-        let requestUrl = apiURL + ApiPath.userInfo.rawValue
+        let requestUrl = apiURL + Constants.ApiPath.userInfo.rawValue
         
         AF.request(requestUrl, method: .get, parameters: params)
             .validate(statusCode: 200..<300)
@@ -347,7 +345,7 @@ class NetworkService {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ NetworkService \(ApiPath.userInfo.rawValue) error ❌\n\(errorCode) \(errorMsg)")
+                            print("❌ NetworkService \(Constants.ApiPath.userInfo.rawValue) error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
                         print("❌ Decoding \(UserResponse.self) failed ❌\n\(error)")
@@ -359,7 +357,7 @@ class NetworkService {
     }
     
     func getWall(ownerId: Int, completion: @escaping (Response) -> Void) {
-        let requestUrl = apiURL + ApiPath.wall.rawValue
+        let requestUrl = apiURL + Constants.ApiPath.wall.rawValue
         let params: Parameters = [
             "access_token": Session.shared.token,
             "v": "5.124",
@@ -384,7 +382,7 @@ class NetworkService {
                             let errorCode = decodedModel.error?.errorCode,
                             let errorMsg = decodedModel.error?.errorMessage
                         {
-                            print("❌ NetworkService \(ApiPath.wall.rawValue) error ❌\n\(errorCode) \(errorMsg)")
+                            print("❌ NetworkService \(Constants.ApiPath.wall.rawValue) error ❌\n\(errorCode) \(errorMsg)")
                         }
                     } catch {
                         print("❌ Decoding \(PostResponse.self) failed ❌\n\(error)")

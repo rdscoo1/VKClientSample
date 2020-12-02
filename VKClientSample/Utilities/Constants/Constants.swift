@@ -11,7 +11,7 @@ import UIKit
 struct Constants {
     static let baseUrl = "api.vk.com"
     
-    enum Paths: String {
+    enum ApiPath: String {
         case userInfo = "users.get"
         case friends = "friends.get"
         case photos = "photos.get"
