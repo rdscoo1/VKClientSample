@@ -31,6 +31,7 @@ class FriendsTableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = Constants.Colors.theme
         
         tableView.register(FriendCell.self, forCellReuseIdentifier: FriendCell.reuseId)
         tableView.tableFooterView = UIView()

@@ -11,14 +11,13 @@ import UIKit
 class CustomActivityIndicator: UIView {
     
     //MARK: - Private Properties
-        
+    
     private lazy var circleLayer: CAShapeLayer = {
         let radius = (frame.size.width - 10)/2
         let startAngle = CGFloat(-Double.pi / 2)
         let endAngle = CGFloat(5 * Double.pi / 4)
         
-        // Use UIBezierPath as an easy way to create the CGPath for the layer.
-        // The path should be the entire circle.
+        // Making form of a circle
         let circlePath = UIBezierPath(arcCenter: CGPoint(x: frame.size.width / 2,
                                                          y: frame.size.width / 2),
                                       radius: radius,
@@ -30,20 +29,19 @@ class CustomActivityIndicator: UIView {
         let circleLayer = CAShapeLayer()
         circleLayer.path = circlePath.cgPath
         circleLayer.fillColor = UIColor.clear.cgColor
-        circleLayer.strokeColor = Constants.Colors.vkGray.cgColor
-        circleLayer.lineWidth = 5.0
+        circleLayer.strokeColor = UIColor.gray.cgColor
+        circleLayer.lineWidth = 3.0
         circleLayer.lineCap = .round
         
         // Don't draw the circle initially
-        circleLayer.strokeEnd = 0.0
+        circleLayer.strokeEnd = 0.95
         
         return circleLayer
     }()
     
-    //MARK: - Private Variables
+    //MARK: - Public Variables
     
-    private var isAnimating : Bool = false
-    private var hidesWhenStopped : Bool = true
+    var isAnimating: Bool = false
     
     //MARK: - Initializers
     
@@ -51,7 +49,7 @@ class CustomActivityIndicator: UIView {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear
         
-        configureCircle()
+        self.layer.addSublayer(circleLayer)
     }
     
     required init?(coder: NSCoder) {
@@ -61,40 +59,23 @@ class CustomActivityIndicator: UIView {
     //MARK: - Public Methods
     
     func startAnimating() {
-        addRotation()
-        
-        if isAnimating {
-            return
-        }
-        
-        if hidesWhenStopped {
-            self.isHidden = false
-        }
-        resume(layer: circleLayer)
+        isAnimating = true
+        spin()
     }
     
     func stopAnimating() {
-        if hidesWhenStopped {
-            self.isHidden = true
-        }
-        pause(layer: circleLayer)
+        isAnimating = false
+        layer.removeAnimation(forKey: "rotate")
     }
     
-    func settingStrokeEnd(value: CGFloat) {
+    func setStrokeEnd(value: CGFloat) {
+        isAnimating = false
         circleLayer.strokeEnd = value
     }
     
     //MARK: - Private Methods
     
-    private func configureCircle() {
-        // Add the circleLayer to the view's layer's sublayers
-        self.layer.addSublayer(circleLayer)
-        
-//        addRotation()
-    }
-    
-    private func addRotation() {
-        circleLayer.strokeEnd = 1.0
+    private func spin() {
         let rotation: CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
         
         rotation.duration = 1.0
@@ -107,27 +88,6 @@ class CustomActivityIndicator: UIView {
         layer.add(rotation, forKey: "rotate")
     }
     
-    private func pause(layer: CALayer) {
-        let pausedTime = layer.convertTime(CACurrentMediaTime(), from: nil)
-        
-        layer.speed = 0.0
-        layer.timeOffset = pausedTime
-        
-        isAnimating = false
-    }
-    
-    private func resume(layer: CALayer) {
-        let pausedTime : CFTimeInterval = layer.timeOffset
-        
-        layer.speed = 1.0
-        layer.timeOffset = 0.0
-        layer.beginTime = 0.0
-        
-        let timeSincePause = layer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
-        layer.beginTime = timeSincePause
-        
-        isAnimating = true
-    }
     
     //MARK: - Animation with StrokeEnd
     

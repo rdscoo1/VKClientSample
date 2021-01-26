@@ -16,7 +16,7 @@ class NetworkService {
     
     //MARK: - Constants
     
-    private let apiURL = "https://api.vk.com/method/"
+    private let apiURL = "https://\(Constants.baseUrl)/method/"
     private let defaultParams: Parameters = [
         "access_token": Session.shared.token,
         "v": "5.103"

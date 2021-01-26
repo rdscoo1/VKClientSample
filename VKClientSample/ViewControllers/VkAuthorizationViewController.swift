@@ -112,6 +112,8 @@ extension VkAuthorizationViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
+        activityIndicator.setStrokeEnd(value: 0)
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
@@ -120,5 +122,7 @@ extension VkAuthorizationViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
+        activityIndicator.setStrokeEnd(value: 0)
     }
 }

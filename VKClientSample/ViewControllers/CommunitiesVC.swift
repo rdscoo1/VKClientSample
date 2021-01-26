@@ -31,7 +31,9 @@ class CommunitiesVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = Constants.Colors.theme
         
+        searchBar.barTintColor = Constants.Colors.theme
         searchBar.delegate = self
         configureTableView()
         
