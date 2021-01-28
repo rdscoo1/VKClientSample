@@ -14,7 +14,7 @@ class StoriesCell: UITableViewCell {
     
     // MARK: - Private Properties
     
-    private let vkApi = VKApi()
+    private let vkApi = NetworkService()
     private let containerView = UIView()
     private var storiesCollectionView: UICollectionView!
     private var stories: [StoriesCommunity]?
@@ -36,20 +36,20 @@ class StoriesCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        storiesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
         backgroundColor = Constants.Colors.theme
+        
+        setupCollectionView()
         
         containerView.addSubview(storiesCollectionView)
         contentView.addSubview(containerView)
         
-        vkApi.getStories { stories in
-            self.stories = stories.groups
-            self.storiesCollectionView.reloadData()
-        }
-        
         configureConstraints()
-        setupCollectionView()
+        
+        loadFromRealm()
+        vkApi.getStories { [weak self] stories in
+            self?.stories = stories.groups
+            self?.storiesCollectionView.reloadData()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -58,7 +58,14 @@ class StoriesCell: UITableViewCell {
     
     //MARK: - Private Methods
     
+    private func loadFromRealm() {
+        let stories = RealmService.manager.getAllObjects(of: StoriesCommunity.self)
+        self.stories = stories
+        storiesCollectionView.reloadData()
+    }
+    
     private func setupCollectionView() {
+        storiesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         storiesCollectionView.dataSource = self
         storiesCollectionView.register(StoryCell.self, forCellWithReuseIdentifier: StoryCell.reuseId)
         storiesCollectionView.register(AddStoryCell.self, forCellWithReuseIdentifier: AddStoryCell.reuseId)

@@ -63,6 +63,4 @@ class ViewsControl: UIView {
             viewCounterLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
-    
-    
 }

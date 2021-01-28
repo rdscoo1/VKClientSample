@@ -6,21 +6,14 @@
 //  Copyright © 2020 Roman Khodukin. All rights reserved.
 //
 
-import RealmSwift
-
-@objcMembers 
-class PostCommunity: Object, Decodable {
-    dynamic var id: Int = 0
-    dynamic var name: String = ""
-    dynamic var imageUrl: String? = ""
+struct PostCommunity: Decodable {
+    let id: Int
+    let name: String
+    let imageUrl: String?
     
     enum CodingKeys: String, CodingKey {
         case id
         case name
         case imageUrl = "photo_50"
-    }
-    
-    override class func primaryKey() -> String? {
-        "id"
     }
 }

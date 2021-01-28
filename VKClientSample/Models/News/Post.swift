@@ -6,19 +6,16 @@
 //  Copyright © 2020 Roman Khodukin. All rights reserved.
 //
 
-import RealmSwift
-
-class PostResponse: Decodable {
-    var response: Response?
+struct PostResponse: Decodable {
+    let response: Response?
     let error: VKError?
 }
 
-class Response: Object, Decodable {
-    @objc dynamic var id: String = UUID().uuidString
-    var items = List<Post>()
-    var profiles = List<PostProfile>()
-    var groups = List<PostCommunity>()
-    @objc dynamic var nextFrom: String? = nil
+struct Response: Decodable {
+    var items: [Post]
+    var profiles: [PostProfile]
+    var groups: [PostCommunity]
+    let nextFrom: String?
     
     enum CodingKeys: String, CodingKey {
         case items
@@ -27,47 +24,36 @@ class Response: Object, Decodable {
         case nextFrom = "next_from"
     }
     
-    //        func addTo(news: Response) {
-    ////            if news.items
-    //            self.items = news.items
-    //        }
+    mutating func addToBeggining(news: Response) {
+        self.items = news.items + self.items
+        self.profiles = news.profiles + self.profiles
+        self.groups = news.groups + self.groups
+    }
     
-    //        func addToBeggining(news: Response) {
-    //            self.items = news.items + self.items
-    //            self.profiles = news.profiles + self.profiles
-    //            self.groups = news.groups + self.groups
-    //        }
-    //
-    //        func addToEnd(news: Response) {
-    //            self.items = self.items + news.items
-    //            self.profiles = self.profiles + news.profiles
-    //            self.groups = self.groups + news.groups
-    //        }
-    
-    override class func primaryKey() -> String? {
-        "id"
+    mutating func addToEnd(news: Response) {
+        self.items = self.items + news.items
+        self.profiles = self.profiles + news.profiles
+        self.groups = self.groups + news.groups
     }
 }
 
-@objcMembers
-class Post: Object, Decodable {
-    dynamic var type: String = ""
-    dynamic var sourceId: Int = 0
-    dynamic var postId: Int = 0
-    dynamic var date: Double = 0.0
-    dynamic var text: String? = nil
-    var attachments = List<PostAttachment>()
-    //    @objc dynamic var attachmentType: String = ""
-    //    var photo = List<PostPhoto>()
-    //    var photos: [Photo]?
-    dynamic var comments: Int = 0
-    dynamic var likes: Int = 0
-    dynamic var reposts: Int = 0
-    dynamic var views: Int = 0
+struct Post: Decodable {
+    var type: String?
+    var sourceId: Int?
+    var ownerId: Int?
+    var postId: Int?
+    var date: Double
+    var text: String?
+    var attachments: [PostAttachment]?
+    var comments: Int?
+    var likes: Int?
+    var reposts: Int?
+    var views: Int?
     
     enum CodingKeys: String, CodingKey {
         case type
         case sourceId = "source_id"
+        case ownerId = "owner_id"
         case postId = "post_id"
         case date
         case text
@@ -77,11 +63,6 @@ class Post: Object, Decodable {
         case reposts
         case views
     }
-    
-    //    enum AttachmentsKeys: String, CodingKey {
-    //        case attachmentType = "type"
-    //        case photo
-    //    }
     
     enum CommentsKeys: CodingKey {
         case count
@@ -99,25 +80,15 @@ class Post: Object, Decodable {
         case count
     }
     
-    required convenience init(from decoder: Decoder) throws {
-        self.init()
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        type = try container.decode(String.self, forKey: .type)
-        sourceId = try container.decode(Int.self, forKey: .sourceId)
-        postId = try container.decode(Int.self, forKey: .postId)
+        type = try container.decodeIfPresent(String.self, forKey: .type)
+        sourceId = try container.decodeIfPresent(Int.self, forKey: .sourceId)
+        ownerId = try container.decodeIfPresent(Int.self, forKey: .ownerId)
+        postId = try container.decodeIfPresent(Int.self, forKey: .postId)
         date = try container.decode(Double.self, forKey: .date)
         text = try container.decodeIfPresent(String.self, forKey: .text)
-        
-        
-        if let attachment = try? container.decode(List<PostAttachment>.self, forKey: .attachments) {
-            self.attachments = attachment
-        }
-        
-        //        if let attachmentsContainer = try? container.nestedContainer(keyedBy: AttachmentsKeys.self, forKey: .attachments) {
-        //            attachmentType = try attachmentsContainer.decode(String.self, forKey: .attachmentType)
-        //            photo = try attachmentsContainer.decode(List<PostPhoto>.self, forKey: .photo)
-        //        }
-        //        photos = try container.decodeIfPresent(Array<Photo>.self, forKey: .photos)
+        attachments = try container.decodeIfPresent([PostAttachment].self, forKey: .attachments)
         
         // Flattening objects
         if let commentsContainer = try? container.nestedContainer(keyedBy: CommentsKeys.self, forKey: .comments) {
@@ -136,10 +107,6 @@ class Post: Object, Decodable {
         if let viewsContainer = try? container.nestedContainer(keyedBy: ViewsKeys.self, forKey: .views) {
             views = try viewsContainer.decode(Int.self, forKey: .count)
         }
-    }
-    
-    override class func primaryKey() -> String? {
-        return "postId"
     }
 }
 

@@ -20,8 +20,8 @@ extension UserDefaults {
         set { set(newValue, forKey: #function) }
     }
     
-    var userId: Int {
-        get { return integer(forKey: #function) }
+    var userId: String? {
+        get { return string(forKey: #function) }
         set { set(newValue, forKey: #function) }
     }
 }

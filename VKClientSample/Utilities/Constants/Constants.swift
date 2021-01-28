@@ -9,6 +9,21 @@
 import UIKit
 
 struct Constants {
+    static let baseUrl = "api.vk.com"
+    
+    enum ApiPath: String {
+        case userInfo = "users.get"
+        case friends = "friends.get"
+        case photos = "photos.get"
+        case groups = "groups.get"
+        case groupsSearch = "groups.search"
+        case groupJoin = "groups.join"
+        case groupLeave = "groups.leave"
+        case wall = "wall.get"
+        case newsfeed = "newsfeed.get"
+        case stories = "stories.get"
+    }
+    
     enum Colors {
         static let vkBlue = UIColor(hex: "#408bdb")
         
@@ -17,7 +32,7 @@ struct Constants {
                 return UIColor { (traits) -> UIColor in
                     // Return one of two colors depending on light or dark mode
                     return traits.userInterfaceStyle == .dark ?
-                        UIColor(hex: "#929599") :
+                        UIColor(hex: "#e1e3e6") :
                         UIColor(hex: "#848b96")
                 }
             } else {
@@ -26,15 +41,28 @@ struct Constants {
             }
         }
         
-        static var newsSeparator: UIColor {
+        static var vkGrayWithAlpha: UIColor {
             if #available(iOS 13.0, *) {
                 return UIColor { (traits) -> UIColor in
                     return traits.userInterfaceStyle == .dark ?
-                        UIColor(hex: "#0a0a0a") :
-                        UIColor(hex: "#ebecef")
+                        UIColor(hex: "#e1e3e6", alpha: 0.5) :
+                        UIColor(hex: "#848b96", alpha: 0.5)
                 }
             } else {
-                return UIColor(hex: "#ebecef")
+                return UIColor(hex: "#848b96", alpha: 0.5)
+            }
+        }
+        
+        
+        static var blueButton: UIColor {
+            if #available(iOS 13.0, *) {
+                return UIColor { (traits) -> UIColor in
+                    return traits.userInterfaceStyle == .dark ?
+                        UIColor(hex: "#929599") :
+                        UIColor(hex: "#408bdb")
+                }
+            } else {
+                return UIColor(hex: "#408bdb")
             }
         }
         
@@ -50,6 +78,18 @@ struct Constants {
             }
         }
         
+        static var newsSeparator: UIColor {
+            if #available(iOS 13.0, *) {
+                return UIColor { (traits) -> UIColor in
+                    return traits.userInterfaceStyle == .dark ?
+                        UIColor(hex: "#0a0a0a") :
+                        UIColor(hex: "#ebecef")
+                }
+            } else {
+                return UIColor(hex: "#ebecef")
+            }
+        }
+
         static var loadingIcon: UIColor {
             if #available(iOS 13.0, *) {
                 return UIColor { (traits) -> UIColor in
@@ -75,5 +115,3 @@ struct Constants {
         }
     }
 }
-
-

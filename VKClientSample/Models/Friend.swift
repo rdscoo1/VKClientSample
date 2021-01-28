@@ -8,6 +8,12 @@
 
 import RealmSwift
 
+enum OnlineStatusState {
+    case offline
+    case online
+    case mobile
+}
+
 @objcMembers class Friend: Object, Decodable {
     dynamic var id: Int = 0
     dynamic var firstName: String = ""
@@ -17,7 +23,7 @@ import RealmSwift
     dynamic var city: String? = nil
     dynamic var imageUrl: String? = nil
     
-    var onlineStatus: OnlineStatusSwitcher {
+    var onlineStatus: OnlineStatusState {
         if online == 1 {
             if onlineMobile.value == 1 {
                 return .mobile

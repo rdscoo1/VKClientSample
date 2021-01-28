@@ -6,21 +6,10 @@
 //  Copyright © 2020 Roman Khodukin. All rights reserved.
 //
 
-import RealmSwift
-
-@objcMembers
-class PostLink: Object, Decodable {
-    dynamic var url: String = ""
-    dynamic var title: String = ""
-    dynamic var descript: String? = nil
-    dynamic var caption: String? = nil
-    dynamic var photo: Photo?
-
-    enum CodingKeys: String, CodingKey {
-        case url
-        case title
-        case descript = "description"
-        case caption
-        case photo
-    }
+struct PostLink: Decodable {
+    let url: String
+    let title: String
+    let description: String?
+    let caption: String?
+    let photo: Photo?
 }

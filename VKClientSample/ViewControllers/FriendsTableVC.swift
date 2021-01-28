@@ -15,9 +15,9 @@ class FriendsTableVC: UITableViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     
-    // MARK: - Properties
+    // MARK: - Private Properties
     
-    private let vkApi = VKApi()
+    private let vkApi = NetworkService()
     private var friends = [Friend]()
     private var friendsInSection = [FriendSection]()
     
@@ -25,13 +25,13 @@ class FriendsTableVC: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let selectionIndexPath = self.tableView.indexPathForSelectedRow {
-            self.tableView.deselectRow(at: selectionIndexPath, animated: animated)
-        }
+        navigationController?.navigationBar.backgroundColor = Constants.Colors.theme
+        navigationController?.navigationBar.isTranslucent = false
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = Constants.Colors.theme
         
         tableView.register(FriendCell.self, forCellReuseIdentifier: FriendCell.reuseId)
         tableView.tableFooterView = UIView()
@@ -128,6 +128,7 @@ extension FriendsTableVC {
         self.navigationController?.navigationBar.tintColor = Constants.Colors.vkBlue
         
         self.navigationController?.pushViewController(friendPhotos, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

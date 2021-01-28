@@ -12,7 +12,7 @@ import SnapKit
 
 class CommunitiesTableVC: UITableViewController {
     
-    let vkApi = VKApi()
+    let vkApi = NetworkService()
     var communities = [Community]()
     
     override func viewDidLoad() {

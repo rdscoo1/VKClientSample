@@ -12,10 +12,16 @@ class ProfileTableViewController: UITableViewController {
     
     // MARK: - Private Properties
     
-    private let vkApi = VKApi()
+    private let vkApi = NetworkService()
     private var profile = [User]()
     
     // MARK: - LifeCycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.backgroundColor = Constants.Colors.theme
+        navigationController?.navigationBar.isTranslucent = false
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

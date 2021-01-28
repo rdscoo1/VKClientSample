@@ -17,12 +17,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let vc = VkAuthorizationViewController()
         let navigationController = UINavigationController(rootViewController: vc)
+        navigationController.navigationBar.backgroundColor = Constants.Colors.theme
         
         window = UIWindow()
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        configureNavigationBar()
         
         return true
+    }
+    
+    func configureNavigationBar() {
+        UINavigationBar.appearance().barTintColor = Constants.Colors.theme
     }
 }
 

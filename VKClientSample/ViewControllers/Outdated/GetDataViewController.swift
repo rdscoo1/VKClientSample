@@ -10,7 +10,7 @@ import UIKit
 
 class GetDataViewController: UIViewController {
 
-    let vkApi = VKApi()
+    let vkApi = NetworkService()
     
     lazy var getDataButton: UIButton = {
         let button = UIButton()

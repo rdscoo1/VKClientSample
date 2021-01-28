@@ -6,9 +6,7 @@
 //  Copyright © 2020 Roman Khodukin. All rights reserved.
 //
 
-import RealmSwift
-
-class PostAttachment: Object, Decodable {
-    @objc dynamic var type: String = ""
-    @objc dynamic var photo: PostPhoto?
+class PostAttachment: Decodable {
+    let type: String
+    let photo: PostPhoto?
 }
