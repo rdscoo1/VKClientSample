@@ -8,7 +8,7 @@
 
 import RealmSwift
 
-enum FollowButtonState {
+enum FollowState {
     case following
     case notFollowing
 }
@@ -24,7 +24,7 @@ enum FollowButtonState {
     dynamic var isMember: Int = 0
     dynamic var cover: CommunityCover?
     
-    var followState: FollowButtonState {
+    var followState: FollowState {
         if isMember == 0 {
             return .notFollowing
         } else {
