@@ -99,7 +99,7 @@ class NewsTableVC: UITableViewController {
     
     private func setupRefreshControl() {
         refreshControl = UIRefreshControl()
-//        refreshControl?.tintColor = UIColor.clear
+        refreshControl?.tintColor = UIColor.clear
         refreshControl?.backgroundColor = Constants.Colors.newsSeparator
         refreshControl?.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
         refreshControl?.addSubview(activityIndicator)
