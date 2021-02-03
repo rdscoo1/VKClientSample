@@ -19,7 +19,7 @@ class CommunitiesVC: UIViewController {
     // MARK: - Variables
     
     private var communities: [Community] = []
-    private let vkApi = NetworkService()
+    private let networkService = NetworkService()
     
     // MARK: - LifeCycle
     
@@ -31,14 +31,14 @@ class CommunitiesVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Constants.Colors.theme
+        tableView.backgroundColor = Constants.Colors.theme
         
         searchBar.barTintColor = Constants.Colors.theme
         searchBar.delegate = self
         configureTableView()
         
         loadData()
-        vkApi.getGroups { [weak self] in
+        networkService.getGroups { [weak self] in
             self?.loadData()
         }
     }
@@ -97,12 +97,12 @@ extension CommunitiesVC: UITableViewDelegate {
 extension CommunitiesVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if !searchText.isEmpty {
-            vkApi.getSearchedGroups(groupName: searchText) { [weak self] groups in
+            networkService.getSearchedGroups(groupName: searchText) { [weak self] groups in
                 self?.communities = groups
                 self?.tableView.reloadData()
             }
         } else {
-            vkApi.getGroups { [weak self] in
+            networkService.getGroups { [weak self] in
                 self?.loadData()
             }
         }

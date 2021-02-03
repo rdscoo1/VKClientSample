@@ -21,7 +21,7 @@ class NewsTableVC: UITableViewController {
     // MARK: - Private Properties
     
     private var posts: Response?
-    private let vkApi = NetworkService()
+    private let networkService = NetworkService()
     private var photoService: PhotoService?
     private let activityIndicator = CustomActivityIndicator(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
     
@@ -73,7 +73,7 @@ class NewsTableVC: UITableViewController {
     }
     
     private func requestFromApi() {
-        vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] users in
+        networkService.getUserInfo(userId: Session.shared.userId) { [weak self] users in
             RealmService.manager.saveObjects(users)
             let user = RealmService.manager.getAllObjects(of: User.self).first(where: { $0.id == Int(Session.shared.userId) })
             self?.userPhotoUrl = user?.imageUrl ?? ""
@@ -82,7 +82,7 @@ class NewsTableVC: UITableViewController {
             self?.sections.append(.whatsNew)
         }
         
-        self.vkApi.getNewsfeed(nextBatch: nil, startTime: nil) { [weak self] items in
+        self.networkService.getNewsfeed(nextBatch: nil, startTime: nil) { [weak self] items in
             self?.nextFrom = items.nextFrom ?? ""
             self?.sections.append(.posts(items))
         }
@@ -119,13 +119,16 @@ class NewsTableVC: UITableViewController {
     @objc private func refresh(sender:AnyObject) {
         self.refreshControl?.beginRefreshing()
         
+        
         let freshestNews = Int(self.posts?.items.first?.date ?? Date().timeIntervalSince1970)
 
-        vkApi.getNewsfeed(nextBatch: nil, startTime: String(freshestNews + 1)) { [weak self] items in
+        networkService.getNewsfeed(nextBatch: nil, startTime: String(freshestNews + 1)) { [weak self] items in
             guard let self = self else { return }
-            self.refreshControl?.endRefreshing()
+            
             //            print(items.items.count)
+            self.refreshControl?.endRefreshing()
 
+            
             guard items.items.count > 0 else {
                 return
             }
@@ -243,7 +246,7 @@ extension NewsTableVC: UITableViewDataSourcePrefetching {
            isLoading == false {
             isLoading = true
             
-            vkApi.getNewsfeed(nextBatch: nextFrom, startTime: nil) { [weak self] items in
+            networkService.getNewsfeed(nextBatch: nextFrom, startTime: nil) { [weak self] items in
                 guard
                     let self = self,
                     items.items.count > 0,

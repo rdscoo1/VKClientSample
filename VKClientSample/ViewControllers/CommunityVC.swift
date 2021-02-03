@@ -37,6 +37,10 @@ class CommunityVC: UIViewController {
             self.tableView.reloadData()
         }
     }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
     
     // MARK: - Public Variables
     
@@ -46,6 +50,7 @@ class CommunityVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setNeedsStatusBarAppearanceUpdate()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = nil
@@ -229,7 +234,7 @@ extension CommunityVC: UIScrollViewDelegate {
             scrollView.contentInsetAdjustmentBehavior = .never
             
             let offset = scrollView.contentOffset.y
-            if offset > 80 {
+            if offset > 60 {
                 navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
                 navigationController?.navigationBar.shadowImage = nil
                 if traitCollection.userInterfaceStyle == .light {

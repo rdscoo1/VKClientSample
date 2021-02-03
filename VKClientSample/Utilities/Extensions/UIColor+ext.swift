@@ -1,5 +1,5 @@
 //
-//  UIColor+hex.swift
+//  UIColor+ext.swift
 //  LoginApp
 //
 //  Created by Roman Khodukin on 18.10.2019.

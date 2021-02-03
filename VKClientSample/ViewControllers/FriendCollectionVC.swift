@@ -12,7 +12,7 @@ class FriendCollectionVC: UICollectionViewController {
     
     // MARK: - Properties
     
-    private let vkApi = NetworkService()
+    private let networkService = NetworkService()
     var friendId = Int()
     private var friendPhotos = [Photo]()
     private var photosUrlsLowRes = [String?]()
@@ -20,12 +20,22 @@ class FriendCollectionVC: UICollectionViewController {
     
     // MARK: - LifeCycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if traitCollection.userInterfaceStyle == .dark {
+            navigationController?.navigationBar.tintColor = .white
+        } else {
+            navigationController?.navigationBar.tintColor = Constants.Colors.vkBlue
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loadData()
         
-        vkApi.getPhotos(ownerId: friendId) { [weak self] in
+        networkService.getPhotos(ownerId: friendId) { [weak self] in
             self?.loadData()
         }
     }

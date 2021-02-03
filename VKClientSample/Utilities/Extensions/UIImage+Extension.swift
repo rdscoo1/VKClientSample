@@ -13,7 +13,7 @@ extension UIImage {
         let image = withRenderingMode(.alwaysTemplate)
         let imageView = UIImageView(image: image)
         imageView.tintColor = color
-
+        
         UIGraphicsBeginImageContextWithOptions(image.size, false, 0.0)
         if let context = UIGraphicsGetCurrentContext() {
             imageView.layer.render(in: context)
