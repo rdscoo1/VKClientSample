@@ -51,7 +51,7 @@ class NetworkService {
                                 let errorCode = decodedModel.error?.errorCode,
                                 let errorMsg = decodedModel.error?.errorMessage
                             {
-                                print("❌ VKApi \(apiPath.rawValue) error\n\(errorCode) \(errorMsg) ❌")
+                                print("❌ NetworkService \(apiPath.rawValue) error\n\(errorCode) \(errorMsg) ❌")
                             }
                         } catch {
                             print("❌ Decoding \(VKResponse<ResponseType>.self) failed ❌\n\(error)")

@@ -14,7 +14,7 @@ class StoriesCell: UITableViewCell {
     
     // MARK: - Private Properties
     
-    private let vkApi = NetworkService()
+    private let networkService = NetworkService()
     private let containerView = UIView()
     private var storiesCollectionView: UICollectionView!
     private var stories: [StoriesCommunity]?
@@ -46,7 +46,7 @@ class StoriesCell: UITableViewCell {
         configureConstraints()
         
         loadFromRealm()
-        vkApi.getStories { [weak self] stories in
+        networkService.getStories { [weak self] stories in
             self?.stories = stories.groups
             self?.storiesCollectionView.reloadData()
         }

@@ -68,15 +68,15 @@ class StretchyTableViewHeader: UIView {
         
         // UIView Constraints
         NSLayoutConstraint.activate([
-            self.widthAnchor.constraint(equalTo: containerView.widthAnchor),
-            self.heightAnchor.constraint(equalTo: containerView.heightAnchor),
-            self.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            self.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
+            widthAnchor.constraint(equalTo: containerView.widthAnchor),
+            heightAnchor.constraint(equalTo: containerView.heightAnchor),
+            centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
         ])
         
         // Container View Constraints
         containerView.widthAnchor.constraint(equalTo: imageView.widthAnchor).isActive = true
-        containerViewHeight = containerView.heightAnchor.constraint(equalTo: self.heightAnchor)
+        containerViewHeight = containerView.heightAnchor.constraint(equalTo: heightAnchor)
         containerViewHeight.isActive = true
         
         // ImageView Constraints
