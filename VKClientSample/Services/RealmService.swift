@@ -127,21 +127,21 @@ class RealmService {
         }
     }
     
-//    func editCommunityMembership(groupId: Int, isMember: Int) {
-//        guard let realm = try? Realm() else { return }
-//        let editingObjects = realm.objects(Community.self).filter("id == %@", groupId)
-//        
-//        if let editingObject = editingObjects.first {
-//            try? realm.write {
-//                editingObject.isMember =
-//                workout.count = plusOne
-//            }
-//        }
-//        print(editingObject)
-//        try? realm.write {
-//            editingObject
-//        }
-//    }
+    func editCommunityMembership(groupId: Int, isMember: Int) {
+        guard let realm = try? Realm() else { return }
+        let editingObjects = realm.objects(Community.self).filter("id == %@", groupId)
+        
+        if let editingObject = editingObjects.first {
+            try? realm.write {
+                editingObject.isMember = isMember
+            }
+        }
+    }
+    
+    func communityExist(id: Int) -> Bool {
+        guard let realm = try? Realm() else { return false }
+        return realm.object(ofType: Community.self, forPrimaryKey: id) != nil
+    }
     
     
     //MARK: - Get objects

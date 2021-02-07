@@ -51,6 +51,6 @@ enum FollowState {
 
 extension Community {
     override var debugDescription: String {
-        return "\n📓<Community with id:\(id)> \(name) has \(membersQuantity) members.\n📓 It's photo url is \(String(describing: imageUrl)).\nCover: \(String(describing: cover))"
+        return "📓<Community with id: \(id)> \"\(name)\" has \(membersQuantity) members.📓"
     }
 }

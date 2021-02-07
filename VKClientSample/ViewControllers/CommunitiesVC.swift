@@ -18,7 +18,8 @@ class CommunitiesVC: UIViewController {
     
     // MARK: - Variables
     
-    private var communities: [Community] = []
+    private var notificationToken: NotificationToken?
+    private var communities: Results<Community>?
     private let networkService = NetworkService()
     
     // MARK: - LifeCycle
@@ -36,11 +37,9 @@ class CommunitiesVC: UIViewController {
         searchBar.barTintColor = Constants.Colors.theme
         searchBar.delegate = self
         configureTableView()
+        configureNotificationToken()
         
-        loadData()
-        networkService.getGroups { [weak self] in
-            self?.loadData()
-        }
+        networkService.getGroups()
     }
     
     // MARK: - Private Methods
@@ -53,9 +52,23 @@ class CommunitiesVC: UIViewController {
         tableView.delegate = self
     }
     
-    private func loadData() {
-        communities = RealmService.manager.getAllObjects(of: Community.self)
-        tableView.reloadData()
+    private func configureNotificationToken() {
+        guard let realm = try? Realm() else { return }
+        communities = realm.objects(Community.self)
+        notificationToken = communities?.observe { [weak self] (changes: RealmCollectionChange) in
+            switch changes {
+            case .initial:
+                self?.tableView.reloadData()
+            case .update(_, let deletions, let insertions, let modifications):
+                self?.tableView.beginUpdates()
+                self?.tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+                self?.tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+                self?.tableView.reloadRows(at: modifications.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+                self?.tableView.endUpdates()
+            case .error(let error):
+                fatalError("\(error)")
+            }
+        }
     }
 }
 
@@ -63,14 +76,14 @@ class CommunitiesVC: UIViewController {
 
 extension CommunitiesVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return communities.count
+        return communities?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CommunityCell.reuseId, for: indexPath) as? CommunityCell else {
             return UITableViewCell()
         }
-        let community = communities[indexPath.row]
+        let community = communities![indexPath.row]
         cell.configure(with: community)
         
         return cell
@@ -82,7 +95,7 @@ extension CommunitiesVC: UITableViewDelegate {
         let vc = CommunityVC()
         
         if let selectedIndex = tableView.indexPathForSelectedRow {
-            vc.community = communities[selectedIndex.row]
+            vc.community = communities![selectedIndex.row]
         }
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
@@ -97,14 +110,9 @@ extension CommunitiesVC: UITableViewDelegate {
 extension CommunitiesVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if !searchText.isEmpty {
-            networkService.getSearchedGroups(groupName: searchText) { [weak self] groups in
-                self?.communities = groups
-                self?.tableView.reloadData()
-            }
+            networkService.getSearchedGroups(groupName: searchText)
         } else {
-            networkService.getGroups { [weak self] in
-                self?.loadData()
-            }
+            networkService.getGroups()
         }
     }
 }
