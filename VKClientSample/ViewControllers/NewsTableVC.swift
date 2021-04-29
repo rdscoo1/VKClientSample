@@ -23,7 +23,7 @@ class NewsTableVC: UITableViewController {
     private var posts: Response?
     private let vkApi = NetworkService()
     private var photoService: PhotoService?
-    private let activityIndicator = CustomActivityIndicator(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
+    private let activityIndicator = CustomActivityIndicator(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
     
     private var sections: [NewsSections] = [] {
         didSet {
@@ -100,20 +100,18 @@ class NewsTableVC: UITableViewController {
     private func setupRefreshControl() {
         refreshControl = UIRefreshControl()
 //        refreshControl?.tintColor = UIColor.clear
-//        refreshControl?.backgroundColor = UIColor.red
-        refreshControl?.addSubview(activityIndicator)
+        refreshControl?.backgroundColor = Constants.Colors.newsSeparator
         refreshControl?.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
+        refreshControl?.addSubview(activityIndicator)
         tableView.refreshControl = refreshControl
         
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
-                    activityIndicator.centerXAnchor.constraint(equalTo: refreshControl!.centerXAnchor),
-                    activityIndicator.bottomAnchor.constraint(equalTo: refreshControl!.bottomAnchor),
-                    activityIndicator.heightAnchor.constraint(equalToConstant: 48),
-                    activityIndicator.widthAnchor.constraint(equalToConstant: 48)
-                ])
-//        activityIndicator.frame = refreshControl?.bounds ?? CGRect(x: view.bounds.width / 2, y: 16, width: 48, height: 48)
-        refreshControl?.addSubview(activityIndicator)
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: refreshControl!.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: refreshControl!.centerYAnchor),
+            activityIndicator.heightAnchor.constraint(equalToConstant: 32),
+            activityIndicator.widthAnchor.constraint(equalToConstant: 32)
+        ])
     }
     
     // MARK: - Action
@@ -121,51 +119,55 @@ class NewsTableVC: UITableViewController {
     @objc private func refresh(sender:AnyObject) {
         self.refreshControl?.beginRefreshing()
         
-//        let freshestNews = Int(self.posts?.items.first?.date ?? Date().timeIntervalSince1970)
-//
-//        vkApi.getNewsfeed(nextBatch: nil, startTime: String(freshestNews + 1)) { [weak self] items in
-//            guard let self = self else { return }
-//            self.refreshControl?.endRefreshing()
-//            //            print(items.items.count)
-//
-//            guard items.items.count > 0 else {
-//                return
-//            }
-//            self.posts?.addToBeggining(news: items)
-//
-//            let indexPathes = items.items.enumerated().map { offset, _ in
-//                IndexPath(row: offset, section: 2)
-//            }
+        let freshestNews = Int(self.posts?.items.first?.date ?? Date().timeIntervalSince1970)
+
+        vkApi.getNewsfeed(nextBatch: nil, startTime: String(freshestNews + 1)) { [weak self] items in
+            guard let self = self else { return }
+            self.refreshControl?.endRefreshing()
+            //            print(items.items.count)
+
+            guard items.items.count > 0 else {
+                return
+            }
+            self.posts?.addToBeggining(news: items)
+
+            let indexPathes = items.items.enumerated().map { offset, _ in
+                IndexPath(row: offset, section: 2)
+            }
 //            self.tableView.insertRows(at: indexPathes, with: .automatic)
-//        }
+        }
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if ((refreshControl?.isRefreshing) != nil) {
-            activityIndicator.startAnimating()
+        if refreshControl?.isHidden == true {
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.transform = .identity
         }
-        activityIndicator.settingStrokeEnd(value: 0.5)
-//         Get the current size of the refresh controller
-        let refreshBounds = self.refreshControl!.bounds
-
         // Distance the table has been pulled >= 0
-        let pullDistance = max(0.0, -self.refreshControl!.frame.origin.y)
-
-        // Half the width of the table
-        let midX = self.tableView.frame.size.width / 2.0
-
-        // Calculate the pull ratio, between 0.0-1.0
-        let pullRatio = min( max(pullDistance, 0.0), 100.0) / 100.0
-
-        if pullRatio == 1.0 {
-            activityIndicator.settingStrokeEnd(value: 1)
-            activityIndicator.startAnimating()
-        } else {
-            activityIndicator.stopAnimating()
-            activityIndicator.settingStrokeEnd(value: pullRatio)
-        }
+        let pullDistance = max(0.0, -(self.refreshControl?.frame.origin.y ?? 0))
         
-        print("pullDistance \(pullDistance), pullRatio: \(pullRatio), midX: \(midX), refreshing: \(self.refreshControl!.isRefreshing)")
+        // Calculate the pull ratio, between 0.0-0.95
+        let pullRatio = min( max(pullDistance, 0.0), 100.0) / 100.0 - 0.05
+        
+        if !activityIndicator.isAnimating {
+            if refreshControl?.isRefreshing == true {
+                activityIndicator.setStrokeEnd(value: 0.95)
+                activityIndicator.startAnimating()
+            } else {
+                activityIndicator.setStrokeEnd(value: pullRatio)
+            }
+        }
+    }
+    
+    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let pullDistance = Double(max(0.0, -(self.refreshControl?.frame.origin.y ?? 0)))
+        if refreshControl?.isRefreshing == false && activityIndicator.isAnimating == true {
+            UIView.animate(withDuration: pullDistance / 1000) {
+                self.activityIndicator.transform = CGAffineTransform(scaleX: 0.4, y: 0.4)
+                self.activityIndicator.layoutIfNeeded()
+                self.activityIndicator.isHidden = false
+            }
+        }
     }
 }
 

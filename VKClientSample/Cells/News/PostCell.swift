@@ -86,7 +86,6 @@ class PostCell: UITableViewCell {
             }
         }
         
-        
         //        if post.photos != nil {
         //            if let photoUrl = URL(string: post.photos?[0].highResPhoto ?? "") {
         //                postImageView.kf.indicatorType = .activity
@@ -94,8 +93,7 @@ class PostCell: UITableViewCell {
         //            }
         //        }
         
-        postStatistics.updateControls(likes: post.likes ?? 0, comments: post.comments ?? 0, reposts: post.reposts ?? 0, views: post.views ?? 0
-        )
+        postStatistics.updateControls(likes: post.likes ?? 0, comments: post.comments ?? 0, reposts: post.reposts ?? 0, views: post.views ?? 0)
     }
     
     
