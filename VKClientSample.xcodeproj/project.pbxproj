@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		717B010CBE93350D2C78A9F2 /* Pods_VKClientSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA61B0E00B803FDF8FE9BD4C /* Pods_VKClientSample.framework */; };
 		E8068CD223DC47E80083FBBE /* NewsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CD123DC47E80083FBBE /* NewsTableVC.swift */; };
 		E8068CD923DC485C0083FBBE /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CD723DC485C0083FBBE /* PostCell.swift */; };
 		E8068CDC23E0BE360083FBBE /* PostStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8068CDB23E0BE360083FBBE /* PostStatistics.swift */; };
@@ -41,6 +40,11 @@
 		E85E8311246CD6B20090FBEC /* UserDefaults+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85E8310246CD6B20090FBEC /* UserDefaults+extensions.swift */; };
 		E861CD9923D271EA00D3E9B3 /* CommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E861CD9723D271EA00D3E9B3 /* CommunityCell.swift */; };
 		E861CD9A23D271EA00D3E9B3 /* CommunityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E861CD9823D271EA00D3E9B3 /* CommunityCell.xib */; };
+		E8627DD727399C64003B2B35 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = E8627DD627399C64003B2B35 /* Nuke */; };
+		E8627DDA27399CB8003B2B35 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = E8627DD927399CB8003B2B35 /* Realm */; };
+		E8627DDC27399CB8003B2B35 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E8627DDB27399CB8003B2B35 /* RealmSwift */; };
+		E8627DDF27399CE4003B2B35 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E8627DDE27399CE4003B2B35 /* Alamofire */; };
+		E8627DE227399CF9003B2B35 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E8627DE127399CF9003B2B35 /* SnapKit */; };
 		E86CCCB123EC669900F3AAA6 /* PhotoPreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86CCCB023EC669900F3AAA6 /* PhotoPreviewVC.swift */; };
 		E871F965247DD13B00EF78BE /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E871F964247DD13B00EF78BE /* Date+extension.swift */; };
 		E8757B0B241BEE49002F92A7 /* CustomInteractionNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8757B0A241BEE49002F92A7 /* CustomInteractionNavigationController.swift */; };
@@ -93,8 +97,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		081635287C3FEF1BDFBAEBA8 /* Pods-VKClientSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VKClientSample.debug.xcconfig"; path = "Target Support Files/Pods-VKClientSample/Pods-VKClientSample.debug.xcconfig"; sourceTree = "<group>"; };
-		6A367E63F19424BE27114643 /* Pods-VKClientSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VKClientSample.release.xcconfig"; path = "Target Support Files/Pods-VKClientSample/Pods-VKClientSample.release.xcconfig"; sourceTree = "<group>"; };
 		E8068CD123DC47E80083FBBE /* NewsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableVC.swift; sourceTree = "<group>"; };
 		E8068CD723DC485C0083FBBE /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		E8068CDB23E0BE360083FBBE /* PostStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStatistics.swift; sourceTree = "<group>"; };
@@ -182,7 +184,6 @@
 		E8F6214E25195B8800C830A6 /* PostAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAttachment.swift; sourceTree = "<group>"; };
 		E8FDF8AE254DB9940089B11E /* CommunityCoverInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunityCoverInfoCell.swift; sourceTree = "<group>"; };
 		E8FE44A8252126C6004146B7 /* ActivityIndicatorWithImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorWithImage.swift; sourceTree = "<group>"; };
-		FA61B0E00B803FDF8FE9BD4C /* Pods_VKClientSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VKClientSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,30 +191,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				717B010CBE93350D2C78A9F2 /* Pods_VKClientSample.framework in Frameworks */,
+				E8627DDF27399CE4003B2B35 /* Alamofire in Frameworks */,
+				E8627DDC27399CB8003B2B35 /* RealmSwift in Frameworks */,
+				E8627DDA27399CB8003B2B35 /* Realm in Frameworks */,
+				E8627DE227399CF9003B2B35 /* SnapKit in Frameworks */,
+				E8627DD727399C64003B2B35 /* Nuke in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		129D89A1F9265CBC7DA6A687 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				FA61B0E00B803FDF8FE9BD4C /* Pods_VKClientSample.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		664375D44D07F08F09B29402 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				081635287C3FEF1BDFBAEBA8 /* Pods-VKClientSample.debug.xcconfig */,
-				6A367E63F19424BE27114643 /* Pods-VKClientSample.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		E8068CDD23E0C1BB0083FBBE /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,8 +318,6 @@
 			children = (
 				E8954A7723B15FEA00A93209 /* VKClientSample */,
 				E8954A7623B15FEA00A93209 /* Products */,
-				664375D44D07F08F09B29402 /* Pods */,
-				129D89A1F9265CBC7DA6A687 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -489,17 +475,22 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E8954A8923B15FEB00A93209 /* Build configuration list for PBXNativeTarget "VKClientSample" */;
 			buildPhases = (
-				D987AD430BC09219F84E513D /* [CP] Check Pods Manifest.lock */,
 				E8954A7123B15FEA00A93209 /* Sources */,
 				E8954A7223B15FEA00A93209 /* Frameworks */,
 				E8954A7323B15FEA00A93209 /* Resources */,
-				50A5C9C858571572D6D067C8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = VKClientSample;
+			packageProductDependencies = (
+				E8627DD627399C64003B2B35 /* Nuke */,
+				E8627DD927399CB8003B2B35 /* Realm */,
+				E8627DDB27399CB8003B2B35 /* RealmSwift */,
+				E8627DDE27399CE4003B2B35 /* Alamofire */,
+				E8627DE127399CF9003B2B35 /* SnapKit */,
+			);
 			productName = VKClientSample;
 			productReference = E8954A7523B15FEA00A93209 /* VKClientSample.app */;
 			productType = "com.apple.product-type.application";
@@ -529,6 +520,12 @@
 				ru,
 			);
 			mainGroup = E8954A6C23B15FEA00A93209;
+			packageReferences = (
+				E8627DD527399C64003B2B35 /* XCRemoteSwiftPackageReference "Nuke" */,
+				E8627DD827399CB8003B2B35 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+				E8627DDD27399CE4003B2B35 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				E8627DE027399CF8003B2B35 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = E8954A7623B15FEA00A93209 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -552,48 +549,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		50A5C9C858571572D6D067C8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-VKClientSample/Pods-VKClientSample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-VKClientSample/Pods-VKClientSample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VKClientSample/Pods-VKClientSample-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D987AD430BC09219F84E513D /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-VKClientSample-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E8954A7123B15FEA00A93209 /* Sources */ = {
@@ -833,7 +788,6 @@
 		};
 		E8954A8A23B15FEB00A93209 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 081635287C3FEF1BDFBAEBA8 /* Pods-VKClientSample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
@@ -856,7 +810,6 @@
 		};
 		E8954A8B23B15FEB00A93209 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6A367E63F19424BE27114643 /* Pods-VKClientSample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
@@ -899,6 +852,69 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E8627DD527399C64003B2B35 /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.5.1;
+			};
+		};
+		E8627DD827399CB8003B2B35 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.19.0;
+			};
+		};
+		E8627DDD27399CE4003B2B35 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.4.4;
+			};
+		};
+		E8627DE027399CF8003B2B35 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E8627DD627399C64003B2B35 /* Nuke */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8627DD527399C64003B2B35 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = Nuke;
+		};
+		E8627DD927399CB8003B2B35 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8627DD827399CB8003B2B35 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		E8627DDB27399CB8003B2B35 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8627DD827399CB8003B2B35 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
+		E8627DDE27399CE4003B2B35 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8627DDD27399CE4003B2B35 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		E8627DE127399CF9003B2B35 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8627DE027399CF8003B2B35 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E8954A6D23B15FEA00A93209 /* Project object */;
 }

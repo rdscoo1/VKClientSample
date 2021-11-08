@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Nuke
 
 class FriendCell: UITableViewCell {
 
@@ -53,7 +54,7 @@ class FriendCell: UITableViewCell {
         friendFullName.text = "\(friend.firstName) \(friend.lastName)"
         if  let photoLink = friend.imageUrl,
             let photoUrl = URL(string: photoLink) {
-            friendPhoto.kf.setImage(with: photoUrl)
+            Nuke.loadImage(with: photoUrl, into: friendPhoto)
         }
         setOnlineStatus(onlineStatus)
     }

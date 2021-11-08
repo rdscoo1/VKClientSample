@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Kingfisher
+import Nuke
 
 class CommunityCoverInfoCell: UITableViewCell {
     
@@ -81,7 +81,7 @@ class CommunityCoverInfoCell: UITableViewCell {
         }
         
         if let imageUrl = URL(string: community.imageUrl ?? "") {
-            photoImageView.kf.setImage(with: imageUrl)
+            Nuke.loadImage(with: imageUrl, into: photoImageView)
         }
         
         layer.frame = CGRect(x: 0.0, y: 111.0, width: bounds.width, height: 1.0)

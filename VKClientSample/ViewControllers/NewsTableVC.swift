@@ -224,10 +224,6 @@ extension NewsTableVC {
             return 64.0
         }
     }
-    
-    override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.imageView?.kf.cancelDownloadTask()
-    }
 }
 
 // MARK: - TableView Prefetching

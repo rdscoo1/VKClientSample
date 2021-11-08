@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Kingfisher
+import Nuke
 
 class AddStoryPhotoView: UIView {
     
@@ -38,7 +38,7 @@ class AddStoryPhotoView: UIView {
     
     func setImage(_ url: String?) {
         if let photoUrl = URL(string: url ?? "") {
-            photoImageView.kf.setImage(with: photoUrl)
+            Nuke.loadImage(with: photoUrl, into: photoImageView)
         }
     }
     

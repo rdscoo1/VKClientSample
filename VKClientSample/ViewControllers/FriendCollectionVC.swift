@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Nuke
 
 class FriendCollectionVC: UICollectionViewController {
     
@@ -81,8 +82,7 @@ extension FriendCollectionVC {
         }
         
         if let photoUrl = URL(string: friendPhotos) {
-            cell.friendPhoto.kf.indicatorType = .activity
-            cell.friendPhoto.kf.setImage(with: photoUrl)
+            Nuke.loadImage(with: photoUrl, into: cell.friendPhoto)
         }
         
         return cell

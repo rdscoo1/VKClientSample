@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Nuke
 
 class PhotoPreviewVC: UIViewController {
     
@@ -61,11 +62,7 @@ class PhotoPreviewVC: UIViewController {
         currentPhoto.isUserInteractionEnabled = true
         
         if let photoUrl = URL(string: friendPreviewPhotos[selectedPhoto]) {
-            currentPhoto.kf.indicatorType = .activity
-            currentPhoto.kf.setImage(with: photoUrl,
-                                     options: [
-                                        .transition(.fade(1)),
-                                     ])
+            Nuke.loadImage(with: photoUrl, into: currentPhoto)
         }
         
         photosPreviewNavBar.alpha = 0.0
@@ -155,7 +152,7 @@ extension PhotoPreviewVC: UIGestureRecognizerDelegate {
                 if selectedPhoto != friendPreviewPhotos.count - 1 {
                     selectedPhoto += 1
                     if let photoUrl = URL(string: friendPreviewPhotos[selectedPhoto]) {
-                        currentPhoto.kf.setImage(with: photoUrl)
+                        Nuke.loadImage(with: photoUrl, into: currentPhoto)
                     }
                     photosPreviewNavBar.setNavBarTitle(selectedPhotoNumber: selectedPhoto, photoQuantity: friendPhotosQuantity)
                 }
@@ -163,7 +160,7 @@ extension PhotoPreviewVC: UIGestureRecognizerDelegate {
                 if selectedPhoto != 0 {
                     selectedPhoto -= 1
                     if let photoUrl = URL(string: friendPreviewPhotos[selectedPhoto]) {
-                        currentPhoto.kf.setImage(with: photoUrl)
+                        Nuke.loadImage(with: photoUrl, into: currentPhoto)
                     }
                     photosPreviewNavBar.setNavBarTitle(selectedPhotoNumber: selectedPhoto, photoQuantity: friendPhotosQuantity)
                 }

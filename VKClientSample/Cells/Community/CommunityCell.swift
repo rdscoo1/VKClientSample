@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Kingfisher
+import Nuke
 
 class CommunityCell: UITableViewCell {
     
@@ -39,7 +39,7 @@ class CommunityCell: UITableViewCell {
         communityTitle.text = community.name
         communityDescription.text = community.activity
         if let imageUrl = URL(string: community.imageUrl ?? "") {
-            communityPhoto.kf.setImage(with: imageUrl)
+            Nuke.loadImage(with: imageUrl, into: communityPhoto)
         }
     }
 }

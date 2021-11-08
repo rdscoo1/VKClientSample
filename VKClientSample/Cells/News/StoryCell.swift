@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Kingfisher
+import Nuke
 
 class StoryCell: UICollectionViewCell {
     
@@ -38,7 +38,7 @@ class StoryCell: UICollectionViewCell {
     
     func configure(with model: StoriesCommunity?) {
         storyAuthor.text = model?.name
-        storyImageView.kf.setImage(with: URL(string: model?.imageUrl ?? ""))
+        Nuke.loadImage(with: URL(string: model?.imageUrl ?? ""), into: storyImageView)
     }
     
     //MARK: - Private Methods

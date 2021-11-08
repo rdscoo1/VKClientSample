@@ -1,6 +1,0 @@
-framework module Pods_VKClientSample {
-  umbrella header "Pods-VKClientSample-umbrella.h"
-
-  export *
-  module * { export * }
-}

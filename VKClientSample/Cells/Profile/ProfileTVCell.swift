@@ -8,7 +8,7 @@
 
 import UIKit
 import SnapKit
-import Kingfisher
+import Nuke
 
 class ProfileTVCell: UITableViewCell {
     
@@ -92,7 +92,7 @@ class ProfileTVCell: UITableViewCell {
         name.text = "\(user.firstName) \(user.lastName)"
         status.text = "\(user.status ?? "")"
         if let imageUrl = URL(string: user.imageUrl ?? "") {
-            avatarImageView.kf.setImage(with: imageUrl)
+            Nuke.loadImage(with: imageUrl, into: avatarImageView)
         }
     }
     

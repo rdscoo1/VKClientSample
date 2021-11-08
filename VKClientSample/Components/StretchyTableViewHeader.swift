@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Kingfisher
+import Nuke
 
 class StretchyTableViewHeader: UIView {
     
@@ -40,7 +40,7 @@ class StretchyTableViewHeader: UIView {
     
     func setImage(url: String?) {
         if let imageUrl = URL(string: url ?? "") {
-            imageView.kf.setImage(with: imageUrl)
+            Nuke.loadImage(with: imageUrl, into: imageView)
         }
     }
     

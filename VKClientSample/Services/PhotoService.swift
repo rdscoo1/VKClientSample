@@ -6,7 +6,7 @@
 //  Copyright © 2020 Roman Khodukin. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import Alamofire
 
 fileprivate protocol DataReloadable {

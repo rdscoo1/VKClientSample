@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Kingfisher
+import Nuke
 
 class PostCell: UITableViewCell {
     
@@ -47,21 +47,21 @@ class PostCell: UITableViewCell {
             if sourceId > 0 {
                 let user = author?.profiles.first(where: { $0.id == abs(sourceId) })
                 postAuthor.text = user?.name
-                postAuthorImage.kf.setImage(with: URL(string: user?.imageUrl ?? ""))
+                Nuke.loadImage(with: URL(string: user?.imageUrl ?? ""), into: postAuthorImage)
             } else {
                 let community = author?.groups.first(where: { $0.id == abs(sourceId) })
                 postAuthor.text = community?.name
-                postAuthorImage.kf.setImage(with: URL(string: community?.imageUrl ?? ""))
+                Nuke.loadImage(with: URL(string: community?.imageUrl ?? ""), into: postAuthorImage)
             }
         } else if let ownerId = post.ownerId {
             if ownerId > 0 {
                 let user = author?.profiles.first(where: { $0.id == abs(ownerId) })
                 postAuthor.text = user?.name
-                postAuthorImage.kf.setImage(with: URL(string: user?.imageUrl ?? ""))
+                Nuke.loadImage(with: URL(string: user?.imageUrl ?? ""), into: postAuthorImage)
             } else {
                 let community = author?.groups.first(where: { $0.id == abs(ownerId) })
                 postAuthor.text = community?.name
-                postAuthorImage.kf.setImage(with: URL(string: community?.imageUrl ?? ""))
+                Nuke.loadImage(with: URL(string: community?.imageUrl ?? ""), into: postAuthorImage)
             }
         }
         
@@ -74,10 +74,7 @@ class PostCell: UITableViewCell {
             if attachments[0].type.contains("photo") || attachments[0].type.contains("post") {
                 postImageViewHeightConstraint.constant = 288
                 layoutIfNeeded()
-                let retry = DelayRetryStrategy(maxRetryCount: 3, retryInterval: .seconds(1))
-                postImageView.kf.indicatorType = .activity
-                postImageView.kf.setImage(with: URL(string: attachments[0].photo?.highResPhoto ?? ""),
-                                          options: [.retryStrategy(retry)])
+                Nuke.loadImage(with: URL(string: attachments[0].photo?.highResPhoto ?? ""), into: postImageView)
             } else {
                 postImageView.image = nil
                 postImageViewHeightConstraint.constant = 0
