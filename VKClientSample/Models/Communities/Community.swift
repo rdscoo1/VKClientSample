@@ -8,7 +8,7 @@
 
 import RealmSwift
 
-enum FollowButtonState {
+enum FollowState {
     case following
     case notFollowing
 }
@@ -24,7 +24,7 @@ enum FollowButtonState {
     dynamic var isMember: Int = 0
     dynamic var cover: CommunityCover?
     
-    var followState: FollowButtonState {
+    var followState: FollowState {
         if isMember == 0 {
             return .notFollowing
         } else {
@@ -51,6 +51,6 @@ enum FollowButtonState {
 
 extension Community {
     override var debugDescription: String {
-        return "\n📓<Community with id:\(id)> \(name) has \(membersQuantity) members.\n📓 It's photo url is \(String(describing: imageUrl)).\nCover: \(String(describing: cover))"
+        return "📓<Community with id: \(id)> \"\(name)\" has \(membersQuantity) members.📓"
     }
 }

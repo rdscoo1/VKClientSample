@@ -51,7 +51,7 @@ class NetworkService {
                                 let errorCode = decodedModel.error?.errorCode,
                                 let errorMsg = decodedModel.error?.errorMessage
                             {
-                                print("❌ VKApi \(apiPath.rawValue) error\n\(errorCode) \(errorMsg) ❌")
+                                print("❌ NetworkService \(apiPath.rawValue) error\n\(errorCode) \(errorMsg) ❌")
                             }
                         } catch {
                             print("❌ Decoding \(VKResponse<ResponseType>.self) failed ❌\n\(error)")
@@ -139,7 +139,7 @@ class NetworkService {
             }
     }
     
-    func getGroups(completion: @escaping () -> Void) {
+    func getGroups() {
         let inputParams: Parameters = [
             "extended" : "1",
             "fields": "activity,status,members_count,cover"
@@ -159,7 +159,6 @@ class NetworkService {
                         if let responseData = decodedModel.response {
                             DispatchQueue.main.async {
                                 RealmService.manager.removeObjectsThanSave(of: Community.self, objects: responseData.items)
-                                completion()
                             }
                         } else if
                             let errorCode = decodedModel.error?.errorCode,
@@ -176,7 +175,7 @@ class NetworkService {
             }
     }
     
-    func getSearchedGroups(groupName: String, completion: @escaping ([Community]) -> Void) {
+    func getSearchedGroups(groupName: String) {
         let searchParams: Parameters = [
             "q" : groupName,
             "fields": "activity,status,members_count,cover"
@@ -195,7 +194,7 @@ class NetworkService {
                         let decodedModel = try JSONDecoder().decode(VKResponse<Community>.self, from: data)
                         if let responseData = decodedModel.response {
                             DispatchQueue.main.async {
-                                completion(responseData.items)
+                                RealmService.manager.removeObjectsThanSave(of: Community.self, objects: responseData.items)
                             }
                         } else if
                             let errorCode = decodedModel.error?.errorCode,

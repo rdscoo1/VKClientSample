@@ -12,7 +12,7 @@ class ProfileTableViewController: UITableViewController {
     
     // MARK: - Private Properties
     
-    private let vkApi = NetworkService()
+    private let networkService = NetworkService()
     private var profile = [User]()
     
     // MARK: - LifeCycle
@@ -35,7 +35,7 @@ class ProfileTableViewController: UITableViewController {
     // MARK: - Private Methods
     
     private func requestProfileInfo() {
-        vkApi.getUserInfo(userId: Session.shared.userId) { [weak self] users in
+        networkService.getUserInfo(userId: Session.shared.userId) { [weak self] users in
             //            RealmService.manager.saveObjects(users)
             self?.loadData()
         }

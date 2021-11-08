@@ -27,6 +27,7 @@ class CommunityCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        backgroundColor = Constants.Colors.theme
         
         communityPhoto.layer.cornerRadius = 24
         communityPhoto.layer.masksToBounds = true

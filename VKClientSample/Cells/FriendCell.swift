@@ -26,18 +26,14 @@ class FriendCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = Constants.Colors.theme
         
         friendPhoto.layer.cornerRadius = 24
         friendPhoto.layer.masksToBounds = true
         
         onlineStatusContainer.alpha = 0.0
-        if #available(iOS 13.0, *) {
-            onlineStatusContainer.backgroundColor = .systemBackground
-            onlineStatus.backgroundColor = .systemBackground
-        } else {
-            onlineStatus.backgroundColor = .white
-            onlineStatusContainer.backgroundColor = .white
-        }
+        onlineStatusContainer.backgroundColor = Constants.Colors.theme
+        onlineStatus.backgroundColor = Constants.Colors.theme
                 
         onlineStatusContainer.addSubview(onlineStatus)
         addSubview(friendPhoto)

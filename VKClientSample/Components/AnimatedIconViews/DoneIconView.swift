@@ -9,7 +9,16 @@
 import UIKit
 
 class DoneIconView: UIView {
-
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func animate() {
         let length = frame.width
         let animatablePath = UIBezierPath()

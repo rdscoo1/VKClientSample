@@ -22,8 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        configureNavigationBar()
         
         return true
+    }
+    
+    func configureNavigationBar() {
+        UINavigationBar.appearance().barTintColor = Constants.Colors.theme
     }
 }
 

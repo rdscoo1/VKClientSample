@@ -12,7 +12,7 @@ class FollowButton: UIButton {
     
     // MARK: - Private Properties
     
-    // Button localisation
+    // Button localization
     private let toFollowPhrase = NSLocalizedString("Follow", comment: "")
     private let followingPhrase = NSLocalizedString("Following", comment: "")
     
@@ -20,7 +20,7 @@ class FollowButton: UIButton {
     private let highlightedCheckmarkIcon = UIImage.followingIcon.tinted(color: Constants.Colors.vkGrayWithAlpha)
     private let highlightedPlusIcon = UIImage.followIcon.tinted(color: Constants.Colors.vkGrayWithAlpha)
     
-    private var followState: FollowButtonState = .notFollowing
+    private var followState: FollowState = .notFollowing
 
     
     // MARK: - Initializers
@@ -47,7 +47,7 @@ class FollowButton: UIButton {
     
     // MARK: - Public Methods
     
-    func setFollow(state: FollowButtonState) {
+    func setFollow(state: FollowState) {
         followState = state
         switch state {
         case .following:

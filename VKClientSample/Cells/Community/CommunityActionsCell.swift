@@ -51,14 +51,13 @@ class CommunityActionsCell: UITableViewCell {
     
     // MARK: - Public Methods
     
-    func configure(with buttonState: FollowButtonState) {
+    func configure(with buttonState: FollowState) {
         followButton.setFollow(state: buttonState)
     }
     
     // MARK: - Private Methods
     
     @objc private func changeState() {
-        print(#function)
         delegate?.changeFollowState()
     }
     

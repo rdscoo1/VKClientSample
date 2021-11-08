@@ -17,7 +17,7 @@ class FriendsTableVC: UITableViewController {
     
     // MARK: - Private Properties
     
-    private let vkApi = NetworkService()
+    private let networkService = NetworkService()
     private var friends = [Friend]()
     private var friendsInSection = [FriendSection]()
     
@@ -31,6 +31,7 @@ class FriendsTableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = Constants.Colors.theme
         
         tableView.register(FriendCell.self, forCellReuseIdentifier: FriendCell.reuseId)
         tableView.tableFooterView = UIView()
@@ -50,7 +51,7 @@ class FriendsTableVC: UITableViewController {
     }
     
     private func requestFromApi() {
-        vkApi.getFriends { [weak self] in
+        networkService.getFriends { [weak self] in
             self?.loadData()
         }
     }

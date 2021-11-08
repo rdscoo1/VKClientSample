@@ -12,7 +12,7 @@ import UIKit
 
 enum CommunityInfoSection: Equatable {
     case coverInfo
-    case communityActions(followButtonState: FollowButtonState)
+    case communityActions(followButtonState: FollowState)
     case communityInfo
 }
 
@@ -38,6 +38,10 @@ class CommunityVC: UIViewController {
         }
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+    
     // MARK: - Public Variables
     
     var community = Community()
@@ -46,6 +50,7 @@ class CommunityVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setNeedsStatusBarAppearanceUpdate()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = nil
@@ -59,6 +64,14 @@ class CommunityVC: UIViewController {
             } else {
                 navigationController?.navigationBar.tintColor = Constants.Colors.vkBlue
             }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if community.isMember == 0 {
+            RealmService.manager.removeCommunity(groupId: community.id)
         }
     }
     
@@ -229,7 +242,7 @@ extension CommunityVC: UIScrollViewDelegate {
             scrollView.contentInsetAdjustmentBehavior = .never
             
             let offset = scrollView.contentOffset.y
-            if offset > 80 {
+            if offset > 60 {
                 navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
                 navigationController?.navigationBar.shadowImage = nil
                 if traitCollection.userInterfaceStyle == .light {
@@ -259,20 +272,21 @@ extension CommunityVC: UIScrollViewDelegate {
 
 extension CommunityVC: CommunityInfoCellDelegate {
     func changeFollowState() {
-        print("button tapped")
         if community.followState == .following {
             present(getFollowActionSheet(unfollowHandler: { [weak self] _ in
                 guard let self = self else { return }
                 
                 self.vkApi.leaveGroup(groupId: self.community.id) { [weak self] response in
                     guard let self = self else { return }
-                    
                     guard response.response == 1 else {
                         print("Запрос отклонен")
                         return
                     }
-                    print("Left community \(String(describing: self.community))")
-//                    RealmService.manager.removeCommunity(groupId: self.communitity.id)
+                    print("Left \(String(describing: self.community.debugDescription))")
+                    
+                    RealmService.manager.editCommunityMembership(groupId: self.community.id, isMember: 0)
+                    //                    self.community.isMember = 0
+                    self.sections[1] = .communityInfo([.communityActions(followButtonState: self.community.followState)])
                     self.tableView.reloadData()
                     let stoppedFollowingPhrase = NSLocalizedString("You have unfollowed the community", comment: "")
                     self.presentAlertOnMainTread(message: stoppedFollowingPhrase)
@@ -282,16 +296,22 @@ extension CommunityVC: CommunityInfoCellDelegate {
         } else {
             self.vkApi.joinGroup(groupId: self.community.id) { [weak self] response in
                 guard let self = self else { return }
-                
                 guard response.response == 1 else {
                     print("Запрос отклонен")
                     return
                 }
-                self.community.isMember = 1
-                print("Started following \(String(describing: self.community))")
-//                RealmService.manager.saveObject(self.communitity)
+                
+                print("Started following \(String(describing: self.community.debugDescription))")
+                
+                if RealmService.manager.communityExist(id: self.community.id) {
+                    RealmService.manager.editCommunityMembership(groupId: self.community.id, isMember: 1)
+                } else {
+                    self.community.isMember = 1
+                    RealmService.manager.saveObject(self.community)
+                }
+                self.sections[1] = .communityInfo([.communityActions(followButtonState: self.community.followState)])
+                //                RealmService.manager.saveObject(self.communitity)
                 self.tableView.reloadData()
-                print(self.community.followState)
                 let startedFollowingPhrase = NSLocalizedString("You are now following this community", comment: "")
                 self.presentAlertOnMainTread(message: startedFollowingPhrase)
             }
