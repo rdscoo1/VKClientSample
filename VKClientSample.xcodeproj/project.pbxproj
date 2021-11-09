@@ -45,6 +45,7 @@
 		E8627DDC27399CB8003B2B35 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E8627DDB27399CB8003B2B35 /* RealmSwift */; };
 		E8627DDF27399CE4003B2B35 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E8627DDE27399CE4003B2B35 /* Alamofire */; };
 		E8627DE227399CF9003B2B35 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E8627DE127399CF9003B2B35 /* SnapKit */; };
+		E8627DEC273A53B5003B2B35 /* NewsFeedAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8627DEB273A53B5003B2B35 /* NewsFeedAssembly.swift */; };
 		E86CCCB123EC669900F3AAA6 /* PhotoPreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86CCCB023EC669900F3AAA6 /* PhotoPreviewVC.swift */; };
 		E871F965247DD13B00EF78BE /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E871F964247DD13B00EF78BE /* Date+extension.swift */; };
 		E8757B0B241BEE49002F92A7 /* CustomInteractionNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8757B0A241BEE49002F92A7 /* CustomInteractionNavigationController.swift */; };
@@ -130,6 +131,7 @@
 		E85E8310246CD6B20090FBEC /* UserDefaults+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+extensions.swift"; sourceTree = "<group>"; };
 		E861CD9723D271EA00D3E9B3 /* CommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCell.swift; sourceTree = "<group>"; };
 		E861CD9823D271EA00D3E9B3 /* CommunityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommunityCell.xib; sourceTree = "<group>"; };
+		E8627DEB273A53B5003B2B35 /* NewsFeedAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedAssembly.swift; sourceTree = "<group>"; };
 		E86CCCB023EC669900F3AAA6 /* PhotoPreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewVC.swift; sourceTree = "<group>"; };
 		E86E1EFF25237E81007EF3D1 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		E871F964247DD13B00EF78BE /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
@@ -243,7 +245,6 @@
 			isa = PBXGroup;
 			children = (
 				E836E3B6246CAA460053A065 /* Outdated */,
-				E8068CD123DC47E80083FBBE /* NewsTableVC.swift */,
 				E885799323D1D73A00C97694 /* FriendsTableVC.swift */,
 				E8CD1C9123D6AC0200C5D668 /* FriendCollectionVC.swift */,
 				E86CCCB023EC669900F3AAA6 /* PhotoPreviewVC.swift */,
@@ -261,23 +262,10 @@
 			children = (
 				E8C219A7254DABB3001CD400 /* Community */,
 				E8757B1F242C06B2002F92A7 /* Profile */,
-				E8500E9523F08B4A0080F802 /* News */,
 				E8CD1C8F23D65EA600C5D668 /* FriendCell.swift */,
 				E8CD1C9323D6AF6000C5D668 /* FriendCVCell.swift */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		E8500E9523F08B4A0080F802 /* News */ = {
-			isa = PBXGroup;
-			children = (
-				E8068CD723DC485C0083FBBE /* PostCell.swift */,
-				E8068CE623E1C7150083FBBE /* StoriesCell.swift */,
-				E8068CEE23E4FE0C0083FBBE /* StoryCell.swift */,
-				E8068CEA23E384C10083FBBE /* WhatsNewCell.swift */,
-				E8068CF023E4FE5B0083FBBE /* AddStoryCell.swift */,
-			);
-			path = News;
 			sourceTree = "<group>";
 		};
 		E861CD9B23D274BF00D3E9B3 /* Models */ = {
@@ -293,6 +281,88 @@
 				E8BC2D7925214F9000182C7B /* Stories.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		E8627DE3273A527B003B2B35 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				E8627DE6273A5348003B2B35 /* NewsFeed */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		E8627DE4273A5300003B2B35 /* NetworkLayer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NetworkLayer;
+			sourceTree = "<group>";
+		};
+		E8627DE5273A5322003B2B35 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E8954A8F23B1625500A93209 /* Constants */,
+				E8954A8E23B1624D00A93209 /* Extensions */,
+				E8627DED273A5518003B2B35 /* Resources */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E8627DE6273A5348003B2B35 /* NewsFeed */ = {
+			isa = PBXGroup;
+			children = (
+				E8627DE9273A5366003B2B35 /* Model */,
+				E8627DE8273A535C003B2B35 /* Presenter */,
+				E8627DE7273A5355003B2B35 /* View */,
+				E8627DEB273A53B5003B2B35 /* NewsFeedAssembly.swift */,
+			);
+			path = NewsFeed;
+			sourceTree = "<group>";
+		};
+		E8627DE7273A5355003B2B35 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E8627DEA273A5375003B2B35 /* Cells */,
+				E8068CD123DC47E80083FBBE /* NewsTableVC.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E8627DE8273A535C003B2B35 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		E8627DE9273A5366003B2B35 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E8627DEA273A5375003B2B35 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E8068CD723DC485C0083FBBE /* PostCell.swift */,
+				E8068CE623E1C7150083FBBE /* StoriesCell.swift */,
+				E8068CEE23E4FE0C0083FBBE /* StoryCell.swift */,
+				E8068CEA23E384C10083FBBE /* WhatsNewCell.swift */,
+				E8068CF023E4FE5B0083FBBE /* AddStoryCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		E8627DED273A5518003B2B35 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E88EC3892524A7D300F3603D /* Localizable.strings */,
+				E8954A8323B15FEB00A93209 /* LaunchScreen.storyboard */,
+				E8954A8623B15FEB00A93209 /* Info.plist */,
+				E8954A8123B15FEB00A93209 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		E8757B09241BEE26002F92A7 /* Navigation */ = {
@@ -332,6 +402,9 @@
 		E8954A7723B15FEA00A93209 /* VKClientSample */ = {
 			isa = PBXGroup;
 			children = (
+				E8627DE5273A5322003B2B35 /* Supporting Files */,
+				E8627DE4273A5300003B2B35 /* NetworkLayer */,
+				E8627DE3273A527B003B2B35 /* Modules */,
 				E8B5E32E24046C91009A5494 /* Services */,
 				E8500E9423F08B0C0080F802 /* Cells */,
 				E8500E9323F08B030080F802 /* ViewControllers */,
@@ -339,22 +412,8 @@
 				E861CD9B23D274BF00D3E9B3 /* Models */,
 				E8954A7823B15FEA00A93209 /* AppDelegate.swift */,
 				E8954A7E23B15FEA00A93209 /* Main.storyboard */,
-				E8954A8D23B1624500A93209 /* Utilities */,
 			);
 			path = VKClientSample;
-			sourceTree = "<group>";
-		};
-		E8954A8D23B1624500A93209 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				E8954A8323B15FEB00A93209 /* LaunchScreen.storyboard */,
-				E8954A8623B15FEB00A93209 /* Info.plist */,
-				E8954A8123B15FEB00A93209 /* Assets.xcassets */,
-				E8954A8F23B1625500A93209 /* Constants */,
-				E8954A8E23B1624D00A93209 /* Extensions */,
-				E88EC3892524A7D300F3603D /* Localizable.strings */,
-			);
-			path = Utilities;
 			sourceTree = "<group>";
 		};
 		E8954A8E23B1624D00A93209 /* Extensions */ = {
@@ -613,6 +672,7 @@
 				E85E8311246CD6B20090FBEC /* UserDefaults+extensions.swift in Sources */,
 				E8068CE723E1C7150083FBBE /* StoriesCell.swift in Sources */,
 				E80B162A255B5248004DF79D /* ActivityIndicatorState.swift in Sources */,
+				E8627DEC273A53B5003B2B35 /* NewsFeedAssembly.swift in Sources */,
 				E8757B0D241BEEA2002F92A7 /* NavigationTransition.swift in Sources */,
 				E836B0E9253C805C00E47521 /* UIViewController+Ext.swift in Sources */,
 				E8757B0B241BEE49002F92A7 /* CustomInteractionNavigationController.swift in Sources */,
@@ -794,7 +854,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AC7SNZV8BM;
-				INFOPLIST_FILE = VKClientSample/Utilities/Info.plist;
+				INFOPLIST_FILE = "VKClientSample/Supporting Files/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -816,7 +876,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AC7SNZV8BM;
-				INFOPLIST_FILE = VKClientSample/Utilities/Info.plist;
+				INFOPLIST_FILE = "VKClientSample/Supporting Files/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

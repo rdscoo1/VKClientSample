@@ -131,7 +131,7 @@ class NewsTableVC: UITableViewController {
             }
             self.posts?.addToBeggining(news: items)
 
-            let indexPathes = items.items.enumerated().map { offset, _ in
+            _ = items.items.enumerated().map { offset, _ in
                 IndexPath(row: offset, section: 2)
             }
 //            self.tableView.insertRows(at: indexPathes, with: .automatic)

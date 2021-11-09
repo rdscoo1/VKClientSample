@@ -10,8 +10,6 @@ import Foundation
 import Alamofire
 import RealmSwift
 
-//MARK: - Api Methods
-
 class NetworkService {
     
     //MARK: - Constants

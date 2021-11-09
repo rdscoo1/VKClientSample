@@ -13,7 +13,7 @@ import RealmSwift
     dynamic var albumId: Int = 0
     dynamic var date: Int = 0
     dynamic var ownerId: Int = 0
-    var postId = RealmOptional<Int>()
+    var postId: Int?
     var sizes = List<Size>()
     dynamic var highResPhoto: String {
         guard let photoLinkhighRes = sizes.first(where: { $0.type == "x" })?.url else {
@@ -38,7 +38,7 @@ import RealmSwift
         albumId = try container.decode(Int.self, forKey: .albumId)
         date = try container.decode(Int.self, forKey: .date)
         ownerId = try container.decode(Int.self, forKey: .ownerId)
-        postId.value = try container.decodeIfPresent(Int.self, forKey: .postId)
+        postId = try container.decodeIfPresent(Int.self, forKey: .postId)
         sizes = try container.decode(List<Size>.self, forKey: .sizes)
     }
     

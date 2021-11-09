@@ -19,13 +19,13 @@ enum OnlineStatusState {
     dynamic var firstName: String = ""
     dynamic var lastName: String = ""
     dynamic var online: Int = 0
-    dynamic var onlineMobile = RealmOptional<Int>()
+    dynamic var onlineMobile: Int?
     dynamic var city: String? = nil
     dynamic var imageUrl: String? = nil
     
     var onlineStatus: OnlineStatusState {
         if online == 1 {
-            if onlineMobile.value == 1 {
+            if onlineMobile == 1 {
                 return .mobile
             } else {
                 return .online
@@ -56,7 +56,7 @@ enum OnlineStatusState {
         firstName = try container.decode(String.self, forKey: .firstName)
         lastName = try container.decode(String.self, forKey: .lastName)
         online = try container.decode(Int.self, forKey: .online)
-        onlineMobile.value = try container.decodeIfPresent(Int.self, forKey: .onlineMobile)
+        onlineMobile = try container.decodeIfPresent(Int.self, forKey: .onlineMobile)
         imageUrl = try container.decodeIfPresent(String.self, forKey: .imageUrl)
         
         if let cityContainer = try? container.nestedContainer(keyedBy: CodingKeys.CityKeys.self, forKey: .city) {
