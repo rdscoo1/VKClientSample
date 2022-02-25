@@ -10,6 +10,7 @@ import Foundation
 import RealmSwift
 
 class RealmService {
+    
     static let manager = RealmService()
     
     private init() {}

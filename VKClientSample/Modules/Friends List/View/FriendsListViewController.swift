@@ -1,5 +1,5 @@
 //
-//  FriendsTableVC.swift
+//  FriendsListViewController.swift
 //  VKClientSample
 //
 //  Created by Roman Khodukin on 17.01.2020.
@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class FriendsTableVC: UITableViewController {
+class FriendsListViewController: UITableViewController {
     
     // MARK: - IBOutlets
     
@@ -86,7 +86,7 @@ class FriendsTableVC: UITableViewController {
 
 // MARK: - UITableViewDataSource
 
-extension FriendsTableVC {
+extension FriendsListViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return friendsInSection.count
     }
@@ -116,7 +116,7 @@ extension FriendsTableVC {
 
 //MARK: - UITableViewDelegate
 
-extension FriendsTableVC {
+extension FriendsListViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let friendPhotos = storyboard.instantiateViewController(withIdentifier: "friendPhotos") as? FriendCollectionVC else { return }
@@ -134,7 +134,7 @@ extension FriendsTableVC {
 
 //MARK: - UISearchBarDelegate
 
-extension FriendsTableVC: UISearchBarDelegate {
+extension FriendsListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if !searchText.isEmpty {
             friendsInSection = handleFriends(items: friends.filter{
