@@ -21,6 +21,7 @@
 		E80B162A255B5248004DF79D /* ActivityIndicatorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80B1629255B5248004DF79D /* ActivityIndicatorState.swift */; };
 		E80D57EE23F9E441002C53CB /* PhotoPreviewNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80D57ED23F9E441002C53CB /* PhotoPreviewNavBarView.swift */; };
 		E80D57F123F9F47D002C53CB /* PhotoPreviewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80D57F023F9F47D002C53CB /* PhotoPreviewFooter.swift */; };
+		E827CE04273AC5BC0027652D /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E827CE03273AC5BC0027652D /* NetworkManager.swift */; };
 		E829F95F2404839400ED148B /* VkAuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E829F95E2404839400ED148B /* VkAuthorizationViewController.swift */; };
 		E829F961240491F900ED148B /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E829F960240491F900ED148B /* NetworkService.swift */; };
 		E836B0B02538AE7600E47521 /* StretchyTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E836B0AF2538AE7600E47521 /* StretchyTableViewHeader.swift */; };
@@ -46,6 +47,10 @@
 		E8627DDF27399CE4003B2B35 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E8627DDE27399CE4003B2B35 /* Alamofire */; };
 		E8627DE227399CF9003B2B35 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E8627DE127399CF9003B2B35 /* SnapKit */; };
 		E8627DEC273A53B5003B2B35 /* NewsFeedAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8627DEB273A53B5003B2B35 /* NewsFeedAssembly.swift */; };
+		E8627E0D273A5B60003B2B35 /* FriendsListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8627E0C273A5B60003B2B35 /* FriendsListPresenter.swift */; };
+		E8627E0F273A5C76003B2B35 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8627E0E273A5C76003B2B35 /* DatabaseManager.swift */; };
+		E8627E13273A5E96003B2B35 /* FriendsListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8627E12273A5E96003B2B35 /* FriendsListInteractor.swift */; };
+		E8627E15273A5F08003B2B35 /* FriendsListProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8627E14273A5F08003B2B35 /* FriendsListProtocols.swift */; };
 		E86CCCB123EC669900F3AAA6 /* PhotoPreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86CCCB023EC669900F3AAA6 /* PhotoPreviewVC.swift */; };
 		E871F965247DD13B00EF78BE /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E871F964247DD13B00EF78BE /* Date+extension.swift */; };
 		E8757B0B241BEE49002F92A7 /* CustomInteractionNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8757B0A241BEE49002F92A7 /* CustomInteractionNavigationController.swift */; };
@@ -60,7 +65,7 @@
 		E8757B25242C2F0E002F92A7 /* ActionsTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8757B24242C2F0E002F92A7 /* ActionsTVCell.swift */; };
 		E87624172472A22D00FB62B6 /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87624162472A22D00FB62B6 /* RealmService.swift */; };
 		E87BB7F423E8CE39006C14F6 /* LoadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87BB7F323E8CE39006C14F6 /* LoadView.swift */; };
-		E885799423D1D73A00C97694 /* FriendsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799323D1D73A00C97694 /* FriendsTableVC.swift */; };
+		E885799423D1D73A00C97694 /* FriendsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E885799323D1D73A00C97694 /* FriendsListViewController.swift */; };
 		E88EC3872524A7D300F3603D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E88EC3892524A7D300F3603D /* Localizable.strings */; };
 		E88EC38F2524ACD400F3603D /* CustomActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88EC38E2524ACD400F3603D /* CustomActivityIndicator.swift */; };
 		E8954A7923B15FEA00A93209 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8954A7823B15FEA00A93209 /* AppDelegate.swift */; };
@@ -112,6 +117,7 @@
 		E80B1629255B5248004DF79D /* ActivityIndicatorState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorState.swift; sourceTree = "<group>"; };
 		E80D57ED23F9E441002C53CB /* PhotoPreviewNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewNavBarView.swift; sourceTree = "<group>"; };
 		E80D57F023F9F47D002C53CB /* PhotoPreviewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewFooter.swift; sourceTree = "<group>"; };
+		E827CE03273AC5BC0027652D /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		E829F95E2404839400ED148B /* VkAuthorizationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VkAuthorizationViewController.swift; sourceTree = "<group>"; };
 		E829F960240491F900ED148B /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		E836B0AF2538AE7600E47521 /* StretchyTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyTableViewHeader.swift; sourceTree = "<group>"; };
@@ -132,6 +138,10 @@
 		E861CD9723D271EA00D3E9B3 /* CommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCell.swift; sourceTree = "<group>"; };
 		E861CD9823D271EA00D3E9B3 /* CommunityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommunityCell.xib; sourceTree = "<group>"; };
 		E8627DEB273A53B5003B2B35 /* NewsFeedAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedAssembly.swift; sourceTree = "<group>"; };
+		E8627E0C273A5B60003B2B35 /* FriendsListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListPresenter.swift; sourceTree = "<group>"; };
+		E8627E0E273A5C76003B2B35 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		E8627E12273A5E96003B2B35 /* FriendsListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListInteractor.swift; sourceTree = "<group>"; };
+		E8627E14273A5F08003B2B35 /* FriendsListProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListProtocols.swift; sourceTree = "<group>"; };
 		E86CCCB023EC669900F3AAA6 /* PhotoPreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewVC.swift; sourceTree = "<group>"; };
 		E86E1EFF25237E81007EF3D1 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		E871F964247DD13B00EF78BE /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
@@ -147,7 +157,7 @@
 		E8757B24242C2F0E002F92A7 /* ActionsTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsTVCell.swift; sourceTree = "<group>"; };
 		E87624162472A22D00FB62B6 /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
 		E87BB7F323E8CE39006C14F6 /* LoadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadView.swift; sourceTree = "<group>"; };
-		E885799323D1D73A00C97694 /* FriendsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableVC.swift; sourceTree = "<group>"; };
+		E885799323D1D73A00C97694 /* FriendsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListViewController.swift; sourceTree = "<group>"; };
 		E88EC3812524A36D00F3603D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		E88EC3882524A7D300F3603D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E88EC38B2524A7D600F3603D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -224,6 +234,22 @@
 			path = ActivityIndicator;
 			sourceTree = "<group>";
 		};
+		E827CDFF273AC5940027652D /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				E827CE02273AC5A60027652D /* Network */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		E827CE02273AC5A60027652D /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				E827CE03273AC5BC0027652D /* NetworkManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		E836E3B6246CAA460053A065 /* OutdatedVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -257,13 +283,6 @@
 				E8627DE6273A5348003B2B35 /* NewsFeed */,
 			);
 			path = Modules;
-			sourceTree = "<group>";
-		};
-		E8627DE4273A5300003B2B35 /* NetworkLayer */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = NetworkLayer;
 			sourceTree = "<group>";
 		};
 		E8627DE5273A5322003B2B35 /* Supporting Files */ = {
@@ -432,9 +451,11 @@
 		E8627DF9273A5656003B2B35 /* Friends List */ = {
 			isa = PBXGroup;
 			children = (
+				E8627E10273A5E7E003B2B35 /* Interactor */,
 				E8627DFC273A5674003B2B35 /* Model */,
 				E8627DFB273A5670003B2B35 /* View */,
 				E8627DFA273A5668003B2B35 /* Presenter */,
+				E8627E14273A5F08003B2B35 /* FriendsListProtocols.swift */,
 			);
 			path = "Friends List";
 			sourceTree = "<group>";
@@ -442,6 +463,7 @@
 		E8627DFA273A5668003B2B35 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				E8627E0C273A5B60003B2B35 /* FriendsListPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -450,7 +472,7 @@
 			isa = PBXGroup;
 			children = (
 				E8CD1C8F23D65EA600C5D668 /* FriendCell.swift */,
-				E885799323D1D73A00C97694 /* FriendsTableVC.swift */,
+				E885799323D1D73A00C97694 /* FriendsListViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -588,6 +610,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		E8627E10273A5E7E003B2B35 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				E8627E12273A5E96003B2B35 /* FriendsListInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
 		E8757B09241BEE26002F92A7 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
@@ -616,8 +646,8 @@
 		E8954A7723B15FEA00A93209 /* VKClientSample */ = {
 			isa = PBXGroup;
 			children = (
+				E827CDFF273AC5940027652D /* Core */,
 				E8627DE5273A5322003B2B35 /* Supporting Files */,
-				E8627DE4273A5300003B2B35 /* NetworkLayer */,
 				E8627DE3273A527B003B2B35 /* Modules */,
 				E8B5E32E24046C91009A5494 /* Services */,
 				E8CD1C9523DB29B800C5D668 /* Components */,
@@ -670,6 +700,7 @@
 				E829F960240491F900ED148B /* NetworkService.swift */,
 				E87624162472A22D00FB62B6 /* RealmService.swift */,
 				E84FF664250425B700272297 /* PhotoService.swift */,
+				E8627E0E273A5C76003B2B35 /* DatabaseManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -801,6 +832,7 @@
 				E8D45F8A25023A04005120D8 /* PostLinkView.swift in Sources */,
 				E8954A7D23B15FEA00A93209 /* LoginViewController.swift in Sources */,
 				E8757B25242C2F0E002F92A7 /* ActionsTVCell.swift in Sources */,
+				E827CE04273AC5BC0027652D /* NetworkManager.swift in Sources */,
 				E8954A9223B162A700A93209 /* Images.swift in Sources */,
 				E8CD1C9923DB2AF900C5D668 /* LikeControl.swift in Sources */,
 				E8068CED23E3A7890083FBBE /* AddStoryPhotoView.swift in Sources */,
@@ -815,6 +847,7 @@
 				E829F95F2404839400ED148B /* VkAuthorizationViewController.swift in Sources */,
 				E8068CDF23E0C1E00083FBBE /* CommentControl.swift in Sources */,
 				E8CD1C9023D65EA600C5D668 /* FriendCell.swift in Sources */,
+				E8627E0D273A5B60003B2B35 /* FriendsListPresenter.swift in Sources */,
 				E8CD1C9423D6AF6100C5D668 /* FriendCVCell.swift in Sources */,
 				E8068CDC23E0BE360083FBBE /* PostStatistics.swift in Sources */,
 				E8D4290D25193D6000A326E9 /* PostPhotoSize.swift in Sources */,
@@ -829,10 +862,11 @@
 				E8068CE323E0C4290083FBBE /* ViewsControl.swift in Sources */,
 				E8068CF123E4FE5B0083FBBE /* AddStoryCell.swift in Sources */,
 				E8D51AAE2475D7570056B945 /* VKError.swift in Sources */,
+				E8627E0F273A5C76003B2B35 /* DatabaseManager.swift in Sources */,
 				E80D57F123F9F47D002C53CB /* PhotoPreviewFooter.swift in Sources */,
 				E8757B1A24278B57002F92A7 /* Photo.swift in Sources */,
 				E80D57EE23F9E441002C53CB /* PhotoPreviewNavBarView.swift in Sources */,
-				E885799423D1D73A00C97694 /* FriendsTableVC.swift in Sources */,
+				E885799423D1D73A00C97694 /* FriendsListViewController.swift in Sources */,
 				E836B0BD253A599D00E47521 /* CommunityResponse.swift in Sources */,
 				E861CD9923D271EA00D3E9B3 /* CommunityCell.swift in Sources */,
 				E89ACE40246DAE7300E269DA /* Post.swift in Sources */,
@@ -861,6 +895,7 @@
 				E836B0E9253C805C00E47521 /* UIViewController+Ext.swift in Sources */,
 				E8757B0B241BEE49002F92A7 /* CustomInteractionNavigationController.swift in Sources */,
 				E897BCCF252F73BE001746DA /* FollowButton.swift in Sources */,
+				E8627E13273A5E96003B2B35 /* FriendsListInteractor.swift in Sources */,
 				E8068CEF23E4FE0C0083FBBE /* StoryCell.swift in Sources */,
 				E8757B21242C0708002F92A7 /* ProfileTableViewController.swift in Sources */,
 				E8BC2D7A25214F9000182C7B /* Stories.swift in Sources */,
@@ -876,6 +911,7 @@
 				E87BB7F423E8CE39006C14F6 /* LoadView.swift in Sources */,
 				E836B116253DC28100E47521 /* UIAlertController+Ext.swift in Sources */,
 				E8D4290A25193D3B00A326E9 /* PostPhoto.swift in Sources */,
+				E8627E15273A5F08003B2B35 /* FriendsListProtocols.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
