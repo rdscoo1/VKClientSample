@@ -17,7 +17,6 @@ let project = Project(
                sources: [
                 "VKClientSample/Components/**",
                 "VKClientSample/Services/**",
-                "VKClientSample/ViewControllers/**",
                 "VKClientSample/Models/**",
                 "VKClientSample/Modules/**",
                 "VKClientSample/Core/**",
@@ -32,21 +31,22 @@ let project = Project(
                copyFiles: nil,
                entitlements: nil,
                scripts: [
-                .post(
-                    script: """
-                    export PATH="$PATH:/opt/homebrew/bin"
-                    swiftlint autocorrect
-                    if which swiftlint >/dev/null; then
-                    swiftlint
-                    else
-                    echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
-                    fi
-                    """, name: "SwiftLint")
+//                .post(
+//                    script: """
+//                    export PATH="$PATH:/opt/homebrew/bin"
+//                    swiftlint autocorrect
+//                    if which swiftlint >/dev/null; then
+//                    swiftlint
+//                    else
+//                    echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+//                    fi
+//                    """, name: "SwiftLint")
                ],
                dependencies: [
                 .external(name: "SnapKit"),
                 .external(name: "Alamofire"),
-                .external(name: "Nuke")
+                .external(name: "Nuke"),
+                .package(product: "RealmSwift")
                ],
                settings: nil,
                coreDataModels: [],
