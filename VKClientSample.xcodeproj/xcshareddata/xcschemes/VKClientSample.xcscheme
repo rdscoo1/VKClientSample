@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1240"
+   LastUpgradeVersion = "1010"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E8954A7423B15FEA00A93209"
+               BlueprintIdentifier = "7C2092B62EADDE7AA70AF0F7"
                BuildableName = "VKClientSample.app"
                BlueprintName = "VKClientSample"
                ReferencedContainer = "container:VKClientSample.xcodeproj">
@@ -26,7 +26,8 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      disableMainThreadChecker = "YES">
       <Testables>
       </Testables>
    </TestAction>
@@ -34,7 +35,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      disableMainThreadChecker = "YES"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -45,7 +45,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E8954A7423B15FEA00A93209"
+            BlueprintIdentifier = "7C2092B62EADDE7AA70AF0F7"
             BuildableName = "VKClientSample.app"
             BlueprintName = "VKClientSample"
             ReferencedContainer = "container:VKClientSample.xcodeproj">
@@ -62,7 +62,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E8954A7423B15FEA00A93209"
+            BlueprintIdentifier = "7C2092B62EADDE7AA70AF0F7"
             BuildableName = "VKClientSample.app"
             BlueprintName = "VKClientSample"
             ReferencedContainer = "container:VKClientSample.xcodeproj">

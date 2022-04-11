@@ -85,6 +85,15 @@ fastlane/test_output
 
 iOSInjectionProject/
 
+# Projects
+*.xcodeproj
+*.xcworkspace
+
+# Tuist derived files
+
+graph.dot
+Derived/
+
 # Other
 *.moved-aside
 *.xcuserstate

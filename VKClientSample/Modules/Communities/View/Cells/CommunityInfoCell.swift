@@ -10,7 +10,7 @@ import UIKit
 
 class CommunityInfoCell: UITableViewCell {
     
-    static let reuseId = String(describing: self)
+    static let reuseId = String(describing: CommunityInfoCell.self)
     
     // MARK: - Private Properties
     
